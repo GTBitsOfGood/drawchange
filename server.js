@@ -4,8 +4,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const api = require('./backend/routes');
 
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
+var MongoClient = require('mongodb').MongoClient,
+    assert = require('assert');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -25,7 +25,7 @@ app.listen(PORT, error => {
 var url = 'dummy url';
 // Use connect method to connect to the Server
 MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected correctly to MongoDB!!");
-  db.close();
+    assert.equal(null, err);
+    console.log("Connected correctly to MongoDB!!");
+    db.close();
 });
