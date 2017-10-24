@@ -6,6 +6,9 @@ const responseSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   answers: {
     type: Array,
     required: true
