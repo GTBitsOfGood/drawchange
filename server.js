@@ -1,19 +1,28 @@
-const path = require('path');
+// NPM Imports
+const mongoose = require('mongoose');
 const express = require('express');
+const path = require('path');
 const app = express();
+
+// Local Imports & Constants
 const PORT = process.env.PORT || 3000;
 const api = require('./backend/routes');
 
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://root:pass@ds135364.mlab.com:35364/apple', { useMongoClient: true });
+mongoose.Promise = global.Promise;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (request, response) => {
+
+// Route API Calls to seperate router
+app.use('/api', api);
+
+// Render React page
+app.get('/*', (request, response) => {
     response.sendFile(__dirname + '/public/index.html'); // For React/Redux
 });
-
-app.use('/api', api);
 
 app.listen(PORT, error => {
     error
@@ -21,11 +30,5 @@ app.listen(PORT, error => {
     : console.info(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
 });
 
-// Connection URL
-var url = 'dummy url';
-// Use connect method to connect to the Server
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected correctly to MongoDB!!");
-  db.close();
-});
+
+module.exports = app;

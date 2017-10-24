@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//define schema for user collection (user model)
+// define schema for user collection (user model)
 const eventSchema = mongoose.Schema({
     name: {
         type: String,
@@ -23,10 +23,10 @@ const eventSchema = mongoose.Schema({
         required: true
     },
     volunteers: {
-        type: Array[Schema.Types.ObjectId], //array of user objects
+        type: Array[ mongoose.Schema.Types.ObjectId ], // array of user objects
         required: true
     }
 }, { timestamps: true });
 
-//export user model to app
-module.exports = mongoose.model('Events', eventSchema);
+// export Event model to app
+module.exports = mongoose.model('Event', eventSchema);
