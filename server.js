@@ -5,12 +5,13 @@ const path = require('path');
 const app = express();
 
 // Local Imports & Constants
+require('dotenv').config(); // load env vars
 const PORT = process.env.PORT || 3000;
 const api = require('./backend/routes');
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb://root:pass@ds135364.mlab.com:35364/apple', { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 app.use(express.static(path.join(__dirname, 'public')));

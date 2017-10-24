@@ -1,6 +1,6 @@
 // NPM Packages
 const express = require('express');
-const passport = require('passport');
+// const passport = require('passport');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ router.use(morgan('dev'));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(session({
-    secret: 'thisSecretShouldBeAnEnvVar',
+    secret: process.env.SECRET,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     resave: false,
     saveUninitialized: false
