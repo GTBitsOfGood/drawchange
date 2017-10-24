@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
 
 // define schema for Surveys collection (Survey model)
-const surveySchema = mongoose.Schema({
-  name: {
-    type: String,
+const responseSchema = mongoose.Schema({
+  survey_id: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-  description: {
-    type: String,
-    required: true
-  },
-  questions: {
+  answers: {
     type: Array,
     required: true
   }
 }, { timestamps: true });
 
 // export Survey model to app
-module.exports = mongoose.model('Survey', surveySchema);
+module.exports = mongoose.model('Survey', responseSchema);

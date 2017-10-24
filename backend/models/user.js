@@ -3,50 +3,53 @@ const mongoose = require('mongoose');
 
 // define schema for user collection (user model)
 const userSchema = mongoose.Schema({
-    first_name: {
-        type: String,
-        required: true
-    },
-    last_name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    street_address: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    state: {
-        type: String,
-        required: true
-    },
-    zip_code: {
-        type: String,
-        required: true
-    },
-    phone_number: {
-        type: String,
-        required: true
-    },
-    date_of_birth_: {
-        type: Date,
-        required: true
-    },
-    age: {
-        type: Number,
-        required: true
-    },
-    events: {
-        type: Array[ mongoose.Schema.Types.ObjectId ], // array of event objects
-        required: true
-    }
+  first_name: {
+    type: String,
+    required: true
+  },
+  last_name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  street_address: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  zip_code: {
+    type: String,
+    required: true
+  },
+  phone_number: {
+    type: String,
+    required: true
+  },
+  date_of_birth_: {
+    type: Date,
+    required: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  events: {
+    type: Array[ mongoose.Schema.Types.ObjectId ], // array of event objects
+    required: true
+  },
+  surveys: {
+    type: Array[ mongoose.Schema.Types.ObjectId ] // array of Survey Objects
+  }
 }, { timestamps: true });
 
 // export user model to app

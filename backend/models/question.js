@@ -1,21 +1,15 @@
-const mongoose = require('mongoose');
+/*
+ * Question Object is used to store survey questions
+ */
+class Question {
+  constructor(text, type, choices) {
+    // Instance Fields for Question Object
+    this.type = type;
+    this.text = text;
+    this.choices = choices || null;
+    this.answer = null;
+  }
 
-// define schema for questions collection (question model)
-const questionSchema = mongoose.Schema({
-    text: {
-        type: String,
-        required: true
-    },
-    input: {
-        type: String,
-        enum: [ 'text', 'radio', 'checkbox', 'select' ],
-        required: true
-    },
-    required: {
-        type: Boolean,
-        required: true
-    }
-}, { timestamps: true });
+}
 
-// export Question model to app
-module.exports = mongoose.model('Question', questionSchema);
+module.exports = Question;

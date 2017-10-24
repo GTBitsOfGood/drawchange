@@ -22,11 +22,11 @@ app.use('/api', api);
 
 // Render React page
 app.get('/*', (request, response) => {
-    response.sendFile(__dirname + '/public/index.html'); // For React/Redux
+  response.sendFile(__dirname + '/public/index.html'); // For React/Redux
 });
 
 app.listen(PORT, error => {
-    error
+  error
     ? console.error(error)
     : console.info(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
 });
