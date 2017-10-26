@@ -11,7 +11,11 @@ const surveySchema = mongoose.Schema({
     required: true
   },
   questions: {
-    type: Array,
+    type: Array, //array of question objects
+    required: true
+  },
+  responses: {
+    type: Array, //array of response objects
     required: true
   }
 }, { timestamps: true });

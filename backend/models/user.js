@@ -44,11 +44,11 @@ const userSchema = mongoose.Schema({
     required: true
   },
   events: {
-    type: Array[ mongoose.Schema.Types.ObjectId ], // array of event objects
+    type: Array, // array of event objects
     required: true
   },
   survey_responses: {
-    type: Array[ mongoose.Schema.Types.ObjectId ] // array of Survey Objects
+    type: Array // array of Survey Objects
   }
 }, { timestamps: true });
 

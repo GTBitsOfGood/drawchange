@@ -23,7 +23,7 @@ const eventSchema = mongoose.Schema({
     required: true
   },
   volunteers: {
-    type: Array[ mongoose.Schema.Types.ObjectId ], // array of user objects
+    type: Array, // array of user objects
     required: true
   }
 }, { timestamps: true });

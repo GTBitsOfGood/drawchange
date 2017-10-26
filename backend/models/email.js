@@ -15,7 +15,7 @@ const emailSchema = mongoose.Schema({
       required: true
     },
     recipients: {
-      type: Array[ mongoose.Schema.Types.ObjectId ],
+      type: Array,
       required: true
     },
     is_sent: {
