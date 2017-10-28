@@ -21,15 +21,15 @@ router.use(morgan('dev'));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(session({
-    secret: process.env.SECRET,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    resave: false,
-    saveUninitialized: false
+  secret: process.env.SECRET,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  resave: true,
+  saveUninitialized: false
 }));
 
 
 router.get('/', (req, res) => {
-    res.send("Hello World");
+  res.send("Hello World");
 });
 
 module.exports = router;
