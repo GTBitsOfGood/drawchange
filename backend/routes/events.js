@@ -18,7 +18,7 @@ router.route('/')
       //     })
       //   .catch(error => res.status(500).json(error));
       // } else {
-    Event.find()
+      Event.find()
       .then(events => res.status(200).json({ events }))
       .catch(({ errors }) => res.status(500).json({ errors }));
       // }

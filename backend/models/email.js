@@ -3,35 +3,34 @@ const mongoose = require('mongoose');
 // define schema for user collection (user model)
 const emailSchema = mongoose.Schema({
     from: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     subject: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     text: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     recipients: {
-      type: Array,
-      required: true
+        type: Array,
+        required: true
     },
     is_sent: {
-      type: Boolean,
-      required: true,
-      default: false
+        type: Boolean,
+        default: false
     },
-    deliver_on: {
-      type: Date,
-      required: true
+    sent_on: {
+        type: Date,
+        default: null
     },
-    isHTML: {
-      type: Boolean,
-      required: true,
+    is_html: {
+        type: Boolean,
+        required: true,
     },
 }, { timestamps: true });
 
 // export Event model to app
-module.exports = mongoose.model('Event', eventSchema);
+module.exports = mongoose.model('Email', emailSchema);
