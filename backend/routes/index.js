@@ -11,6 +11,7 @@ const router = express.Router();
 
 // Local Imports
 const User = require('../models/user');
+const events = require('./events');
 // const responses = require('./responses');
 // const survey = require('./survey');
 // const users = require('./users');
@@ -105,4 +106,5 @@ module.exports = router;
 // router.use('/responses', responses);
 // router.use('/surveys', surveys);
 // router.use('/users', users);
+router.use('/events', events);
 
