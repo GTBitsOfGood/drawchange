@@ -25,6 +25,10 @@ const eventSchema = mongoose.Schema({
   volunteers: {
     type: Array, // array of user objects
     default: []
+  },
+  max_volunteers: {
+    type: Number,
+    required: true
   }
 }, { timestamps: true });
 

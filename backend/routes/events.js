@@ -20,6 +20,7 @@ router.route('/')
     check('location').exists().isAscii().trim().escape(),
     check('description').exists().isAscii().trim().escape(),
     check('contact').exists().isAscii().trim().escape(),
+    check('max_volunteers').exists().isNumeric(),
     // check('volunteers').custom(value => {
     //   if ()
     // })
@@ -50,7 +51,7 @@ router.route('/:id')
       .then(event => {
         event
           ? res.status(200).json({ event })
-          : res.status(404).json({ errors: 'No response found with id: ${req.params.id}'});
+          : res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
       })
       .catch(errors => { res.status(500).json({ errors }); });
   })
@@ -60,6 +61,7 @@ router.route('/:id')
     check('location').isAscii().trim().escape(),
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
+    check('max_volunteers').exists().isNumeric(),
     // check('volunteers').custom(value => {
     //   if ()
     // })
@@ -74,7 +76,7 @@ router.route('/:id')
     Event.findById(req.params.id)
       .then(event => {
         if (!event) {
-          return res.status(404).json({ errors: 'No response found with id: ${req.params.id}'});
+          return res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
         }
         event.name = eventData.name || event.name;
         event.date = eventData.date || event.date;
@@ -82,6 +84,7 @@ router.route('/:id')
         event.description = eventData.description || event.description;
         event.contact = eventData.contact || event.contact;
         event.volunteers = eventData.volunteers || event.volunteers;
+        event.max_volunteers = eventData.max_volunteers || event.max_volunteers;
         event.save();
         res.status(200).json({ event });
       })
@@ -96,7 +99,7 @@ router.route('/:id')
       .then(removed => {
         removed
               ? res.status(200).json({ removed })
-              : res.status(404).json({ errors: "No response found with id: ${req.params.id}"});
+              : res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
       })
       .catch(errors => { res.status(500).json({ errors });});
   });

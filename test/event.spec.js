@@ -4,7 +4,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
 const should = chai.should;
-const assert = require('assert');
 
 const Event = require('../backend/models/event');
 chai.use(chaiHttp);
@@ -14,14 +13,16 @@ const PROPER_FIELDS = {
   date: new Date(),
   location: '123 College of Computing',
   description: 'Hackathon for bits of good teams!',
-  contact: 'George Burdell -- 123.123.1234'
+  contact: 'George Burdell -- 123.123.1234',
+  max_volunteers: 10
 };
 
 const BAD_FIELDS = {
   date: new Date(),
   location: '123 College of Computing',
   description: 'Hackathon for bits of good teams!',
-  contact: 'George Burdell -- 123.123.1234'
+  contact: 'George Burdell -- 123.123.1234',
+  max_volunteers: 10
 };
 
 const UPDATE_FIELDS = {
