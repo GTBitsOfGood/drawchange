@@ -3,54 +3,53 @@ const express = require('express');
 const router = express.Router();
 
 // Local Imports
-const Event = require('../models/event');
+const Survey = require('../models/survey');
 
 
 router.route('/')
   .get((req, res) => {
-    Event.find()
-      .then(events => res.status(200).json({ events }))
+    Survey.find()
+      .then(surveys => res.status(200).json({ surveys }))
       .catch(({ errors }) => res.status(500).json({ errors }));
   })
   .post((req, res) => {
-    const { name, date, location, description, contact, volunteers } = req.body;
-    const newEvent = new Event({ name, date, location, description, contact, volunteers });
-    newEvent.save()
-      .then(event => res.status(200).json({ event }))
+    const { name, description, questions, responses } = req.body;
+    const newSurvey = new Survey({ name, description, questions, responses });
+    newSurvey.save()
+      .then(survey => res.status(200).json({ survey }))
       .catch((errors) => { res.status(500).json({ errors });});
   });
 
 router.route('/:id')
   .get((req, res) => {
-    Event.findById(req.params.id)
+    Survey.findById(req.params.id)
       .then(response => {
         response
           ? res.status(200).json({ response })
-          : res.status(404).json({Error: 'No response found with id: ${req.params.id}'});
+          : res.status(404).json({ Error: 'No Survey found with id: ${req.params.id}'});
       })
       .catch(errors => { res.status(500).json({ errors }); });
   })
   .put((req, res) => {
-    const { name, date, location, description, contact, volunteers } = req.body;
-    Event.findById(req.params.id)
+    const { name, description, questions, responses } = req.body;
+    Survey.findById(req.params.id)
       .then(response => {
         response.name = name || response.name;
-        response.date = date || response.date;
-        response.location = location || response.location;
         response.description = description || response.description;
-        response.contact = contact || response.contact;
-        response.volunteers = volunteers || response.volunteers;
+        response.questions = questions || response.questions;
+        response.responses = responses || response.responses;
+
         response.save();
         res.status(200).json({ response });
       })
       .catch(({ errors }) => res.status(500).json({ errors }));
   })
   .delete((req, res) => {
-    Event.findByIdAndRemove(req.params.id)
+    Survey.findByIdAndRemove(req.params.id)
       .then(removed => {
         removed
               ? res.status(200).json({removed})
-              : res.status(404).json({Error: "No response found with id: ${req.params.id}"});
+              : res.status(404).json({Error: "No Survey found with id: ${req.params.id}"});
       })
       .catch(errors => { res.status(500).json({errors});});
   });
