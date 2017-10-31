@@ -14,4 +14,6 @@ const testEmail = new Email({
   is_html: false
 });
 
-EmailService.sendEmail(testEmail);
+EmailService.sendEmail(testEmail)
+.then((result) => console.log(result))
+.catch((error) => console.log(error));
