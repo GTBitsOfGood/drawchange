@@ -16,7 +16,7 @@ const emailSchema = mongoose.Schema({
   },
   recipients: {
     type: Array,
-    validate: [minNumRecipients, 'You need to specify least one recipient'],
+    validate: [minNumRecipients, 'You need to specify at least one recipient'],
     required: true
   },
   is_sent: {

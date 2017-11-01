@@ -32,7 +32,14 @@ router.route('/')
     const newEmail = new Email(emailData);
     newEmail.save()
       .then(email => res.status(200).json({ email }))
-      .catch((errors) => { res.status(500).json({ errors });});
+      .catch((errors) => {
+        if (recipients.length == 0) {
+          res.status(422).json({ errors });
+        } else {
+          res.status(500).json({ errors });
+        }
+
+    });
   });
 
 router.route('/:id')
