@@ -1,5 +1,7 @@
 // NPM Packages
 const express = require('express');
+const { check, oneOf, validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 const router = express.Router();
 
 // Local Imports
@@ -11,54 +13,99 @@ router.route('/')
       .then(users => res.status(200).json({ users }))
       .catch(errors =>  res.status(500).json({ errors }));
   })
-  .post((req, res) => {
-    const { first_name, last_name, email, street_address, city, state,
-          zip_code, phone_number, date_of_birth, events, survey_responses } = req.body;
-    const newUser = new User({ first_name, last_name, email, street_address, city, state,
-      zip_code, phone_number, date_of_birth, events, survey_responses });
+  .post([ //TODO Add validations for events and survey_responses Array
+    check('first_name').exists().isAscii().trim().escape(),
+    check('last_name').exists().isAscii().trim().escape(),
+    check('email').exists().isEmail().trim(),
+    check('street_address').exists().isAscii().trim().escape(),
+    check('city').exists().isAscii().trim().escape(),
+    check('state').exists().isAscii().trim().escape(),
+    check('zip_code').exists().isAscii().trim().escape(),
+    check('phone_number').exists().isAscii().trim().escape(),
+    check('date_of_birth').exists().trim().escape()
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+    }
+    const userData = matchedData(req);
+    userData.events = req.body.events;
+    userData.survey_responses = req.body.survey_responses;
+
+    const newUser = new User(userData);
     newUser.save()
-      .then(event => res.status(200).json({ event }))
+      .then(user => res.status(200).json({ user }))
       .catch(errors =>  res.status(500).json({ errors }));
   });
 
 router.route('/:id')
-    .get((req, res) => {
+    .get([ check('id').isMongoId() ], (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.mapped() });
+      }
       User.findById(req.params.id)
-        .then(response => {
-          response
-            ? res.status(200).json({ response })
-            : res.status(404).json({Error: 'No response found with id: ${req.params.id}'});
+        .then(user => {
+          user
+            ? res.status(200).json({ user })
+            : res.status(404).json({ errors: `No User found with id: ${req.params.id}`});
         })
         .catch(errors =>  res.status(500).json({ errors }));
     })
-    .put((req, res) => {
-      const { first_name, last_name, email, street_address, city, state,
-            zip_code, phone_number, date_of_birth, age, events, survey_responses } = req.body;
-      User.findById(req.params.id)
-        .then(response => {
-          response.first_name = first_name || response.first_name;
-          response.last_name = last_name || response.last_name;
-          response.email = email || response.email;
-          response.street_address = street_address || response.street_address;
-          response.city = city || response.city;
-          response.state = state || response.state;
-          response.zip_code = zip_code || response.zip_code;
-          response.phone_number = phone_number || response.phone_number;
-          response.date_of_birth = date_of_birth || response.date_of_birth;
-          response.events = events || response.events;
-          response.survey_responses = survey_responses || response.survey_responses;
+    .put([check('id').isMongoId()], oneOf([ //TODO Add validations for events and survey_responses Array
+      check('first_name').exists().isAscii().trim().escape(),
+      check('last_name').exists().isAscii().trim().escape(),
+      check('email').exists().isEmail().trim(),
+      check('street_address').exists().isAscii().trim().escape(),
+      check('city').exists().isAscii().trim().escape(),
+      check('state').exists().isAscii().trim().escape(),
+      check('zip_code').exists().isAscii().trim().escape(),
+      check('phone_number').exists().isAscii().trim().escape(),
+      check('date_of_birth').exists().trim().escape()
+    ]), (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.mapped() });
+      }
 
-          response.save();
-          res.status(200).json({ response });
+      const userData = matchedData(req);
+      userData.events = req.body.events;
+      userData.survey_responses = req.body.survey_responses;
+
+      User.findById(req.params.id)
+        .then(user => {
+
+          if (!user) {
+            return res.status(404).json({ errors: `No user found with id: ${req.params.id}`});
+          }
+
+          user.first_name = userData.first_name || user.first_name;
+          user.last_name = userData.last_name || user.last_name;
+          user.email = userData.email || user.email;
+          user.street_address = userData.street_address || user.street_address;
+          user.city = userData.city || user.city;
+          user.state = userData.state || user.state;
+          user.zip_code = userData.zip_code || user.zip_code;
+          user.phone_number = userData.phone_number || user.phone_number;
+          user.date_of_birth = userData.date_of_birth || user.date_of_birth;
+          user.events = userData.events || user.events;
+          user.survey_responses = userData.survey_responses || user.survey_responses;
+
+          user.save();
+          res.status(200).json({ user });
         })
-        .catch(errors =>  res.status(500).json({ errors }));
+        .catch(errors => res.status(500).json({ errors }));
     })
-    .delete((req, res) => {
+    .delete([ check('id').isMongoId() ], (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.mapped() });
+      }
       User.findByIdAndRemove(req.params.id)
         .then(removed => {
           removed
-                ? res.status(200).json({removed})
-                : res.status(404).json({Error: "No response found with id: ${req.params.id}"});
+                ? res.status(200).json({ removed })
+                : res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
         })
         .catch(errors =>  res.status(500).json({ errors }));
     });
