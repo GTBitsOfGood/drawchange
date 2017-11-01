@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
-
-const chai = require('chai');
+// NPM Imports
 const chaiHttp = require('chai-http');
+const chai = require('chai');
+
+// Local Imports & Config
+const User = require('../backend/models/user');
 const server = require('../server');
 const should = chai.should;
-
-const User = require('../backend/models/user');
 chai.use(chaiHttp);
 
+// Constants for Testing
 const PROPER_FIELDS = {
   first_name: 'Georgie',
   last_name: 'Burdell',
@@ -37,6 +38,8 @@ const UPDATE_FIELDS = {
 
 let id = 'too slow';
 
+
+// Start User Model Testing (CRUD)
 describe('User Model Test Suite', () => {
   describe('Create User...', () => {
     it('works w/ all fields', (done) => {
@@ -76,6 +79,7 @@ describe('User Model Test Suite', () => {
   });
 });
 
+// Start API Testing (CRUD)
 describe('User RESTful Endpoints Test Suite', () => {
   describe('POST /api/users/', () => {
     it ('works when proper body sent', (done) => {

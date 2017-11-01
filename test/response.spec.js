@@ -1,15 +1,16 @@
-const mongoose = require("mongoose");
-
-const chai = require('chai');
+// NPM Imports
 const chaiHttp = require('chai-http');
-const server = require('../server');
-const should = chai.should;
+const chai = require('chai');
 
+// Local Imports & Config
 const Response = require('../backend/models/response');
 const Question = require('../backend/models/question');
-const User = require('../backend/models/user');
 const Survey = require('../backend/models/survey');
+const User = require('../backend/models/user');
+const server = require('../server');
+const should = chai.should;
 chai.use(chaiHttp);
+
 
 // Constants to use for testing
 const QUESTION1 = new Question('question1', 'input');
@@ -47,6 +48,7 @@ const UPDATE_FIELDS = {
 
 let id = 'too slow';
 
+// Response Model Testing (CRUD)
 describe('Response Model Test Suite', () => {
   describe('Create Response...', () => {
     before( () => {
@@ -103,6 +105,8 @@ describe('Response Model Test Suite', () => {
   });
 });
 
+
+// API Testing (CRUD)
 describe('Response RESTful Endpoints Test Suite', () => {
   describe('POST /api/responses/', () => {
     it ('works when proper body sent', (done) => {

@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
-
-const chai = require('chai');
+// NPM Imports
 const chaiHttp = require('chai-http');
+const chai = require('chai');
+
+// Local Imports & Config
+const Email = require('../backend/models/email');
 const server = require('../server');
 const should = chai.should;
-
-const Email = require('../backend/models/email');
 chai.use(chaiHttp);
 
+// Constants for Testing
 const PROPER_FIELDS = {
   from: 'Bits of Good',
   subject: 'Bits of Good Kickoff!',
@@ -31,6 +32,7 @@ const UPDATE_FIELDS = {
 
 let id = 'too slow';
 
+// Testing Email Model (CRUD)
 describe('Email Model Test Suite', () => {
   describe('Create Email...', () => {
     it('works w/ all fields', (done) => {
@@ -71,6 +73,7 @@ describe('Email Model Test Suite', () => {
   });
 });
 
+// Testing API (CRUD)
 describe('Email RESTful Endpoints Test Suite', () => {
   describe('POST /api/emails/', () => {
     it ('works when proper body sent', (done) => {

@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
-
-const chai = require('chai');
+// NPM Imports
 const chaiHttp = require('chai-http');
+const chai = require('chai');
+
+// Local Imports & Config
+const Event = require('../backend/models/event');
 const server = require('../server');
 const should = chai.should;
-
-const Event = require('../backend/models/event');
 chai.use(chaiHttp);
 
+// Constants for Testing
 const PROPER_FIELDS = {
   name: 'Bits of Good Kickoff',
   date: new Date(),
@@ -31,6 +32,8 @@ const UPDATE_FIELDS = {
 
 let id = 'too slow';
 
+
+// Event Model Testing (CRUD)
 describe('Event Model Test Suite', () => {
   describe('Create Event...', () => {
     it('works w/ all fields', (done) => {
@@ -71,6 +74,8 @@ describe('Event Model Test Suite', () => {
   });
 });
 
+
+// API Testing (CRUD)
 describe('Event RESTful Endpoints Test Suite', () => {
   describe('POST /api/events/', () => {
     it ('works when proper body sent', (done) => {

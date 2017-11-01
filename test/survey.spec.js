@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
-
-const chai = require('chai');
+// NPM Imports
 const chaiHttp = require('chai-http');
-const server = require('../server');
-const should = chai.should;
+const chai = require('chai');
 
+// Local Imports & Config
 const Survey = require('../backend/models/survey');
 const Question = require('../backend/models/question');
+const server = require('../server');
+const should = chai.should;
 chai.use(chaiHttp);
 
 // Constants to use for testing
@@ -30,6 +30,8 @@ const UPDATE_FIELDS = {
 
 let id = 'too slow';
 
+
+// Starting Survey Model Testing (CRUD)
 describe('Survey Model Test Suite', () => {
   describe('Create Survey...', () => {
     it('works w/ all fields', (done) => {
@@ -70,6 +72,7 @@ describe('Survey Model Test Suite', () => {
   });
 });
 
+// Starting API Testing (CRUD)
 describe('Survey RESTful Endpoints Test Suite', () => {
   describe('POST /api/surveys/', () => {
     it ('works when proper body sent', (done) => {

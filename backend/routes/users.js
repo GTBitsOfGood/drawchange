@@ -31,7 +31,7 @@ router.route('/')
     const userData = matchedData(req);
     userData.events = req.body.events;
     userData.survey_responses = req.body.survey_responses;
-
+    userData.role = req.body.role;
     const newUser = new User(userData);
     newUser.save()
       .then(user => res.status(200).json({ user }))
