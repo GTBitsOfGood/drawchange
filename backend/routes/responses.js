@@ -15,8 +15,8 @@ router.route('/')
       .catch(({ errors }) => res.status(500).json({ errors }));
   })
   .post([ //TODO Add better validation for answers Array
-    check('survey_id').exists().isMongoId(),
-    check('user_id').exists().isMongoId(),
+    check('survey_id').isMongoId(),
+    check('user_id').isMongoId(),
     check('answers').exists()
   ], (req, res) => {
     const errors = validationResult(req);
@@ -45,8 +45,8 @@ router.route('/:id')
       .catch(errors => { res.status(500).json({ errors }); });
   })
   .put([check('id').isMongoId()], oneOf([ //TODO Add validations for voluntters Array
-    check('survey_id').exists().isMongoId(),
-    check('user_id').exists().isMongoId(),
+    check('survey_id').isMongoId(),
+    check('user_id').isMongoId(),
     check('answers').exists()
   ]), (req, res) => {
     const errors = validationResult(req);

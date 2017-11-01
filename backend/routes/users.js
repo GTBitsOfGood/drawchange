@@ -9,19 +9,19 @@ const User = require('../models/user');
 
 router.route('/')
   .get((req, res) => {
-    User.find().select('name id')
+    User.find()
       .then(users => res.status(200).json({ users }))
       .catch(errors =>  res.status(500).json({ errors }));
   })
   .post([ //TODO Add validations for events and survey_responses Array
-    check('first_name').exists().isAscii().trim().escape(),
-    check('last_name').exists().isAscii().trim().escape(),
-    check('email').exists().isEmail().trim(),
-    check('street_address').exists().isAscii().trim().escape(),
-    check('city').exists().isAscii().trim().escape(),
-    check('state').exists().isAscii().trim().escape(),
-    check('zip_code').exists().isAscii().trim().escape(),
-    check('phone_number').exists().isAscii().trim().escape(),
+    check('first_name').isAlpha().trim().escape(),
+    check('last_name').isAlpha().trim().escape(),
+    check('email').isEmail().trim(),
+    check('street_address').isAscii().trim().escape(),
+    check('city').isAlpha().trim().escape(),
+    check('state').isAlpha().trim().escape(),
+    check('zip_code').isAscii().trim().escape(),
+    check('phone_number').isAscii().trim().escape(),
     check('date_of_birth').exists().trim().escape()
   ], (req, res) => {
     const errors = validationResult(req);
@@ -53,14 +53,15 @@ router.route('/:id')
         .catch(errors =>  res.status(500).json({ errors }));
     })
     .put([check('id').isMongoId()], oneOf([ //TODO Add validations for events and survey_responses Array
-      check('first_name').exists().isAscii().trim().escape(),
-      check('last_name').exists().isAscii().trim().escape(),
-      check('email').exists().isEmail().trim(),
-      check('street_address').exists().isAscii().trim().escape(),
-      check('city').exists().isAscii().trim().escape(),
-      check('state').exists().isAscii().trim().escape(),
-      check('zip_code').exists().isAscii().trim().escape(),
-      check('phone_number').exists().isAscii().trim().escape(),
+      check('first_name').isAlpha().trim().escape(),
+      check('last_name').isAlpha().trim().escape(),
+      check('role').isAlpha().trim().escape(),
+      check('email').isEmail().trim(),
+      check('street_address').isAscii().trim().escape(),
+      check('city').isAlpha().trim().escape(),
+      check('state').isAlpha().trim().escape(),
+      check('zip_code').isAscii().trim().escape(),
+      check('phone_number').isAscii().trim().escape(),
       check('date_of_birth').exists().trim().escape()
     ]), (req, res) => {
       const errors = validationResult(req);

@@ -11,6 +11,7 @@ chai.use(chaiHttp);
 const PROPER_FIELDS = {
   first_name: 'Georgie',
   last_name: 'Burdell',
+  role: 'admin',
   email: 'gburdell3@gatech.edu',
   street_address: '123 Cherry Lane',
   city: 'Atlanta',
@@ -23,6 +24,7 @@ const PROPER_FIELDS = {
 const BAD_FIELDS = {
   first_name: 'Georgie',
   last_name: 'Burdell',
+  role: 'admin',
   email: 'gburdell3@gatech.edu',
   street_address: '123 Cherry Lane',
   city: 'Atlanta',

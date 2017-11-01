@@ -15,8 +15,8 @@ router.route('/')
       .catch(errors => res.status(500).json({ errors }));
   })
   .post([ //TODO Add validations for voluntters Array
-    check('name').exists().isAscii().trim().escape(),
-    check('description').exists().isAscii().trim().escape(),
+    check('name').isAscii().trim().escape(),
+    check('description').isAscii().trim().escape(),
     check('questions').exists()
   ], (req, res) => {
     const errors = validationResult(req);
@@ -46,8 +46,8 @@ router.route('/:id')
       .catch(errors => res.status(500).json({ errors }));
   })
   .put([check('id').isMongoId()], oneOf([ //TODO Add validations for voluntters Array
-    check('name').exists().isAscii().trim().escape(),
-    check('description').exists().isAscii().trim().escape(),
+    check('name').isAscii().trim().escape(),
+    check('description').isAscii().trim().escape(),
     check('questions').exists()
   ]), (req, res) => {
     const errors = validationResult(req);

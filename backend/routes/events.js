@@ -15,12 +15,12 @@ router.route('/')
       .catch(({ errors }) => res.status(500).json({ errors }));
   })
   .post([ //TODO Add validations for voluntters Array
-    check('name').exists().isAscii().trim().escape(),
+    check('name').isAscii().trim().escape(),
     check('date').exists(),
-    check('location').exists().isAscii().trim().escape(),
-    check('description').exists().isAscii().trim().escape(),
-    check('contact').exists().isAscii().trim().escape(),
-    check('max_volunteers').exists().isNumeric(),
+    check('location').isAscii().trim().escape(),
+    check('description').isAscii().trim().escape(),
+    check('contact').isAscii().trim().escape(),
+    check('max_volunteers').isNumeric(),
     // check('volunteers').custom(value => {
     //   if ()
     // })
@@ -54,11 +54,11 @@ router.route('/:id')
   })
   .put([check('id').isMongoId()], oneOf([ //TODO Add validations for voluntters Array
     check('name').isAscii().trim().escape(),
-    check('date'),
+    check('date').exists(),
     check('location').isAscii().trim().escape(),
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
-    check('max_volunteers').exists().isNumeric(),
+    check('max_volunteers').isNumeric(),
     // check('volunteers').custom(value => {
     //   if ()
     // })
