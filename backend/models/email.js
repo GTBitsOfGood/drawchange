@@ -30,7 +30,7 @@ const emailSchema = mongoose.Schema({
   is_html: {
     type: Boolean,
     required: true,
-  },
+  }
 }, { timestamps: true });
 
 function minNumRecipients(val) {

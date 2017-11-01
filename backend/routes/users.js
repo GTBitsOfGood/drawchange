@@ -26,7 +26,7 @@ router.route('/')
   ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
+      return res.status(400).json({ errors: errors.mapped() });
     }
     const userData = matchedData(req);
     userData.events = req.body.events;
@@ -42,7 +42,7 @@ router.route('/:id')
     .get([ check('id').isMongoId() ], (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.mapped() });
+        return res.status(400).json({ errors: errors.mapped() });
       }
       User.findById(req.params.id)
         .then(user => {
@@ -65,7 +65,7 @@ router.route('/:id')
     ]), (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.mapped() });
+        return res.status(400).json({ errors: errors.mapped() });
       }
 
       const userData = matchedData(req);
@@ -78,28 +78,19 @@ router.route('/:id')
           if (!user) {
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}`});
           }
-
-          user.first_name = userData.first_name || user.first_name;
-          user.last_name = userData.last_name || user.last_name;
-          user.email = userData.email || user.email;
-          user.street_address = userData.street_address || user.street_address;
-          user.city = userData.city || user.city;
-          user.state = userData.state || user.state;
-          user.zip_code = userData.zip_code || user.zip_code;
-          user.phone_number = userData.phone_number || user.phone_number;
-          user.date_of_birth = userData.date_of_birth || user.date_of_birth;
-          user.events = userData.events || user.events;
-          user.survey_responses = userData.survey_responses || user.survey_responses;
+          for (let key in user) {
+            user[key] = userData[key] !== undefined ? userData[key] : user[key]
+          }
 
           user.save();
-          res.status(200).json({ user });
+          return res.status(200).json({ user });
         })
         .catch(errors => res.status(500).json({ errors }));
     })
     .delete([ check('id').isMongoId() ], (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.mapped() });
+        return res.status(400).json({ errors: errors.mapped() });
       }
       User.findByIdAndRemove(req.params.id)
         .then(removed => {

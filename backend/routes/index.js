@@ -28,10 +28,14 @@ router.use(session({
   saveUninitialized: false
 }));
 
+// // Restful endpoints
+router.use('/responses', responses);
+router.use('/surveys', surveys);
+router.use('/users', users);
+router.use('/events', events);
+router.use('/emails', emails);
 
-router.get('/', (req, res) => {
-  res.send("Hello World");
-});
+
 
 module.exports = router;
 // Passport Config
@@ -102,11 +106,4 @@ module.exports = router;
 // router.get('/success', (req, res) => {
 //     res.json({ authenticated: true, user: req.user });
 // });
-
-// // Restful endpoints
-router.use('/responses', responses);
-router.use('/surveys', surveys);
-router.use('/users', users);
-router.use('/events', events);
-router.use('/emails', emails);
 

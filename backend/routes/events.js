@@ -27,7 +27,7 @@ router.route('/')
   ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
+      return res.status(400).json({ errors: errors.mapped() });
     }
     const eventData = matchedData(req);
     eventData.volunteers = req.body.volunteers; // should be removed when volunteer validation is added
@@ -38,14 +38,11 @@ router.route('/')
   });
 
 router.route('/:id')
-  .get([
-    check('id').isMongoId()
-  ], (req, res) => {
+  .get([ check('id').isMongoId() ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
+      return res.status(400).json({ errors: errors.mapped() });
     }
-
 
     Event.findById(req.params.id)
       .then(event => {
@@ -68,7 +65,7 @@ router.route('/:id')
   ]), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
+      return res.status(400).json({ errors: errors.mapped() });
     }
     const eventData = matchedData(req);
     eventData.volunteers = req.body.volunteers; // should be removed when volunteer validation is added
@@ -76,24 +73,21 @@ router.route('/:id')
     Event.findById(req.params.id)
       .then(event => {
         if (!event) {
-          return res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
+          return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
         }
-        event.name = eventData.name || event.name;
-        event.date = eventData.date || event.date;
-        event.location = eventData.location || event.location;
-        event.description = eventData.description || event.description;
-        event.contact = eventData.contact || event.contact;
-        event.volunteers = eventData.volunteers || event.volunteers;
-        event.max_volunteers = eventData.max_volunteers || event.max_volunteers;
+
+        for (let key in event) {
+          event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+        }
         event.save();
-        res.status(200).json({ event });
+        return res.status(200).json({ event });
       })
-      .catch(( errors ) => res.status(500).json({ errors }));
+      .catch(( errors ) => res.status(500).json({ errors }) );
   })
   .delete([check('id').isMongoId()], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
+      return res.status(400).json({ errors: errors.mapped() });
     }
     Event.findByIdAndRemove(req.params.id)
       .then(removed => {

@@ -5,53 +5,52 @@ const chaiHttp = require('chai-http');
 const server = require('../server');
 const should = chai.should;
 
-const Email = require('../backend/models/email');
+const Survey = require('../backend/models/survey');
+const Question = require('../backend/models/question');
 chai.use(chaiHttp);
 
+// Constants to use for testing
+const QUESTION1 = new Question('question1', 'input');
+const QUESTION2 = new Question('question2', 'input');
+const QUESTION3 = new Question('question3', 'input');
 const PROPER_FIELDS = {
-  from: 'Bits of Good',
-  subject: 'Bits of Good Kickoff!',
-  text: 'email text blah blah',
-  recipients: [{user: 'George'}],
-  is_html: false,
+  name: 'Test Survey',
+  description: 'Test Survey is for testing purposes',
+  questions: [QUESTION1, QUESTION2]
 };
 
-
 const BAD_FIELDS = {
-  from: 'Bits of Good',
-  subject: 'Bits of Good Kickoff!',
-  text: 'email text blah blah',
-  is_html: false,
+  name: 'Test Survey',
+  description: 'Test Survey is for testing purposes'
 };
 
 const UPDATE_FIELDS = {
-  text: '<h1>email text blah blah</h1>',
-  is_html: true
+  questions: [QUESTION3, QUESTION2]
 };
 
 let id = 'too slow';
 
-describe('Email Model Test Suite', () => {
-  describe('Create Email...', () => {
+describe('Survey Model Test Suite', () => {
+  describe('Create Survey...', () => {
     it('works w/ all fields', (done) => {
 
-      const testEmail = new Email(PROPER_FIELDS);
-      testEmail.save(done);
+      const testSurvey = new Survey(PROPER_FIELDS);
+      testSurvey.save(done);
     });
     it('fails w/o all fields', (done) => {
-      const testEmail = new Email(BAD_FIELDS);
-      testEmail.save((err) => {
+      const testSurvey = new Survey(BAD_FIELDS);
+      testSurvey.save((err) => {
         should().exist(err);
         done();
       });
     });
   });
-  describe('Read Email...', () => {
+  describe('Read Survey...', () => {
     it('works when document exists', (done) => {
-      Email.findOne({from: 'Bits of Good'}, done);
+      Survey.findOne({name: 'Test Survey'}, done);
     });
     it('fails when document does not exist', (done) => {
-      Email.findOne({from: 'Bits of Good falseeee'}, (err, results) => {
+      Survey.findOne({name: 'This Survey does not exist'}, (err, results) => {
         should().not.exist(err);
         should().not.exist(results);
 
@@ -59,35 +58,35 @@ describe('Email Model Test Suite', () => {
       });
     });
   });
-  describe('Update Email...', () => {
+  describe('Update Survey...', () => {
     it('works when you pass in fields to update', (done) => {
-      Email.findOneAndUpdate({from: 'Bits of Good'}, UPDATE_FIELDS, done);
+      Survey.findOneAndUpdate({name: 'Test Survey'}, UPDATE_FIELDS, done);
     });
   });
-  describe('Delete Email', () => {
-    it('works when the Email exists already', (done) => {
-      Email.findOneAndRemove({from: 'Bits of Good'}, done);
+  describe('Delete Survey', () => {
+    it('works when the Survey exists already', (done) => {
+      Survey.findOneAndRemove({name: 'Test Survey'}, done);
     });
   });
 });
 
-describe('Email RESTful Endpoints Test Suite', () => {
-  describe('POST /api/emails/', () => {
+describe('Survey RESTful Endpoints Test Suite', () => {
+  describe('POST /api/surveys/', () => {
     it ('works when proper body sent', (done) => {
       chai.request(server)
-        .post('/api/emails/')
+        .post('/api/surveys/')
         .send(PROPER_FIELDS)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('email');
-          res.body.email.should.be.a('object');
-          id = res.body.email._id;
+          res.body.should.have.property('survey');
+          res.body.survey.should.be.a('object');
+          id = res.body.survey._id;
           done();
         });
     })
     it ('fails when proper body not sent', (done) => {
       chai.request(server)
-        .post('/api/emails/')
+        .post('/api/surveys/')
         .send(BAD_FIELDS)
         .end((err, res) => {
           res.should.have.status(400);
@@ -96,14 +95,14 @@ describe('Email RESTful Endpoints Test Suite', () => {
     })
   })
 
-  describe('GET /api/emails/', () => {
+  describe('GET /api/surveys/', () => {
     it ('works with no body sent', (done) => {
       chai.request(server)
-        .get('/api/emails/')
+        .get('/api/surveys/')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('emails');
-          res.body.emails.should.be.a('array');
+          res.body.should.have.property('surveys');
+          res.body.surveys.should.be.a('array');
           done();
         });
     })
@@ -111,21 +110,21 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
   })
 
-  describe('GET /api/emails/:id', () => {
+  describe('GET /api/surveys/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .get(`/api/emails/${id}`)
+        .get(`/api/surveys/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('email');
-          res.body.email.should.be.a('object');
+          res.body.should.have.property('survey');
+          res.body.survey.should.be.a('object');
           done();
         });
     })
 
     it ('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
-        .get(`/api/emails/59f6130e6f22a25c35d72ce9`)
+        .get(`/api/surveys/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
@@ -135,7 +134,7 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .get(`/api/emails/asdfaksdlj213lkj`)
+        .get(`/api/surveys/asdfaksdlj213lkj`)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');
@@ -144,22 +143,22 @@ describe('Email RESTful Endpoints Test Suite', () => {
     })
   })
 
-  describe('PUT /api/emails/:id', () => {
+  describe('PUT /api/surveys/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .put(`/api/emails/${id}`)
+        .put(`/api/surveys/${id}`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('email');
-          res.body.email.should.be.a('object');
+          res.body.should.have.property('survey');
+          res.body.survey.should.be.a('object');
           done();
         });
     })
 
     it ('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
-        .put(`/api/emails/59f6130e6f22a25c35d72ce9`)
+        .put(`/api/surveys/59f6130e6f22a25c35d72ce9`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(404);
@@ -170,7 +169,7 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .put(`/api/emails/asdfaksdlj213lkj`)
+        .put(`/api/surveys/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(400);
@@ -182,10 +181,10 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
   })
 
-  describe('DELETE /api/emails/:id', () => {
+  describe('DELETE /api/surveys/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .delete(`/api/emails/${id}`)
+        .delete(`/api/surveys/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('removed');
@@ -196,7 +195,7 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
     it ('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
-        .delete(`/api/emails/59f6130e6f22a25c35d72ce9`)
+        .delete(`/api/surveys/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
@@ -206,7 +205,7 @@ describe('Email RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .delete(`/api/emails/asdfaksdlj213lkj`)
+        .delete(`/api/surveys/asdfaksdlj213lkj`)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');

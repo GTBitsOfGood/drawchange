@@ -90,7 +90,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
         .post('/api/events/')
         .send(BAD_FIELDS)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           done();
         });
     })
@@ -137,7 +137,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
       chai.request(server)
         .get(`/api/events/asdfaksdlj213lkj`)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('errors');
           done();
         });
@@ -173,7 +173,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
         .put(`/api/events/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('errors');
           done();
         });
@@ -208,7 +208,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
       chai.request(server)
         .delete(`/api/events/asdfaksdlj213lkj`)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.body.should.have.property('errors');
           done();
         });
