@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config(); // load env vars
 
 function sendEmail(email) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     nodemailer.createTestAccount((err, account) => {
@@ -26,7 +26,7 @@ function sendEmail(email) {
     // setup email data with unicode symbols
       const mailOptions = {
         from: email.from, // sender address
-        to: email.recipients, // list of receivers
+        to: parseRecipientEmails(email.recipients), // list of receivers
         subject: email.subject, // Subject line
       // text: "<b> test </b>", // plain text body
         html: email.text // html body
@@ -35,14 +35,22 @@ function sendEmail(email) {
     // send mail with defined transport object
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          reject("Unable to send email. Error: " + error);
-          return;
+          return reject("Unable to send email. Error: " + error);
         }
 
         resolve("Email sent! ID: " + info.messageId);
       });
     });
   });
+}
+
+function parseRecipientEmails(recipients) {
+  const recipientEmails = [];
+  for (const recipient in recipients) {
+    if (recipient.email) {
+      recipientEmails.push(recipient.email);
+    }
+  }
 }
 
 module.exports = {sendEmail};
