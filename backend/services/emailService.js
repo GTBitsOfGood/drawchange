@@ -11,13 +11,16 @@ function sendEmail(email) {
     nodemailer.createTestAccount((err, account) => {
     // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: false // true for 465, false for other ports
-  // auth: {
-  //   user: account.user, // generated ethereal user
-  //   pass: account.pass  // generated ethereal password
-  // }
+        host: account.smtp.host,
+        port: account.smtp.port,
+        secure: account.smtp.secure,
+        // host: process.env.SMTP_HOST,
+        // port: process.env.SMTP_PORT,
+        // secure: false, // true for 465, false for other ports
+        auth: {
+          user: account.user, // generated ethereal user
+          pass: account.pass  // generated ethereal password
+        }
       });
 
     // setup email data with unicode symbols
