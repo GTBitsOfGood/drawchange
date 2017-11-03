@@ -33,12 +33,17 @@ function sendEmail(email) {
       };
 
     // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
+      transporter.sendMail(mailOptions, (error) => {
         if (error) {
-          return reject("Unable to send email. Error: " + error);
+          return reject({
+            errorMessage: error,
+            emailSent: false
+          });
         }
 
-        resolve("Email sent! ID: " + info.messageId);
+        resolve({
+          emailSent: true
+        });
       });
     });
   });
@@ -46,11 +51,11 @@ function sendEmail(email) {
 
 function parseRecipientEmails(recipients) {
   const recipientEmails = [];
-  for (const recipient in recipients) {
-    if (recipient.email) {
-      recipientEmails.push(recipient.email);
-    }
-  }
+  recipients.forEach((recipient) => {
+    recipientEmails.push(recipient.email);
+  });
+
+  return recipientEmails;
 }
 
 module.exports = {sendEmail};
