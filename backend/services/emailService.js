@@ -50,12 +50,7 @@ function sendEmail(email) {
 }
 
 function parseRecipientEmails(recipients) {
-  const recipientEmails = [];
-  recipients.forEach((recipient) => {
-    recipientEmails.push(recipient.email);
-  });
-
-  return recipientEmails;
+  return recipients.map(recipient => recipient.email);
 }
 
-module.exports = {sendEmail};
+module.exports = { sendEmail };
