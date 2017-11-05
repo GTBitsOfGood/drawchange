@@ -21,8 +21,8 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'volunteer',
-    enum: ['admin', 'manager', 'volunteer']
+    default: 'pending',
+    enum: ['pending','admin', 'manager', 'volunteer']
   },
   street_address: {
     type: String,

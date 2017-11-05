@@ -9,7 +9,8 @@ const router = express.Router();
 const User = require('../models/user');
 
 
-
+// This method is purposely put before the login wall so that
+// new users can be created w/o needing to be signed in...
 router.post('/', [
   check('first_name').isAlpha().trim().escape(),
   check('password').isAscii().trim().escape(),

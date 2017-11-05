@@ -60,12 +60,12 @@ passport.deserializeUser((id, done) => {
 router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/api/success',
-    failureRedirect: '/api/failed'
+    failureRedirect: '/api/failure'
   })
 );
 
 // Login Failed Route
-router.get('/failed', (req, res) => {
+router.get('/failure', (req, res) => {
   res.status(400).json({ authenticated: false });
 });
 
