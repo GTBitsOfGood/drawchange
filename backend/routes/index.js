@@ -16,7 +16,7 @@ const emails = require('./emails');
 const responses = require('./responses');
 const surveys = require('./surveys');
 const users = require('./users');
-const auth = require('./auth');
+``
 // Middleware
 router.use(morgan('dev'));
 router.use(bodyParser.json());
