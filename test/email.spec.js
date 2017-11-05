@@ -73,6 +73,9 @@ describe('Email Model Test Suite', () => {
   });
 });
 
+// trick server into thinking we are logged in...
+server.request.user = true;
+
 // Testing API (CRUD)
 describe('Email RESTful Endpoints Test Suite', () => {
   describe('POST /api/emails/', () => {

@@ -99,22 +99,40 @@ router.route('/:id')
       userData.events = req.body.events;
       userData.survey_responses = req.body.survey_responses;
 
-      bcrypt.hash(userData.password, 10)
-        .then(hash => {
-          userData.password = hash;
-          return User.findById(req.params.id)})
-        .then(user => {
-          if (!user) {
-            return res.status(404).json({ errors: `No user found with id: ${req.params.id}`});
-          }
-          for (let key in user) {
-            user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
-          }
+      if (userData.password) {
+        bcrypt.hash(userData.password, 10)
+          .then(hash => {
+            userData.password = hash;
+            return User.findById(req.params.id)
+          })
+          .then(user => {
+            if (!user) {
+              return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
+            }
+            for (let key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+            }
 
-          user.save();
-          return res.status(200).json({ user });
-        })
-        .catch(errors => res.status(500).json({ errors }));
+            user.save();
+            return res.status(200).json({ user });
+          })
+          .catch(errors => res.status(500).json({ errors }));
+      } else {
+        User.findById(req.params.id)
+          .then(user => {
+            if (!user) {
+              return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
+            }
+            for (let key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+            }
+
+            user.save();
+            return res.status(200).json({ user });
+          })
+          .catch(errors => res.status(500).json({ errors }));
+      }
+
     })
     .delete([ check('id').isMongoId() ], (req, res) => {
       const errors = validationResult(req);

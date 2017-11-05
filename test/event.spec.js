@@ -75,6 +75,9 @@ describe('Event Model Test Suite', () => {
 });
 
 
+// trick server into thinking we are logged in...
+server.request.user = true;
+
 // API Testing (CRUD)
 describe('Event RESTful Endpoints Test Suite', () => {
   describe('POST /api/events/', () => {

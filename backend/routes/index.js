@@ -69,7 +69,7 @@ router.post('/login', (req, res) => {
 // Logout Route
 router.get('/logout', (req, res) => {
   req.logout();
-  return res.json({ logout: 'success' });
+  return res.status(200).json({ logout: 'success' });
 });
 
 router.use('/users', users);
