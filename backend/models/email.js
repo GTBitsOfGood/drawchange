@@ -16,6 +16,7 @@ const emailSchema = mongoose.Schema({
   },
   recipients: {
     type: Array,
+    validate: [minNumRecipients, 'You need to specify at least one recipient'],
     required: true
   },
   is_sent: {
@@ -29,8 +30,11 @@ const emailSchema = mongoose.Schema({
   is_html: {
     type: Boolean,
     required: true,
-  },
+  }
 }, { timestamps: true });
 
+function minNumRecipients(val) {
+  return val.length > 0;
+}
 // export Event model to app
 module.exports = mongoose.model('Email', emailSchema);

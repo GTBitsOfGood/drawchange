@@ -3,58 +3,57 @@ const chaiHttp = require('chai-http');
 const chai = require('chai');
 
 // Local Imports & Config
-const Event = require('../backend/models/event');
+const Email = require('../backend/models/email');
 const server = require('../server');
 const should = chai.should;
 chai.use(chaiHttp);
 
 // Constants for Testing
 const PROPER_FIELDS = {
-  name: 'Bits of Good Kickoff',
-  date: new Date(),
-  location: '123 College of Computing',
-  description: 'Hackathon for bits of good teams!',
-  contact: 'George Burdell -- 123.123.1234',
-  max_volunteers: 10
+  from: 'Bits of Good',
+  subject: 'Bits of Good Kickoff!',
+  text: 'email text blah blah',
+  recipients: [{user: 'George'}],
+  is_html: false,
 };
 
+
 const BAD_FIELDS = {
-  date: new Date(),
-  location: '123 College of Computing',
-  description: 'Hackathon for bits of good teams!',
-  contact: 'George Burdell -- 123.123.1234',
-  max_volunteers: 10
+  from: 'Bits of Good',
+  subject: 'Bits of Good Kickoff!',
+  text: 'email text blah blah',
+  is_html: false,
 };
 
 const UPDATE_FIELDS = {
-  description: 'This will be the first meeting of the semester!'
+  text: '<h1>email text blah blah</h1>',
+  is_html: true
 };
 
 let id = 'too slow';
 
-
-// Event Model Testing (CRUD)
-describe('Event Model Test Suite', () => {
-  describe('Create Event...', () => {
+// Testing Email Model (CRUD)
+describe('Email Model Test Suite', () => {
+  describe('Create Email...', () => {
     it('works w/ all fields', (done) => {
 
-      const testEvent = new Event(PROPER_FIELDS);
-      testEvent.save(done);
+      const testEmail = new Email(PROPER_FIELDS);
+      testEmail.save(done);
     });
     it('fails w/o all fields', (done) => {
-      const testEvent = new Event(BAD_FIELDS);
-      testEvent.save((err) => {
+      const testEmail = new Email(BAD_FIELDS);
+      testEmail.save((err) => {
         should().exist(err);
         done();
       });
     });
   });
-  describe('Read Event...', () => {
+  describe('Read Email...', () => {
     it('works when document exists', (done) => {
-      Event.findOne({name: 'Bits of Good Kickoff'}, done);
+      Email.findOne({from: 'Bits of Good'}, done);
     });
     it('fails when document does not exist', (done) => {
-      Event.findOne({name: 'This event does not exist'}, (err, results) => {
+      Email.findOne({from: 'Bits of Good falseeee'}, (err, results) => {
         should().not.exist(err);
         should().not.exist(results);
 
@@ -62,40 +61,39 @@ describe('Event Model Test Suite', () => {
       });
     });
   });
-  describe('Update Event...', () => {
+  describe('Update Email...', () => {
     it('works when you pass in fields to update', (done) => {
-      Event.findOneAndUpdate({name: 'Bits of Good Kickoff'}, UPDATE_FIELDS, done);
+      Email.findOneAndUpdate({from: 'Bits of Good'}, UPDATE_FIELDS, done);
     });
   });
-  describe('Delete Event', () => {
-    it('works when the event exists already', (done) => {
-      Event.findOneAndRemove({name: 'Bits of Good Kickoff'}, done);
+  describe('Delete Email', () => {
+    it('works when the Email exists already', (done) => {
+      Email.findOneAndRemove({from: 'Bits of Good'}, done);
     });
   });
 });
 
-
 // trick server into thinking we are logged in...
 server.request.user = true;
 
-// API Testing (CRUD)
-describe('Event RESTful Endpoints Test Suite', () => {
-  describe('POST /api/events/', () => {
+// Testing API (CRUD)
+describe('Email RESTful Endpoints Test Suite', () => {
+  describe('POST /api/emails/', () => {
     it ('works when proper body sent', (done) => {
       chai.request(server)
-        .post('/api/events/')
+        .post('/api/emails/')
         .send(PROPER_FIELDS)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('event');
-          res.body.event.should.be.a('object');
-          id = res.body.event._id;
+          res.body.should.have.property('email');
+          res.body.email.should.be.a('object');
+          id = res.body.email._id;
           done();
         });
     })
     it ('fails when proper body not sent', (done) => {
       chai.request(server)
-        .post('/api/events/')
+        .post('/api/emails/')
         .send(BAD_FIELDS)
         .end((err, res) => {
           res.should.have.status(400);
@@ -104,14 +102,14 @@ describe('Event RESTful Endpoints Test Suite', () => {
     })
   })
 
-  describe('GET /api/events/', () => {
+  describe('GET /api/emails/', () => {
     it ('works with no body sent', (done) => {
       chai.request(server)
-        .get('/api/events/')
+        .get('/api/emails/')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('events');
-          res.body.events.should.be.a('array');
+          res.body.should.have.property('emails');
+          res.body.emails.should.be.a('array');
           done();
         });
     })
@@ -119,21 +117,21 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
   })
 
-  describe('GET /api/events/:id', () => {
+  describe('GET /api/emails/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .get(`/api/events/${id}`)
+        .get(`/api/emails/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('event');
-          res.body.event.should.be.a('object');
+          res.body.should.have.property('email');
+          res.body.email.should.be.a('object');
           done();
         });
     })
 
     it ('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
-        .get(`/api/events/59f6130e6f22a25c35d72ce9`)
+        .get(`/api/emails/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
@@ -143,7 +141,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .get(`/api/events/asdfaksdlj213lkj`)
+        .get(`/api/emails/asdfaksdlj213lkj`)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');
@@ -152,22 +150,22 @@ describe('Event RESTful Endpoints Test Suite', () => {
     })
   })
 
-  describe('PUT /api/events/:id', () => {
+  describe('PUT /api/emails/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .put(`/api/events/${id}`)
+        .put(`/api/emails/${id}`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('event');
-          res.body.event.should.be.a('object');
+          res.body.should.have.property('email');
+          res.body.email.should.be.a('object');
           done();
         });
     })
 
     it ('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
-        .put(`/api/events/59f6130e6f22a25c35d72ce9`)
+        .put(`/api/emails/59f6130e6f22a25c35d72ce9`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(404);
@@ -178,7 +176,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .put(`/api/events/asdfaksdlj213lkj`)
+        .put(`/api/emails/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
         .end((err, res) => {
           res.should.have.status(400);
@@ -190,10 +188,10 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
   })
 
-  describe('DELETE /api/events/:id', () => {
+  describe('DELETE /api/emails/:id', () => {
     it ('works with a valid id', (done) => {
       chai.request(server)
-        .delete(`/api/events/${id}`)
+        .delete(`/api/emails/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('removed');
@@ -204,7 +202,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
     it ('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
-        .delete(`/api/events/59f6130e6f22a25c35d72ce9`)
+        .delete(`/api/emails/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
@@ -214,7 +212,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
 
     it ('fails with an invalid id ', (done) => {
       chai.request(server)
-        .delete(`/api/events/asdfaksdlj213lkj`)
+        .delete(`/api/emails/asdfaksdlj213lkj`)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');

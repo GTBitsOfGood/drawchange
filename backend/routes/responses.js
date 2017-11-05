@@ -1,5 +1,7 @@
 // NPM Packages
 const express = require('express');
+const { check, oneOf, validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 const router = express.Router();
 
 // Local Imports
@@ -12,43 +14,72 @@ router.route('/')
       .then(responses => res.status(200).json({ responses }))
       .catch(({ errors }) => res.status(500).json({ errors }));
   })
-  .post((req, res) => {
-    const { survey_id, user_id, answers } = req.body;
-    const newResponse = new Response({ survey_id, user_id, answers });
+  .post([ //TODO Add better validation for answers Array
+    check('survey_id').isMongoId(),
+    check('user_id').isMongoId(),
+    check('answers').exists()
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() });
+    }
+    const responseData = matchedData(req);
+    const newResponse = new Response(responseData);
     newResponse.save()
-      .then(result => res.status(200).json({ response: result }))
-      .catch((errors) => { res.status(500).json({ errors });});
+      .then(response => res.status(200).json({ response }))
+      .catch(errors => res.status(500).json({ errors }));
   });
 
 router.route('/:id')
-  .get((req, res) => {
+  .get([ check('id').isMongoId() ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() });
+    }
     Response.findById(req.params.id)
       .then(result => {
         result
           ? res.status(200).json({ response: result })
-          : res.status(404).json({ Error: 'No response found with id: ${req.params.id}'});
+          : res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
       })
       .catch(errors => { res.status(500).json({ errors }); });
   })
-  .put((req, res) => {
-    const { survey_id, user_id, answers } = req.body;
+  .put([check('id').isMongoId()], oneOf([ //TODO Add validations for voluntters Array
+    check('survey_id').isMongoId(),
+    check('user_id').isMongoId(),
+    check('answers').exists()
+  ]), (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() });
+    }
+    const responseData = matchedData(req);
     Response.findById(req.params.id)
-      .then(result => {
-        result.survey_id = survey_id || result.survey_id;
-        result.user_id = user_id || result.user_id;
-        result.answers = answers || result.answers;
+      .then(response => {
+        if (!response) {
+          return res.status(404).json({ errors: `No response found with id: ${req.params.id}`});
+        }
 
-        result.save();
-        res.status(200).json({ response: result });
+        for (let key in response) {
+          response[key] = responseData[key] !== undefined ? responseData[key] : response[key]
+        }
+
+
+        response.save();
+        return res.status(200).json({ response });
       })
-      .catch(({ errors }) => res.status(500).json({ errors }));
+      .catch( errors  => res.status(500).json({ errors }));
   })
-  .delete((req, res) => {
+  .delete([ check('id').isMongoId() ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() });
+    }
     Response.findByIdAndRemove(req.params.id)
       .then(removed => {
         removed
-              ? res.status(200).json({removed})
-              : res.status(404).json({Error: "No response found with id: ${req.params.id}"});
+              ? res.status(200).json({ removed })
+              : res.status(404).json({ errors: `No response found with id: ${req.params.id}` });
       })
       .catch(errors => { res.status(500).json({errors});});
   });
