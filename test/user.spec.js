@@ -7,11 +7,13 @@ const User = require('../backend/models/user');
 const server = require('../server');
 const should = chai.should;
 chai.use(chaiHttp);
+// Allows the middleware to think we're already authenticated.
 
 // Constants for Testing
 const PROPER_FIELDS = {
   first_name: 'Georgie',
   last_name: 'Burdell',
+  password: 'testpass123',
   role: 'admin',
   email: 'gburdell3@gatech.edu',
   street_address: '123 Cherry Lane',
@@ -51,7 +53,7 @@ describe('User Model Test Suite', () => {
       const testUser = new User(BAD_FIELDS);
       testUser.save((err) => {
         should().exist(err);
-        done();
+        return done();
       });
     });
   });
@@ -63,7 +65,7 @@ describe('User Model Test Suite', () => {
       User.findOne({last_name: 'Smith'}, (err, results) => {
         should().not.exist(err);
         should().not.exist(results);
-        done();
+        return done();
       });
     });
   });
@@ -91,7 +93,7 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('user');
           res.body.user.should.be.a('object');
           id = res.body.user._id;
-          done();
+          return done();
         });
     })
     it ('fails when proper body not sent', (done) => {
@@ -100,10 +102,13 @@ describe('User RESTful Endpoints Test Suite', () => {
         .send(BAD_FIELDS)
         .end((err, res) => {
           res.should.have.status(400);
-          done();
+          return done();
         });
     })
   })
+
+  // trick server into thinking we are logged in...
+  server.request.user = true;
 
   describe('GET /api/users/', () => {
     it ('works with no body sent', (done) => {
@@ -113,11 +118,9 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.should.have.status(200);
           res.body.should.have.property('users');
           res.body.users.should.be.a('array');
-          done();
+          return done();
         });
     })
-
-
   })
 
   describe('GET /api/users/:id', () => {
@@ -128,7 +131,7 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.user.should.be.a('object');
-          done();
+          return done();
         });
     })
 
@@ -138,7 +141,7 @@ describe('User RESTful Endpoints Test Suite', () => {
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
 
@@ -148,7 +151,7 @@ describe('User RESTful Endpoints Test Suite', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
   })
@@ -162,7 +165,7 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.user.should.be.a('object');
-          done();
+          return done();
         });
     })
 
@@ -173,7 +176,7 @@ describe('User RESTful Endpoints Test Suite', () => {
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
 
@@ -184,7 +187,7 @@ describe('User RESTful Endpoints Test Suite', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
 
@@ -192,24 +195,13 @@ describe('User RESTful Endpoints Test Suite', () => {
   })
 
   describe('DELETE /api/users/:id', () => {
-    it ('works with a valid id', (done) => {
-      chai.request(server)
-        .delete(`/api/users/${id}`)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('removed');
-          res.body.removed.should.be.a('object');
-          done();
-        });
-    })
-
     it ('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
         .delete(`/api/users/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
 
@@ -219,9 +211,18 @@ describe('User RESTful Endpoints Test Suite', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('errors');
-          done();
+          return done();
         });
     })
-
+    it('works with a valid id', (done) => {
+      chai.request(server)
+        .delete(`/api/users/${id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('removed');
+          res.body.removed.should.be.a('object');
+          return done();
+        });
+    })
   })
 })

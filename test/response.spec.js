@@ -19,6 +19,7 @@ const QUESTION3 = new Question('question3', 'input');
 const USER = new User({
   first_name: 'Georgie',
   last_name: 'Burdell',
+  password: 'testpass',
   email: 'gburdell3@gatech.edu',
   street_address: '123 Cherry Lane',
   city: 'Atlanta',
@@ -104,6 +105,9 @@ describe('Response Model Test Suite', () => {
     });
   });
 });
+
+// trick server into thinking we are logged in...
+server.request.user = true;
 
 
 // API Testing (CRUD)

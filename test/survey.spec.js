@@ -72,6 +72,9 @@ describe('Survey Model Test Suite', () => {
   });
 });
 
+// trick server into thinking we are logged in...
+server.request.user = true;
+
 // Starting API Testing (CRUD)
 describe('Survey RESTful Endpoints Test Suite', () => {
   describe('POST /api/surveys/', () => {

@@ -1,8 +1,16 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 // define schema for user collection (user model)
 const userSchema = mongoose.Schema({
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   first_name: {
     type: String,
     required: true
@@ -13,12 +21,8 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'volunteer',
-    enum: ['admin', 'manager', 'volunteer']
-  },
-  email: {
-    type: String,
-    required: true
+    default: 'pending',
+    enum: ['pending','admin', 'manager', 'volunteer']
   },
   street_address: {
     type: String,
@@ -58,5 +62,10 @@ userSchema.virtual('age').get(function() {
   const current = new Date();
   return current.getYear() - this.date_of_birth.getYear();
 });
+
+userSchema.methods.verifyPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 // export user model to app
 module.exports = mongoose.model('Users', userSchema);
