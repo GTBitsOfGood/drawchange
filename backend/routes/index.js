@@ -16,7 +16,7 @@ const emails = require('./emails');
 const responses = require('./responses');
 const surveys = require('./surveys');
 const users = require('./users');
-``
+
 // Middleware
 router.use(morgan('dev'));
 router.use(bodyParser.json());
@@ -46,52 +46,40 @@ passport.use(new LocalStrategy({
   }));
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => {
-    done(err, user);
+    return done(err, user);
   });
 });
 
 
 // Login Route
-router.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/api/success',
-    failureRedirect: '/api/failure'
-  })
-);
-
-// Login Failed Route
-router.get('/failure', (req, res) => {
-  res.status(400).json({ authenticated: false });
+router.post('/login', (req, res) => {
+  passport.authenticate('local', (errors, user) => {
+    req.logIn(user, () => {
+      if (errors) return res.status(500).json({ errors });
+      return res.status(user ? 200 : 400).json(user ? user : { errors: "Login Failed" });
+    })
+  })(req, res);
 });
 
 // Logout Route
 router.get('/logout', (req, res) => {
   req.logout();
-  res.json({ logout: 'success' });
+  return res.json({ logout: 'success' });
 });
 
 router.use('/users', users);
 
 //************** LOGIN WALL *******************
 router.use((req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
-  }
+  return req.user ? next() : res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
 });
 
-// Login Success Route
-router.get('/success', (req, res) => {
-  res.json({ authenticated: true, user: req.user });
-});
-
-// // Restful endpoints
+// Restful endpoints
 router.use('/responses', responses);
 router.use('/surveys', surveys);
 router.use('/events', events);

@@ -53,11 +53,7 @@ router.post('/', [
 
 //************** LOGIN WALL *******************
 router.use((req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
-  }
+  return req.user ? next() : res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
 });
 
 router.get('/', (req, res) => {
@@ -91,7 +87,8 @@ router.route('/:id')
       check('state').isAlpha().trim().escape(),
       check('zip_code').isAscii().trim().escape(),
       check('phone_number').isAscii().trim().escape(),
-      check('date_of_birth').exists().trim().escape()
+      check('date_of_birth').exists().trim().escape(),
+      check('password').isAscii().trim().escape()
     ]), (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -102,14 +99,16 @@ router.route('/:id')
       userData.events = req.body.events;
       userData.survey_responses = req.body.survey_responses;
 
-      User.findById(req.params.id)
+      bcrypt.hash(userData.password, 10)
+        .then(hash => {
+          userData.password = hash;
+          return User.findById(req.params.id)})
         .then(user => {
-
           if (!user) {
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}`});
           }
           for (let key in user) {
-            user[key] = userData[key] !== undefined ? userData[key] : user[key]
+            user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
           }
 
           user.save();
