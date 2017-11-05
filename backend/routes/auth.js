@@ -1,32 +1,14 @@
 // NPM Packages
 const express = require('express');
 const passport = require('passport');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const { check, oneOf, validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 const LocalStrategy = require('passport-local').Strategy;
 const router = express.Router();
 
 // Local Imports
 const User = require('../models/user');
-const events = require('./events');
-const emails = require('./emails');
-const responses = require('./responses');
-const surveys = require('./surveys');
-const users = require('./users');
-const auth = require('./auth');
-// Middleware
-router.use(morgan('dev'));
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(session({
-  secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  resave: true,
-  saveUninitialized: false
-}));
+
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -59,8 +41,8 @@ passport.deserializeUser((id, done) => {
 // Login Route
 router.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/api/success',
-    failureRedirect: '/api/failed'
+    successRedirect: '/api/auth/success',
+    failureRedirect: '/api/auth/failed'
   })
 );
 
@@ -74,8 +56,6 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.json({ logout: 'success' });
 });
-
-router.use('/users', users);
 
 //************** LOGIN WALL *******************
 router.use((req, res, next) => {
@@ -91,11 +71,4 @@ router.get('/success', (req, res) => {
   res.json({ authenticated: true, user: req.user });
 });
 
-// // Restful endpoints
-router.use('/responses', responses);
-router.use('/surveys', surveys);
-router.use('/events', events);
-router.use('/emails', emails);
-
 module.exports = router;
-
