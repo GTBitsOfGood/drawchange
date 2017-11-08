@@ -8,7 +8,7 @@ const surveySchema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    default: ""
   },
   questions: {
     type: Array, // array of question objects
