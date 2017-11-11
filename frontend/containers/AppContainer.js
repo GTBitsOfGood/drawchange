@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Splash from './Splash';
 const AppContainer = () => {
   return (
-        <Splash/>
+    <Splash/>
   );
 };
 

@@ -5,9 +5,6 @@ import { Jumbotron, Col, Panel } from 'react-bootstrap';
 // Local Imports
 import SplashInfo from '../components/SplashInfo';
 import SplashAuth from '../components/SplashAuth';
-import Login from '../containers/Login';
-// import SplashInfo from '../../components/SplashInfo';
-// import Registration from '../containers/Registration';
 
 // Home component
 const Splash = () => (
@@ -24,9 +21,6 @@ const Splash = () => (
     </Col>
     <Col md={5}>
       <SplashAuth/>
-      {/* <Panel header={<h3>Sign In</h3>} bsStyle="success">
-        <Login />
-      </Panel> */}
     </Col>
   </div>
 );
