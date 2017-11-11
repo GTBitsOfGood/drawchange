@@ -38,12 +38,14 @@ class Registration extends Component {
         return this.props.emailChange(e.target.value);
       case 'password':
         return this.props.passwordChange(e.target.value);
+      case 'phone_number':
+        return this.props.phoneNumberChange(e.target.value);
       case 'first_name':
         return this.props.firstNameChange(e.target.value);
       case 'last_name':
         return this.props.lastNameChange(e.target.value);
-      case 'address':
-        return this.props.addressChange(e.target.value);
+      case 'street_address':
+        return this.props.streetAddressChange(e.target.value);
       case 'city':
         return this.props.cityChange(e.target.value);
       case 'state':
@@ -77,13 +79,17 @@ class Registration extends Component {
           <ControlLabel>{"Last Name"}</ControlLabel>
           <FormControl name={"last_name"} type={"text"} value={this.props.last_name} onChange={this._handleInputChange} />
         </FormGroup>
+        <FormGroup controlId={"phoneNumber"}>
+          <ControlLabel>{"Phone Number"}</ControlLabel>
+          <FormControl name={"phone_number"} type={"tel"} value={this.props.phone_number} onChange={this._handleInputChange} />
+        </FormGroup>
         <FormGroup controlId={"dob"}>
           <ControlLabel>{"Date of Birth"}</ControlLabel>
           <FormControl name={"date_of_birth"} type={"date"} value={this.props.date_of_birth} onChange={this._handleInputChange} />
         </FormGroup>
         <FormGroup controlId={"address"}>
-          <ControlLabel>{"Address"}</ControlLabel>
-          <FormControl name={"address"} type={"text"} value={this.props.address} onChange={this._handleInputChange} />
+          <ControlLabel>{"Street Address"}</ControlLabel>
+          <FormControl name={"street_address"} type={"text"} value={this.props.street_address} onChange={this._handleInputChange} />
         </FormGroup>
         <FormGroup controlId={"city"}>
           <ControlLabel>{"City"}</ControlLabel>
@@ -111,8 +117,9 @@ Registration.propTypes = {
   // user fields
   first_name: PropTypes.string,
   last_name: PropTypes.string,
+  phone_number: PropTypes.string,
   date_of_birth: PropTypes.string,
-  address: PropTypes.string,
+  street_address: PropTypes.string,
   city: PropTypes.string,
   state: PropTypes.string,
   zip_code: PropTypes.string,
@@ -122,10 +129,11 @@ Registration.propTypes = {
   // update methods
   firstNameChange: PropTypes.func,
   lastNameChange: PropTypes.func,
+  phoneNumberChange: PropTypes.func,
   emailChange: PropTypes.func,
   passwordChange: PropTypes.func,
   dateOfBirthChange: PropTypes.func,
-  addressChange: PropTypes.func,
+  streetAddressChange: PropTypes.func,
   cityChange: PropTypes.func,
   stateChange: PropTypes.func,
   zipCodeChange: PropTypes.func,

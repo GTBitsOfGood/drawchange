@@ -47,7 +47,7 @@ class Login extends Component {
           <ControlLabel>{"Password"}</ControlLabel>
           <FormControl type={"password"} value={this.props.password} onChange={this._passwordChange} />
         </FormGroup>
-        <Button type="submit" onClick={() => this.props.login()}>
+        <Button type="submit" onClick={this.props.login}>
           Login
       </Button>
         <ReduxSweetAlert />

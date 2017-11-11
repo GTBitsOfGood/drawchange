@@ -24,8 +24,12 @@ export function passwordChange(password) {
   return { type: types.PASSWORD_CHANGE, password };
 }
 
-export function addressChange(address) {
-  return { type: types.ADDRESS_CHANGE, address };
+export function phoneNumberChange(phone_number) {
+  return { type: types.PHONE_NUMBER_CHANGE, phone_number };
+}
+
+export function streetAddressChange(street_address) {
+  return { type: types.STREET_ADDRESS_CHANGE, street_address };
 }
 export function stateChange(state) {
   return { type: types.STATE_CHANGE, state };
@@ -41,22 +45,11 @@ export function dateOfBirthChange(date_of_birth) {
 }
 
 
-// handles login email field updates
-export function loginEmailChange(email) {
-  return { type: types.LOGIN_EMAIL_CHANGE, email };
-}
-
-// handles login password field updates
-export function loginPasswordChange(password) {
-  return { type: types.LOGIN_PASSWORD_CHANGE, password };
-}
-
-
 // handles login request processing
 export function login() {
   return (dispatch, getState) => { // using Thunks
-    const { loginUsername, loginPassword } = getState().auth;
-    axios.post('/api/login', { username: loginUsername, password: loginPassword })
+    const { email, password } = getState().auth;
+    axios.post('/api/login', {  email, password })
       .then(resp => {
         dispatch(generator.login(resp.data.user));
       })
@@ -67,8 +60,10 @@ export function login() {
 // handles registration request processing
 export function register() {
   return (dispatch, getState) => {
-    const { username, password, name } = getState().auth;
-    axios.post('/api/register', { username, password, name })
+    const { email, password, first_name, last_name, date_of_birth,
+            street_address, city, state, zip_code, phone_number } = getState().auth;
+    axios.post('/api/users', { email, password, first_name, last_name,
+      date_of_birth, street_address, city, state, zip_code, phone_number })
       .then(resp => {
         dispatch(generator.register(resp.data.user));
       })
