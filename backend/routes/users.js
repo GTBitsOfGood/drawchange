@@ -128,7 +128,6 @@ router.route('/:id')
             if (!user) {
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
             }
-<<<<<<< HEAD
             if (req.query.action) {
               if (req.query.action === 'appendEvents') {
                 userData.events.push(req.body.eventId);
@@ -138,10 +137,6 @@ router.route('/:id')
             }
             for (let key in user) {
               user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
-=======
-            for (const key in user) {
-              user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
->>>>>>> 6b38a819c8f49a5a1750406b9e92d6b6c45fbbea
             }
             user.save();
             return res.status(200).json({ user });
