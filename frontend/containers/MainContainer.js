@@ -13,8 +13,6 @@ import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
 
 class MainContainer extends React.Component {
-
-
   render() {
     let itemLists;
     let mainItem;
@@ -134,14 +132,14 @@ class MainContainer extends React.Component {
     }
 
     return (
-    <div>
-      <LeftPane>
-        { itemLists }
-      </LeftPane>
-      <MainPane>
-        { mainItem }
-      </MainPane>
-    </div>
+      <div>
+        <LeftPane>
+          { itemLists }
+        </LeftPane>
+        <MainPane>
+          { mainItem }
+        </MainPane>
+      </div>
     );
   }
 };
