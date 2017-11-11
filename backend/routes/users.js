@@ -33,17 +33,21 @@ router.post('/', [
     .then(user => {
       if (user) {
         emailInUse = true;
-        throw new Error("Email already in use")
-        return null;
+        throw new Error("Email already in use");
       }
-      return bcrypt.hash(userData.password, 10)})
+      return bcrypt.hash(userData.password, 10);
+    })
     .then(hash => {
       userData.password = hash;
       const newUser = new User(userData);
       return newUser.save();
     })
-    .then(user => res.status(200).json({ user }))
+    .then(user => {
+      res.status(200).json({ user });
+      user.password = undefined;
+    })
     .catch(errors => {
+      console.log(errors);
       if (emailInUse) {
         return res.status(400).json({errors: "Email in use"});
       }
@@ -51,13 +55,13 @@ router.post('/', [
     });
 });
 
-//************** LOGIN WALL *******************
+//* ************* LOGIN WALL *******************
 router.use((req, res, next) => {
   return req.user ? next() : res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
 });
 
 router.get('/', (req, res) => {
-    User.find()
+  User.find()
       .then(users => res.status(200).json({ users }))
       .catch(errors =>  res.status(500).json({ errors }));
 });
@@ -77,7 +81,7 @@ router.route('/:id')
         })
         .catch(errors =>  res.status(500).json({ errors }));
     })
-    .put([check('id').isMongoId()], oneOf([ //TODO Add validations for events and survey_responses Array
+    .put([check('id').isMongoId()], oneOf([ // TODO Add validations for events and survey_responses Array
       check('first_name').isAlpha().trim().escape(),
       check('last_name').isAlpha().trim().escape(),
       check('role').isAlpha().trim().escape(),
@@ -104,14 +108,14 @@ router.route('/:id')
         bcrypt.hash(userData.password, 10)
           .then(hash => {
             userData.password = hash;
-            return User.findById(req.params.id)
+            return User.findById(req.params.id);
           })
           .then(user => {
             if (!user) {
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
             }
-            for (let key in user) {
-              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+            for (const key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
             }
 
             user.save();
@@ -124,6 +128,7 @@ router.route('/:id')
             if (!user) {
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
             }
+<<<<<<< HEAD
             if (req.query.action) {
               if (req.query.action === 'appendEvents') {
                 userData.events.push(req.body.eventId);
@@ -133,13 +138,16 @@ router.route('/:id')
             }
             for (let key in user) {
               user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+=======
+            for (const key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
+>>>>>>> 6b38a819c8f49a5a1750406b9e92d6b6c45fbbea
             }
             user.save();
             return res.status(200).json({ user });
           })
           .catch(errors => res.status(500).json({ errors }));
       }
-
     })
     .delete([ check('id').isMongoId() ], (req, res) => {
       const errors = validationResult(req);

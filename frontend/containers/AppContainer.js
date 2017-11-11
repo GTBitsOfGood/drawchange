@@ -1,23 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import MainContainer from '../containers/MainContainer';
+import Splash from './Splash';
 
 const AppContainer = () => {
   return (
-        <div>
-            <MainContainer />
-        </div>
+    <Splash/>
   );
 };
 
 AppContainer.propTypes = {
-  name: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
   return {
-    name: state.name
   };
 };
 
