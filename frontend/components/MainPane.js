@@ -4,17 +4,19 @@ var MainPane = React.createClass({
   render: function() {
     if (this.props.children) {
       return (
-        <div>
+        <div className="MainPane">
           { this.props.children };
         </div>
       );
     }
     else {
       return(
-        <div>
-          { this.props.placeholder };
+        <div className="MainPane MainPane--empty">
+          { this.props.placeholder }
         </div>
       );
     }
   }
 });
+
+export default MainPane;
