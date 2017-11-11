@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const Event = require('../models/event');
+const User = require('../models/user');
 
 
 router.route('/')
@@ -59,6 +60,7 @@ router.route('/:id')
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
     check('max_volunteers').isNumeric(),
+    check('volunteers').exists(),
     // check('volunteers').custom(value => {
     //   if ()
     // })
@@ -76,20 +78,16 @@ router.route('/:id')
           return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
         }
         if (req.query.action) {
-          if (req.query.action === 'addVolunteer') {
-            event.volunteers.push(req.body.volunteerId);
-          } else if (req.query.action === 'removeVolunteer') {
-            for (let vol in event.volunteers) {
-              if (vol === req.body.volunteerId) {
-                event.volunteers.splice(event.volunteers.indexOf(vol), 1);
-              }
-            }
-          }
-        } else {
-          for (let key in event) {
-            event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+          if (req.query.action === 'appendVolunteers') {
+            eventData.volunteers.push(req.body.volunteerId);
+          } else if (req.query.action === 'removeVolunteers') {
+            eventData.volunteers.splice(eventData.volunteers.indexOf(req.body.volunteerId), 1);
           }
         }
+        for (let key in event) {
+          event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+        }
+
         event.save();
         return res.status(200).json({ event });
       })

@@ -1,12 +1,15 @@
 // NPM Imports
 const chaiHttp = require('chai-http');
 const chai = require('chai');
+const assertArrays = require('chai-arrays');
 
 // Local Imports & Config
 const Event = require('../backend/models/event');
 const server = require('../server');
 const should = chai.should;
+const expect = chai.expect;
 chai.use(chaiHttp);
+chai.use(assertArrays);
 
 // Constants for Testing
 const PROPER_FIELDS = {
@@ -165,6 +168,34 @@ describe('Event RESTful Endpoints Test Suite', () => {
         });
     })
 
+    it ('works when a query param (add volunteer) is passed', (done) => {
+      chai.request(server)
+        .put(`/api/events/${id}?action=appendVolunteers`)
+        .send({volunteers: ['507f191e810c19729de860ea']})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('event');
+          res.body.event.should.be.a('object');
+          let volunteerArr = res.body.event.volunteers;
+          expect(volunteerArr).to.be.containing('507f191e810c19729de860ea');
+          done();
+        });
+    });
+
+    it ('works when a query param (remove volunteer) is passed', (done) => {
+      chai.request(server)
+        .put(`/api/events/${id}?action=removeVolunteers`)
+        .send({volunteers: ['507f191e810c19729de860ea']})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('event');
+          res.body.event.should.be.a('object');
+          let volunteerArr = res.body.event.volunteers;
+          expect(volunteerArr).not.to.be.containing('507f191e810c19729de860ea');
+          done();
+        });
+    });
+
     it ('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
         .put(`/api/events/59f6130e6f22a25c35d72ce9`)
@@ -176,7 +207,7 @@ describe('Event RESTful Endpoints Test Suite', () => {
         });
     })
 
-    it ('fails with an invalid id ', (done) => {
+    it ('fails with an invalid id', (done) => {
       chai.request(server)
         .put(`/api/events/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
