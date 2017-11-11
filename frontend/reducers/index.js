@@ -1,8 +1,8 @@
-function rootReducer(state = {name: 'Horizons'}, action) {
-    switch (action.type) {
-        default:
-            return state;
-    }
+function rootReducer(state = {name: 'Bits of Good :)'}, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
 }
 
 export default rootReducer;
