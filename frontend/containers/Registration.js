@@ -7,7 +7,7 @@ import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
 
 // Local Components
-import * as actions from '../actions/authentication';
+import * as actions from '../actions/auth';
 
 
 class Registration extends Component {

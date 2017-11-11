@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Splash from './Splash';
 const AppContainer = () => {
   return (
-        <div>
-            <h1>Testing :)</h1>
-        </div>
+        <Splash/>
   );
 };
 

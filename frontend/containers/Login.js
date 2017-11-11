@@ -7,10 +7,16 @@ import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
 
 // Local Imports
-import * as actions from '../actions/authentication';
+import * as actions from '../actions/auth';
 
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this._emailChange = this._emailChange.bind(this);
+    this._passwordChange = this._passwordChange.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
@@ -22,16 +28,24 @@ class Login extends Component {
     }
   }
 
+  _emailChange(e) {
+    this.props.loginEmailChange(e.target.value);
+  }
+
+  _passwordChange(e) {
+    this.props.loginPasswordChange(e.target.value);
+  }
+
   render() {
     return (
       <div>
-        <FormGroup controlId={"username"}>
-          <ControlLabel>{"Username"}</ControlLabel>
-          <FormControl type={"text"} value={this.props.username} onChange={(e) => this.props.loginUsernameChange(e.target.value)} />
+        <FormGroup controlId={"email"}>
+          <ControlLabel>{"Email"}</ControlLabel>
+          <FormControl type={"email"} value={this.props.email} onChange={this._emailChange} />
         </FormGroup>
         <FormGroup controlId={"password"}>
           <ControlLabel>{"Password"}</ControlLabel>
-          <FormControl type={"password"} value={this.props.password} onChange={(e) => this.props.loginPasswordChange(e.target.value)} />
+          <FormControl type={"password"} value={this.props.password} onChange={this._passwordChange} />
         </FormGroup>
         <Button type="submit" onClick={() => this.props.login()}>
           Login
@@ -43,10 +57,10 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  username: PropTypes.string,
+  email: PropTypes.string,
   password: PropTypes.string,
   loginPasswordChange: PropTypes.func,
-  loginUsernameChange: PropTypes.func,
+  loginEmailChange: PropTypes.func,
   login: PropTypes.func,
   error: PropTypes.bool,
   swal: PropTypes.func.isRequired,
@@ -57,7 +71,7 @@ Login.propTypes = {
 const mapStateToProps = (state) => {
   return {
     error: state.auth.loginFailed,
-    username: state.auth.loginUsername,
+    email: state.auth.loginEmail,
     password: state.auth.loginPassword
   };
 };

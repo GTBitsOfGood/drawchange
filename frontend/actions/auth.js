@@ -11,8 +11,8 @@ export function nameChange(name) {
 }
 
 // handles registration username field updates
-export function usernameChange(username) {
-  return { type: types.USERNAME_CHANGE, username };
+export function emailChange(email) {
+  return { type: types.EMAIL_CHANGE, email };
 }
 
 // handles registration password field updates
@@ -20,9 +20,9 @@ export function passwordChange(password) {
   return { type: types.PASSWORD_CHANGE, password };
 }
 
-// handles login username field updates
-export function loginUsernameChange(username) {
-  return { type: types.LOGIN_USERNAME_CHANGE, username };
+// handles login email field updates
+export function loginEmailChange(email) {
+  return { type: types.LOGIN_EMAIL_CHANGE, email };
 }
 
 // handles login password field updates

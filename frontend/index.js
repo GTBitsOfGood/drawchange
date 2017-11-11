@@ -12,13 +12,8 @@ import Root from './containers/Root';
 const store = configureStore(history);
 
 // saves state in session storage to perserve login on refresh
-store.subscribe(throttle(() => {
-  saveState({
-    auth: store.getState().auth
-  });
-}, 1000));
+store.subscribe(throttle(() => saveState({ auth: store.getState().auth }), 1000));
 
-render(
-  <Root store={store} history={history} />,
+render(<Root store={store} history={history} />,
   document.getElementById('root')
 );
