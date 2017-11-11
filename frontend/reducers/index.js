@@ -1,4 +1,4 @@
-function rootReducer(state = {name: 'Bits of Good :)'}, action) {
+function rootReducer(state = {name: 'Bits of Good -- Drawchange :)'}, action) {
   switch (action.type) {
     default:
       return state;
