@@ -62,7 +62,7 @@ router.route('/:id')
     // check('volunteers').custom(value => {
     //   if ()
     // })
-  ]), (req, res) => {
+  ]), (req, res, query) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
@@ -75,9 +75,20 @@ router.route('/:id')
         if (!event) {
           return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
         }
-
-        for (let key in event) {
-          event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+        if (req.query.action) {
+          if (req.query.action === 'addVolunteer') {
+            event.volunteers.push(req.body.volunteerId);
+          } else if (req.query.action === 'removeVolunteer') {
+            for (let vol in event.volunteers) {
+              if (vol === req.body.volunteerId) {
+                event.volunteers.splice(event.volunteers.indexOf(vol), 1);
+              }
+            }
+          }
+        } else {
+          for (let key in event) {
+            event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+          }
         }
         event.save();
         return res.status(200).json({ event });

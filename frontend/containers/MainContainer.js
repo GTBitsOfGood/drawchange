@@ -13,7 +13,6 @@ import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
 
 class MainContainer extends React.Component {
-
   render() {
     let itemLists;
     let mainItem;
@@ -158,6 +157,8 @@ MainContainer.propTypes = {
 
 const mapStateToProps = ( state, ownProps ) => {
   return {
+    // name: state.name
+    currentEvent: state._id,
     currentView: state.currentView,
     events: state.events, // event data
     volunteers: state.volunteers, // volunteer data
@@ -170,7 +171,7 @@ const mapStateToProps = ( state, ownProps ) => {
 const mapDispatchToProps = ( dispatch ) => {
   return {
     eventActions: bindActionCreators( eventActions, dispatch ),
-    volunteerActions: bindActionCreators( volunteerActions, dispatch ),
+    volunteerActions: bindActionCreators( volunteerActions, dispatch )
   };
 };
 
