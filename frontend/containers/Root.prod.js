@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import AppContainer from './AppContainer.js';
 
 export default function Root({ store }) {
-    return (
+  return (
         <Provider store={store}>
             <AppContainer />
         </Provider>
-    );
+  );
 }
 
 Root.propTypes = {
-    store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired
 };

@@ -44,6 +44,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
+    "react-redux-sweetalert": "^1.0.1",
+    "react-router-redux": "^4.0.8",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.0",
     "redux-devtools-dock-monitor": "^1.1.2",
