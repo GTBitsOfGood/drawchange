@@ -17,6 +17,7 @@ const Splash = () => (
     </Jumbotron>
     <Col md={7}>
       <SplashInfo />
+      {/* Add this for insta feed http://instafeedjs.com/ */}
 
     </Col>
     <Col md={5}>
