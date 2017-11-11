@@ -1,7 +1,10 @@
+//NPM Packages
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+//Local Imports
 import * as eventActions from '../actions/events.js'
 import * as volunteerActions from '../actions/volunteers.js'
 import LeftPane from '../components/LeftPane';
@@ -10,7 +13,6 @@ import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
 
 class MainContainer extends React.Component {
-  
 
   render() {
     let itemLists;
@@ -19,8 +21,98 @@ class MainContainer extends React.Component {
     switch( this.props.currentView ) {
       case 'events':
         itemLists = (
-          <ItemList title="Your Events" items={[]} updateCurrentEvent={} />
-          <ItemList title="Upcoming Events" items={this.props.events} updateCurrentEvent={} />
+          <ItemList
+            title="Your Events"
+            items={
+                [{
+                    "name": "event1",
+                    "date": "11/11/2017",
+                    "location": "location1",
+                    "description": "description1",
+                    "contact": "contact1",
+                    "_id": "in329894322",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event2",
+                    "date": "11/12/2017",
+                    "location": "location2",
+                    "description": "description2",
+                    "contact": "contact2",
+                    "_id": "in329894323",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event3",
+                    "date": "11/13/2017",
+                    "location": "location3",
+                    "description": "description3",
+                    "contact": "contact3",
+                    "_id": "in329894324",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event4",
+                    "date": "11/14/2017",
+                    "location": "location4",
+                    "description": "description4",
+                    "contact": "contact4",
+                    "_id": "in329894325",
+                    "volunteers": [],
+                    "max_volunteers": null
+                }]
+            }
+            updateCurrentEvent={this.props.eventActions.updateCurrentEvent}
+          />
+          <ItemList
+            title="Upcoming Events"
+            {/* items={this.props.events}  */}
+            items={
+                [{
+                    "name": "event1",
+                    "date": "11/11/2017",
+                    "location": "location1",
+                    "description": "description1",
+                    "contact": "contact1",
+                    "_id": "in329894322",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event2",
+                    "date": "11/12/2017",
+                    "location": "location2",
+                    "description": "description2",
+                    "contact": "contact2",
+                    "_id": "in329894323",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event3",
+                    "date": "11/13/2017",
+                    "location": "location3",
+                    "description": "description3",
+                    "contact": "contact3",
+                    "_id": "in329894324",
+                    "volunteers": [],
+                    "max_volunteers": null
+                },
+                {
+                    "name": "event4",
+                    "date": "11/14/2017",
+                    "location": "location4",
+                    "description": "description4",
+                    "contact": "contact4",
+                    "_id": "in329894325",
+                    "volunteers": [],
+                    "max_volunteers": null
+                }]
+            }
+            updateCurrentEvent={this.props.updateCurrentEvent} />
         );
         mainItem = (
           <EventView mode={} event={} onCreate={} onUpdate={} onRegister={} onUnregister={} />
@@ -41,12 +133,14 @@ class MainContainer extends React.Component {
     }
 
     return (
-      <LeftPane>
-        { itemLists }
-      </LeftPane>
-      <MainPane>
-        { mainItem }
-      </MainPane>
+      <div>
+        <LeftPane>
+          { itemLists }
+        </LeftPane>
+        <MainPane>
+          { mainItem }
+        </MainPane>
+      </div>
     );
   }
 };

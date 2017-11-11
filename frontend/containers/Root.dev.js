@@ -5,7 +5,7 @@ import AppContainer from './AppContainer.js';
 import DevTools from './DevTools';
 
 export default function Root({ store }) {
-    return (
+  return (
         <Provider store={store}>
             <div>
                 <AppContainer />
@@ -16,5 +16,5 @@ export default function Root({ store }) {
 }
 
 Root.propTypes = {
-    store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired
 };
