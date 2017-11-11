@@ -29,11 +29,11 @@ class Login extends Component {
   }
 
   _emailChange(e) {
-    this.props.loginEmailChange(e.target.value);
+    this.props.emailChange(e.target.value);
   }
 
   _passwordChange(e) {
-    this.props.loginPasswordChange(e.target.value);
+    this.props.passwordChange(e.target.value);
   }
 
   render() {
@@ -59,8 +59,8 @@ class Login extends Component {
 Login.propTypes = {
   email: PropTypes.string,
   password: PropTypes.string,
-  loginPasswordChange: PropTypes.func,
-  loginEmailChange: PropTypes.func,
+  passwordChange: PropTypes.func,
+  emailChange: PropTypes.func,
   login: PropTypes.func,
   error: PropTypes.bool,
   swal: PropTypes.func.isRequired,
@@ -71,8 +71,8 @@ Login.propTypes = {
 const mapStateToProps = (state) => {
   return {
     error: state.auth.loginFailed,
-    email: state.auth.loginEmail,
-    password: state.auth.loginPassword
+    email: state.auth.email,
+    password: state.auth.password
   };
 };
 

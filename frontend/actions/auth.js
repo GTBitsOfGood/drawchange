@@ -6,8 +6,12 @@ import * as types from './types';
 import * as generator from './generator';
 
 // handles registration name field updates
-export function nameChange(name) {
-  return { type: types.NAME_CHANGE, name };
+export function firstNameChange(first_name) {
+  return { type: types.FIRST_NAME_CHANGE, first_name };
+}
+
+export function lastNameChange(last_name) {
+  return { type: types.LAST_NAME_CHANGE, last_name };
 }
 
 // handles registration username field updates
@@ -19,6 +23,23 @@ export function emailChange(email) {
 export function passwordChange(password) {
   return { type: types.PASSWORD_CHANGE, password };
 }
+
+export function addressChange(address) {
+  return { type: types.ADDRESS_CHANGE, address };
+}
+export function stateChange(state) {
+  return { type: types.STATE_CHANGE, state };
+}
+export function cityChange(city) {
+  return { type: types.CITY_CHANGE, city };
+}
+export function zipCodeChange(zip_code) {
+  return { type: types.ZIP_CODE_CHANGE, zip_code };
+}
+export function dateOfBirthChange(date_of_birth) {
+  return { type: types.DATE_OF_BIRTH_CHANGE, date_of_birth };
+}
+
 
 // handles login email field updates
 export function loginEmailChange(email) {

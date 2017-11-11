@@ -46,6 +46,7 @@
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^15.5.4",
+    "react-instafeed": "^0.4.0",
     "react-redux": "^5.0.5",
     "react-redux-sweetalert": "^1.0.1",
     "react-router-redux": "^4.0.8",
