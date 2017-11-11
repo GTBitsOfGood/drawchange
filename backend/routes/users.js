@@ -92,8 +92,9 @@ router.route('/:id')
       check('zip_code').isAscii().trim().escape(),
       check('phone_number').isAscii().trim().escape(),
       check('date_of_birth').exists().trim().escape(),
-      check('password').isAscii().trim().escape()
-    ]), (req, res) => {
+      check('password').isAscii().trim().escape(),
+      check('events').exists(),
+    ]), (req, res, query) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.mapped() });
@@ -127,10 +128,16 @@ router.route('/:id')
             if (!user) {
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
             }
-            for (const key in user) {
-              user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
+            if (req.query.action) {
+              if (req.query.action === 'appendEvents') {
+                userData.events.push(req.body.eventId);
+              } else if (req.query.action === 'removeEvents') {
+                userData.events.splice(userData.events.indexOf(req.body.eventId), 1);
+              }
             }
-
+            for (let key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+            }
             user.save();
             return res.status(200).json({ user });
           })

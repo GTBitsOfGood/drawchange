@@ -1,12 +1,15 @@
 // NPM Imports
 const chaiHttp = require('chai-http');
 const chai = require('chai');
+const assertArrays = require('chai-arrays');
 
 // Local Imports & Config
 const User = require('../backend/models/user');
 const server = require('../server');
 const should = chai.should;
+const expect = chai.expect;
 chai.use(chaiHttp);
+chai.use(assertArrays);
 // Allows the middleware to think we're already authenticated.
 
 // Constants for Testing
@@ -167,6 +170,35 @@ describe('User RESTful Endpoints Test Suite', () => {
           return done();
         });
     });
+
+    it ('works when a query param (add event) is passed', (done) => {
+      chai.request(server)
+        .put(`/api/users/${id}?action=appendEvents`)
+        .send({events: ['507f191e810c19729de860ea']})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('user');
+          res.body.user.should.be.a('object');
+          let eventArr = res.body.user.events;
+          expect(eventArr).to.be.containing('507f191e810c19729de860ea');
+          return done();
+        });
+    });
+
+    it ('works when a query param (remove event) is passed', (done) => {
+      chai.request(server)
+        .put(`/api/users/${id}?action=removeEvents`)
+        .send({events: ['507f191e810c19729de860ea']})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('user');
+          res.body.user.should.be.a('object');
+          let eventArr = res.body.user.events;
+          expect(eventArr).not.to.be.containing('507f191e810c19729de860ea');
+          return done();
+        });
+    });
+
 
     it('fails with an valid id that is not in DB', (done) => {
       chai.request(server)

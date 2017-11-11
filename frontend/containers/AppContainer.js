@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
 import Splash from './Splash';
+
 import Navbar from '../components/Navbar';
 
 import * as actions from '../actions/authentication';
