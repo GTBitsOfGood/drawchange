@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import MainContainer from '../containers/MainContainer';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
+import MainContainer from './MainContainer.js';
 const AppContainer = ({ name }) => {
   return (
-        <div>
-            <MainContainer />
-        </div>
+        <BrowserRouter>
+            <div>
+                <Route path="/homeScreen" component={MainContainer
+
+                }/>
+            </div>
+        </BrowserRouter>
   );
 };
 

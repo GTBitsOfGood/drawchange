@@ -47,3 +47,5 @@ ItemList.propTypes = {
   title: PropTypes.string,
   updateCurrentEvent: PropTypes.func
 };
+
+export default ItemList;

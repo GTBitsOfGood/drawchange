@@ -30,3 +30,5 @@ InlineItem.propTypes = {
   id: PropTypes.string,
   updateCurrentEvent: PropTypes.func
 };
+
+export default InlineItem;

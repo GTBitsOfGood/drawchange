@@ -1,8 +1,8 @@
 import * as types from './types.js';
 import axios from 'axios';
 
-export function updateCurrentEvent(eventId) {
-  return { type: types.CURRENT_EVENT, eventId };
+export function updateCurrentEvent(currentEvent) {
+  return { type: types.CURRENT_EVENT, currentEvent };
 }
 
 export function updateEventName(name) {

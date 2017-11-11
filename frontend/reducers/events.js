@@ -6,7 +6,7 @@ const initialState = {
   "location": "",
   "description": "",
   "contact": "",
-  "_id": "",
+  "currentEvent": "",
   "volunteers": [],
   "max_volunteers": ""
 };
@@ -14,15 +14,15 @@ const initialState = {
 function events(state = initialState, action) {
   switch(action.type) {
     case types.EVENT_NAME:
-      return Object.assign({}, state, { type: action.updateEventName });
+      return Object.assign({}, state, { name: action.name });
     case types.EVENT_DATE:
-      return Object.assign({}, state, { type: action.updateEventDate });
+      return Object.assign({}, state, { date: action.date });
     case types.EVENT_LOCATION:
-      return Object.assign({}, state, { type: action.updateEventLocation });
+      return Object.assign({}, state, { location: action.location });
     case types.EVENT_DESCRIPTION:
-      return Object.assign({}, state, { type: action.updateEventDescription });
+      return Object.assign({}, state, { description: action.description });
     case types.CURRENT_EVENT:
-      return Object.assign({}, state, { type: action.updateCurrentEvent });
+      return Object.assign({}, state, { currentEvent: action.currentEvent });
     default:
       return state;
   }
