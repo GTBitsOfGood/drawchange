@@ -1,13 +1,11 @@
 /* Action types */
 
-<<<<<<< HEAD
 // Event values
-export const EVENT_NAME = "EVENT_NAME";
-export const EVENT_DATE = "EVENT_DATE";
-export const EVENT_LOCATION = "EVENT_LOCATION";
-export const EVENT_DESCRIPTION = "EVENT_DESCRIPTION";
-export const CURRENT_EVENT = "CURRENT_EVENT";
-=======
+export const EVENT_NAME = Symbol("EVENT_NAME");
+export const EVENT_DATE = Symbol("EVENT_DATE");
+export const EVENT_LOCATION = Symbol("EVENT_LOCATION");
+export const EVENT_DESCRIPTION = Symbol("EVENT_DESCRIPTION");
+export const CURRENT_EVENT = Symbol("CURRENT_EVENT");
 // Authentication Action Types
 export const LOGOUT = Symbol("LOGOUT");
 export const LOGIN_FAILED = Symbol("LOGIN_FAILED");
@@ -25,4 +23,3 @@ export const ZIP_CODE_CHANGE = Symbol("ZIP_CODE_CHANGE");
 export const DATE_OF_BIRTH_CHANGE = Symbol("DATE_OF_BIRTH_CHANGE");
 export const EMAIL_CHANGE = Symbol("EMAIL_CHANGE");
 export const PASSWORD_CHANGE = Symbol("PASSWORD_CHANGE");
->>>>>>> 6b38a819c8f49a5a1750406b9e92d6b6c45fbbea

@@ -5,7 +5,7 @@ import Splash from './Splash';
 
 import Navbar from '../components/Navbar';
 
-import * as actions from '../actions/authentication';
+import * as actions from '../actions/auth';
 
 
 const AppContainer = () => {

@@ -6,7 +6,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 // Local Imports
-import * as actions from '../actions/authentication';
 
 const NavBar = ({ logoutAction }) => {
   return (
@@ -19,7 +18,7 @@ const NavBar = ({ logoutAction }) => {
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight>
-          <LinkContainer isActive={() => false} onClick={logoutAction} to="/">
+          <LinkContainer isActive={() => false} onClick={ logoutAction } to="/">
             <NavItem>Logout</NavItem>
           </LinkContainer>
         </Nav>
