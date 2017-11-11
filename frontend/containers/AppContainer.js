@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MainContainer from '../containers/MainContainer';
 
-const AppContainer = ({ name }) => {
+const AppContainer = () => {
   return (
         <div>
             <MainContainer />
