@@ -145,6 +145,17 @@ class MainContainer extends React.Component {
   }
 };
 
+MainContainer.propTypes = {
+  currentView: PropTypes.string,
+  events: PropTypes.array,
+  volunteers: PropTypes.array,
+  eventMode: PropTypes.string,
+  currentEvent: PropTypes.string,
+  currentVolunteer: PropTypes.string,
+  eventActions: PropTypes.object,
+  volunteerActions: PropTypes.object,
+};
+
 const mapStateToProps = ( state, ownProps ) => {
   return {
     currentView: state.currentView,

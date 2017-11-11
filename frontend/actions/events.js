@@ -25,11 +25,11 @@ export function onSignUp() {
   return (dispatch, getState) => {
     const volunteer_Id = getState.volunteer._id; // TODO:volunteers
     const event_Id = getState.currentEvent._id;
-    axios.put(`/api/events/:${volunteer_Id}?action=updateVolunteer`)
+    axios.put(`/api/events/:${event_Id}?action=addVolunteer`, { volunteer_Id, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/:${event_Id}?action=updateEvent`)
+    axios.put(`/api/users/:${volunteer_Id}?action=addEvent`, { event_Id, })
         .then(resp => {
           alert("You're signed up!");
         });
@@ -40,13 +40,13 @@ export function unSignUp() {
   return (dispatch, getState) => {
     const volunteer_Id = getState.volunteer._id; // TODO:volunteers
     const event_Id = getState.currentEvent._id;
-    axios.put(`/api/events/:${volunteer_Id}?action=removeVolunteer`)
-            .then(resp => {
-              console.log("updated events object, volunteer array");
-            });
-    axios.put(`/api/users/:${event_Id}?action=removeEvent`)
-            .then(resp => {
-              alert("You're signed up!");
-            });
+    axios.put(`/api/events/:${event_Id}?action=removeVolunteer`, { volunteer_Id, })
+        .then(resp => {
+          console.log("updated events object, volunteer array");
+        });
+    axios.put(`/api/users/:${volunteer_Id}?action=removeEvent`, { event_Id, })
+        .then(resp => {
+          alert("Successfully unregistered!");
+        });
   };
 }
