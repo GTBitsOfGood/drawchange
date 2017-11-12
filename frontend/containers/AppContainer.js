@@ -1,30 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Title from '../components/Title';
+import { bindActionCreators } from 'redux';
 
-const AppContainer = ({ name }) => {
+import Splash from './Splash';
+
+import Navbar from '../components/Navbar';
+
+import * as actions from '../actions/auth';
+
+
+const AppContainer = ({ logout }) => {
   return (
-        <div>
-            <Title name={name} />
-        </div>
+    <div>
+      <Navbar logoutAction={ logout } />
+      <Splash />
+    </div>
+
   );
 };
 
 AppContainer.propTypes = {
-  name: PropTypes.string,
+  logout: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.name
-  };
-};
+function mapStateToProps(state) {
+  return {};
+}
 
-const mapDispatchToProps = (/* dispatch */) => {
-  return {
-  };
-};
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actions, dispatch);
+}
 
 export default connect(
     mapStateToProps,

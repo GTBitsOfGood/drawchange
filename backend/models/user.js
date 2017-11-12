@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
   role: {
     type: String,
     default: 'pending',
-    enum: ['pending','admin', 'manager', 'volunteer']
+    enum: ['pending', 'admin', 'manager', 'volunteer']
   },
   street_address: {
     type: String,
@@ -63,7 +63,7 @@ userSchema.virtual('age').get(function() {
   return current.getYear() - this.date_of_birth.getYear();
 });
 
-userSchema.methods.verifyPassword = function (password) {
+userSchema.methods.verifyPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
