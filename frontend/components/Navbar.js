@@ -12,7 +12,7 @@ const NavBar = ({ logoutAction }) => {
     <Navbar inverse collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/">Survey Apple</Link>
+          <Link to="/">drawchange Volunteer Portal</Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
