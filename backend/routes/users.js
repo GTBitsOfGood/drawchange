@@ -88,7 +88,8 @@ router.route('/:id')
       check('zip_code').isAscii().trim().escape(),
       check('phone_number').isAscii().trim().escape(),
       check('date_of_birth').exists().trim().escape(),
-      check('password').isAscii().trim().escape()
+      check('password').isAscii().trim().escape(),
+      check('events').exists(),
     ]), (req, res, query) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -124,19 +125,14 @@ router.route('/:id')
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
             }
             if (req.query.action) {
-              if (req.query.action === 'addEvent') {
-                user.events.push(req.body.eventId);
-              } else if (req.query.action === 'removeEvent') {
-                for (let event in user.events) {
-                  if (event === req.body.eventId) {
-                    user.volunteers.splice(user.volunteers.indexOf(event), 1);
-                  }
-                }
+              if (req.query.action === 'appendEvents') {
+                userData.events.push(req.body.eventId);
+              } else if (req.query.action === 'removeEvents') {
+                userData.events.splice(userData.events.indexOf(req.body.eventId), 1);
               }
-            } else {
-              for (let key in user) {
-                user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
-              }
+            }
+            for (let key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
             }
             user.save();
             return res.status(200).json({ user });
