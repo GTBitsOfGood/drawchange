@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import MainContainer from './MainContainer.js';
-const AppContainer = ({ name }) => {
+const AppContainer = () => {
   return (
         <BrowserRouter>
             <div>

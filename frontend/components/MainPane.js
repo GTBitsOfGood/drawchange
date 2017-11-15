@@ -12,9 +12,11 @@ var MainPane = React.createClass({
     else {
       return(
         <div className="MainPane MainPane--empty">
-          { this.props.placeholder };
+          { this.props.placeholder }
         </div>
       );
     }
   }
 });
+
+export default MainPane;

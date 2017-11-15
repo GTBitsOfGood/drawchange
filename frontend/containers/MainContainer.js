@@ -360,7 +360,7 @@ import { bindActionCreators } from 'redux';
 
 // Local Imports
 import * as eventActions from '../actions/events.js';
-// import * as volunteerActions from '../actions/volunteers.js';
+// import * as volunteerActions from '../actions/volunteers.js'
 import LeftPane from '../components/LeftPane';
 import MainPane from '../components/MainPane';
 import ItemList from '../components/ItemList';
@@ -479,13 +479,13 @@ class MainContainer extends React.Component {
             <ItemList title="Volunteers" items={this.props.volunteers} />
           </LeftPane>
         );
-        mainItem = (
-          {/* <VolunteerView />*/}
-        );
+        // mainItem = (
+        //   {/*<VolunteerView />*/}
+        // );
         break;
       default:
-        itemLists = undefined;
-        mainItem = undefined;
+        // itemLists = ();
+        // mainItem = ();
         break;
     }
 
@@ -509,6 +509,7 @@ MainContainer.propTypes = {
   currentVolunteer: PropTypes.string,
   eventActions: PropTypes.object,
   volunteerActions: PropTypes.object,
+  updateCurrentEvent: PropTypes.func
 };
 
 const mapStateToProps = ( state, ownProps ) => {

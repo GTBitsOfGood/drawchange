@@ -15,3 +15,5 @@ var EventView = React.createClass({
 		);
 	}
 })
+
+export default EventView;

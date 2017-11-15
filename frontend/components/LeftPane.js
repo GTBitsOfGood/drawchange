@@ -18,3 +18,5 @@ var LeftPane = React.createClass({
     }
   }
 });
+
+export default LeftPane;

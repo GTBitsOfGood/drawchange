@@ -23,13 +23,15 @@ export function updateEventDescription(description) {
 
 export function onSignUp() {
   return (dispatch, getState) => {
-    const volunteer_Id = getState.volunteer._id; // TODO:volunteers
-    const event_Id = getState.currentEvent._id;
-    axios.put(`/api/events/:${event_Id}?action=addVolunteer`, { volunteer_Id, })
+    const volunteer_Id = [];
+    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
+    const event_Id = [];
+    event_Id.append(getState.currentEvent._id);
+    axios.put(`/api/events/:${event_Id}?action=appendVolunteer`, { volunteer_Id, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/:${volunteer_Id}?action=addEvent`, { event_Id, })
+    axios.put(`/api/users/:${volunteer_Id}?action=appendEvent`, { event_Id, })
         .then(resp => {
           alert("You're signed up!");
         });
@@ -38,8 +40,9 @@ export function onSignUp() {
 
 export function unSignUp() {
   return (dispatch, getState) => {
-    const volunteer_Id = getState.volunteer._id; // TODO:volunteers
-    const event_Id = getState.currentEvent._id;
+    const volunteer_Id = [];
+    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
+    const event_Id = [];
     axios.put(`/api/events/:${event_Id}?action=removeVolunteer`, { volunteer_Id, })
         .then(resp => {
           console.log("updated events object, volunteer array");
