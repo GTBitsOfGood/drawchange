@@ -367,6 +367,11 @@ import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
 
 class MainContainer extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.currentView = this.props.currentView;
+  }
   render() {
     let leftPane;
     let mainItem;
@@ -491,6 +496,9 @@ class MainContainer extends React.Component {
 
     return (
       <div>
+          <h1>
+            hello world 2.0 {this.state.currentView}
+        </h1>
         { leftPane }
         <MainPane>
           { mainItem }

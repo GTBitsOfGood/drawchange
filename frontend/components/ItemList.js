@@ -2,26 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import InlineItem from './InlineItem';
+import '../assets/stylesheets/ItemDisplay.css';
 
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
-    this.items = this.props.items;
-    this.title = this.props.title;
-    this.updateCurrentEvent = this.props.updateCurrentEvent;
   }
 
   renderItem() {
     return (
       <div className="ItemList">
-        { this.items.map((item) => (
+        { this.props.items.map((item) => (
           <InlineItem
             name = {item.name}
             date = {item.date}
             location = {item.location}
             description = {item.description}
             id = {item._id}
-            updateCurrentEvent = {this.updateCurrentEvent}
+            updateCurrentEvent = {this.props.updateCurrentEvent}
           />
         )) }
       </div>
@@ -32,7 +30,7 @@ class ItemList extends React.Component {
     return (
       <div>
       <h1>
-          {this.title}
+          Item Page
       </h1>
       <div>
           {this.renderItem()}
@@ -45,7 +43,8 @@ class ItemList extends React.Component {
 ItemList.propTypes = {
   items: PropTypes.array,
   title: PropTypes.string,
-  updateCurrentEvent: PropTypes.func
+  updateCurrentEvent: PropTypes.func,
+  updateRenderItem: PropTypes.func
 };
 
 export default ItemList;

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/stylesheets/ItemDisplay.css';
 
 var LeftPane = React.createClass({
   render: function() {
@@ -9,13 +10,13 @@ var LeftPane = React.createClass({
         </div>
       );
     }
-    else {
+    
       return(
         <div className="LeftPane LeftPane--empty">
           { this.props.placeholder };
         </div>
       );
-    }
+    
   }
 });
 

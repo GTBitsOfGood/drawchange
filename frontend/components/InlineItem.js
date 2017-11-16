@@ -1,25 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InlineItem({name, date, location, description, id, updateCurrentEvent}) {
-  return(
-        <div className="controlSingleItem">
-        <div className="singleevent" onClick={() => updateCurrentEvent(id)}>
-            <div className="itemName">
-                {name}
+import '../assets/stylesheets/ItemDisplay.css';
+
+class InlineItem extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return(
+            <div className="singleItem" onClick= {()=>this.props.updateCurrentEvent(this.props.id)}>
+
+                <div className="itemName">
+                    {this.props.name}
+                </div>
+                <div className="itemDate">
+                    {this.props.date}
+                </div>
+                <div className="itemLocation">
+                    {this.props.location}
+                </div>
+                <div className="itemDescription" >
+                    {this.props.description}
+                </div>
             </div>
-            <div className="itemDate">
-                {date}
-            </div>
-            <div className="itemLocation">
-                {location}
-            </div>
-            <div className="itemDescription" >
-                {description}
-            </div>
-        </div>
-        </div>
-  );
+    );
+  }
+
 }
 
 InlineItem.propTypes = {
@@ -28,7 +36,8 @@ InlineItem.propTypes = {
   location: PropTypes.string,
   description: PropTypes.string,
   id: PropTypes.string,
-  updateCurrentEvent: PropTypes.func
+  updateCurrentEvent: PropTypes.func,
+  updateRenderItem: PropTypes.func
 };
 
 export default InlineItem;

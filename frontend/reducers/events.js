@@ -1,17 +1,17 @@
 import * as types from '../actions/types';
 
+
 const initialState = {
   "name": "",
   "date": "",
   "location": "",
   "description": "",
   "contact": "",
-  "currentEvent": "",
   "volunteers": [],
   "max_volunteers": ""
 };
-
-function events(state = initialState, action) {
+export default function events(state = initialState, action) {
+  console.log('aksdfaksdjhfa');
   switch(action.type) {
     case types.EVENT_NAME:
       return Object.assign({}, state, { name: action.name });
@@ -21,11 +21,9 @@ function events(state = initialState, action) {
       return Object.assign({}, state, { location: action.location });
     case types.EVENT_DESCRIPTION:
       return Object.assign({}, state, { description: action.description });
-    case types.CURRENT_EVENT:
-      return Object.assign({}, state, { currentEvent: action.currentEvent });
     default:
       return state;
   }
 }
 
-export default events;
+// export default events;
