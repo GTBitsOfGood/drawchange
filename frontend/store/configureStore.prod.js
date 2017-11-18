@@ -1,9 +1,21 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducers';
+// NPM Imports
+import { createStore, compose, applyMiddleware } from 'redux';
+import createHistory from 'history/createBrowserHistory';
+import { routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
 
-export function configureStore(initialState) {
+// Local Imports & Constants
+import rootReducer from '../reducers/index';
+import { loadState } from './sessionStorage';
+const persistedState = loadState();
+
+export function configureStore(history) {
+  const middleware = [thunk, routerMiddleware(history)];
   return createStore(
-        rootReducer,
-        initialState
-    );
+    rootReducer,
+    persistedState,
+    compose(applyMiddleware(...middleware))
+  );
 }
+
+export const history = createHistory();

@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
+import { reducer } from 'react-redux-sweetalert';
+import { routerReducer as router } from 'react-router-redux';
 import events from './events.js';
 import current from './current.js';
-// function rootReducer(state = {name: 'Horizons'}, action) {
-//   switch (action.type) {
-//     default:
-//       return state;
-//   }
-// }
-const rootReducer = combineReducers({
-  events,
-  current
-});
 
-export default rootReducer;
+import auth from './auth';
+
+export default combineReducers({
+  auth,
+  events,
+  current,
+  sweetalert: reducer,
+  router,
+});

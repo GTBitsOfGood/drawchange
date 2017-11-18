@@ -48,7 +48,6 @@ let id = 'too slow';
 describe('User Model Test Suite', () => {
   describe('Create User...', () => {
     it('works w/ all fields', (done) => {
-
       const testUser = new User(PROPER_FIELDS);
       testUser.save(done);
     });
@@ -87,7 +86,7 @@ describe('User Model Test Suite', () => {
 // Start API Testing (CRUD)
 describe('User RESTful Endpoints Test Suite', () => {
   describe('POST /api/users/', () => {
-    it ('works when proper body sent', (done) => {
+    it('works when proper body sent', (done) => {
       chai.request(server)
         .post('/api/users/')
         .send(PROPER_FIELDS)
@@ -98,8 +97,8 @@ describe('User RESTful Endpoints Test Suite', () => {
           id = res.body.user._id;
           return done();
         });
-    })
-    it ('fails when proper body not sent', (done) => {
+    });
+    it('fails when proper body not sent', (done) => {
       chai.request(server)
         .post('/api/users/')
         .send(BAD_FIELDS)
@@ -107,14 +106,14 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.should.have.status(400);
           return done();
         });
-    })
-  })
+    });
+  });
 
   // trick server into thinking we are logged in...
   server.request.user = true;
 
   describe('GET /api/users/', () => {
-    it ('works with no body sent', (done) => {
+    it('works with no body sent', (done) => {
       chai.request(server)
         .get('/api/users/')
         .end((err, res) => {
@@ -123,11 +122,11 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.users.should.be.a('array');
           return done();
         });
-    })
-  })
+    });
+  });
 
   describe('GET /api/users/:id', () => {
-    it ('works with a valid id', (done) => {
+    it('works with a valid id', (done) => {
       chai.request(server)
         .get(`/api/users/${id}`)
         .end((err, res) => {
@@ -136,9 +135,9 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.user.should.be.a('object');
           return done();
         });
-    })
+    });
 
-    it ('fails with a valid id that is not in DB', (done) => {
+    it('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
         .get(`/api/users/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
@@ -146,9 +145,9 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
+    });
 
-    it ('fails with an invalid id ', (done) => {
+    it('fails with an invalid id ', (done) => {
       chai.request(server)
         .get(`/api/users/asdfaksdlj213lkj`)
         .end((err, res) => {
@@ -156,11 +155,11 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
-  })
+    });
+  });
 
   describe('PUT /api/users/:id', () => {
-    it ('works with a valid id', (done) => {
+    it('works with a valid id', (done) => {
       chai.request(server)
         .put(`/api/users/${id}`)
         .send(UPDATE_FIELDS)
@@ -200,7 +199,8 @@ describe('User RESTful Endpoints Test Suite', () => {
         });
     });
 
-    it ('fails with an valid id that is not in DB', (done) => {
+
+    it('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
         .put(`/api/users/59f6130e6f22a25c35d72ce9`)
         .send(UPDATE_FIELDS)
@@ -209,9 +209,9 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
+    });
 
-    it ('fails with an invalid id ', (done) => {
+    it('fails with an invalid id ', (done) => {
       chai.request(server)
         .put(`/api/users/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
@@ -220,13 +220,11 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
-
-
-  })
+    });
+  });
 
   describe('DELETE /api/users/:id', () => {
-    it ('fails with a valid id that is not in DB', (done) => {
+    it('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
         .delete(`/api/users/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
@@ -234,9 +232,9 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
+    });
 
-    it ('fails with an invalid id ', (done) => {
+    it('fails with an invalid id ', (done) => {
       chai.request(server)
         .delete(`/api/users/asdfaksdlj213lkj`)
         .end((err, res) => {
@@ -244,7 +242,7 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           return done();
         });
-    })
+    });
     it('works with a valid id', (done) => {
       chai.request(server)
         .delete(`/api/users/${id}`)
@@ -254,6 +252,6 @@ describe('User RESTful Endpoints Test Suite', () => {
           res.body.removed.should.be.a('object');
           return done();
         });
-    })
-  })
-})
+    });
+  });
+});
