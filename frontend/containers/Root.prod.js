@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-// import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
 // Local Imports
 import AppContainer from './AppContainer.js';
