@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // Local Imports
 import * as eventActions from '../actions/events.js';
@@ -12,7 +13,7 @@ import LeftPane from '../components/LeftPane';
 import MainPane from '../components/MainPane';
 import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
-
+import EventContainer from '../components/EventContainer';
 class TestContainer extends React.Component {
 
   constructor(props) {
@@ -59,71 +60,14 @@ class TestContainer extends React.Component {
     }];
   }
 
-  renderItem() {
-    console.log('asdf');
-    // console.log(this.props.events.currentEvent);
-    console.log(this.props.currentEvent);
-    if (this.props.currentEvent !== null) {
-      return this.itemList.find((item) => {
-        return item._id === this.props.currentEvent;
-      });
-    }
-    return null;
-  }
   render() {
-    let mainItem;
     return (
-      <div className="Item">
-        <ItemList
-            title="Your Events"
-            items={
-            [{
-              "name": "event1",
-              "date": "11/11/2017",
-              "location": "location1",
-              "description": "description1",
-              "contact": "contact1",
-              "_id": "in329894322",
-              "volunteers": [],
-              "max_volunteers": null
-            },
-            {
-              "name": "event2",
-              "date": "11/12/2017",
-              "location": "location2",
-              "description": "description2",
-              "contact": "contact2",
-              "_id": "in329894323",
-              "volunteers": [],
-              "max_volunteers": null
-            },
-            {
-              "name": "event3",
-              "date": "11/13/2017",
-              "location": "location3",
-              "description": "description3",
-              "contact": "contact3",
-              "_id": "in329894324",
-              "volunteers": [],
-              "max_volunteers": null
-            },
-            {
-              "name": "event4",
-              "date": "11/14/2017",
-              "location": "location4",
-              "description": "description4",
-              "contact": "contact4",
-              "_id": "in329894325",
-              "volunteers": [],
-              "max_volunteers": null
-            }]
-            }
-            updateCurrentEvent={this.props.eventActions.updateCurrentEvent}
-          />
-            <div>
-                 <MainPane currentItem = {this.renderItem()}/>
-            </div>
-      </div>
+            <Route path="/EventScreen"
+                render={
+                    () =>  (<EventContainer
+                            itemList = {this.itemList}
+                            updateCurrentEvent = {this.props.eventActions.updateCurrentEvent}
+                            currentEvent = {this.props.currentEvent}/>)}/>
     );
   }
 }

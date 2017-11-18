@@ -1,23 +1,23 @@
 import React from 'react';
 import '../assets/stylesheets/ItemDisplay.css';
-
-var LeftPane = React.createClass({
-  render: function() {
-    if (this.props.children) {
-      return (
-        <div className="LeftPane">
-          { this.props.children };
-        </div>
-      );
-    }
-    
-      return(
-        <div className="LeftPane LeftPane--empty">
-          { this.props.placeholder };
-        </div>
-      );
-    
+import ItemList from '.'
+class LeftPane extends React.Component {
+  constructor(props) {
+    super(props);
   }
-});
 
-export default LeftPane;
+  render() {
+    return (
+          <div>
+              <h1>
+                  Item Page
+                </h1>
+                <div>
+                    <ItemList
+                        items = {this.props.itemList}
+
+
+            </div>
+      );
+  }
+}
