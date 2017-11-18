@@ -32,6 +32,7 @@ class Registration extends Component {
       });
     }
   }
+
   _handleInputChange(e) {
     switch(e.target.name) {
       case 'email':
