@@ -21,6 +21,19 @@ export function updateEventDescription(description) {
   return { type: types.EVENT_DESCRIPTION, description };
 }
 
+export function updateEventArray(events) {
+  return { type: types.UPDATE_EVENT_ARRAY, events};
+}
+
+export function onLoadEvent() {
+  return(dispatch) => {
+    axios.get('/api/events')
+        .then(({data}) => {
+          dispatch(updateEventArray(data.events));
+        });
+  };
+}
+
 export function onSignUp() {
   return (dispatch, getState) => {
     const volunteer_Id = [];

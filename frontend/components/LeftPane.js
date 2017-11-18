@@ -2,8 +2,8 @@ import React from 'react';
 import '../assets/stylesheets/ItemDisplay.css';
 import PropTypes from 'prop-types';
 
-import ItemList from './ItemList';
-
+import EventList from './EventList';
+import VolunteersList from './VolunteersList';
 class LeftPane extends React.Component {
   constructor(props) {
     super(props);
@@ -18,23 +18,14 @@ class LeftPane extends React.Component {
               <h1>
                   Item Page
                 </h1>
-                {this.isEvent && <ItemList
+                {this.isEvent && <EventList
                         items = {this.props.itemList}
                         updateCurrentEvent = {this.props.updateCurrentEvent}
                         view = {this.props.view}/>}
-                {this.isVolunteer && <ItemList
+                {this.isVolunteer && <VolunteersList
                         items = {this.props.itemList}
-                        updateCurrentEvent = {this.props.updateCurrentEvent}
+                        updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
                         view = {this.props.view}/>}
-
-                {/* <div>
-
-                    <ItemList
-                        items = {this.props.itemList}
-                        updateCurrentEvent = {this.props.updateCurrentEvent}
-                        view = {this.props.view}
-                    />
-                </div> */}
             </div>
     );
   }
@@ -43,5 +34,8 @@ class LeftPane extends React.Component {
 LeftPane.propTypes = {
   itemList: PropTypes.array,
   updateCurrentEvent: PropTypes.func,
+  updateCurrentVolunteer: PropTypes.func,
   view: PropTypes.string
 };
+
+export default LeftPane;

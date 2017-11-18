@@ -18,46 +18,6 @@ class TestContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.itemList = [{
-      "name": "event1",
-      "date": "11/11/2017",
-      "location": "location1",
-      "description": "description1",
-      "contact": "contact1",
-      "_id": "in329894322",
-      "volunteers": [],
-      "max_volunteers": null
-    },
-    {
-      "name": "event2",
-      "date": "11/12/2017",
-      "location": "location2",
-      "description": "description2",
-      "contact": "contact2",
-      "_id": "in329894323",
-      "volunteers": [],
-      "max_volunteers": null
-    },
-    {
-      "name": "event3",
-      "date": "11/13/2017",
-      "location": "location3",
-      "description": "description3",
-      "contact": "contact3",
-      "_id": "in329894324",
-      "volunteers": [],
-      "max_volunteers": null
-    },
-    {
-      "name": "event4",
-      "date": "11/14/2017",
-      "location": "location4",
-      "description": "description4",
-      "contact": "contact4",
-      "_id": "in329894325",
-      "volunteers": [],
-      "max_volunteers": null
-    }];
   }
 
   render() {

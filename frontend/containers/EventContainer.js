@@ -6,21 +6,23 @@ import { bindActionCreators } from 'redux';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
+import * as eventActions from '../actions/events.js';
 // import * as volunteerActions from '../actions/volunteers.js';
 import LeftPane from '../components/LeftPane';
 import MainPane from '../components/MainPane';
-import ItemList from '../components/ItemList';
-import EventView from '../components/EventView';
 
 class EventContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.itemList = this.props.itemList;
   }
 
+  componentWillMount() {
+    this.props.eventActions.onLoadEvent();
+  }
   renderItem() {
     if (this.props.currentEvent !== null) {
-      return this.itemList.find((item) => {
+      return this.props.eventList.find((item) => {
+        console.log(item._id);
         return item._id === this.props.currentEvent;
       });
     }
@@ -31,12 +33,12 @@ class EventContainer extends React.Component {
     return(
         <div>
           <LeftPane
-                itemList = {this.itemList}
-                updateCurrentEvent = {this.props.updateCurrentEvent}
+                itemList = {this.props.eventList}
+                updateCurrentEvent = {this.props.eventActions.updateCurrentEvent}
                 view = "Event"
                 />
          <MainPane
-                currentEvent = {this.renderItem()}/>
+                currentItem = {this.renderItem()}/>
         </div>
     );
   }
@@ -51,4 +53,38 @@ EventContainer.propTypes = {
 };
 
 
-export default EventContainer;
+EventContainer.propTypes = {
+    //   currentView: PropTypes.string,
+  events: PropTypes.object,
+  volunteers: PropTypes.array,
+  eventMode: PropTypes.string,
+  currentEvent: PropTypes.string,
+  currentVolunteer: PropTypes.string,
+  eventActions: PropTypes.object,
+  onLoadEvent: PropTypes.func,
+  eventList: PropTypes.array
+};
+
+const mapStateToProps = ( state, ownProps ) => {
+  return {
+        // name: state.name
+        // currentView: state.currentView,
+    currentEvent: state.current.currentEvent,
+    eventList: state.events.list
+        // volunteers: state.volunteers, // volunteer data
+        // eventMode: state.eventMode, // view, edit, or create
+        // currentVolunteer: state.current.currentVolunteer, // Volunteer id
+  };
+};
+
+const mapDispatchToProps = ( dispatch ) => {
+  return {
+    eventActions: bindActionCreators( eventActions, dispatch ),
+        // volunteerActions: bindActionCreators( volunteerActions, dispatch )
+  };
+};
+
+export default connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(EventContainer);

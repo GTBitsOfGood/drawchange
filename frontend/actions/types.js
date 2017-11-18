@@ -1,13 +1,12 @@
 /* Action types */
 export const CURRENT_ITEM = "CURRENT_ITEM";
-
-
+export const UPDATE_EVENT_ARRAY = "UPDATE_EVENT_ARRAY";
+export const UPDATE_VOLUNTEER_ARRAY = "UPDATE_VOLUNTEER_ARRAY";
 // Volunteer values
 
 export const VOLUNTEER_STATUS = "VOLUNTEER_STATUS";
 export const CURRENT_VOLUNTEER = "CURRENT_VOLUNTEER";
-
-
+// EVENT VALUES
 export const EVENT_NAME = Symbol("EVENT_NAME");
 export const EVENT_DATE = Symbol("EVENT_DATE");
 export const EVENT_LOCATION = Symbol("EVENT_LOCATION");

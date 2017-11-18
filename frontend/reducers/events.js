@@ -8,7 +8,8 @@ const initialState = {
   "description": "",
   "contact": "",
   "volunteers": [],
-  "max_volunteers": ""
+  "max_volunteers": "",
+  "list": []
 };
 export default function events(state = initialState, action) {
   console.log('aksdfaksdjhfa');
@@ -21,6 +22,8 @@ export default function events(state = initialState, action) {
       return Object.assign({}, state, { location: action.location });
     case types.EVENT_DESCRIPTION:
       return Object.assign({}, state, { description: action.description });
+    case types.UPDATE_EVENT_ARRAY:
+      return Object.assign({}, state, {list: action.events});
     default:
       return state;
   }
