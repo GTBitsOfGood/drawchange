@@ -33,6 +33,7 @@ class EventContainer extends React.Component {
           <LeftPane
                 itemList = {this.itemList}
                 updateCurrentEvent = {this.props.updateCurrentEvent}
+                view = "Event"
                 />
          <MainPane
                 currentEvent = {this.renderItem()}/>

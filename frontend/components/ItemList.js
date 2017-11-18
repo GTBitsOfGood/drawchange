@@ -12,7 +12,8 @@ class ItemList extends React.Component {
   renderItem() {
     return (
       <div className="ItemList">
-        { this.props.items.map((item) => (
+        {
+         this.props.items.map((item) => (
           <InlineItem
             name = {item.name}
             date = {item.date}
@@ -42,9 +43,7 @@ class ItemList extends React.Component {
 
 ItemList.propTypes = {
   items: PropTypes.array,
-  title: PropTypes.string,
   updateCurrentEvent: PropTypes.func,
-  updateRenderItem: PropTypes.func
 };
 
 export default ItemList;

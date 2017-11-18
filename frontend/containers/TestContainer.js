@@ -13,7 +13,7 @@ import LeftPane from '../components/LeftPane';
 import MainPane from '../components/MainPane';
 import ItemList from '../components/ItemList';
 import EventView from '../components/EventView';
-import EventContainer from '../components/EventContainer';
+import EventContainer from './EventContainer';
 class TestContainer extends React.Component {
 
   constructor(props) {
