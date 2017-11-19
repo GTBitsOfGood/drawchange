@@ -1,18 +1,28 @@
 // const cron = require('node-cron');
-// const axios = require('axios');
+const mongoose = require('mongoose');
+const Email = require('../models/email');
+const EmailService = require('./emailService');
+require('dotenv').config(); // load env vars
 
-// const server = require('./server');
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.Promise = global.Promise;
 
-// console.log("running");
-// axios.get('http://localhost:3000/api/email')
-// .then((response) => {
-//   console.log(response.data);
-// })
-// .catch((error) => {
-//   console.log(error);
-// });
+Email.find({is_sent: false})
+  .then(emails => {
+    for (let i = 0; i < emails.length; i++) {
+      EmailService.sendEmail(emails[i])
+        .then(data => {
+          if (data.emailSent) {
+            const query = {_id: emails[i]._id};
+            Email.update(query, {
+              is_sent: true,
+              sent_on: Date.now()
+            }, (err, affected, resp) => {
+              console.log(err);
+            });
+          }
+        });
+    }
+  });
 
-
-// // cron.schedule('* * * * *', () => {
-// //   console.log('test');
-// // });
