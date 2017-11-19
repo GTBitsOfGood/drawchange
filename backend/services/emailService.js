@@ -1,22 +1,16 @@
 'use strict';
 const nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
+const nodemailerSendgrid = require('nodemailer-sendgrid');
 
 // Local Imports & Constants
 require('dotenv').config(); // load env vars
 
 function sendEmail(email) {
   return new Promise((resolve, reject) => {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    nodemailer.createTestAccount((err, account) => {
       // Sendgrid info for SMTP
-      const options = {
-        auth: {
-          user: process.env.SENDGRID_USERNAME,
-          pass: process.env.SENDGRID_PASSWORD
-        }
-      };
+    const options = {
+      apiKey: process.env.SENDGRID_API_KEY
+    };
 
       // Settings for testing with local smtp
       // const transporter = nodemailer.createTransport({
@@ -28,29 +22,28 @@ function sendEmail(email) {
       //   // secure: false, // true for 465, false for other ports
       // });
 
-      const transporter = nodemailer.createTransport(sgTransport(options));
+    const transporter = nodemailer.createTransport(nodemailerSendgrid(options));
 
       // setup email data with unicode symbols
-      const mailOptions = {
-        from: email.from, // sender address
-        to: parseRecipientEmails(email.recipients), // list of receivers
-        subject: email.subject, // Subject line
+    const mailOptions = {
+      from: email.from, // sender address
+      to: parseRecipientEmails(email.recipients), // list of receivers
+      subject: email.subject, // Subject line
       // text: "<b> test </b>", // plain text body
-        html: email.text // html body
-      };
+      html: email.text // html body
+    };
 
       // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error) => {
-        if (error) {
-          return reject({
-            errorMessage: error,
-            emailSent: false
-          });
-        }
-
-        resolve({
-          emailSent: true
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        return reject({
+          errorMessage: error,
+          emailSent: false
         });
+      }
+
+      resolve({
+        emailSent: true
       });
     });
   });
