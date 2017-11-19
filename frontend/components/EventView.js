@@ -1,6 +1,6 @@
 import React from 'react';
 
-var EventView = React.createClass({
+const EventView = React.createClass({
   render() {
     return (
 			<div className="EventView">

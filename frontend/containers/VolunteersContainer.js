@@ -16,40 +16,36 @@ class VolunteersContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.props.volunteerActions.onLoadVolunteers();
-    console.log(this.props.volunteersList);
+    this.props.onLoadVolunteers();
   }
 
+  // eventually we should move this logic to redux...
   renderItem() {
     if (this.props.currentVolunteer !== null) {
-      return this.props.volunteersList.find((item) => {
-        console.log(item._id);
-        return item._id === this.props.currentVolunteer;
-      });
+      return this.props.volunteersList.find((item) => item._id === this.props.currentVolunteer);
     }
     return null;
   }
 
   render() {
     return(
-            <div>
-                <LeftPane
-                    itemList = {this.props.volunteersList}
-                    updateCurrentVolunteer = {this.props.volunteerActions.updateCurrentVolunteer}
-                    view = "Volunteer"
-                />
-                <MainPane
-                    currentItem = {this.renderItem()}/>
-            </div>
+      <div>
+        <LeftPane
+            itemList = {this.props.volunteersList}
+            updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
+            view = "Volunteer"
+        />
+        <MainPane currentItem = {this.renderItem()}/>
+      </div>
     );
   }
 }
 
 VolunteersContainer.propTypes = {
+  onLoadVolunteers: PropTypes.func,
   currentVolunteer: PropTypes.string,
   volunteersList: PropTypes.array,
-  updateCurrentVolunteer: PropTypes.array,
-  volunteerActions: PropTypes.object,
+  updateCurrentVolunteer: PropTypes.func,
 };
 
 const mapStateToProps = ( state, ownProps ) => {
@@ -68,13 +64,7 @@ const mapStateToProps = ( state, ownProps ) => {
 };
 
 const mapDispatchToProps = ( dispatch ) => {
-  return {
-    volunteerActions: bindActionCreators( volunteerActions, dispatch ),
-          // volunteerActions: bindActionCreators( volunteerActions, dispatch )
-  };
+  return bindActionCreators( volunteerActions, dispatch );
 };
 
-export default connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(VolunteersContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(VolunteersContainer);

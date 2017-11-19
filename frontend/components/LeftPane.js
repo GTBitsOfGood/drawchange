@@ -14,19 +14,17 @@ class LeftPane extends React.Component {
 
   render() {
     return (
-          <div>
-              <h1>
-                  Item Page
-                </h1>
-                {this.isEvent && <EventList
-                        items = {this.props.itemList}
-                        updateCurrentEvent = {this.props.updateCurrentEvent}
-                        view = {this.props.view}/>}
-                {this.isVolunteer && <VolunteersList
-                        items = {this.props.itemList}
-                        updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-                        view = {this.props.view}/>}
-            </div>
+      <div>
+        <h1>Item Page</h1>
+        {this.isEvent && <EventList
+                items = {this.props.itemList}
+                updateCurrentEvent = {this.props.updateCurrentEvent}
+                view = {this.props.view}/>}
+        {this.isVolunteer && <VolunteersList
+                items = {this.props.itemList}
+                updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
+                view = {this.props.view}/>}
+        </div>
     );
   }
 }

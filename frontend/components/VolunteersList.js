@@ -15,6 +15,7 @@ class VolunteersList extends React.Component {
         {
          this.props.items.map((item) => (
           <InlineVolunteer
+            key={item._id}
             first_name = {item.first_name}
             last_name = {item.last_name}
             street_address = {item.street_address}

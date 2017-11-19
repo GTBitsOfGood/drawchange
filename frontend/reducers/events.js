@@ -12,7 +12,6 @@ const initialState = {
   "list": []
 };
 export default function events(state = initialState, action) {
-  console.log('aksdfaksdjhfa');
   switch(action.type) {
     case types.EVENT_NAME:
       return Object.assign({}, state, { name: action.name });
@@ -28,5 +27,3 @@ export default function events(state = initialState, action) {
       return state;
   }
 }
-
-// export default events;

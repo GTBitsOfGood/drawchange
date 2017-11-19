@@ -17,7 +17,7 @@ export function onLoadVolunteers() {
   return(dispatch) => {
     axios.get('/api/users')
             .then(({data}) => {
-              console.log(data.users);
+              // console.log(data.users);
               dispatch(updateVolunteerArray(data.users));
             });
   };

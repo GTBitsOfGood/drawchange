@@ -1,46 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import InlineItem from './InlineItem';
+import InlineEvent from './InlineEvent';
 import '../assets/stylesheets/ItemDisplay.css';
 
-class ItemList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  renderItem() {
-    return (
-      <div className="ItemList">
-        {
-         this.props.items.map((item) => (
-          <InlineItem
-            name = {item.name}
-            date = {item.date}
-            location = {item.location}
-            description = {item.description}
-            id = {item._id}
-            updateCurrentEvent = {this.props.updateCurrentEvent}
-          />
-        )) }
-      </div>
-    );
-  }
+const EventList = ({items, updateCurrentEvent}) => (
+  <div className="ItemList">
+    {
+      items.map(item => (
+        <InlineEvent
+          key={item._id}
+          name={item.name}
+          date={item.date}
+          location={item.location}
+          description={item.description}
+          id={item._id}
+          updateCurrentEvent={updateCurrentEvent}
+        />
+    ))}
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-      <div>
-          {this.renderItem()}
-      </div>
-      </div>
-    );
-  }
-}
-
-ItemList.propTypes = {
+EventList.propTypes = {
   items: PropTypes.array,
   updateCurrentEvent: PropTypes.func,
 };
 
-export default ItemList;
+export default EventList;

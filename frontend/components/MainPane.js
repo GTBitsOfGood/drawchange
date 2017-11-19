@@ -1,8 +1,18 @@
 import PropTypes from 'prop-types';
-
-
 import React from 'react';
 import '../assets/stylesheets/ItemDisplay.css';
+
+const MainPane = ({ currentItem }) => (
+  <div className="spaceside">
+    <h1>{currentItem ? currentItem._id : "None Selected"}</h1>
+  </div>
+);
+
+MainPane.propTypes = {
+  currentItem: PropTypes.object
+};
+
+export default MainPane;
 
 // var MainPane = React.createClass({
 //   render: function() {
@@ -25,19 +35,15 @@ import '../assets/stylesheets/ItemDisplay.css';
 
 // export default MainPane;
 
-class MainPane extends React.Component {
-  render() {
-    console.log(this.props.currentItem);
-    return (
-              <div className="spaceside">
-                  <h1>{ this.props.currentItem ? this.props.currentItem._id : "None Selected" }</h1>
-              </div>
-    );
-  }
-  }
+// class MainPane extends React.Component {
+//   render() {
+//     return (
+//       <div className="spaceside">
+//           <h1>{ this.props.currentItem ? this.props.currentItem._id : "None Selected" }</h1>
+//       </div>
+//     );
+//   }
+//   }
 
-MainPane.propTypes = {
-  currentItem: PropTypes.any
-};
 
-export default MainPane;
+// export default MainPane;
