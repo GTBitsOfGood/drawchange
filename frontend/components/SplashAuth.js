@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { Panel, Button } from 'react-bootstrap';
 
-import Login from '../containers/Login';
-import Registration from '../containers/Registration';
+import LoginForm from '../containers/forms/LoginForm';
+import RegistrationForm from '../containers/forms/RegistrationForm';
+
 
 class SplashAuth extends Component {
   constructor() {
@@ -39,7 +40,7 @@ class SplashAuth extends Component {
     return (
       <div>
         <Panel header={<h3>{this.state.header}</h3>} bsStyle="success">
-          { this.state.login ? <Login /> : <Registration/> }
+          { this.state.login ? <LoginForm /> : <RegistrationForm /> }
           <a href={''} onClick={this._switchState}>
             Click here to {this.state.text}
           </a>

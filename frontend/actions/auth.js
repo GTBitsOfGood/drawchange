@@ -5,46 +5,11 @@ import axios from 'axios';
 import * as types from './types';
 
 /*
- * Action Creators for controlled input fields
- */
-export function firstNameChange(first_name) {
-  return { type: types.FIRST_NAME_CHANGE, first_name };
-}
-export function lastNameChange(last_name) {
-  return { type: types.LAST_NAME_CHANGE, last_name };
-}
-export function emailChange(email) {
-  return { type: types.EMAIL_CHANGE, email };
-}
-export function passwordChange(password) {
-  return { type: types.PASSWORD_CHANGE, password };
-}
-export function phoneNumberChange(phone_number) {
-  return { type: types.PHONE_NUMBER_CHANGE, phone_number };
-}
-export function streetAddressChange(street_address) {
-  return { type: types.STREET_ADDRESS_CHANGE, street_address };
-}
-export function stateChange(state) {
-  return { type: types.STATE_CHANGE, state };
-}
-export function cityChange(city) {
-  return { type: types.CITY_CHANGE, city };
-}
-export function zipCodeChange(zip_code) {
-  return { type: types.ZIP_CODE_CHANGE, zip_code };
-}
-export function dateOfBirthChange(date_of_birth) {
-  return { type: types.DATE_OF_BIRTH_CHANGE, date_of_birth };
-}
-
-
-/*
  * Login Async Action Creator
  */
 export function login() {
   return (dispatch, getState) => { // using Thunks
-    const { email, password } = getState().auth;
+    const { email, password } = getState().myForms.user;
     axios.post('/api/login', {  email, password })
       .then(resp => {
         dispatch(loginGenerator(resp.data.user));
@@ -59,7 +24,7 @@ export function login() {
 export function register() {
   return (dispatch, getState) => {
     const { email, password, first_name, last_name, date_of_birth,
-            street_address, city, state, zip_code, phone_number } = getState().auth;
+            street_address, city, state, zip_code, phone_number } = getState().myForms.user;
     axios.post('/api/users', { email, password, first_name, last_name,
       date_of_birth, street_address, city, state, zip_code, phone_number })
       .then(resp => {
