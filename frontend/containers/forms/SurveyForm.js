@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { register } from '../../actions/auth';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 
-class RegistrationForm extends Component {
+class SurveyForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
@@ -33,56 +33,56 @@ class RegistrationForm extends Component {
           onSubmit={this.props.register}
         >
           <label htmlFor=".email">Email:</label>
-          <br/>
+          <br />
           <Control.text type="email" model=".email" id=".email" />
-          <br/>
+          <br />
 
           <label htmlFor=".password">Password:</label>
-          <br/>
+          <br />
           <Control.text type="password" model=".password" id=".password" />
-          <br/>
+          <br />
 
           <label htmlFor=".first_name">First Name:</label>
-          <br/>
+          <br />
           <Control.text model=".first_name" id=".first_name" />
-          <br/>
+          <br />
 
           <label htmlFor=".last_name">Last Name:</label>
-          <br/>
+          <br />
           <Control.text model=".last_name" id=".last_name" />
-          <br/>
+          <br />
 
           <label htmlFor=".phone_number">Phone Number:</label>
-          <br/>
+          <br />
           <Control.text type="tel" model=".phone_number" id=".phone_number" />
-          <br/>
+          <br />
 
           <label htmlFor=".date_of_birth">Date of Birth:</label>
-          <br/>
+          <br />
           <Control.text type="date" model=".date_of_birth" id=".date_of_birth" />
-          <br/>
+          <br />
 
           <label htmlFor=".street_address">Address:</label>
-          <br/>
+          <br />
           <Control.text model=".street_address" id=".street_address" />
-          <br/>
+          <br />
 
           <label htmlFor=".city">City:</label>
-          <br/>
+          <br />
           <Control.text model=".city" id=".city" />
-          <br/>
+          <br />
 
           <label htmlFor=".state">State:</label>
-          <br/>
+          <br />
           <Control.text model=".state" id=".state" />
-          <br/>
+          <br />
 
           <label htmlFor=".zip_code">Zip Code:</label>
-          <br/>
+          <br />
           <Control.text model=".zip_code" id=".zip_code" />
-          <br/>
+          <br />
 
-          <br/>
+          <br />
           <button type="submit">
             Register!
           </button>
@@ -109,4 +109,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SurveyForm);

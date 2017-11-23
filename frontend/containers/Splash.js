@@ -5,6 +5,7 @@ import { Jumbotron, Col, Panel } from 'react-bootstrap';
 // Local Imports
 import SplashInfo from '../components/SplashInfo';
 import SplashAuth from '../components/SplashAuth';
+import LoginForm from './forms/LoginForm';
 
 // Home component
 const Splash = () => (
@@ -16,12 +17,14 @@ const Splash = () => (
       </div>
     </Jumbotron>
     <Col md={7}>
-      <SplashInfo />
+        <SplashInfo />
       {/* Add this for insta feed http://instafeedjs.com/ */}
 
     </Col>
     <Col md={5}>
-      <SplashAuth/>
+      <Panel header={<h3>Login</h3>} bsStyle="success">
+        <LoginForm/>
+      </Panel>
     </Col>
   </div>
 );
