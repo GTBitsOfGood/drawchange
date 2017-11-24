@@ -9,7 +9,8 @@ const initialState = {
   "contact": "",
   "volunteers": [],
   "max_volunteers": "",
-  "list": []
+  "list": [],
+  "createEvent": "false",
 };
 export default function events(state = initialState, action) {
   switch(action.type) {
@@ -23,6 +24,8 @@ export default function events(state = initialState, action) {
       return Object.assign({}, state, { description: action.description });
     case types.UPDATE_EVENT_ARRAY:
       return Object.assign({}, state, {list: action.events});
+    case types.CREATE_EVENT:
+      return Object.assign({}, state, {createEvent: action.createEvent});
     default:
       return state;
   }

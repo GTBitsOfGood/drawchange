@@ -25,6 +25,10 @@ export function updateEventArray(events) {
   return { type: types.UPDATE_EVENT_ARRAY, events};
 }
 
+export function onCreateEvent(createEvent) {
+  return { type: types.CREATE_EVENT, createEvent};
+}
+
 export function onLoadEvent() {
   return(dispatch) => {
     axios.get('/api/events')

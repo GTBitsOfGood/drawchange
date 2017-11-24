@@ -2,17 +2,42 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import '../assets/stylesheets/ItemDisplay.css';
 
-const MainPane = ({ currentItem }) => (
-  <div className="spaceside">
-    <h1>{currentItem ? currentItem._id : "None Selected"}</h1>
-  </div>
-);
+class MainPane extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  _createNewEvent() {
+    if(this.props.newEvent === "true") {
+      <h1> yay </h1>;
+    }  else {
+      this.props.currentItem ? this.props.currentItem._id : "None Selected";
+    }
+  }
+
+  render() {
+    return (
+        <div className="spaceside">
+              <h1>{this._createNewEvent()}</h1>
+        </div>
+    );
+  }
+}
 
 MainPane.propTypes = {
+  newEvent: PropTypes.string,
   currentItem: PropTypes.object
 };
 
 export default MainPane;
+// const MainPane = ({ currentItem }) => (
+//   <div className="spaceside">
+//     <h1>{_createNewEvent()}</h1>
+//   </div>
+// );
+
+
+// export default MainPane;
 
 // var MainPane = React.createClass({
 //   render: function() {

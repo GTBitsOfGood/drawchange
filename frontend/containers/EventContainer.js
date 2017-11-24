@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import {Button} from 'react-bootstrap';
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
 import LeftPane from '../components/LeftPane';
 import MainPane from '../components/MainPane';
 
+
 class EventContainer extends React.Component {
+
+  constructor(props) {
+    super(props);
+    var newEvent = false;
+  }
   componentWillMount() {
     this.props.onLoadEvent();
   }
@@ -26,12 +32,16 @@ class EventContainer extends React.Component {
   render() {
     return(
       <div>
+          <div>
         <LeftPane
           itemList = {this.props.eventList}
           updateCurrentEvent = {this.props.updateCurrentEvent}
           view = "Event"
         />
-        <MainPane currentItem = {this.renderItem()}/>
+        <MainPane currentItem = {this.renderItem()}
+            newEvent = {this.props.createEvent}/>
+        </div>
+        <Button onClick={this.props.onCreateEvent("true")}>New Event</Button>
       </div>
     );
   }
@@ -46,18 +56,16 @@ EventContainer.propTypes = {
   volunteers: PropTypes.array,
   eventMode: PropTypes.string,
   currentVolunteer: PropTypes.string,
-  eventList: PropTypes.array
+  eventList: PropTypes.array,
+  onCreateEvent: PropTypes.func,
+  createEvent: PropTypes.string
 };
 
 const mapStateToProps = ( state, ownProps ) => {
   return {
-        // name: state.name
-        // currentView: state.currentView,
     currentEvent: state.current.currentEvent,
-    eventList: state.events.list
-        // volunteers: state.volunteers, // volunteer data
-        // eventMode: state.eventMode, // view, edit, or create
-        // currentVolunteer: state.current.currentVolunteer, // Volunteer id
+    eventList: state.events.list,
+    createEvent: state.events.createEvent
   };
 };
 
