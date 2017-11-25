@@ -19,7 +19,7 @@ const PROPER_FIELDS = {
     last_name: 'Burdell',
     password: 'testpass123',
     role: 'admin',
-    email: 'gburdell4@gatech.edu',
+    email: 'gburdell5@gatech.edu',
     street_address: '123 Cherry Lane',
     city: 'Atlanta',
     state: 'Georgia',
@@ -290,13 +290,15 @@ describe('User RESTful Endpoints Test Suite', () => {
     it('works when a query param (add event) is passed', (done) => {
       chai.request(server)
         .put(`/api/users/${id}?action=appendEvents`)
-        .send({ events: ['507f191e810c19729de860ea', '507f191e810c19729de860eb']})
+        .send({ events: ['507f191e810c19729de860ec', '507f191e810c19729de860ea', '507f191e810c19729de860eb']})
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('user');
           res.body.user.should.be.a('object');
           const eventArr = res.body.user.events;
           expect(eventArr).to.be.containing('507f191e810c19729de860ea');
+          expect(eventArr).to.be.containing('507f191e810c19729de860eb');
+          expect(eventArr).to.be.containing('507f191e810c19729de860ec');
           return done();
         });
     });
@@ -312,6 +314,7 @@ describe('User RESTful Endpoints Test Suite', () => {
           const eventArr = res.body.user.events;
           expect(eventArr).not.to.be.containing('507f191e810c19729de860ea');
           expect(eventArr).to.be.containing('507f191e810c19729de860eb');
+          expect(eventArr).to.be.containing('507f191e810c19729de860ec');
           return done();
         });
     });

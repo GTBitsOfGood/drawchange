@@ -86,12 +86,11 @@ router.post('/', [
 ], (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.mapped());
     return res.status(400).json({ errors: errors.mapped() });
   }
   const userData = matchedData(req);
   let emailInUse = false;
-  User.findOne({ email: userData.email })
+  User.findOne({ 'bio.email': userData.bio.email })
     .then(user => {
       if (user) {
         emailInUse = true;
@@ -262,7 +261,7 @@ router.route('/:id')
               userData.events.forEach(eventId => user.events.push(eventId));
               userData.events = undefined;
             } else if (req.query.action === 'removeEvents') {
-              userData.events.forEach(eventId => user.events.splice(userData.events.indexOf(eventId), 1));
+              userData.events.forEach(eventId => user.events.splice(user.events.indexOf(eventId), 1));
               userData.events = undefined;
             }
 

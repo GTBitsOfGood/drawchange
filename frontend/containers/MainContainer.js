@@ -8,10 +8,10 @@ import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
 // Local Imports
 import * as eventActions from '../actions/events.js';
 // import * as volunteerActions from '../actions/volunteers.js'
-import LeftPane from '../components/LeftPane';
-import MainPane from '../components/MainPane';
-import ItemList from '../components/ItemList';
-import EventView from '../components/EventView';
+// import LeftPane from '../components/LeftPane';
+// import MainPane from '../components/MainPane';
+// import ItemList from '../components/ItemList';
+// import EventView from '../components/EventView';
 
 // class MainContainer extends React.Component {
 const MainContainer = () => (
