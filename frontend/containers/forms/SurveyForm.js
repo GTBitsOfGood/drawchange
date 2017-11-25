@@ -4,7 +4,7 @@ import { Control, Form, actions, Fieldset } from 'react-redux-form';
 import { bindActionCreators } from 'redux';
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
-
+import Image from 'react-bootstrap/lib/Image';
 // Local Components
 import { register } from '../../actions/auth';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';

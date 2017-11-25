@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
     skills_qualifications: { type: String, required: true },
     previous_volunteer_experience: { type: String, required: true }
   },
-  availabilitY: {
+  availability: {
     weekday_mornings: { type: Boolean, default: false },
     weekday_afternoons: { type: Boolean, default: false },
     weekday_evenings: { type: Boolean, default: false },
@@ -91,7 +91,7 @@ const userSchema = mongoose.Schema({
   },
   permissions: {
     comments: { type: String},
-    references: { type: Boolean, required: true },
+    reference: { type: Boolean, required: true },
     personal_image: { type: Boolean, required: true },
     email_list: { type: Boolean, required: true },
     signature: { type: String, required: true }
