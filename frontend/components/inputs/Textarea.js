@@ -4,15 +4,15 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 
-const InputTextArea = (props) => (
+const TextArea = (props) => (
   <FormGroup >
     <ControlLabel>{props.label}</ControlLabel>
     <FormControl componentClass="textarea" {...props} />
   </FormGroup>
 );
 
-InputTextArea.propTypes = {
+TextArea.propTypes = {
   label: PropTypes.string,
 };
 
-export default InputTextArea;
+export default TextArea;

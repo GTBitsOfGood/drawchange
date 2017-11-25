@@ -11,7 +11,7 @@ import { register } from '../../actions/auth';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 
 import Text from '../../components/inputs/Text';
-import TextArea from '../../components/inputs/TextArea';
+import TextArea from '../../components/inputs/Textarea';
 import Checkbox from '../../components/inputs/Checkbox';
 class SurveyForm extends Component {
 
