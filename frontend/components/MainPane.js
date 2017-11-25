@@ -8,17 +8,18 @@ import EventCreate from './EventCreate';
 class MainPane extends React.Component {
   constructor(props) {
     super(props);
-  }
-  _createNewEvent() {
-    return (
-    {this.props.newEvent === "true" ? {EventCreate} : this.props.currentItem ? this.props.currentItem._id : "None Selected"}
-   );
+
+    this.isEvent = this.props.view === "Event" ? true : null;
+    this.isVolunteer = this.props.view === "Volunteer" ? true : null;
+    this.isNewEvent = this.props.view === "NewEvent" ? true : null;
   }
 
   render() {
     return (
         <div>
-            {this._createNewEvent()}
+            {this.isEvent && this.isNewEvent && <EventCreate/>}
+            {this.isEvent && !this.isNewEvent && this.props.currentItem ? this.props.currentItem._id : "None Selected"}
+            {this.isVolunteer && this.props.currentItem ? this.props.currentItem._id : "None Selected"}
         </div>
     );
   }
