@@ -1,21 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import React from 'react';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import FormControl from 'react-bootstrap/lib/FormControl';
 
-class InputText extends Component {
-  render() {
-    return (
-      <FormGroup >
-        <ControlLabel>{this.props.label}</ControlLabel>
-        <FormControl {...this.props} />
-      </FormGroup>
-    );
-  }
-}
-
+const InputText = (props) => (
+  <FormGroup >
+    <ControlLabel>{props.label}</ControlLabel>
+    <FormControl {...props} />
+  </FormGroup>
+);
 InputText.propTypes = {
   label: PropTypes.string,
 };
-
 
 export default InputText;

@@ -1,21 +1,15 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { Checkbox } from 'react-bootstrap';
+import Checkbox from 'react-bootstrap/lib/Checkbox';
 
-class InputCheck extends Component {
-
-  render() {
-    return (
-      <Checkbox {...this.props}>
-        {this.props.label}
-      </Checkbox>
-    );
-  }
-}
+const InputCheck = (props) => (
+  <Checkbox {...props}>
+    {props.label}
+  </Checkbox>
+);
 
 InputCheck.propTypes = {
   label: PropTypes.string
 };
-
 
 export default InputCheck;
