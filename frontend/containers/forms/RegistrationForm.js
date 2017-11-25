@@ -98,7 +98,7 @@ function mapStateToProps(state) {
     error: state.auth.registrationFailed,
     success: state.auth.registrationSuccess,
   };
-};
+}
 
 function mapDispatchToProps(dispatch) {
   return Object.assign(
