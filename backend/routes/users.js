@@ -278,16 +278,7 @@ router.route('/:id')
                 user[key1] = userObj;
               }
             }
-            // if (req.query.action) {
-            //   if (req.query.action === 'appendEvents') {
-            //     userData.events.push(req.body.eventId);
-            //   } else if (req.query.action === 'removeEvents') {
-            //     userData.events.splice(userData.events.indexOf(req.body.eventId), 1);
-            //   }
-            // }
-            // for (const key in user) {
-            //   user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
-            // }
+
             user.save();
             return res.status(200).json({ user });
           })
