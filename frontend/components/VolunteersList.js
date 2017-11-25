@@ -14,7 +14,8 @@ class VolunteersList extends React.Component {
         <div className="ItemList">
         {
          this.props.items.map((item) => (
-          <InlineVolunteer
+            (item.role === "pending")
+           ? <InlineVolunteer
             key={item._id}
             first_name = {item.first_name}
             last_name = {item.last_name}
@@ -25,6 +26,17 @@ class VolunteersList extends React.Component {
             id = {item._id}
             updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
           />
+          : <InlineVolunteer
+          key={item._id}
+          first_name = {item.first_name}
+          last_name = {item.last_name}
+          street_address = {item.street_address}
+          city = {item.city}
+          state = {item.state}
+          phone_number = {item.phone_number}
+          id = {item._id}
+          updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
+        />
         )) }
       </div>
     );

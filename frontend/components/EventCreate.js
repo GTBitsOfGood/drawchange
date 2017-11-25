@@ -3,8 +3,8 @@ import React from 'react';
 import { Control, Form, actions } from 'react-redux-form';
 import Button from 'react-bootstrap/lib/Button';
 
-import Text from '../../components/inputs/Text';
-import Textarea from '../../components/inputs/Textarea';
+import Text from '../components/inputs/Text';
+import Textarea from '../components/inputs/Textarea';
 
 const EventCreate = () => (
     <Form model = "myForms" >

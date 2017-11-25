@@ -29,7 +29,9 @@
     padding: 0;
     text-align: center;
     width: 50%;
+    flex-direction: column;
   }
+
 
   .spaceside {
     display: flex;

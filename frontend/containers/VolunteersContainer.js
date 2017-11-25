@@ -35,7 +35,8 @@ class VolunteersContainer extends React.Component {
             updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
             view = "Volunteer"
         />
-        <MainPane currentItem = {this.renderItem()}/>
+        <MainPane currentItem = {this.renderItem()}
+        view = "Volunteer"/>
       </div>
     );
   }

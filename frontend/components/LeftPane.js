@@ -14,7 +14,7 @@ class LeftPane extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="parentItem">
         <h1>Item Page</h1>
         {this.isEvent && <EventList
                 items = {this.props.itemList}

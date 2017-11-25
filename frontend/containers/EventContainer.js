@@ -15,7 +15,6 @@ class EventContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    var newEvent = false;
   }
   componentWillMount() {
     this.props.onLoadEvent();
@@ -39,9 +38,10 @@ class EventContainer extends React.Component {
           view = "Event"
         />
         <MainPane currentItem = {this.renderItem()}
+            view = "Event"
             newEvent = {this.props.createEvent}/>
         </div>
-        <Button onClick={() => this.props.onCreateEvent("true")}>New Event</Button>
+        <Button onClick={() => this.props.onCreateEvent("NewEvent")}>New Event</Button>
       </div>
     );
   }

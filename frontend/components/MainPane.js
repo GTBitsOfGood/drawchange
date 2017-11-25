@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { LocalForm, Control } from 'react-redux-form';
 import { Control, Form, actions } from 'react-redux-form';
 
 import '../assets/stylesheets/ItemDisplay.css';
@@ -11,7 +10,7 @@ class MainPane extends React.Component {
 
     this.isEvent = this.props.view === "Event" ? true : null;
     this.isVolunteer = this.props.view === "Volunteer" ? true : null;
-    this.isNewEvent = this.props.view === "NewEvent" ? true : null;
+    this.isNewEvent = this.props.newEvent === "NewEvent" ? true : null;
   }
 
   render() {
@@ -27,7 +26,8 @@ class MainPane extends React.Component {
 
 MainPane.propTypes = {
   newEvent: PropTypes.string,
-  currentItem: PropTypes.object
+  currentItem: PropTypes.object,
+  view: PropTypes.string
 };
 
 export default MainPane;
