@@ -73,7 +73,7 @@ const user = {
     sexual_violent: false,
     drugs: false,
     driving: false,
-    explanation: ''
+    explanation: 'n/a'
   },
   ice: {
     name: '',
@@ -84,7 +84,7 @@ const user = {
   },
   permissions: {
     comments: '',
-    references: false,
+    reference: false,
     personal_image: false,
     email_list: false,
     signature: ''

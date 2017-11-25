@@ -13,17 +13,34 @@ import Navbar from '../components/Navbar';
 import * as actions from '../actions/auth';
 
 
-// const AppContainer = ({ logout }) => {
 class AppContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this._login = this._login.bind(this);
+    this._register = this._register.bind(this);
+    this._home = this._home.bind(this);
+  }
+
+  _login() {
+    return ( this.props.user ? <Redirect to={'/'} /> : <Splash /> );
+  }
+  _register() {
+    return (this.props.user ? <Redirect to={'/'} /> : <SurveyForm />);
+  }
+  _home() {
+    return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
+  }
+
   render() {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
-        <SurveyForm/>
-        {/* <Switch>
-          <Route exact path={'/login'} render={() => this.props.user ? <Redirect to={'/'} /> : <Splash/>}/>
-          <Route path={'/*'} render={() => this.props.user ? <MainContainer/> : <Redirect to={'/login'}/>}/>
-        </Switch> */}
+        <Switch>
+          <Route exact path={'/login'} render={this._login}/>
+          <Route exact path={'/register'} render={this._register} />
+          <Route path={'/*'} render={this._home}/>
+        </Switch>
       </div>
 
     );

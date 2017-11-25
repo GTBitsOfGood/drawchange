@@ -18,22 +18,16 @@ function Auth(state = initialState, action) {
       };
     case types.LOGIN_FAILED:
       return Object.assign({}, state, {
-        password: '',
         loginFailed: true
       });
     case types.REGISTRATION_SUCCESS:
-      const loginemail = state.email;
       return Object.assign({}, state, {
-        password: '',
-        email: '',
-        name: '',
-        loginemail,
+        user: action.user,
         registrationFailed: false,
         registrationSuccess: true
       });
     case types.REGISTRATION_FAILED:
       return Object.assign({}, state, {
-        password: '',
         registrationFailed: true,
         registrationSuccess: false
       });

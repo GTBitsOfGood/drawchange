@@ -9,7 +9,7 @@ import * as types from './types';
  */
 export function login() {
   return (dispatch, getState) => { // using Thunks
-    const { email, password } = getState().myForms.user;
+    const { email, password } = getState().myForms.user.bio;
     axios.post('/api/login', {  email, password })
       .then(resp => {
         dispatch(loginGenerator(resp.data.user));
@@ -23,11 +23,15 @@ export function login() {
  */
 export function register() {
   return (dispatch, getState) => {
-    const { email, password, first_name, last_name, date_of_birth,
-            street_address, city, state, zip_code, phone_number } = getState().myForms.user;
-    axios.post('/api/users', { email, password, first_name, last_name,
-      date_of_birth, street_address, city, state, zip_code, phone_number })
+    // const { email, password, first_name, last_name, date_of_birth,
+    //         street_address, city, state, zip_code, phone_number } = getState().myForms.user;
+    const { bio, history, availability, skills_interests,
+      referral, employment, ice, reference, criminal, permissions} = getState().myForms.user;
+    axios.post('/api/users', { bio, history, availability, skills_interests,
+      referral, employment, ice, reference, criminal, permissions })
       .then(resp => {
+        console.log('inside register action creator');
+        console.log(resp);
         dispatch(registerGenerator(resp.data.user));
       })
       .catch(err => dispatch(registerGenerator()));

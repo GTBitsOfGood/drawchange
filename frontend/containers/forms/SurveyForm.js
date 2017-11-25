@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Control, Form, actions, Fieldset } from 'react-redux-form';
 import { bindActionCreators } from 'redux';
@@ -142,7 +143,7 @@ class SurveyForm extends Component {
           <h2>Permissions</h2>
           <p><b>drawchange has my permission to:</b></p>
 
-            <Control.checkbox component={Checkbox} model=".references" label="Verify the reference I have provided" />
+            <Control.checkbox component={Checkbox} model=".reference" label="Verify the reference I have provided" />
             <Control.checkbox component={Checkbox} model=".personal_image" label="Include my name and/or picture in drawchange promotional materials, newspapers, TV, radio, brochures, videos, website(s), etc" />
             <Control.checkbox component={Checkbox} model=".email_list" label="Add me to their mailing list. (We only send 1 email per month and never share your email address)" />
             <p>By submitting this application, I affirm that the facts set forth in it are true and complete. I understand that if I am accepted as a volunteer, any false statements, omissions, or other misrepresentations made by me on this application may result in my immediate dismissal.</p>
@@ -150,7 +151,7 @@ class SurveyForm extends Component {
 
           </Fieldset>
 
-          <Button bsStyle="primary">Submit Volunteer Application</Button>
+          <Button bsStyle="primary" onClick={this.props.register}>Submit Volunteer Application</Button>
           <ReduxSweetAlert />
         </Form>
       </Col>
@@ -158,6 +159,15 @@ class SurveyForm extends Component {
     );
   }
 }
+
+SurveyForm.propTypes = {
+  register: PropTypes.func,
+  error: PropTypes.bool,
+  success: PropTypes.bool,
+  swal: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
+
+};
 
 function mapStateToProps(state) {
   return {

@@ -34,7 +34,7 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
 },
   function(email, password, done) {
-    User.findOne({ email }, function(err, user) {
+    User.findOne({ "bio.email": email }, function(err, user) {
       if (err) return done(err);
       if (!user || !user.verifyPassword(password)) {
         return done(null, false, { message: 'Login Error.' });
