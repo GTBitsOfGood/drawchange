@@ -3,222 +3,117 @@ const bcrypt = require('bcrypt');
 
 // define schema for user collection (user model)
 const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true
+  bio: {
+    first_name: { type: String, required: true },
+    last_name: {type: String, required: true },
+    phone_number: { type: String, required: true },
+    email: { type: String, required: true },
+    date_of_birth: { type: Date, required: true },
+    street_address: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip_code: { type: String, required: true },
+    password: { type: String, required: true },
+    languages: { type: String, default: '' },
+    role: { type: String, default: 'pending',
+      enum: ['pending', 'admin', 'manager', 'volunteer']
+    }
   },
-  password: {
-    type: String,
-    required: true
+  history: {
+    volunteer_interest_cause: { type: String, required: true },
+    volunteer_support: { type: String, required: true },
+    volunteer_commitment: { type: String, required: true },
+    skills_qualifications: { type: String, required: true },
+    previous_volunteer_experience: { type: String, required: true }
   },
-  first_name: {
-    type: String,
-    required: true
+  availabilitY: {
+    weekday_mornings: { type: Boolean, default: false },
+    weekday_afternoons: { type: Boolean, default: false },
+    weekday_evenings: { type: Boolean, default: false },
+    weekend_mornings: { type: Boolean, default: false },
+    weekend_afternoons: { type: Boolean, default: false },
+    weekend_evenings: { type: Boolean, default: false },
   },
-  last_name: {
-    type: String,
-    required: true
+  skills_interests: {
+    admin_in_office: { type: Boolean, default: false },
+    admin_virtual: { type: Boolean, default: false },
+    atlanta_shelter: { type: Boolean, default: false },
+    orlando_shelter: { type: Boolean, default: false },
+    graphic_web_design: { type: Boolean, default: false },
+    special_events: { type: Boolean, default: false },
+    grant_writing: { type: Boolean, default: false },
+    writing_editing: { type: Boolean, default: false },
+    social_media: { type: Boolean, default: false },
+    fundraising: { type: Boolean, default: false },
+    finance: { type: Boolean, default: false },
+    office_maintenance_housekeeping: { type: Boolean, default: false },
+    international_projects: { type: Boolean, default: false },
+    volunteer_coordination: { type: Boolean, default: false },
+    outreach: { type: Boolean, default: false },
   },
-  role: {
-    type: String,
-    default: 'pending',
-    enum: ['pending', 'admin', 'manager', 'volunteer']
+  referral: {
+    friend: { type: Boolean, default: false },
+    newsletter: { type: Boolean, default: false },
+    event: { type: Boolean, default: false },
+    volunteer_match: { type: Boolean, default: false },
+    internet: { type: Boolean, default: false },
+    social_media: { type: Boolean, default: false },
   },
-  street_address: {
-    type: String,
-    required: true
+  employment: {
+    name: { type: String, required: true },
+    position: { type: String, required: true },
+    duration: { type: String, required: true },
+    location: { type: String, required: true },
+    previous_name: { type: String, required: true },
+    previous_reason_for_leaving: { type: String, required: true },
+    previous_location: { type: String, required: true }
   },
-  city: {
-    type: String,
-    required: true
+  reference: {
+    name: { type: String, required: true },
+    phone_number: { type: String, required: true },
+    email: { type: String, required: true },
+    relationship: { type: String, required: true },
+    duration: { type: String, required: true }
   },
-  state: {
-    type: String,
-    required: true
+  criminal: {
+    felony: { type: Boolean, required: true },
+    sexual_violent: { type: Boolean, required: true },
+    drugs: { type: Boolean, required: true },
+    driving: { type: Boolean, required: true },
+    explanation: { type: String }
   },
-  zip_code: {
-    type: String,
-    required: true
+  ice: {
+    name: { type: String, required: true },
+    relationship: { type: String, required: true },
+    phone_number: { type: String, required: true },
+    email: { type: String, required: true },
+    address: { type: String, required: true },
   },
-  phone_number: {
-    type: String,
-    required: true
+  permissions: {
+    comments: { type: String},
+    references: { type: Boolean, required: true },
+    personal_image: { type: Boolean, required: true },
+    email_list: { type: Boolean, required: true },
+    signature: { type: String, required: true }
   },
-  date_of_birth: {
-    type: Date,
-    required: true
-  },
+
   events: {
     type: Array, // array of event objects
     default: []
   },
-  survey_responses: {
-    type: Array, // array of Survey Objects
-    default: []
-  },
-  primary_im: {
-    type: String,
-    default: ""
-  },
-  when_available: {
-    type: String,
-    enum: ['weekday_mornings', 'weekday_afternoons', 'weekday_evenings', 'weekend_mornings', 'weekend_afternoons', 'weekend_evenings'],
-    required: true
-  },
-  specific_event: {
-    type: String,
-    required: true
-  },
-  skills: {
-    type: String,
-    enum: ['in_office_support',
-      'virtual_support',
-      'atl_homeless_shelter_program',
-      'orlando_homeless_shelter_program',
-      'graphic_web_design_support',
-      'special_events_planning',
-      'grant_writing',
-      'general_writing_editing',
-      'social_media_assistance',
-      'fundraising',
-      'financing_assistance',
-      'office_maintenance_housekeeping',
-      'international_projects_trips',
-      'volunteer_coordination',
-      'outreach',
-      'other']
-  },
-  how_did_you_learn: {
-    type: String,
-    required: true
-  },
-  other_languages: {
-    type: String,
-    default: ""
-  },
-  why_interested: {
-    type: String,
-    required: true
-  },
-  support_needed: {
-    type: String,
-    required: true
-  },
-  cannot_commit: {
-    type: String,
-    required: true
-  },
-  current_employer: {
-    type: String,
-    required: true
-  },
-  current_position: {
-    type: String,
-    required: true
-  },
-  length_current_employer: {
-    type: Date,
-  },
-  current_employer_city_state: {
-    type: String,
-    default: ""
-  },
-  previous_employer_name: {
-    type: String,
-    default: ""
-  },
-  reason_for_leaving: {
-    type: String,
-    default: ""
-  },
-  previous_employer_city_state: {
-    type: String,
-    default: ""
-  },
-  special_skills: {
-    type: String,
-    required: true
-  },
-  previous_volunteer_experience: {
-    type: String,
-    required: true
-  },
-  additional_comments: {
-    type: String,
-    default: ""
-  },
-  references: {
-    type: String,
-    default: ""
-  },
-  felony: {
-    type: Boolean,
-    required: true
-  },
-  when_felony: {
-    type: Date,
-  },
-  sexual_offense_gun_weapon: {
-    type: Boolean,
-    required: true
-  },
-  drugs: {
-    type: Boolean,
-    required: true
-  },
-  reckless_driving: {
-    type: Boolean,
-    required: true
-  },
-  if_yes_explain: {
-    type: String,
-    default: ""
-  },
-  emergecy_contact_name: {
-    type: String,
-    required: true
-  },
-  emergency_contact_relationship: {
-    type: String,
-    required: true
-  },
-  emergency_contact_street_address: {
-    type: String,
-    default: ""
-  },
-  emergency_contact_city: {
-    type: String,
-    default: ""
-  },
-  emergency_contact_home_phone: {
-    type: String,
-    default: ""
-  },
-  emergency_contact_cell_phone: {
-    type: String,
-    required: true
-  },
-  verify_references_permission: {
-    type: Boolean,
-    required: true
-  },
-  include_pii: { // PII - personally identifiable information
-    type: Boolean,
-    required: true
-  },
-  mailing_list: {
-    type: Boolean,
-    required: true
-  },
 }, { timestamps: true });
+
+userSchema.virtual('name').get(function() {
+  return this.bio.first_name + this.bio.last_name;
+});
 
 userSchema.virtual('age').get(function() {
   const current = new Date();
-  return current.getYear() - this.date_of_birth.getYear();
+  return current.getYear() - this.bio.date_of_birth.getYear();
 });
 
 userSchema.methods.verifyPassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
+  return bcrypt.compareSync(password, this.bio.password);
 };
 
 // export user model to app

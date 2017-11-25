@@ -13,8 +13,6 @@ const router = express.Router();
 const User = require('../models/user');
 const events = require('./events');
 const emails = require('./emails');
-const responses = require('./responses');
-const surveys = require('./surveys');
 const users = require('./users');
 
 // Middleware
@@ -80,8 +78,6 @@ router.use((req, res, next) => {
 });
 
 // Restful endpoints
-router.use('/responses', responses);
-router.use('/surveys', surveys);
 router.use('/events', events);
 router.use('/emails', emails);
 
