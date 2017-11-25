@@ -319,7 +319,6 @@ describe('User RESTful Endpoints Test Suite', () => {
         });
     });
 
-
     it('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
         .put(`/api/users/59f6130e6f22a25c35d72ce9`)
