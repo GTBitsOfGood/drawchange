@@ -12,7 +12,7 @@ class InlineVolunteer extends React.Component {
   }
 
   _update() {
-    this.props.updateCurrentVolunteer(this.props.id);
+    this.props.updateCurrentVolunteer(this.props);
   }
 
   render() {

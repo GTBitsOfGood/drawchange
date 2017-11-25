@@ -20,12 +20,12 @@ class VolunteersContainer extends React.Component {
   }
 
   // eventually we should move this logic to redux...
-  renderItem() {
-    if (this.props.currentVolunteer !== null) {
-      return this.props.volunteersList.find((item) => item._id === this.props.currentVolunteer);
-    }
-    return null;
-  }
+//   renderItem() {
+//     if (this.props.currentVolunteer !== null) {
+//       return this.props.volunteersList.find((item) => item._id === this.props.currentVolunteer);
+//     }
+//     return null;
+//   }
 
   render() {
     return(
@@ -35,7 +35,7 @@ class VolunteersContainer extends React.Component {
             updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
             view = "Volunteer"
         />
-        <MainPane currentItem = {this.renderItem()}
+        <MainPane currentItem = {this.props.currentVolunteer || null}
         view = "Volunteer"/>
       </div>
     );

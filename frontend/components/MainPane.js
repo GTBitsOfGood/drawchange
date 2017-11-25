@@ -4,6 +4,8 @@ import { Control, Form, actions } from 'react-redux-form';
 
 import '../assets/stylesheets/ItemDisplay.css';
 import EventCreate from './EventCreate';
+import Button from 'react-bootstrap/lib/Button';
+
 class MainPane extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,8 @@ class MainPane extends React.Component {
         <div>
             {this.isEvent && this.isNewEvent && <EventCreate/>}
             {this.isEvent && !this.isNewEvent && this.props.currentItem ? this.props.currentItem._id : "None Selected"}
-            {this.isVolunteer && this.props.currentItem ? this.props.currentItem._id : "None Selected"}
+            {this.isVolunteer && this.props.currentItem ? this.props.currentItem : "None Selected"}
+            {this.isVolunteer && this.props.currentItem.role === "pending" ? <Button bsStyle="primary">Approve</Button> : <Button bsStyle="primary" >Remove</Button>}
         </div>
     );
   }
