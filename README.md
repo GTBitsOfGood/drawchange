@@ -3,6 +3,8 @@ _for [Heroku](https://www.heroku.com/) deployment_
 
 ## Overview
 
+[![Known Vulnerabilities](https://snyk.io/test/github/gtbitsofgood/drawchange/badge.svg)](https://snyk.io/test/github/gtbitsofgood/drawchange)
+
 This is a simple starter to get you up and running for React projects. This is intended to provide:
 
 * a lightweight webpack config (for development and production)
