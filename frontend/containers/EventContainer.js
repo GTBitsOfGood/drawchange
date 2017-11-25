@@ -41,7 +41,7 @@ class EventContainer extends React.Component {
         <MainPane currentItem = {this.renderItem()}
             newEvent = {this.props.createEvent}/>
         </div>
-        <Button onClick={this.props.onCreateEvent("true")}>New Event</Button>
+        <Button onClick={() => this.props.onCreateEvent("true")}>New Event</Button>
       </div>
     );
   }
