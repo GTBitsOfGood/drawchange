@@ -12,19 +12,20 @@ const User = require('../models/user');
 // This method is purposely put before the login wall so that
 // new users can be created w/o needing to be signed in...
 router.post('/', [
-  check('first_name').isAlpha().trim().escape(),
-  check('password').isAscii().trim().escape(),
-  check('last_name').isAlpha().trim().escape(),
-  check('email').isEmail().trim(),
-  check('street_address').isAscii().trim().escape(),
-  check('city').isAlpha().trim().escape(),
-  check('state').isAlpha().trim().escape(),
-  check('zip_code').isAscii().trim().escape(),
-  check('phone_number').isAscii().trim().escape(),
-  check('date_of_birth').exists().trim().escape()
+  check('bio.first_name').isAlpha().trim().escape(),
+  check('bio.password').isAscii().trim().escape(),
+  check('bio.last_name').isAlpha().trim().escape(),
+  check('bio.email').isEmail().trim(),
+  check('bio.street_address').isAscii().trim().escape(),
+  check('bio.city').isAlpha().trim().escape(),
+  check('bio.state').isAlpha().trim().escape(),
+  check('bio.zip_code').isAscii().trim().escape(),
+  check('bio.phone_number').isAscii().trim().escape(),
+  check('bio.date_of_birth').exists().trim().escape()
 ], (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log('TESTING THIS AREA SHOULD NOT BE PRINTIED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     console.log(errors.mapped());
     return res.status(400).json({ errors: errors.mapped() });
   }
@@ -136,8 +137,8 @@ router.route('/:id')
                 userData.events.splice(userData.events.indexOf(req.body.eventId), 1);
               }
             }
-            for (let key in user) {
-              user[key] = (userData[key] !== undefined) ? userData[key] : user[key]
+            for (const key in user) {
+              user[key] = (userData[key] !== undefined) ? userData[key] : user[key];
             }
             user.save();
             return res.status(200).json({ user });
