@@ -17,6 +17,18 @@ const NavBar = ({ logoutAction }) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
+        <Nav>
+          <LinkContainer exact to="/">
+            <NavItem>Dashboard</NavItem>
+          </LinkContainer>
+          <LinkContainer to="/events">
+            <NavItem>Events</NavItem>
+          </LinkContainer>
+          <LinkContainer to="/volunteers">
+            <NavItem>Volunteers</NavItem>
+          </LinkContainer>
+
+        </Nav>
         <Nav pullRight>
           <LinkContainer isActive={() => false} onClick={ logoutAction } to="/">
             <NavItem>Logout</NavItem>
