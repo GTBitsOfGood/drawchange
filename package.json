@@ -9,7 +9,9 @@
     "frontend": "webpack -d --watch",
     "backend": "nodemon server.js",
     "start": "npm run build && NODE_ENV=production node server.js",
-    "test": "mocha --compilers js:babel-core/register ./test/**/*.js --require ignore-styles"
+    "test": "mocha --require babel-core/register ./test/**/*.js --require ignore-styles --exit",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -34,13 +36,15 @@
     "express-validator": "^4.2.1",
     "history": "^4.7.2",
     "lodash": "^4.17.4",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.1",
     "mongodb": "^2.2.31",
     "mongoose": "^4.12.4",
     "morgan": "^1.9.0",
     "node-cron": "^1.2.1",
     "node-sass": "^4.5.2",
     "nodemailer": "^4.2.0",
+    "nodemailer-sendgrid": "^1.0.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "prop-types": "^15.6.0",
@@ -63,7 +67,8 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
-    "webpack": "^2.3.3"
+    "webpack": "^2.3.3",
+    "snyk": "^1.50.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.2",
@@ -80,5 +85,6 @@
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.18.0"
-  }
+  },
+  "snyk": true
 }

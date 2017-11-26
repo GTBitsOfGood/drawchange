@@ -13,8 +13,6 @@ const router = express.Router();
 const User = require('../models/user');
 const events = require('./events');
 const emails = require('./emails');
-const responses = require('./responses');
-const surveys = require('./surveys');
 const users = require('./users');
 
 // Middleware
@@ -36,7 +34,7 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
 },
   function(email, password, done) {
-    User.findOne({ email }, function(err, user) {
+    User.findOne({ "bio.email": email }, function(err, user) {
       if (err) return done(err);
       if (!user || !user.verifyPassword(password)) {
         return done(null, false, { message: 'Login Error.' });
@@ -80,8 +78,6 @@ router.use((req, res, next) => {
 });
 
 // Restful endpoints
-router.use('/responses', responses);
-router.use('/surveys', surveys);
 router.use('/events', events);
 router.use('/emails', emails);
 

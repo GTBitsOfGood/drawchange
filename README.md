@@ -1,14 +1,11 @@
-# React + Node Starter
-_for [Heroku](https://www.heroku.com/) deployment_
+# drawchange Volunteer & Event Managemnt System
+[![Known Vulnerabilities](https://snyk.io/test/github/gtbitsofgood/drawchange/badge.svg)](https://snyk.io/test/github/gtbitsofgood/drawchange)
 
 ## Overview
 
-This is a simple starter to get you up and running for React projects. This is intended to provide:
+This portal is meant to be used by Atlanta nonprofit drawchange to manage their volunteers and events. New volunteers will register an account, be vetted by an administrator, then sign up for volunteer events through this portal.
 
-* a lightweight webpack config (for development and production)
-* some helpful tooling for development workflow
-* a similar setup to what you'll see in the wild
-* Heroku-ready deployment setup
+
 
 ## Running
 

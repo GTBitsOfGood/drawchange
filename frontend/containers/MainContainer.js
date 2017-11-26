@@ -9,6 +9,8 @@ import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
 // import * as volunteerActions from '../actions/volunteers.js'
 import EventContainer from './EventContainer';
 import VolunteersContainer from './VolunteersContainer';
+
+
 // class MainContainer extends React.Component {
 const MainContainer = () => (
     <div>

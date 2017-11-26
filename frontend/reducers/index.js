@@ -5,12 +5,14 @@ import events from './events.js';
 import current from './current.js';
 import volunteers from './volunteers.js';
 import auth from './auth';
+import myForms from './forms';
 
 export default combineReducers({
   auth,
   events,
   volunteers,
   current,
+  myForms,
   sweetalert: reducer,
   router,
 });
