@@ -4,7 +4,6 @@ import { Jumbotron, Col, Panel } from 'react-bootstrap';
 
 // Local Imports
 import SplashInfo from '../components/SplashInfo';
-import SplashAuth from '../components/SplashAuth';
 import LoginForm from './forms/LoginForm';
 
 // Home component

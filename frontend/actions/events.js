@@ -5,28 +5,21 @@ export function updateCurrentEvent(currentEvent) {
   return { type: types.CURRENT_EVENT, currentEvent };
 }
 
-export function updateEventName(name) {
-  return { type: types.EVENT_NAME, name };
-}
-
-export function updateEventDate(date) {
-  return { type: types.EVENT_DATE, date };
-}
-
-export function updateEventLocation(location) {
-  return { type: types.EVENT_LOCATION, location };
-}
-
-export function updateEventDescription(description) {
-  return { type: types.EVENT_DESCRIPTION, description };
-}
 
 export function updateEventArray(events) {
   return { type: types.UPDATE_EVENT_ARRAY, events};
 }
 
-export function onCreateEvent(createEvent) {
-  return { type: types.CREATE_EVENT, createEvent};
+// export function onCreateEvent(createEvent) {
+//   return { type: types.CREATE_EVENT, createEvent};
+// }
+
+export function onCreateEvent() {
+  return (dispatch, getState) => {
+    const { name, description, date, location, max_volunteers, contact } = getState().forms.event;
+    axios.post('/api/events', { name, description, date, location, max_volunteers, contact})
+      .then(({data}) => console.log(data));
+  };
 }
 
 export function onLoadEvent() {
