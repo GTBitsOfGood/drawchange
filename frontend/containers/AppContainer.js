@@ -8,7 +8,6 @@ import Splash from './Splash';
 import MainContainer from './MainContainer';
 import VolunteerForm from './forms/VolunteerForm';
 import Dashboard from './Dashboard';
-import EventForm from './forms/EventForm';
 
 import Navbar from '../components/Navbar';
 
@@ -38,12 +37,12 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
-        {/* <Dashboard /> */}
-        <Switch>
+        <Dashboard />
+        {/* <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
           <Route path={'/*'} render={this._home}/>
-        </Switch>
+        </Switch> */}
       </div>
 
     );

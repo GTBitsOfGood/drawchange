@@ -8,61 +8,61 @@ const data = [
   {
     name: 'Tanner Linsley',
     age: 26,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     },
   }, {
     name: 'Andre Hijaouy',
     age: 20,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     }
   },
   {
     name: 'Tanner Linsley2',
     age: 26,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     },
   }, {
     name: 'Andre Hijaouy2',
     age: 20,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     }
   },
   {
     name: 'Tanner Linsley',
     age: 26,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     },
   }, {
     name: 'Andre Hijaouy',
     age: 20,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     }
   },
   {
     name: 'Tanner Linsley2',
     age: 26,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     },
   }, {
     name: 'Andre Hijaouy2',
     age: 20,
-    friend: {
-      name: 'Jason Maurer',
-      age: 23,
+    bio: {
+      first_name: 'Jason',
+      last_name: 'Smith',
     }
   }
 ];
@@ -76,13 +76,10 @@ const columns = [{
   accessor: 'age' // String-based value accessors!
 },
 {
-  id: 'friendName', // Required because our accessor is not a string
-  Header: 'Friend Name',
-  accessor: d => d.friend.name // Custom value accessors!
-}, {
-  Header: 'Friend Age', // Custom header components!
-  accessor: 'friend.age'
-}];
+  id: 'full_name', // Required because our accessor is not a string
+  Header: 'Full Name',
+  accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
+}, ];
 
 
 function showPagination(size) {
