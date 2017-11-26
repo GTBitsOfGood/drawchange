@@ -1,4 +1,5 @@
 # drawchange Volunteer & Event Managemnt System
+[![CircleCI](https://circleci.com/gh/GTBitsOfGood/drawchange.svg?style=svg)](https://circleci.com/gh/GTBitsOfGood/drawchange)
 [![Known Vulnerabilities](https://snyk.io/test/github/gtbitsofgood/drawchange/badge.svg)](https://snyk.io/test/github/gtbitsofgood/drawchange)
 
 ## Overview
