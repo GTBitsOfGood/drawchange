@@ -1,8 +1,20 @@
 import * as types from './types.js';
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
-export function updateCurrentVolunteer(currentVolunteer) {
-  return { type: types.CURRENT_VOLUNTEER, currentVolunteer };
+
+export function updateCurrentVolunteer(id) {
+  return (dispatch, getState) => {
+    dispatch(push(`/volunteers/${id}`));
+    dispatch(currentVolunteer(id));
+  };
+}
+
+function currentVolunteer(id) {
+  return {
+    type: types.UPDATE_CURRENT_VOLUNTEER,
+    id
+  };
 }
 
 export function updateVolunteerStatus(role) {
@@ -10,11 +22,12 @@ export function updateVolunteerStatus(role) {
 }
 
 
-export function loadAllVolunteers() {
+export function loadAllVolunteers(id) {
   return dispatch => {
     axios.get('/api/users?type=volunteer')
       .then(({ data }) => {
         dispatch(allVolunteers(data.users));
+        if (id) dispatch(currentVolunteer(id));
       });
   };
 }

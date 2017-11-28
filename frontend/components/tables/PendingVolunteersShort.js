@@ -47,9 +47,7 @@ const PendingVolunteersShort = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => {
-            console.log(rowInfo.original);
-          }
+          onClick: (e) => props.updateVolunteer(rowInfo.original._id)
         };
       }}
     />

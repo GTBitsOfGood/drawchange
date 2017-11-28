@@ -159,13 +159,13 @@ router.route('/:id')
     })
     .put([check('id').isMongoId()], oneOf([ // TODO Add validations for events and survey_responses Array
       check('bio.role').isAlpha().trim().escape(),
-      check('bio.first_name').isAlpha().trim().escape(),
-      check('bio.last_name').isAlpha().trim().escape(),
+      check('bio.first_name').isAscii().trim().escape(),
+      check('bio.last_name').isAscii().trim().escape(),
       check('bio.phone_number').isAscii().trim().escape(),
       check('bio.email').isEmail().trim(),
       check('bio.date_of_birth').exists().trim().escape(),
       check('bio.street_address').isAscii().trim().escape(),
-      check('bio.city').isAlpha().trim().escape(),
+      check('bio.city').isAscii().trim().escape(),
       check('bio.state').isAlpha().trim().escape(),
       check('bio.zip_code').isAscii().trim().escape(),
       check('bio.password').isAscii().trim().escape(),

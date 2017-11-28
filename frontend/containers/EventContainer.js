@@ -17,29 +17,14 @@ import EventDetails from '../components/EventDetails';
 
 
 class EventContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this._getCurrentEvent = this._getCurrentEvent.bind(this);
-  }
 
   componentWillMount() {
     this.props.loadAllEvents(this.props.match.params.id);
-    // if (this.props.match.params.id && !this.props.current_event) {
-    //   this.props.updateCurrentEvent(this.props.match.params.id);
-    // }
   }
-
-  _getCurrentEvent(id) {
-    if (this.props.match.params.id !== null) {
-      return this.props.all.find((item) => item._id === id);
-    }
-    return null;
-  }
-
 
   render() {
     return (
-      <div>
+      <div >
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
             <Panel header={<h3>All Event</h3>} bsStyle="info">
@@ -49,8 +34,9 @@ class EventContainer extends React.Component {
 
           </Col>
           <Col sm={5} lg={4}>
-            <Panel header={<h3>Event Details</h3>} bsStyle="info">
+            <Panel header={<h3>Event Details</h3>} bsStyle="info" >
               {this.props.current_event && <EventDetails event={this.props.current_event}/>}
+              {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
           </Col>
         </Row>

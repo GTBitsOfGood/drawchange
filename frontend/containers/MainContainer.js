@@ -13,6 +13,7 @@ const MainContainer = () => (
   <Switch>
     <Route path={"/events/:id"} component={EventContainer} />
     <Route path={"/events"} component={EventContainer}/>
+    <Route path={"/volunteers/:id"} component={VolunteersContainer} />
     <Route path={"/volunteers"} component={VolunteersContainer} />
     <Route path={"/"} exact component={Dashboard} />
   </Switch>

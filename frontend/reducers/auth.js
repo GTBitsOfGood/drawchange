@@ -22,7 +22,6 @@ function Auth(state = initialState, action) {
       });
     case types.REGISTRATION_SUCCESS:
       return Object.assign({}, state, {
-        user: action.user,
         registrationFailed: false,
         registrationSuccess: true
       });

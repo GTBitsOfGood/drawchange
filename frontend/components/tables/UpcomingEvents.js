@@ -69,10 +69,7 @@ const UpcomingEvents = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => {
-            props.updateEvent(rowInfo.original._id);
-            console.log(rowInfo.original);
-          }
+          onClick: (e) => props.updateEvent(rowInfo.original._id)
         };
       }}
     />

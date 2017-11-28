@@ -8,8 +8,7 @@ import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as volunteerActions from '../actions/volunteers.js';
-import LeftPane from '../components/LeftPane';
-import MainPane from '../components/MainPane';
+import VolunteerProfile from '../components/VolunteerProfile';
 import PendingVolunteersShort from '../components/tables/PendingVolunteersShort';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
@@ -21,7 +20,7 @@ class VolunteersContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadAllVolunteers();
+    this.props.loadAllVolunteers(this.props.match.params.id);
     this.props.loadPendingVolunteers();
   }
 
@@ -40,29 +39,20 @@ class VolunteersContainer extends React.Component {
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
-              <AllVolunteers data={this.props.all} />
+              <AllVolunteers data={this.props.all} updateVolunteer={this.props.updateCurrentVolunteer}/>
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending} />
+              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer}/>
             </Panel>
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {/* <input type={text}> */}
-              {/* <PendingVolunteers data={this.props.pending} /> */}
-              <h1>Heading</h1>
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} />}
+              {!this.props.current_volunteer && <h2>Click an Event to view details</h2>}
+
             </Panel>
           </Col>
         </Row>
-
-
-        {/* <LeftPane
-            itemList = {this.props.volunteersList}
-            updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-            view = "Volunteer"
-        />
-        <MainPane currentItem = {this.props.currentVolunteer || null}
-        view = "Volunteer"/> */}
       </div>
     );
   }
@@ -70,7 +60,7 @@ class VolunteersContainer extends React.Component {
 
 VolunteersContainer.propTypes = {
   onLoadVolunteers: PropTypes.func,
-  currentVolunteer: PropTypes.string,
+  current_volunteer: PropTypes.object,
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
 };
@@ -79,6 +69,7 @@ const mapStateToProps = ( state, ownProps ) => {
   return {
     pending: state.volunteers.pending,
     all: state.volunteers.all,
+    current_volunteer: state.volunteers.current_volunteer,
   };
 };
 
