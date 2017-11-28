@@ -25,3 +25,10 @@ export const LOGIN_FAILED = Symbol("LOGIN_FAILED");
 export const LOGIN_SUCCESS = Symbol("LOGIN_SUCCESS");
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
+
+// Volunteer actions
+export const LOAD_PENDING_VOLUNTEERS = Symbol("LOAD_PENDING_VOLUNTEERS");
+export const LOAD_NEWEST_VOLUNTEERS = Symbol("LOAD_NEWEST_VOLUNTEERS");
+
+// Event Actions
+export const LOAD_NEWEST_EVENTS = Symbol('LOAD_NEWEST_EVENTS');

@@ -173,7 +173,6 @@ function mapStateToProps(state) {
   return {
     error: state.auth.registrationFailed,
     success: state.auth.registrationSuccess,
-    availablility: state.myForms.user.volunteer_availability
   };
 }
 

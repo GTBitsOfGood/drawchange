@@ -30,19 +30,19 @@ class AppContainer extends Component {
     return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
-    return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
+    return (this.props.user ? <Dashboard /> : <Redirect to={'/login'} />);
   }
 
   render() {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
-        <Dashboard />
-        {/* <Switch>
+        {/* <Dashboard /> */}
+        <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
           <Route path={'/*'} render={this._home}/>
-        </Switch> */}
+        </Switch>
       </div>
 
     );
