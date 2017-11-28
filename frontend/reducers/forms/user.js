@@ -83,7 +83,7 @@ const user = {
     address: '',
   },
   permissions: {
-    comments: '',
+    comments: 'n/a',
     reference: false,
     personal_image: false,
     email_list: false,

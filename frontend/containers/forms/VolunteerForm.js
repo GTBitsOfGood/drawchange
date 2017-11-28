@@ -209,7 +209,7 @@ class VolunteerForm extends Component {
             }} />
             <Control required component={Text} type="text" model=".previous_location" label="Previous employer's city and state"
             placeholder = "previous location?" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
-            <Errors className="errors" model=".previous_name" show = "focus" messages={{
+            <Errors className="errors" model=".previous_location" show = "focus" messages={{
               isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".previous_reason_for_leaving" label="Why did you leave this employer?"
@@ -299,8 +299,11 @@ class VolunteerForm extends Component {
             <Control.checkbox component={Checkbox} model=".personal_image" label="Include my name and/or picture in drawchange promotional materials, newspapers, TV, radio, brochures, videos, website(s), etc" />
             <Control.checkbox component={Checkbox} model=".email_list" label="Add me to their mailing list. (We only send 1 email per month and never share your email address)" />
             <p>By submitting this application, I affirm that the facts set forth in it are true and complete. I understand that if I am accepted as a volunteer, any false statements, omissions, or other misrepresentations made by me on this application may result in my immediate dismissal.</p>
-            <Control required component={Text} type="text" model=".signature" label="Please enter your full legal name here, to confirm agreement." />
-
+            <Control required component={Text} type="text" model=".signature" label="Please enter your full legal name here, to confirm agreement."
+                errors={{ isRequired: (val) => !val || !(val.length >= 3) }}/>
+            <Errors className="errors" model=".signature" show="focus" messages={{
+              isRequired: 'This is a required field',
+            }} />
           </Fieldset>
 
           <Button bsStyle="primary" type="submit" onClick={this.props.register}>Submit Volunteer Application</Button>
