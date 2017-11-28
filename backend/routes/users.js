@@ -123,9 +123,19 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  User.find()
+  if (req.query.type === 'pending') {
+    User.find({'bio.role': 'pending'})
+      .then(users => {console.log(users); res.status(200).json({users});})
+      .catch(errors => {console.log(errors); res.status(500).json({errors});});
+  } else if (req.query.type === 'new') {
+    User.find().sort('-createdAt').limit(5)
+      .then(users => {console.log(users); res.status(200).json({users});})
+      .catch(errors => { console.log(errors); res.status(500).json({ errors }); });
+  } else {
+    User.find()
       .then(users => res.status(200).json({ users }))
-      .catch(errors =>  res.status(500).json({ errors }));
+      .catch(errors => res.status(500).json({ errors }));
+  }
 });
 
 

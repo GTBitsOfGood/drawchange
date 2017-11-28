@@ -6,8 +6,10 @@ import { bindActionCreators } from 'redux';
 import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
-import * as eventActions from '../actions/events.js';
+import * as dashboardActions from '../actions/dashboard.js';
 import PendingVolunteers from '../components/tables/PendingVolunteers';
+import UpcomingEvents from '../components/tables/UpcomingEvents';
+import NewVolunteers from '../components/tables/NewVolunteers';
 
 
 class Dashboard extends Component {
@@ -15,19 +17,19 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
   }
-  // componentWillMount() {
-  //   this.props.onLoadEvent();
-  // }
+  componentWillMount() {
+    this.props.onLoad();
+  }
 
 
   render() {
     return (
       <div>
         <Row>
-          <Col smOffset={2} sm={4}>
-            <h1>Welcome Andre</h1>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+            <h1>Welcome, Andre</h1>
           </Col>
-          <Col sm={4}>
+          <Col sm={5} lg={4}>
             <Nav pullRight style={{marginTop: '20px', marginBottom: '10px', fontSize: 'initial'}} bsStyle="pills"  onSelect={key => alert(`clicked ${key}`)}>
               <NavItem eventKey={1}>New Event</NavItem>
               <NavItem eventKey={2}>New Volunteer</NavItem>
@@ -35,21 +37,21 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          <Col smOffset={2} sm={8}>
+          <Col smOffset={1} lgOffset={2} lg={8} sm={10}>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteers/>
+              <PendingVolunteers data={this.props.pending}/>
             </Panel>
           </Col>
         </Row>
         <Row>
-          <Col smOffset={2} sm={4}>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
             <Panel header={<h3>New Volunteers</h3>} bsStyle="info">
-              <h2>Panel contents</h2>
+              <NewVolunteers data={this.props.newest}/>
             </Panel>
           </Col>
-          <Col sm={4}>
+          <Col sm={5} lg={4}>
             <Panel header={<h3>Upcoming Events</h3>} bsStyle="info">
-              <h2>Panel contents</h2>
+              <UpcomingEvents data={this.props.upcoming}/>
             </Panel>
           </Col>
         </Row>
@@ -74,11 +76,14 @@ Dashboard.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    pending: state.volunteers.pending,
+    newest: state.volunteers.newest,
+    upcoming: state.events.newest,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(eventActions, dispatch);
+  return bindActionCreators(dashboardActions, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

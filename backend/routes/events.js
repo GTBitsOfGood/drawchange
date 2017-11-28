@@ -11,11 +11,17 @@ const User = require('../models/user');
 
 router.route('/')
   .get((req, res) => {
-    Event.find()
-      .then(events => res.status(200).json({ events }))
-      .catch(({ errors }) => res.status(500).json({ errors }));
+    if (req.query.type === 'new') {
+      Event.find().sort('-createdAt').limit(5)
+        .then(events => res.status(200).json({ events }))
+        .catch(({ errors }) => res.status(500).json({ errors }));
+    } else {
+      Event.find()
+        .then(events => res.status(200).json({ events }))
+        .catch(({ errors }) => res.status(500).json({ errors }));
+    }
   })
-  .post([ //TODO Add validations for voluntters Array
+  .post([ // TODO Add validations for voluntters Array
     check('name').isAscii().trim().escape(),
     check('date').exists(),
     check('location').isAscii().trim().escape(),
@@ -53,7 +59,7 @@ router.route('/:id')
       })
       .catch(errors => { res.status(500).json({ errors }); });
   })
-  .put([check('id').isMongoId()], oneOf([ //TODO Add validations for voluntters Array
+  .put([check('id').isMongoId()], oneOf([ // TODO Add validations for voluntters Array
     check('name').isAscii().trim().escape(),
     check('date').exists(),
     check('location').isAscii().trim().escape(),
@@ -84,8 +90,8 @@ router.route('/:id')
             eventData.volunteers.splice(eventData.volunteers.indexOf(req.body.volunteerId), 1);
           }
         }
-        for (let key in event) {
-          event[key] = eventData[key] !== undefined ? eventData[key] : event[key]
+        for (const key in event) {
+          event[key] = eventData[key] !== undefined ? eventData[key] : event[key];
         }
 
         event.save();

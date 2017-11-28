@@ -4,82 +4,61 @@ import ReactTable from 'react-table';
 
 import 'react-table/react-table.css';
 
-const data = [
+
+const columns = [
   {
-    name: 'Tanner Linsley',
-    age: 26,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
-    },
-  }, {
-    name: 'Andre Hijaouy',
-    age: 20,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
-    }
+    id: 'full_name', // Required because our accessor is not a string
+    Header: 'Full Name',
+    accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
   },
   {
-    name: 'Tanner Linsley2',
-    age: 26,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
+    id: 'age',
+    Header: 'Age',
+    accessor: d => {
+      const currentYear = new Date().getYear();
+      const userYear = new Date(d.bio.date_of_birth).getYear();
+      return currentYear - userYear;
     },
-  }, {
-    name: 'Andre Hijaouy2',
-    age: 20,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
-    }
+    maxWidth: 50
   },
   {
-    name: 'Tanner Linsley',
-    age: 26,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
+    id: 'criminal_history', // Required because our accessor is not a string
+    Header: 'Criminal History',
+    accessor: d => {
+      const { felony, sexual_violent, drugs, driving } = d.criminal;
+      if (felony || sexual_violent || drugs || driving) {
+        return 'Yes';
+      }
+      return 'None';
     },
-  }, {
-    name: 'Andre Hijaouy',
-    age: 20,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
-    }
+    maxWidth: 140,
+    minWidth: 100,
   },
   {
-    name: 'Tanner Linsley2',
-    age: 26,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
+    id: 'referral',
+    Header: 'Referral',
+    accessor: d => {
+      let referral = '';
+      if (d.referral.friend) referral += 'Friend ';
+      if (d.referral.newsletter) referral += 'Newsletter ';
+      if (d.referral.event) referral += 'Event ';
+      if (d.referral.volunteer_match) referral += 'Volunteer Match ';
+      if (d.referral.internet) referral += 'Internet ';
+      if (d.referral.social_media) referral += 'Social Media ';
+      return referral;
     },
-  }, {
-    name: 'Andre Hijaouy2',
-    age: 20,
-    bio: {
-      first_name: 'Jason',
-      last_name: 'Smith',
-    }
+    maxWidth: 100
+  },
+  {
+    Header: 'Email',
+    accessor: 'bio.email'
+  },
+  {
+    Header: 'Phone Number',
+    accessor: 'bio.phone_number',
+    maxWidth: 175
   }
 ];
-
-const columns = [{
-  Header: 'Name',
-  accessor: 'name' // String-based value accessors!
-},
-{
-  Header: 'Age',
-  accessor: 'age' // String-based value accessors!
-},
-{
-  id: 'full_name', // Required because our accessor is not a string
-  Header: 'Full Name',
-  accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
-}, ];
 
 
 function showPagination(size) {
@@ -88,11 +67,11 @@ function showPagination(size) {
 const PendingVolunteers = (props) => (
   <div>
     <ReactTable
-      data={data}
+      data={props.data}
       columns={columns}
       defaultPageSize={5}
       showPageSizeOptions={false}
-      showPagination={showPagination(data.length)}
+      showPagination={showPagination(props.data.length)}
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
@@ -106,6 +85,7 @@ const PendingVolunteers = (props) => (
 );
 
 PendingVolunteers.propTypes = {
+  data: PropTypes.array,
 };
 
 export default PendingVolunteers;
