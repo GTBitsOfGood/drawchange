@@ -36,6 +36,7 @@
     "express-validator": "^4.2.1",
     "history": "^4.7.2",
     "is-phone-number": "^1.0.4",
+    "is-valid-date": "0.0.1",
     "is-valid-zip": "0.0.3",
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",

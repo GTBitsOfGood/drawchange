@@ -9,6 +9,7 @@ import Image from 'react-bootstrap/lib/Image';
 import validator from 'validator';
 var isPhoneNumber = require('is-phone-number');
 var isValidZip = require('is-valid-zip');
+var isValidDate = require('is-valid-date');
 
 // Local Components
 import { register } from '../../actions/auth';
@@ -81,7 +82,7 @@ class VolunteerForm extends Component {
               isPhoneNumber: 'Enter a valid phone number of form: 982-004-3178',
             }} />
             <Control required component={Text} model=".date_of_birth" label="Date of Birth" type="date" placeholder="2017-11-27"
-            errors={{isRequired: (val) => !val}}/>
+            errors={{isRequired: (val) => !val || !isValidDate(val)}}/>
         <Errors className="errors" model=".date_of_birth" show = "focus" messages={{
           isRequired: 'Please enter a date of birth',
         }} />
