@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-
 import Splash from './Splash';
 import MainContainer from './MainContainer';
 import VolunteerForm from './forms/VolunteerForm';
+import EventForm from './forms/EventForm';
 import Dashboard from './Dashboard';
 
 import Navbar from '../components/Navbar';
@@ -30,19 +30,18 @@ class AppContainer extends Component {
     return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
-    return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
+    return (this.props.user ? <EventForm /> : <Redirect to={'/login'} />);
   }
 
   render() {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
-        <Dashboard />
-        {/* <Switch>
+        <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
           <Route path={'/*'} render={this._home}/>
-        </Switch> */}
+        </Switch>
       </div>
 
     );
