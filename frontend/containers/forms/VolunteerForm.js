@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 import validator from 'validator';
+var isPhoneNumber = require('is-phone-number');
+var isValidZip = require('is-valid-zip');
 
 // Local Components
 import { register } from '../../actions/auth';
@@ -42,7 +44,7 @@ class VolunteerForm extends Component {
           <Image style={{paddingLeft: "33%"}} src={"http://drawchange.org/wp-content/uploads/2014/02/LOGO_dc.png"} />
           <p>Thank you for your interest in volunteering with us! You can volunteer to help us with a specific project, event, going to the homeless shelters with us or helping us out around the office. Whatever it is, you are guaranteed to leave with a full heart and ear to ear smile!</p>
           <p>While we greatly need and appreciate all of the volunteer assistance we receive, we do not have a full time volunteer manager on staff. Thank you in advance for understanding that your application may take a few weeks to get processed.</p>
-        <Form model="forms.user">
+        <Form model="forms.user" onSubmit={v => console.log(v)}>
           <h2>Personal Information</h2>
           <Fieldset model=".bio">
               <div>
@@ -65,43 +67,43 @@ class VolunteerForm extends Component {
         }} />
             <Control required component={Text} model=".email" label="Email" placeholder="Email" type="email"
             errors={{isEmail: (val) => !validator.isEmail(val)}}/>
-        <Errors model=".email" show = "focus" messages={{
+        <Errors className="errors" model=".email" show = "focus" messages={{
           isEmail: 'Please enter a valid email',
         }} />
             <Control required component={Text} model=".password" label="Password" placeholder="Password" type="password"
-            errors={{isRequired: (val) => !val, isLong: (val) => !(val.length >= 5)}}/>
-            <Control required component={Text} model=".phone_number" label="Phone Number" placeholder="9820043178" type="tel"
-            errors={{isPhoneNumber: validator.isPhoneNumber, isRequired}}/>
-        <Errors model=".phone_number" show = "focus" messages={{
-          isRequired: 'Please enter a phone number',
-          isPhoneNumber: 'Please enter a valid phone number',
-        }} />
-            <Control required component={Text} model=".date_of_birth" label="Date of Birth" type="date"   placeholder="11/27/2017"
-            errors={{isRequired }}/>
-        <Errors model=".date_of_birth" show = "focus" messages={{
+            errors={{isRequired: (val) => !val || !(val.length >= 5)}}/>
+            <Errors className="errors" model=".password" show = "focus" messages={{
+              isRequired: 'Please enter a valid password',
+            }} />
+            <Control required component={Text} model=".phone_number" label="Phone Number" placeholder="982-004-3178" type="tel"
+            errors={{isPhoneNumber: (val) => !isPhoneNumber(val)}}/>
+            <Errors className="errors" model=".phone_number" show = "focus" messages={{
+              isPhoneNumber: 'Enter a valid phone number of form: 982-004-3178',
+            }} />
+            <Control required component={Text} model=".date_of_birth" label="Date of Birth" type="date" placeholder="2017-11-27"
+            errors={{isRequired: (val) => !val}}/>
+        <Errors className="errors" model=".date_of_birth" show = "focus" messages={{
           isRequired: 'Please enter a date of birth',
         }} />
             <Control required component={Text} model=".street_address" label="Street Address" type="text"   placeholder="711 Techwood Dr NW"
-            errors={{isRequired}}/>
-        <Errors model=".street_address" show = "focus" messages={{
+            errors={{isRequired: (val) => !val}}/>
+        <Errors className="errors" model=".street_address" show = "focus" messages={{
           isRequired: 'Please enter a street address',
-          typeMismatch: 'Please enter a valid street address',
         }} />
             <Control required component={Text} model=".city" label="City" type="text"   placeholder="Atlanta"
-            errors={{isRequired}}/>
-        <Errors model=".city" show = "focus" messages={{
+            errors={{isRequired: (val) => !val}}/>
+        <Errors className="errors" model=".city" show = "focus" messages={{
           isRequired: 'Please enter a city',
         }} />
             <Control required component={Text} model=".state" label="State" type="text"   placeholder="GA"
-            errors={{isRequired}}/>
-        <Errors model=".state" show = "focus" messages={{
+            errors={{isRequired: (val) => !val}}/>
+        <Errors className="errors" model=".state" show = "focus" messages={{
           isRequired: 'Please enter a state',
         }} />
             <Control required component={Text} model=".zip_code" label="Zip Code" type="text"   placeholder="30318"
-            errors={{isRequired, isZipCode: validator.isZipCode}}/>
-        <Errors model=".zip_code" show = "focus" messages={{
+            errors={{isRequired: (val) => !val || !isValidZip(val)}}/>
+        <Errors className="errors" model=".zip_code" show = "focus" messages={{
           isRequired: 'Please enter a zip code',
-          isZipCode: 'Please enter a valid zip code',
         }} />
           </Fieldset>
           <h2>Tell Us About You</h2>
@@ -145,118 +147,101 @@ class VolunteerForm extends Component {
 
           <Control required component={Text} model=".bio.languages" label="Please list any languages you speak, read, or write fluently (other than English.)" type="text"
           placeholder="Languages"
-          errors={{isRequired}}/>
-          <Errors model=".bio.languages" show = "focus" messages={{
+          errors={{isRequired: (val) => !val}}/>
+          <Errors className="errors" model=".bio.languages" show = "focus" messages={{
             isRequired: 'Please enter spoken languages'}}/>
           <Fieldset model=".history">
             <Control required component={TextArea} model=".volunteer_interest_cause" label="Why are you interested in volunteering with drawchange?"
-            errors={{isRequired, isLong: (val)=> val.length >= 10}}/>
-        <Errors model=".volunteer_interest_cause" show = "focus" messages={{
-          isRequired: 'This is a required field',
-          isLong: 'Please enter a valid answer'
+            errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+        <Errors className="errors" model=".volunteer_interest_cause" show = "focus" messages={{
+          isRequired: 'Enter a valid answer',
         }} />
             <Control required component={TextArea} model=".volunteer_support" label="What would you need FROM us to support your timely completion of tasks? What supports your productivity? What sorts of recognition do you most value?"
-            placeholder="support" errors={{isRequired, isLong: (val)=> val.length >= 10}}/>
-            <Errors model=".volunteer_support" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder="support" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+            <Errors className="errors" model=".volunteer_support" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={TextArea} model=".volunteer_commitment" label="What do you do when you realize you cannot keep a commitment? "
-            placeholder="commitment" errors={{isRequired, isLong: (val)=> val.length >= 10}}/>
-            <Errors model=".volunteer_commitment" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder="commitment" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+            <Errors className="errors" model=".volunteer_commitment" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={TextArea} model=".skills_qualifications" label="Please summarize special skills and qualifications you have acquired from employment, previous volunteer  work, or through other activities, including hobbies or sports."
-            placeholder="skills and qualifications" errors={{isRequired, isLong: (val)=> val.length >= 10}}/>
-            <Errors model=".skills_qualifications" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder="skills and qualifications" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+            <Errors className="errors" model=".skills_qualifications" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={TextArea} model=".previous_volunteer_experience" label="What are your previous volunteer experiences? Please list the organization name, city and state, position and duties. How long you were there?"
-            placeholder="previous volunteer experience" errors={{isRequired, isLong: (val)=> val.length >= 10}}/>
-            <Errors model=".previous_volunteer_experience" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder="previous volunteer experience" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+            <Errors className="errors" model=".previous_volunteer_experience" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
           </Fieldset>
 
           <h2>Employment History</h2>
           <Fieldset model=".employment">
             <Control required component={Text} type="text" model=".name" label="Current employer's name"
-            placeholder = "current employer's name "errors={{isRequired, isLong: (val)=> val.length >= 5}}/>
-            <Errors model=".name" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "current employer's name "errors={{isRequired: (val)=> !val || !(val.length >= 5)}}/>
+            <Errors className="errors" model=".name" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".position" label="Position at current employer"
-            placeholder = "position at current employer" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".position" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "position at current employer" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".position" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".duration" label="How long have you been with this current employer?"
-            placeholder = "duration" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".duration" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "duration" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".duration" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".location" label="Current employer's city and state"
-            placeholder = "location" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".location" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "location" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".location" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".previous_name" label="Previous employer's name"
-            placeholder = "previous employer's name" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".previous_name" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "previous employer's name" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".previous_name" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".previous_location" label="Previous employer's city and state"
-            placeholder = "previous location?" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".previous_name" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "previous location?" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".previous_name" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".previous_reason_for_leaving" label="Why did you leave this employer?"
-            placeholder = "previous reason for leaving?" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".previous_reason_for_leaving" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "previous reason for leaving?" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".previous_reason_for_leaving" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
           </Fieldset>
           <h2>Reference</h2>
           <Fieldset model=".reference">
             <Control required component={Text} type="text" model=".name" label="Reference Name"
-            placeholder = "reference name" errors={{isRequired, isLong: (val)=> val.length >= 2}}/>
-            <Errors model=".name" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid answer'
+            placeholder = "reference name" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            <Errors className="errors" model=".name" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="tel" model=".phone_number" label="Reference Phone Number"
-            placeholder = "98200445613"errors={{isRequired, isPhoneNumber: validator.isPhoneNumber}}/>
-            <Errors model=".phone_number" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isPhoneNumber: 'Please enter a valid number'
+            placeholder = "982-004-45613"errors={{isRequired: (val) => !val || !(isPhoneNumber(val))}}/>
+            <Errors className="errors" model=".phone_number" show = "focus" messages={{
+              isRequired: 'Enter a valid phone number of form: 982-004-3178',
             }} />
             <Control required component={Text} type="email" model=".email" label="Reference Email"
-            placeholder = "randome@random.com" errors={{isRequired, isEmail: validator.isEmail}}/>
-            <Errors model=".email" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isEmail: 'Please enter a valid email'
+            placeholder = "randome@random.com" errors={{isRequired: (val) => !val || !(validator.isEmail(val))}}/>
+            <Errors className="errors" model=".email" show = "focus" messages={{
+              isRequired: 'Enter a valid email address',
             }} />
             <Control required component={Text} type="text" model=".relationship" label="How does this person know you?"
-            placeholder = "relationship" errors={{isRequired, isLong}}/>
-            <Errors model=".relationship" show = "focus" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid relationship'
+            placeholder = "relationship" errors={{isRequired: (val) => !val || !(val.length >= 3)}}/>
+            <Errors className="errors" model=".relationship" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".duration" label="How long have you know this person?"
-            placeholder = "duration" errors={{isRequired, isLong}}/>
-            <Errors model=".duration" messages={{
-              isRequired: 'This is a required field',
-              isLong: 'Please enter a valid duration'
+            placeholder = "duration" errors={{isRequired: (val) => !val || !(val.length >= 5)}}/>
+            <Errors className="errors" model=".duration" show = "focus" messages={{
+              isRequired: 'Enter a valid answer',
             }} />
           </Fieldset>
           <h2>Criminal History</h2>
@@ -270,24 +255,29 @@ class VolunteerForm extends Component {
           </Fieldset>
           <h2>Emergency Contact</h2>
           <Fieldset model=".ice">
-            <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" placeholder = "Emergency Contact Name" errors={{isRequired}}/>
-            <Errors model=".duration" messages={{
+            <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" placeholder = "Emergency Contact Name"
+            errors={{isRequired: (val) => !val}}/>
+            <Errors className="errors" model=".name" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
-            <Control required component={Text} type="tel" model=".phone_number" label="Emergency Contact Phone Number" placeholder = "Emergency Contact Number" errors={{isRequired}}/>
-            <Errors model=".duration" messages={{
+            <Control required component={Text} type="tel" model=".phone_number" label="Emergency Contact Phone Number" placeholder = "Emergency Contact Number"
+            errors={{isRequired: (val) => !val || !(isPhoneNumber(val))}}/>
+            <Errors className="errors" model=".phone_number" show = "focus" messages={{
+              isRequired: 'Enter a valid phone number of form: 982-004-3178',
+            }} />
+            <Control required component={Text} type="email" model=".email" label="Emergency Contact Email" placeholder = "Emergency Contact Email"
+            errors={{isRequired: (val) => !(val) || !(validator.isEmail(val))}}/>
+            <Errors className="errors" model=".email" show = "focus" messages={{
+              isRequired: 'Enter a valid email address',
+            }} />
+            <Control required component={Text} type="text" model=".relationship" label="Relation to Emergency Contact" placeholder = "Emergency Contact Relation"
+            errors={{isRequired: (val) => !val || !(val.length >= 3)}}/>
+            <Errors className="errors" model=".relationship" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
-            <Control required component={Text} type="email" model=".email" label="Emergency Contact Email" placeholder = "Emergency Contact Email" errors={{isRequired}}/>
-            <Errors model=".duration" messages={{
-              isRequired: 'This is a required field',
-            }} />
-            <Control required component={Text} type="text" model=".relationship" label="Relation to Emergency Contact" placeholder = "Emergency Contact Relation" errors={{isRequired}}/>
-            <Errors model=".duration" messages={{
-              isRequired: 'This is a required field',
-            }} />
-            <Control required component={Text} type="text" model=".address" label="Emergency Contact Address" placeholder = "Emergency Contact Address" errors={{isRequired}}/>
-            <Errors model=".duration" messages={{
+            <Control required component={Text} type="text" model=".address" label="Emergency Contact Address" placeholder = "Emergency Contact Address"
+            errors={{isRequired: (val) => !val}}/>
+            <Errors className="errors" model=".address" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
           </Fieldset>
@@ -306,7 +296,7 @@ class VolunteerForm extends Component {
 
           </Fieldset>
 
-          <Button bsStyle="primary" onClick={this.props.register}>Submit Volunteer Application</Button>
+          <Button bsStyle="primary" type="submit" onClick={this.props.register}>Submit Volunteer Application</Button>
           <ReduxSweetAlert />
         </Form>
       </Col>
