@@ -13,7 +13,7 @@ import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import Text from '../../components/inputs/Text';
 import TextArea from '../../components/inputs/Textarea';
 import Checkbox from '../../components/inputs/Checkbox';
-class SurveyForm extends Component {
+class VolunteerForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
@@ -39,7 +39,7 @@ class SurveyForm extends Component {
           <Image style={{paddingLeft: "33%"}} src={"http://drawchange.org/wp-content/uploads/2014/02/LOGO_dc.png"} />
           <p>Thank you for your interest in volunteering with us! You can volunteer to help us with a specific project, event, going to the homeless shelters with us or helping us out around the office. Whatever it is, you are guaranteed to leave with a full heart and ear to ear smile!</p>
           <p>While we greatly need and appreciate all of the volunteer assistance we receive, we do not have a full time volunteer manager on staff. Thank you in advance for understanding that your application may take a few weeks to get processed.</p>
-        <Form model="myForms.user">
+        <Form model="forms.user">
           <h2>Personal Information</h2>
           <Fieldset model=".bio">
             <Control required component={Text} model=".first_name" label="First Name" type="text"  />
@@ -53,6 +53,7 @@ class SurveyForm extends Component {
             <Control required component={Text} model=".state" label="State" type="text"  />
             <Control required component={Text} model=".zip_code" label="Zip Code" type="text"  />
           </Fieldset>
+          <br/>
           <h2>Tell Us About You</h2>
           <p><b>When are you available to volunteer?</b></p>
           <Fieldset model=".availability">
@@ -100,7 +101,7 @@ class SurveyForm extends Component {
             <Control required component={TextArea} model=".skills_qualifications" label="Please summarize special skills and qualifications you have acquired from employment, previous volunteer  work, or through other activities, including hobbies or sports." />
             <Control required component={TextArea} model=".previous_volunteer_experience" label="What are your previous volunteer experiences? Please list the organization name, city and state, position and duties. How long you were there?" />
           </Fieldset>
-
+            <br />
           <h2>Employment History</h2>
           <Fieldset model=".employment">
             <Control required component={Text} type="text" model=".name" label="Current employer's name" />
@@ -111,6 +112,7 @@ class SurveyForm extends Component {
             <Control required component={Text} type="text" model=".previous_location" label="Previous employer's city and state" />
             <Control required component={Text} type="text" model=".previous_reason_for_leaving" label="Why did you leave this employer?" />
           </Fieldset>
+            <br />
           <h2>Reference</h2>
           <Fieldset model=".reference">
             <Control required component={Text} type="text" model=".name" label="Reference Name" />
@@ -119,6 +121,7 @@ class SurveyForm extends Component {
             <Control required component={Text} type="text" model=".relationship" label="How does this person know you?" />
             <Control required component={Text} type="text" model=".duration" label="How long have you know this person?" />
           </Fieldset>
+            <br />
           <h2>Criminal History</h2>
           <Fieldset model=".criminal">
             <p><b>Please indicate if you have been convicted of any of the following.</b></p>
@@ -128,6 +131,7 @@ class SurveyForm extends Component {
             <Control.checkbox component={Checkbox} model=".driving" label="Reckless driving, operating a motor vehicle while under the influence, or driving to endanger? " />
             <Control required component={Text} type="text" model=".explanation" label="If you indicated yes to any of the above please explain and list when the offense occured." />
           </Fieldset>
+            <br />
           <h2>Emergency Contact</h2>
           <Fieldset model=".ice">
             <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" />
@@ -137,9 +141,11 @@ class SurveyForm extends Component {
             <Control required component={Text} type="text" model=".address" label="Emergency Contact Address" />
           </Fieldset>
           <Fieldset model=".permissions">
+              <br />
           <h2>Additional Comments</h2>
             <Control required component={Text} type="text" model=".comments" label="Is there anything else we should know about you? Any Questions, Comments, or Concerns?" />
 
+              <br />
           <h2>Permissions</h2>
           <p><b>drawchange has my permission to:</b></p>
 
@@ -160,7 +166,7 @@ class SurveyForm extends Component {
   }
 }
 
-SurveyForm.propTypes = {
+VolunteerForm.propTypes = {
   register: PropTypes.func,
   error: PropTypes.bool,
   success: PropTypes.bool,
@@ -173,7 +179,6 @@ function mapStateToProps(state) {
   return {
     error: state.auth.registrationFailed,
     success: state.auth.registrationSuccess,
-    availablility: state.myForms.user.volunteer_availability
   };
 }
 
@@ -186,4 +191,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SurveyForm);
+export default connect(mapStateToProps, mapDispatchToProps)(VolunteerForm);

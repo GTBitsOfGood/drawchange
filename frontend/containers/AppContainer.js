@@ -6,7 +6,9 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Splash from './Splash';
 import MainContainer from './MainContainer';
-import SurveyForm from './forms/SurveyForm';
+import VolunteerForm from './forms/VolunteerForm';
+import Dashboard from './Dashboard';
+import VolunteersContainer from './VolunteersContainer';
 
 import Navbar from '../components/Navbar';
 
@@ -26,7 +28,7 @@ class AppContainer extends Component {
     return ( this.props.user ? <Redirect to={'/'} /> : <Splash /> );
   }
   _register() {
-    return (this.props.user ? <Redirect to={'/'} /> : <SurveyForm />);
+    return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
     return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
@@ -36,6 +38,7 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
+        {/* <Dashboard /> */}
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />

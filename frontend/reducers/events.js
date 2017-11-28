@@ -1,31 +1,23 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  "name": "",
-  "date": "",
-  "location": "",
-  "description": "",
-  "contact": "",
-  "_id": "",
-  "volunteers": [],
-  "max_volunteers": ""
+  newest: [],
+  all: [],
+  current_event: undefined
 };
 
-function events(state = initialState, action) {
-  switch(action.type) {
-    case types.EVENT_NAME:
-      return Object.assign({}, state, { type: action.updateEventName });
-    case types.EVENT_DATE:
-      return Object.assign({}, state, { type: action.updateEventDate });
-    case types.EVENT_LOCATION:
-      return Object.assign({}, state, { type: action.updateEventLocation });
-    case types.EVENT_DESCRIPTION:
-      return Object.assign({}, state, { type: action.updateEventDescription });
-    case types.CURRENT_EVENT:
-      return Object.assign({}, state, { type: action.updateCurrentEvent });
+export default function events(state = initialState, action) {
+  switch (action.type) {
+    case types.LOAD_NEWEST_EVENTS:
+      return Object.assign({}, state, { newest: action.newest });
+    case types.LOAD_ALL_EVENTS:
+      return Object.assign({}, state, { all: action.all });
+    case types.UPDATE_CURRENT_EVENT:
+      if (state.all.length === 0) return state;
+      return Object.assign({}, state,
+        { current_event: state.all.find((item) => item._id === action.id)}
+      );
     default:
       return state;
   }
 }
-
-export default events;

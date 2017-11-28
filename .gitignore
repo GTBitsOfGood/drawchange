@@ -64,5 +64,5 @@ typings/
 # dotenv environment variables file
 .env
 
-public/*.js
+public/*.json
 public/*.js
