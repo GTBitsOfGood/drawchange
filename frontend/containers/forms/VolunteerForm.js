@@ -53,6 +53,7 @@ class VolunteerForm extends Component {
             <Control required component={Text} model=".state" label="State" type="text"  />
             <Control required component={Text} model=".zip_code" label="Zip Code" type="text"  />
           </Fieldset>
+          <br/>
           <h2>Tell Us About You</h2>
           <p><b>When are you available to volunteer?</b></p>
           <Fieldset model=".availability">
@@ -100,7 +101,7 @@ class VolunteerForm extends Component {
             <Control required component={TextArea} model=".skills_qualifications" label="Please summarize special skills and qualifications you have acquired from employment, previous volunteer  work, or through other activities, including hobbies or sports." />
             <Control required component={TextArea} model=".previous_volunteer_experience" label="What are your previous volunteer experiences? Please list the organization name, city and state, position and duties. How long you were there?" />
           </Fieldset>
-
+            <br />
           <h2>Employment History</h2>
           <Fieldset model=".employment">
             <Control required component={Text} type="text" model=".name" label="Current employer's name" />
@@ -111,6 +112,7 @@ class VolunteerForm extends Component {
             <Control required component={Text} type="text" model=".previous_location" label="Previous employer's city and state" />
             <Control required component={Text} type="text" model=".previous_reason_for_leaving" label="Why did you leave this employer?" />
           </Fieldset>
+            <br />
           <h2>Reference</h2>
           <Fieldset model=".reference">
             <Control required component={Text} type="text" model=".name" label="Reference Name" />
@@ -119,6 +121,7 @@ class VolunteerForm extends Component {
             <Control required component={Text} type="text" model=".relationship" label="How does this person know you?" />
             <Control required component={Text} type="text" model=".duration" label="How long have you know this person?" />
           </Fieldset>
+            <br />
           <h2>Criminal History</h2>
           <Fieldset model=".criminal">
             <p><b>Please indicate if you have been convicted of any of the following.</b></p>
@@ -128,6 +131,7 @@ class VolunteerForm extends Component {
             <Control.checkbox component={Checkbox} model=".driving" label="Reckless driving, operating a motor vehicle while under the influence, or driving to endanger? " />
             <Control required component={Text} type="text" model=".explanation" label="If you indicated yes to any of the above please explain and list when the offense occured." />
           </Fieldset>
+            <br />
           <h2>Emergency Contact</h2>
           <Fieldset model=".ice">
             <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" />
@@ -137,9 +141,11 @@ class VolunteerForm extends Component {
             <Control required component={Text} type="text" model=".address" label="Emergency Contact Address" />
           </Fieldset>
           <Fieldset model=".permissions">
+              <br />
           <h2>Additional Comments</h2>
             <Control required component={Text} type="text" model=".comments" label="Is there anything else we should know about you? Any Questions, Comments, or Concerns?" />
 
+              <br />
           <h2>Permissions</h2>
           <p><b>drawchange has my permission to:</b></p>
 

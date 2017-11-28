@@ -13,24 +13,29 @@ import MainPane from '../components/MainPane';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
+import EventDetails from '../components/EventDetails';
 
 
 class EventContainer extends React.Component {
   constructor(props) {
     super(props);
+    this._getCurrentEvent = this._getCurrentEvent.bind(this);
   }
 
   componentWillMount() {
-    this.props.loadAllEvents();
+    this.props.loadAllEvents(this.props.match.params.id);
+    // if (this.props.match.params.id && !this.props.current_event) {
+    //   this.props.updateCurrentEvent(this.props.match.params.id);
+    // }
   }
 
-  // eventually we should move this logic to redux...
-  //   renderItem() {
-  //     if (this.props.currentVolunteer !== null) {
-  //       return this.props.volunteersList.find((item) => item._id === this.props.currentVolunteer);
-  //     }
-  //     return null;
-  //   }
+  _getCurrentEvent(id) {
+    if (this.props.match.params.id !== null) {
+      return this.props.all.find((item) => item._id === id);
+    }
+    return null;
+  }
+
 
   render() {
     return (
@@ -39,27 +44,16 @@ class EventContainer extends React.Component {
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
             <Panel header={<h3>All Event</h3>} bsStyle="info">
               {/* <input type={text}> */}
-              <UpcomingEvents data={this.props.all} />
+              <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
 
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Event Details</h3>} bsStyle="info">
-              {/* <input type={text}> */}
-              {/* <PendingVolunteers data={this.props.pending} /> */}
-              <h1>Heading</h1>
+              {this.props.current_event && <EventDetails event={this.props.current_event}/>}
             </Panel>
           </Col>
         </Row>
-
-
-        {/* <LeftPane
-            itemList = {this.props.volunteersList}
-            updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-            view = "Volunteer"
-        />
-        <MainPane currentItem = {this.props.currentVolunteer || null}
-        view = "Volunteer"/> */}
       </div>
     );
   }
@@ -76,6 +70,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     pending: state.volunteers.pending,
     all: state.events.all,
+    current_event: state.events.current_event
   };
 };
 

@@ -1,10 +1,21 @@
 import * as types from './types.js';
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
-export function updateCurrentEvent(currentEvent) {
-  return { type: types.CURRENT_EVENT, currentEvent };
+export function updateCurrentEvent(id) {
+  return (dispatch, getState) => {
+    dispatch(push(`/events/${id}`));
+    dispatch(currentEvent(id));
+  };
+  // return { type: types.CURRENT_EVENT, currentEvent };
 }
 
+function currentEvent(id) {
+  return {
+    type: types.UPDATE_CURRENT_EVENT,
+    id
+  };
+}
 
 export function updateEventArray(events) {
   return { type: types.UPDATE_EVENT_ARRAY, events};
@@ -30,11 +41,12 @@ function newEvents(newest) {
   };
 }
 
-export function loadAllEvents() {
+export function loadAllEvents(id) {
   return dispatch => {
     axios.get('/api/events')
       .then(({ data }) => {
         dispatch(allEvents(data.events));
+        if (id) dispatch(currentEvent(id));
       });
   };
 }

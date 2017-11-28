@@ -70,6 +70,7 @@ const UpcomingEvents = (props) => (
       getTdProps={(state, rowInfo, column, instance) => {
         return {
           onClick: (e) => {
+            props.updateEvent(rowInfo.original._id);
             console.log(rowInfo.original);
           }
         };

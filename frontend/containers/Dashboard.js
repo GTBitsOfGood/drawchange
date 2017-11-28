@@ -7,6 +7,7 @@ import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as dashboardActions from '../actions/dashboard.js';
+import * as eventActions from '../actions/events.js';
 import PendingVolunteers from '../components/tables/PendingVolunteers';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
 import NewVolunteers from '../components/tables/NewVolunteers';
@@ -52,7 +53,7 @@ class Dashboard extends Component {
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Upcoming Events</h3>} bsStyle="info">
-              <UpcomingEvents data={this.props.upcoming}/>
+              <UpcomingEvents data={this.props.upcoming} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
           </Col>
         </Row>
@@ -84,7 +85,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(dashboardActions, dispatch);
+  return Object.assign({},
+    bindActionCreators(dashboardActions, dispatch),
+    bindActionCreators(eventActions, dispatch),
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

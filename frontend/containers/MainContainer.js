@@ -11,6 +11,7 @@ import VolunteersContainer from './VolunteersContainer';
 
 const MainContainer = () => (
   <Switch>
+    <Route path={"/events/:id"} component={EventContainer} />
     <Route path={"/events"} component={EventContainer}/>
     <Route path={"/volunteers"} component={VolunteersContainer} />
     <Route path={"/"} exact component={Dashboard} />

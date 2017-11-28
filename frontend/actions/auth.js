@@ -1,5 +1,6 @@
 // NPM Import
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
 // Action Creators
 import * as types from './types';
@@ -42,6 +43,7 @@ export function register() {
 export function logout() {
   return function(dispatch, getState) {
     sessionStorage.removeItem('state');
+    dispatch(push('/login'));
     axios.get('/api/logout')
       .then(resp => dispatch(logoutGenerator()));
   };
