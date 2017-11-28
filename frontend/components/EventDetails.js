@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTable from 'react-table';
 
-const EventDetails = ({event}) => (
+const EventDetails = ({ event }) => (
   <div>
     <h3>{event.name}</h3>
     <p><b>Date:</b> {new Date(event.date).toDateString()}</p>
@@ -19,6 +18,7 @@ const EventDetails = ({event}) => (
 );
 
 EventDetails.propTypes = {
+  event: PropTypes.object,
 };
 
 export default EventDetails;

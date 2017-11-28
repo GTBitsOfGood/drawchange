@@ -33,8 +33,7 @@ class Dashboard extends Component {
           </Col>
           <Col sm={5} lg={4}>
             <Nav pullRight style={{marginTop: '20px', marginBottom: '10px', fontSize: 'initial'}} bsStyle="pills"  onSelect={key => alert(`clicked ${key}`)}>
-              <NavItem eventKey={1}>New Event</NavItem>
-              <NavItem eventKey={2}>New Volunteer</NavItem>
+              <NavItem eventKey={1}>+ New Event</NavItem>
             </Nav>
           </Col>
         </Row>

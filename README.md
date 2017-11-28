@@ -1,4 +1,4 @@
-# drawchange Volunteer & Event Managemnt System
+# drawchange Volunteer & Event Management System
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CircleCI](https://circleci.com/gh/GTBitsOfGood/drawchange.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/GTBitsOfGood/drawchange)
 [![Known Vulnerabilities](https://snyk.io/test/github/gtbitsofgood/drawchange/badge.svg)](https://snyk.io/test/github/gtbitsofgood/drawchange)

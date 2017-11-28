@@ -29,8 +29,7 @@ export function register() {
     axios.post('/api/users', { bio, history, availability, skills_interests,
       referral, employment, ice, reference, criminal, permissions })
       .then(resp => {
-        console.log('inside register action creator');
-        console.log(resp);
+        if (resp.data.user) dispatch(push('/login'));
         dispatch(registerGenerator(resp.data.user));
       })
       .catch(err => dispatch(registerGenerator()));
@@ -58,7 +57,7 @@ function loginGenerator(user) {
 }
 
 function registerGenerator(user) {
-  return user ? { type: types.REGISTRATION_SUCCESS, user } : { type: types.REGISTRATION_FAILED };
+  return user ? { type: types.REGISTRATION_SUCCESS } : { type: types.REGISTRATION_FAILED };
 }
 
 function logoutGenerator() {

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Splash from './Splash';
+import PostRegisterSplash from '../components/PostRegisterSplash';
 import MainContainer from './MainContainer';
 import VolunteerForm from './forms/VolunteerForm';
 import Dashboard from './Dashboard';
@@ -31,7 +32,16 @@ class AppContainer extends Component {
     return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
-    return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
+    return (this.props.user ? this._authorize(this.props.user) : <Redirect to={'/login'} />);
+  }
+
+  _authorize(user) {
+    if (user.bio.role === 'pending') {
+      return <PostRegisterSplash />;
+    } else if (user.bio.role === 'rejected') {
+      return <h1>Your application has been rejected</h1>;
+    }
+    return <MainContainer user={user} />;
   }
 
   render() {
