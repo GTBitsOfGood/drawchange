@@ -8,6 +8,7 @@ import Splash from './Splash';
 import MainContainer from './MainContainer';
 import VolunteerForm from './forms/VolunteerForm';
 import Dashboard from './Dashboard';
+import VolunteersContainer from './VolunteersContainer';
 
 import Navbar from '../components/Navbar';
 
@@ -30,7 +31,7 @@ class AppContainer extends Component {
     return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
-    return (this.props.user ? <Dashboard /> : <Redirect to={'/login'} />);
+    return (this.props.user ? <VolunteersContainer /> : <Redirect to={'/login'} />);
   }
 
   render() {
