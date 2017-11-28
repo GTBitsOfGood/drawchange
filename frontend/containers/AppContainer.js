@@ -47,7 +47,7 @@ class AppContainer extends Component {
   render() {
     return (
       <div>
-        <Navbar logoutAction={this.props.logout} />
+        <Navbar role={this.props.user} logoutAction={this.props.logout} />
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
