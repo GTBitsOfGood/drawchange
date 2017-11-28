@@ -7,7 +7,6 @@ export function updateCurrentEvent(id) {
     dispatch(push(`/events/${id}`));
     dispatch(currentEvent(id));
   };
-  // return { type: types.CURRENT_EVENT, currentEvent };
 }
 
 function currentEvent(id) {
