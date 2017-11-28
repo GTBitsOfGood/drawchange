@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 // Local Imports
+import '../assets/stylesheets/Nav.css';
 
 const NavBar = ({ logoutAction }) => {
   return (

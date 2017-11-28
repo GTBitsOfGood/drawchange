@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const VolunteerProfile = ({ user }) => (
-  <div>
+  <div style={{height: '500px', overflow: 'scroll'}}>
 
     <h3> Personal Information </h3>
     <p> Current Status: {user.bio.role} </p>
@@ -14,14 +14,14 @@ const VolunteerProfile = ({ user }) => (
     <p> City: {user.bio.city} </p>
     <p> State: {user.bio.state} </p>
     <p> Zip Code: {user.bio.zip_code} </p>
-    <p> Languages: {user.bio.Languages} </p>
+    <p> Languages: {user.bio.languages} </p>
     <br />
 
     <h3> About Volunteer </h3>
     {/* <p> Availability: {user.availability} </p>
     <p> Skills: {user.skills_interests} </p> */}
     <p> Why are you interested in volunteering: {user.history.volunteer_interest_cause} </p>
-    <p> How did you hear about drawchange: {user.referral} </p>
+    {/* <p> How did you hear about drawchange: {user.referral} </p> */}
     <p> What would you need from us: {user.history.volunteer_support} </p>
     <p> What do you do when you realize you cannot keep a commitment: {user.history.volunteer_commitment} </p>
     <p> Summarize skills and qualifications you have obtained from previous work: {user.history.skills_qualifications} </p>
@@ -51,11 +51,11 @@ const VolunteerProfile = ({ user }) => (
     <br /> */}
 
     <h3> Emergency Contact </h3>
-    <p> Relationship: {user.emergency.relationship} </p>
-    <p> Name: {user.emergency.name} </p>
-    <p> Email: {user.emergency.email} </p>
-    <p> Phone Number: {user.emergency.phone_number} </p>
-    <p> Address: {user.emergency.address} </p>
+    <p> Relationship: {user.ice.relationship} </p>
+    <p> Name: {user.ice.name} </p>
+    <p> Email: {user.ice.email} </p>
+    <p> Phone Number: {user.ice.phone_number} </p>
+    <p> Address: {user.ice.address} </p>
     <br />
 
     <h3> Additional Comments </h3>
@@ -63,16 +63,16 @@ const VolunteerProfile = ({ user }) => (
     <br />
 
     <h3> Permissions </h3>
-    <p> Verify Reference: {user.permissions.reference} </p>
-    <p> Use peronsal image: {user.permissions.personal_image} </p>
-    <p> Add to Mailing List: {user.permissions.email_list} </p>
+    <p> Verify Reference: {user.permissions.reference ? 'Granted' : 'Denied'} </p>
+    <p> Use peronsal image: {user.permissions.personal_image ? 'Granted' : 'Denied'} </p>
+    <p> Add to Mailing List: {user.permissions.email_list ? 'Granted' : 'Denied'} </p>
     <p> Signature: {user.permissions.signature} </p>
     <br />
   </div>
 );
 
 VolunteerProfile.propTypes = {
-  user: PropTypes.obj
+  user: PropTypes.object
 };
 
 export default VolunteerProfile;

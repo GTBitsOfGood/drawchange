@@ -22,11 +22,12 @@ export function updateVolunteerStatus(role) {
 }
 
 
-export function loadAllVolunteers() {
+export function loadAllVolunteers(id) {
   return dispatch => {
     axios.get('/api/users?type=volunteer')
       .then(({ data }) => {
         dispatch(allVolunteers(data.users));
+        if (id) dispatch(currentVolunteer(id));
       });
   };
 }
