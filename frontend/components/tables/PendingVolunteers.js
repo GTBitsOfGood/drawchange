@@ -31,7 +31,23 @@ const columns = [
       }
       return 'None';
     },
-    maxWidth: 175
+    maxWidth: 140,
+    minWidth: 100,
+  },
+  {
+    id: 'referral',
+    Header: 'Referral',
+    accessor: d => {
+      let referral = '';
+      if (d.referral.friend) referral += 'Friend ';
+      if (d.referral.newsletter) referral += 'Newsletter ';
+      if (d.referral.event) referral += 'Event ';
+      if (d.referral.volunteer_match) referral += 'Volunteer Match ';
+      if (d.referral.internet) referral += 'Internet ';
+      if (d.referral.social_media) referral += 'Social Media ';
+      return referral;
+    },
+    maxWidth: 100
   },
   {
     Header: 'Email',
