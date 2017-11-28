@@ -35,6 +35,9 @@
     "express-session": "^1.15.6",
     "express-validator": "^4.2.1",
     "history": "^4.7.2",
+    "is-phone-number": "^1.0.4",
+    "is-valid-date": "0.0.1",
+    "is-valid-zip": "0.0.3",
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "mongodb": "^2.2.31",
@@ -69,6 +72,7 @@
     "sass-loader": "^6.0.3",
     "snyk": "^1.50.0",
     "style-loader": "^0.16.1",
+    "validator": "^9.1.2",
     "webpack": "^2.3.3"
   },
   "devDependencies": {

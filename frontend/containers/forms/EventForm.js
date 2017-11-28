@@ -2,14 +2,18 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Control, Form } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import { bindActionCreators } from 'redux';
 import Button from 'react-bootstrap/lib/Button';
+var isValidDate = require('is-valid-date');
+
 // Local Components
 import { onCreateEvent } from '../../actions/events';
 import Text from '../../components/inputs/Text';
 import Textarea from '../../components/inputs/Textarea';
+
+import '../../assets/stylesheets/ItemDisplay.css';
 
 
 class EventForm extends Component {
@@ -26,14 +30,50 @@ class EventForm extends Component {
 
   render() {
     return (
-      <Form model="forms.event" >
-        <Control required component={Text} model=".name" label="Event Name" type="text" />
-        <Control required component={Text} model=".date" label="Event Date" type="date" />
-        <Control required component={Text} model=".location" label="Event Location" type="text" />
-        <Control required component={Textarea} model=".description" label="Event Description" />
-        <Control required component={Text} model=".contact" label="Event Contact" type="text" />
-        <Control required component={Text} model=".max_volunteers" label="Maximum Number of Volunteers" type="text" />
-        <Button bsStyle="primary" onClick={this.props.onCreateEvent}>Submit</Button>
+      <Form model="forms.event" onSubmit={v => console.log(v)}>
+        <Control required component={Text} model=".name" label="Event Name" type="text" placeholder = "Event Name"
+        errors={{
+          isRequired: (val) => !val
+        }}/>
+        <Errors className="errors" model=".name" show="focus" messages={{
+          isRequired: 'Please enter your name',
+        }} />
+        <Control required component={Text} model=".date" label="Event Date" type="date"
+        errors={{
+          isRequired: (val) => !val || !isValidDate(val)
+        }}/>
+        <Errors className="errors" model=".date" show="focus" messages={{
+          isRequired: 'Please enter a date',
+        }} />
+        <Control required component={Text} model=".location" label="Event Location" type="text" placeholder = "Event Location"
+        errors={{
+          isRequired: (val) => !val || !(val.length >= 5)
+        }}/>
+        <Errors className="errors" model=".location" show="focus" messages={{
+          isRequired: 'Please enter a location',
+        }} />
+        <Control required component={Textarea} model=".description" label="Event Description" type="text" placeholder = "Event Description"
+        errors={{
+          isRequired: (val) => !val
+        }}/>
+        <Errors className="errors" model=".description" show="focus" messages={{
+          isRequired: 'Please enter a description',
+        }} />
+        <Control required component={Text} model=".contact" label="Event Contact" type="text" placeholder = "Event Contact"
+        errors={{
+          isRequired: (val) => !val
+        }}/>
+        <Errors className="errors" model=".contact" show="focus" messages={{
+          isRequired: 'Please enter a contact',
+        }} />
+        <Control required component={Text} model=".max_volunteers" label="Maximum Number of Volunteers" type="text" min={1} placeholder = "Maximum number of Volunteers"
+        errors={{
+          isRequired: (val) => !val
+        }}/>
+        <Errors className="errors" model=".max_volunteers" show="focus" messages={{
+          isRequired: 'Please enter a maximum number of volunteers',
+        }} />
+        <Button bsStyle="primary" type="submit" onClick={this.props.onCreateEvent}>Submit</Button>
         <ReduxSweetAlert />
       </Form>
     );

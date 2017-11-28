@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-
 import Splash from './Splash';
 import PostRegisterSplash from '../components/PostRegisterSplash';
 import MainContainer from './MainContainer';
 import VolunteerForm from './forms/VolunteerForm';
+import EventForm from './forms/EventForm';
 import Dashboard from './Dashboard';
 import VolunteersContainer from './VolunteersContainer';
 
@@ -48,7 +48,6 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar logoutAction={this.props.logout} />
-        {/* <Dashboard /> */}
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
