@@ -10,4 +10,10 @@ ignore:
     - node-sass > request > tunnel-agent:
         reason: None given
         expires: '2017-12-25T21:05:27.654Z'
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:minimatch:20160620':
+    - is-valid-date > tape > glob > minimatch:
+        patched: '2017-11-28T21:56:59.879Z'
+    - is-valid-zip > tape > glob > minimatch:
+        patched: '2017-11-28T21:56:59.879Z'
