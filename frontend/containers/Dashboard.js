@@ -10,6 +10,7 @@ import * as dashboardActions from '../actions/dashboard.js';
 import PendingVolunteers from '../components/tables/PendingVolunteers';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
 import NewVolunteers from '../components/tables/NewVolunteers';
+import { PENDING_VOLUNTEERS_FULL } from '../components/tables/columns';
 
 
 class Dashboard extends Component {
@@ -39,7 +40,7 @@ class Dashboard extends Component {
         <Row>
           <Col smOffset={1} lgOffset={2} lg={8} sm={10}>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteers data={this.props.pending}/>
+              <PendingVolunteers data={this.props.pending} columns={PENDING_VOLUNTEERS_FULL}/>
             </Panel>
           </Col>
         </Row>

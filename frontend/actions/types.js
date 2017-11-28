@@ -29,6 +29,8 @@ export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 // Volunteer actions
 export const LOAD_PENDING_VOLUNTEERS = Symbol("LOAD_PENDING_VOLUNTEERS");
 export const LOAD_NEWEST_VOLUNTEERS = Symbol("LOAD_NEWEST_VOLUNTEERS");
+export const LOAD_ALL_VOLUNTEERS = Symbol("LOAD_ALL_VOLUNTEERS");
 
 // Event Actions
+export const LOAD_ALL_EVENTS = Symbol('LOAD_ALL_EVENTS');
 export const LOAD_NEWEST_EVENTS = Symbol('LOAD_NEWEST_EVENTS');

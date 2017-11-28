@@ -31,7 +31,7 @@ class AppContainer extends Component {
     return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
   }
   _home() {
-    return (this.props.user ? <VolunteersContainer /> : <Redirect to={'/login'} />);
+    return (this.props.user ? <MainContainer /> : <Redirect to={'/login'} />);
   }
 
   render() {
