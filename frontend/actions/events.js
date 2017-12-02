@@ -60,7 +60,10 @@ export function onCreateEvent() {
   return (dispatch, getState) => {
     const { name, description, date, location, max_volunteers, contact } = getState().forms.event;
     axios.post('/api/events', { name, description, date, location, max_volunteers, contact})
-      .then(({data}) => console.log(data));
+      .then(({data}) => {
+        console.log(data);
+        dispatch(push('/'));
+      });
   };
 }
 

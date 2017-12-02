@@ -14,7 +14,7 @@ import UpcomingEvents from '../components/tables/UpcomingEvents';
 import MyEvents from '../components/tables/MyEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
-import EventDetails from '../components/EventDetails';
+import VolunteersEventDetails from '../components/VolunteersEventDetails';
 
 
 class VolunteersDashboard extends React.Component {
@@ -49,7 +49,7 @@ class VolunteersDashboard extends React.Component {
             <Panel header={<h3>Event Details</h3>} bsStyle="info">
 
                 {/* {this.props.current_event && this.props.} */}
-              {this.props.current_event && <EventDetails user = {this.props.userId} event=
+              {this.props.current_event && <VolunteersEventDetails user = {this.props.userId} event=
                 {this.props.current_event} signUp={this.props.onSignUp} unregister=
                 {this.props.unSignUp} allVolunteers={this.findEvent()}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}

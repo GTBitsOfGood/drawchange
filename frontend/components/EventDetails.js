@@ -8,21 +8,6 @@ class EventDetails extends React.Component {
     super(props);
   }
 
-  Registration(register, unregister, allEvents) {
-    this.allVolunteers = allEvents.volunteers;
-    console.log("volunteer id's" + this.allVolunteers);
-    console.log("user id" + this.props.user);
-    console.log("checking volunteer registration:" + this.allVolunteers.find((val) => (val === this.props.user) ? true : false));
-    if (this.allVolunteers.find((val) => val === this.props.user)) {
-      return (
-                  <Button bsStyle="primary" active onClick={()=>unregister()}>Unregister</Button>
-      );
-    }
-    return (
-          <Button bsStyle="primary" active onClick={()=>register()}>Register</Button>
-    );
-  }
-
   render() {
     return (
             <div>
@@ -30,9 +15,7 @@ class EventDetails extends React.Component {
             <p><b>Location:</b> {this.props.event.location}</p>
             <p><b>Contact:</b> {this.props.event.contact}</p>
             <p><b>Description:</b> {this.props.event.description}</p>
-            <p><b>Volunteers:</b> {this.props.event.volunteers.length === 0 && <span>No Volunteers Registered</span>}</p>
-            {this.Registration(this.props.signUp, this.props.unregister, this.props.allVolunteers)}
-
+            <p><b>Volunteers:</b> {this.props.event.volunteers.length === 0 ?  <span>No Volunteers Registered</span> : this.props.event.volunteers.length}</p>
             </div>
     );
   }

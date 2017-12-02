@@ -46,6 +46,10 @@ class AppContainer extends Component {
     return <MainContainer user={user} />;
   }
 
+  _createEvent() {
+    return ( <EventForm/>);
+  }
+
   render() {
     return (
       <div>
@@ -53,6 +57,7 @@ class AppContainer extends Component {
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
+          <Route exact path={'/newEvent'} render={this._createEvent} />
           <Route path={'/*'} render={this._home}/>
         </Switch>
       </div>

@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Panel, Nav, NavItem, Button } from 'react-bootstrap';
+import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
@@ -15,11 +16,19 @@ import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import EventDetails from '../components/EventDetails';
 import EventForm from './forms/EventForm';
+import VolunteerForm from './forms/VolunteerForm';
 
 class EventContainer extends React.Component {
 
   componentWillMount() {
     this.props.loadAllEvents(this.props.match.params.id);
+  }
+
+  onCreateEvent() {
+    console.log("clicked");
+    return (
+        <Route exact path={'/createEvent'} component={EventForm} />
+    );
   }
 
   render() {
@@ -31,12 +40,14 @@ class EventContainer extends React.Component {
               {/* <input type={text}> */}
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
-
+            <Panel header={<h3>Upcoming Events</h3>} bsStyle="info">
+              {/* <input type={text}> */}
+              <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
+            </Panel>
           </Col>
           <Col sm={5} lg={4}>
-            <Panel header={<h3>Event BLAHABALDSFASD</h3>} bsStyle="info" >
-                <p>Test</p>
-              <Button bsStyle="primary" >Create Event</Button>
+          <Link to={"/newEvent"}><Button style={{marginTop: '20px', marginBottom: '10px', fontSize: 'initial'}} bsStyle="pills"> + Create Event</Button> </Link>
+            <Panel header={<h3>Event Detail</h3>} bsStyle="info">
               {this.props.current_event && <EventDetails event={this.props.current_event}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
