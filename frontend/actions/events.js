@@ -90,6 +90,7 @@ export function onSignUp() {
     axios.put(`/api/events/${stringevents}?action=appendVolunteers`, { volunteers, })
         .then(resp => {
           console.log("updated events object, volunteer array");
+          dispatch();
         });
     axios.put(`/api/users/${userId}?action=appendEvent`, { events, })
         .then(resp => {
@@ -106,13 +107,13 @@ export function unSignUp() {
     volunteers.push(userId); // TODO:volunteers
     const events = [];
     const stringeventID = getState().events.current_event._id;
-    console.log("this is event ID:" + events);
+    console.log("this is event ID:" + stringeventID);
     events.push(stringeventID);
-    axios.put(`/api/events/${stringeventID}?action=removeVolunteer`, { volunteers, })
+    axios.put(`/api/events/${stringeventID}?action=removeVolunteers`, { volunteers, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/${volunteers}?action=removeEvent`, { events, })
+    axios.put(`/api/users/${userId}?action=removeEvents`, { events, })
         .then(resp => {
           console.log(resp);
           alert("Successfully unregistered!");
