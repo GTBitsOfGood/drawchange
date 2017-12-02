@@ -4,8 +4,8 @@ import { push } from 'react-router-redux';
 
 export function updateCurrentEvent(id) {
   return (dispatch, getState) => {
-    dispatch(push(`/events/${id}`));
     dispatch(currentEvent(id));
+    dispatch(push(`/events/${id}`));
   };
 }
 
@@ -74,16 +74,21 @@ export function onLoadEvent() {
 }
 
 export function onSignUp() {
+  console.log("called");
   return (dispatch, getState) => {
     const volunteer_Id = [];
-    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
+    const userId = getState().auth.user._id;
+    console.log("this is volunteer ID:" + userId);
+    volunteer_Id.push(userId); // TODO:volunteers
     const event_Id = [];
-    event_Id.append(getState.currentEvent._id);
-    axios.put(`/api/events/:${event_Id}?action=appendVolunteer`, { volunteer_Id, })
+    const eventID = getState().events.current_event._id;
+    console.log("this is event ID:" + eventID);
+    event_Id.push(eventID);
+    axios.put(`/api/events/${event_Id}?action=appendVolunteer`, { volunteerId, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/:${volunteer_Id}?action=appendEvent`, { event_Id, })
+    axios.put(`/api/users/${volunteer_Id}?action=appendEvent`, { eventId, })
         .then(resp => {
           alert("You're signed up!");
         });
@@ -93,13 +98,18 @@ export function onSignUp() {
 export function unSignUp() {
   return (dispatch, getState) => {
     const volunteer_Id = [];
-    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
+    const userId = getState().auth.user._id;
+    console.log("this is volunteer ID:" + userId);
+    volunteer_Id.push(userId); // TODO:volunteers
     const event_Id = [];
-    axios.put(`/api/events/:${event_Id}?action=removeVolunteer`, { volunteer_Id, })
+    const eventID = getState().events.current_event._id;
+    console.log("this is event ID:" + eventID);
+    event_Id.push(eventID);
+    axios.put(`/api/events/${event_Id}?action=removeVolunteer`, { volunteer_Id, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/:${volunteer_Id}?action=removeEvent`, { event_Id, })
+    axios.put(`/api/users/${volunteer_Id}?action=removeEvent`, { event_Id, })
         .then(resp => {
           alert("Successfully unregistered!");
         });
