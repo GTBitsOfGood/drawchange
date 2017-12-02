@@ -23,6 +23,7 @@ router.post('/', [
   check('bio.zip_code').isAscii().trim().escape(),
   check('bio.password').isAscii().trim().escape(),
   check('bio.languages').isAscii().trim().escape(),
+  check('bio.role').isAscii().trim().escape(),
   check('history.volunteer_interest_cause').isAscii().trim().escape(),
   check('history.volunteer_support').isAscii().trim().escape(),
   check('history.volunteer_commitment').isAscii().trim().escape(),
@@ -233,6 +234,7 @@ router.route('/:id')
     ]), (req, res, query) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        console.log(errors.mapped());
         return res.status(400).json({ errors: errors.mapped() });
       }
 

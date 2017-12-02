@@ -34,7 +34,7 @@ class Dashboard extends Component {
       <div>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
-            <h1>Welcome, Andre</h1>
+            <h1>Welcome</h1>
           </Col>
           <Col sm={5} lg={4}>
             <Nav pullRight style={{marginTop: '20px', marginBottom: '10px', fontSize: 'initial'}} bsStyle="pills"  onSelect={key => alert(`clicked ${key}`)}>
