@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
+import { Col, Row, Panel, Nav, NavItem, Button } from 'react-bootstrap';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
@@ -14,7 +14,7 @@ import UpcomingEvents from '../components/tables/UpcomingEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import EventDetails from '../components/EventDetails';
-
+// import EventCreate from '../components/EventCreate';
 
 class EventContainer extends React.Component {
 
@@ -35,6 +35,7 @@ class EventContainer extends React.Component {
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Event Details</h3>} bsStyle="info" >
+            {/* <Button bsStyle="primary" active onClick={()=>unregister()}>Create Event</Button> */}
               {this.props.current_event && <EventDetails event={this.props.current_event}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>

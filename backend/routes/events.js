@@ -84,8 +84,11 @@ router.route('/:id')
         if (!event) {
           return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
         }
+        console.log("checking if valid event");
         if (req.query.action) {
+          console.log("req.query.action " + req.query.action);
           if (req.query.action === 'appendVolunteers') {
+            console.log("appendVolunteers is being checked");
             eventData.volunteers.push(req.body.volunteerId);
           } else if (req.query.action === 'removeVolunteers') {
             eventData.volunteers.splice(eventData.volunteers.indexOf(req.body.volunteerId), 1);

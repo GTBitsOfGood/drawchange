@@ -43,3 +43,19 @@
     margin-right: 80px;
     /* width: 100%; */
   }
+
+  .errors {
+    font-size: 1.5rem;
+    color: #EE0000;
+    margin-top: 0.25rem;
+    animation: slide-down 0.3s backwards ease-in-out;
+
+
+  }
+
+  @keyframes slide-down {
+      from {
+        transform: translateY(-50%);
+        opacity: 0;
+      }
+    }
