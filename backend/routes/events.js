@@ -81,18 +81,28 @@ router.route('/:id')
 
     Event.findById(req.params.id)
       .then(event => {
+        // if (!event) {
+        //   return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
+        // }
+        // if (req.query.action) {
+        //   if (req.query.action === 'appendVolunteers') {
+        //     eventData.volunteers.push(req.body.volunteerId);
+        //   } else if (req.query.action === 'removeVolunteers') {
+        //     eventData.volunteers.splice(eventData.volunteers.indexOf(req.body.volunteerId), 1);
+        //   }
+        // }
+
+
         if (!event) {
           return res.status(404).json({ errors: `No event found with id: ${req.params.id}`});
-        }
-        console.log("checking if valid event");
-        if (req.query.action) {
-          console.log("req.query.action " + req.query.action);
-          if (req.query.action === 'appendVolunteers') {
-            console.log("appendVolunteers is being checked");
-            eventData.volunteers.push(req.body.volunteerId);
-          } else if (req.query.action === 'removeVolunteers') {
-            eventData.volunteers.splice(eventData.volunteers.indexOf(req.body.volunteerId), 1);
-          }
+        } else if (req.query.action === "appendVolunteers") {
+          eventData.volunteers.forEach(volunteerId => event.volunteers.push(volunteerId));
+          eventData.events = undefined;
+        } else if (req.query.action === "removeVolunteers") {
+          eventData.volunteers.forEach(volunteerId =>
+            event.volunteers.splice(event.volunteers.indexOf(volunteerId), 1)
+          );
+          eventData.volunteers = undefined;
         }
         for (const key in event) {
           event[key] = eventData[key] !== undefined ? eventData[key] : event[key];
