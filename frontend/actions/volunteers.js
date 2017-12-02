@@ -63,11 +63,10 @@ export function approvePendingVolunteer(id) {
     axios.put(`/api/users/${id}`, body)
       .then(({ data }) => {
         if (data.user.bio.role === 'volunteer') {
-          dispatch(approveVolunteer(id))
+          dispatch(approveVolunteer(id));
         }
-        dispatch(approveVolunteer(data));
       });
-  }
+  };
 }
 
 // export function onLoad() {
@@ -105,6 +104,6 @@ function approveVolunteer(id) {
   return {
     type: types.APPROVE_PENDING_VOLUNTEER,
     id
-  }
+  };
 }
 
