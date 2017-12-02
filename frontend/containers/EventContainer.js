@@ -14,7 +14,7 @@ import UpcomingEvents from '../components/tables/UpcomingEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import EventDetails from '../components/EventDetails';
-// import EventCreate from '../components/EventCreate';
+import EventForm from './forms/EventForm';
 
 class EventContainer extends React.Component {
 
@@ -34,8 +34,9 @@ class EventContainer extends React.Component {
 
           </Col>
           <Col sm={5} lg={4}>
-            <Panel header={<h3>Event Details</h3>} bsStyle="info" >
-            {/* <Button bsStyle="primary" active onClick={()=>unregister()}>Create Event</Button> */}
+            <Panel header={<h3>Event BLAHABALDSFASD</h3>} bsStyle="info" >
+                <p>Test</p>
+              <Button bsStyle="primary" >Create Event</Button>
               {this.props.current_event && <EventDetails event={this.props.current_event}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>

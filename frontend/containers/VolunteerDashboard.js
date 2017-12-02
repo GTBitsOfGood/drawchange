@@ -78,7 +78,7 @@ const mapStateToProps = (state, ownProps) => {
     pending: state.volunteers.pending,
     all: state.events.all,
     current_event: state.events.current_event,
-    userId: state.auth._id,
+    userId: state.auth.user._id,
   };
 };
 
