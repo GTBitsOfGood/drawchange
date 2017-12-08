@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Splash from './Splash';
 import PostRegisterSplash from '../components/PostRegisterSplash';
-import MainContainer from './MainContainer';
+import { MainContainer } from './MainContainer/';
 import VolunteerForm from './forms/VolunteerForm';
 import EventForm from './forms/EventForm';
 import Dashboard from './Dashboard';
@@ -57,7 +57,7 @@ class AppContainer extends Component {
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
-          <Route exact path={'/newEvent'} render={this._createEvent} />
+          {/* <Route exact path={'/newEvent'} render={this._createEvent} /> */}
           <Route path={'/*'} render={this._home}/>
         </Switch>
       </div>
