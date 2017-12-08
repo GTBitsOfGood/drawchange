@@ -33,28 +33,30 @@ class VolunteersContainer extends React.Component {
 //   }
 
   render() {
-    return(
-      <div>
+    return (<div>
+        <Row>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+            <h1>Manage Volunteers</h1>
+          </Col>
+        </Row>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
-              <AllVolunteers data={this.props.all} updateVolunteer={this.props.updateCurrentVolunteer}/>
+              <AllVolunteers data={this.props.all} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer}/>
+              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} />}
-              {!this.props.current_volunteer && <h2>Click an Event to view details</h2>}
-
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} />}
+              {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
         </Row>
-      </div>
-    );
+      </div>);
   }
 }
 
@@ -63,6 +65,7 @@ VolunteersContainer.propTypes = {
   current_volunteer: PropTypes.object,
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
+  approvePendingVolunteer: PropTypes.func,
 };
 
 const mapStateToProps = ( state, ownProps ) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const VolunteerProfile = ({ user }) => (
+const VolunteerProfile = ({ user, onClickApprove }) => (
   <div style={{height: '500px', overflow: 'scroll'}}>
 
     <h3> Personal Information </h3>
@@ -68,11 +68,14 @@ const VolunteerProfile = ({ user }) => (
     <p> Add to Mailing List: {user.permissions.email_list ? 'Granted' : 'Denied'} </p>
     <p> Signature: {user.permissions.signature} </p>
     <br />
+
+    <button type="button" onClick={()=>onClickApprove()}> Approve </button>
   </div>
 );
 
 VolunteerProfile.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  onClickApprove: PropTypes.func,
 };
 
 export default VolunteerProfile;

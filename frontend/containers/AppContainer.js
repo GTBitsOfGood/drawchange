@@ -5,13 +5,13 @@ import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Splash from './Splash';
 import PostRegisterSplash from '../components/PostRegisterSplash';
-import MainContainer from './MainContainer';
+import { MainContainer } from './MainContainer/';
 import VolunteerForm from './forms/VolunteerForm';
 import EventForm from './forms/EventForm';
 import Dashboard from './Dashboard';
 import VolunteersContainer from './VolunteersContainer';
-
-import Navbar from '../components/Navbar';
+import VolunteerDashboard from './VolunteerDashboard';
+import { Navbar } from '../components/Navbar';
 
 import * as actions from '../actions/auth';
 
@@ -37,20 +37,27 @@ class AppContainer extends Component {
 
   _authorize(user) {
     if (user.bio.role === 'pending') {
-      return <PostRegisterSplash />;
+      return <PostRegisterSplash user={user} />;
     } else if (user.bio.role === 'rejected') {
       return <h1>Your application has been rejected</h1>;
+    } else if (user.bio.role === 'volunteer') {
+      return <VolunteerDashboard user={user} />;
     }
     return <MainContainer user={user} />;
+  }
+
+  _createEvent() {
+    return ( <EventForm/>);
   }
 
   render() {
     return (
       <div>
-        <Navbar role={this.props.user} logoutAction={this.props.logout} />
+        <Navbar logoutAction={this.props.logout} user ={this.props.user} />
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
+          {/* <Route exact path={'/newEvent'} render={this._createEvent} /> */}
           <Route path={'/*'} render={this._home}/>
         </Switch>
       </div>

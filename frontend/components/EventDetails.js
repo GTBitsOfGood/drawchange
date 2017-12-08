@@ -1,24 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-const EventDetails = ({ event }) => (
-  <div>
-    <h3>{event.name}</h3>
-    <p><b>Date:</b> {new Date(event.date).toDateString()}</p>
-    <p><b>Location:</b> {event.location}</p>
-    <p><b>Contact:</b> {event.contact}</p>
-    <p><b>Description:</b> {event.description}</p>
-    <p><b>Volunteers:</b> {event.volunteers.length === 0 && <span>No Volunteers Registered</span>}</p>
+import {Button} from 'react-bootstrap';
 
 
-    {/* Not Sure if this part works yet... */}
-    {/* event.volunteers.length > 0 && (<ul>{event.volunteers.map(current => <li>{`${current.bio.first_name} ${current.bio.last_name}`}</li>)}</ul>)*/}
+class EventDetails extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  </div>
-);
+  render() {
+    return (
+            <div>
+            <p><b>Date:</b> {new Date(this.props.event.date).toDateString()}</p>
+            <p><b>Location:</b> {this.props.event.location}</p>
+            <p><b>Contact:</b> {this.props.event.contact}</p>
+            <p><b>Description:</b> {this.props.event.description}</p>
+            <p><b>Volunteers:</b> {this.props.event.volunteers.length === 0 ?  <span>No Volunteers Registered</span> : this.props.event.volunteers.length}</p>
+            </div>
+    );
+  }
+}
+
 
 EventDetails.propTypes = {
   event: PropTypes.object,
+  signUp: PropTypes.func,
 };
 
 export default EventDetails;

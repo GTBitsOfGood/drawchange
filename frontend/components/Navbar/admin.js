@@ -5,11 +5,8 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-// Local Imports
-import '../assets/stylesheets/Nav.css';
 
-const NavBar = ({ role, logoutAction }) => {
-  return (
+export const AdminNavbar = ({logout}) => (
     <Navbar inverse collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
@@ -28,21 +25,18 @@ const NavBar = ({ role, logoutAction }) => {
           <LinkContainer to="/volunteers">
             <NavItem>Volunteers</NavItem>
           </LinkContainer>
-
         </Nav>
         <Nav pullRight>
-          <LinkContainer isActive={() => false} onClick={ logoutAction } to="/">
+          <LinkContainer isActive={() => false} onClick={logout} to="/">
             <NavItem>Logout</NavItem>
           </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  );
+);
+
+
+AdminNavbar.propTypes = {
+  logout: PropTypes.func
 };
 
-
-NavBar.propTypes = {
-  logoutAction: PropTypes.func
-};
-
-export default NavBar;

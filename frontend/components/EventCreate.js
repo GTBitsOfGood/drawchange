@@ -7,7 +7,9 @@ import Text from '../components/inputs/Text';
 import Textarea from '../components/inputs/Textarea';
 
 const EventCreate = () => (
-    <Form model = "myForms" >
+  <div>
+
+    <Form model = "forms.event" >
         <Control required component={Text} model=".name" label="Name" type="name" />
         <Control required component={Text} model=".date" label="Date" type="date" />
         <Control required component={Textarea} model=".location" label="Location" type="location" />
@@ -16,6 +18,7 @@ const EventCreate = () => (
         <Control required component={Text} model=".max_volunteers" label="Max_Volunteers" type="max_volunteers" />
         <Button bsStyle="primary" >Submit</Button>
     </Form>
+  </div>
 );
 
 

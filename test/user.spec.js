@@ -172,7 +172,7 @@ describe('User Model Test Suite', () => {
       });
     });
     it('fails when document does not exist', (done) => {
-      User.findOne({'bio.last_name': 'Smith'}, (err, results) => {
+      User.findOne({'bio.last_name': 'djsnidsnc'}, (err, results) => {
         should().not.exist(err);
         should().not.exist(results);
         return done();

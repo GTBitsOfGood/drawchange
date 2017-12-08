@@ -40,7 +40,6 @@ let id = 'too slow';
 describe('Event Model Test Suite', () => {
   describe('Create Event...', () => {
     it('works w/ all fields', (done) => {
-
       const testEvent = new Event(PROPER_FIELDS);
       testEvent.save(done);
     });
@@ -84,7 +83,7 @@ server.request.user = true;
 // API Testing (CRUD)
 describe('Event RESTful Endpoints Test Suite', () => {
   describe('POST /api/events/', () => {
-    it ('works when proper body sent', (done) => {
+    it('works when proper body sent', (done) => {
       chai.request(server)
         .post('/api/events/')
         .send(PROPER_FIELDS)
@@ -95,8 +94,8 @@ describe('Event RESTful Endpoints Test Suite', () => {
           id = res.body.event._id;
           done();
         });
-    })
-    it ('fails when proper body not sent', (done) => {
+    });
+    it('fails when proper body not sent', (done) => {
       chai.request(server)
         .post('/api/events/')
         .send(BAD_FIELDS)
@@ -104,11 +103,11 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.should.have.status(400);
           done();
         });
-    })
-  })
+    });
+  });
 
   describe('GET /api/events/', () => {
-    it ('works with no body sent', (done) => {
+    it('works with no body sent', (done) => {
       chai.request(server)
         .get('/api/events/')
         .end((err, res) => {
@@ -117,13 +116,11 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.events.should.be.a('array');
           done();
         });
-    })
-
-
-  })
+    });
+  });
 
   describe('GET /api/events/:id', () => {
-    it ('works with a valid id', (done) => {
+    it('works with a valid id', (done) => {
       chai.request(server)
         .get(`/api/events/${id}`)
         .end((err, res) => {
@@ -132,9 +129,9 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.event.should.be.a('object');
           done();
         });
-    })
+    });
 
-    it ('fails with a valid id that is not in DB', (done) => {
+    it('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
         .get(`/api/events/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
@@ -142,9 +139,9 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
+    });
 
-    it ('fails with an invalid id ', (done) => {
+    it('fails with an invalid id ', (done) => {
       chai.request(server)
         .get(`/api/events/asdfaksdlj213lkj`)
         .end((err, res) => {
@@ -152,11 +149,11 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
-  })
+    });
+  });
 
   describe('PUT /api/events/:id', () => {
-    it ('works with a valid id', (done) => {
+    it('works with a valid id', (done) => {
       chai.request(server)
         .put(`/api/events/${id}`)
         .send(UPDATE_FIELDS)
@@ -166,23 +163,25 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.event.should.be.a('object');
           done();
         });
-    })
+    });
 
-    it ('works when a query param (add volunteer) is passed', (done) => {
+    it('works when a query param (add volunteer) is passed', (done) => {
       chai.request(server)
         .put(`/api/events/${id}?action=appendVolunteers`)
-        .send({volunteers: ['507f191e810c19729de860ea']})
+        .send({volunteers: ['507f191e810c19729de860ec', '507f191e810c19729de860ea', '507f191e810c19729de860eb']})
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('event');
           res.body.event.should.be.a('object');
-          let volunteerArr = res.body.event.volunteers;
-          expect(volunteerArr).to.be.containing('507f191e810c19729de860ea');
+          const volunteerArr = res.body.event.volunteers;
+          expect(volunteerArr).to.be.containing("507f191e810c19729de860ea");
+          expect(volunteerArr).to.be.containing("507f191e810c19729de860eb");
+          expect(volunteerArr).to.be.containing("507f191e810c19729de860ec");
           done();
         });
     });
 
-    it ('works when a query param (remove volunteer) is passed', (done) => {
+    it('works when a query param (remove volunteer) is passed', (done) => {
       chai.request(server)
         .put(`/api/events/${id}?action=removeVolunteers`)
         .send({volunteers: ['507f191e810c19729de860ea']})
@@ -190,13 +189,15 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.should.have.status(200);
           res.body.should.have.property('event');
           res.body.event.should.be.a('object');
-          let volunteerArr = res.body.event.volunteers;
-          expect(volunteerArr).not.to.be.containing('507f191e810c19729de860ea');
-          done();
+          const volunteerArr = res.body.event.volunteers;
+          expect(volunteerArr).not.to.be.containing("507f191e810c19729de860ea");
+          expect(volunteerArr).to.be.containing("507f191e810c19729de860eb");
+          expect(volunteerArr).to.be.containing("507f191e810c19729de860ec");
+          return done();
         });
     });
 
-    it ('fails with an valid id that is not in DB', (done) => {
+    it('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
         .put(`/api/events/59f6130e6f22a25c35d72ce9`)
         .send(UPDATE_FIELDS)
@@ -205,9 +206,9 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
+    });
 
-    it ('fails with an invalid id', (done) => {
+    it('fails with an invalid id', (done) => {
       chai.request(server)
         .put(`/api/events/asdfaksdlj213lkj`)
         .send(UPDATE_FIELDS)
@@ -216,13 +217,11 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
-
-
-  })
+    });
+  });
 
   describe('DELETE /api/events/:id', () => {
-    it ('works with a valid id', (done) => {
+    it('works with a valid id', (done) => {
       chai.request(server)
         .delete(`/api/events/${id}`)
         .end((err, res) => {
@@ -231,9 +230,9 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.removed.should.be.a('object');
           done();
         });
-    })
+    });
 
-    it ('fails with a valid id that is not in DB', (done) => {
+    it('fails with a valid id that is not in DB', (done) => {
       chai.request(server)
         .delete(`/api/events/59f6130e6f22a25c35d72ce9`)
         .end((err, res) => {
@@ -241,9 +240,9 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
+    });
 
-    it ('fails with an invalid id ', (done) => {
+    it('fails with an invalid id ', (done) => {
       chai.request(server)
         .delete(`/api/events/asdfaksdlj213lkj`)
         .end((err, res) => {
@@ -251,7 +250,6 @@ describe('Event RESTful Endpoints Test Suite', () => {
           res.body.should.have.property('errors');
           done();
         });
-    })
-
-  })
-})
+    });
+  });
+});
