@@ -76,7 +76,7 @@ EventContainer.propTypes = {
   updateCurrentVolunteer: PropTypes.func,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     pending: state.volunteers.pending,
     all: state.events.all,
