@@ -7,7 +7,7 @@ import { Switch, Route  } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import EventContainer from './EventContainer';
 import VolunteersContainer from './VolunteersContainer';
-
+import VolunteerDashboard from './VolunteerDashboard';
 
 const MainContainer = () => (
   <Switch>

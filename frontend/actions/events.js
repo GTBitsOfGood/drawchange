@@ -4,8 +4,8 @@ import { push } from 'react-router-redux';
 
 export function updateCurrentEvent(id) {
   return (dispatch, getState) => {
-    dispatch(push(`/events/${id}`));
     dispatch(currentEvent(id));
+    dispatch(push(`/events/${id}`));
   };
 }
 
@@ -60,7 +60,10 @@ export function onCreateEvent() {
   return (dispatch, getState) => {
     const { name, description, date, location, max_volunteers, contact } = getState().forms.event;
     axios.post('/api/events', { name, description, date, location, max_volunteers, contact})
-      .then(({data}) => console.log(data));
+      .then(({data}) => {
+        console.log(data);
+        dispatch(push('/'));
+      });
   };
 }
 
@@ -74,16 +77,22 @@ export function onLoadEvent() {
 }
 
 export function onSignUp() {
+  console.log("called");
   return (dispatch, getState) => {
-    const volunteer_Id = [];
-    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
-    const event_Id = [];
-    event_Id.append(getState.currentEvent._id);
-    axios.put(`/api/events/:${event_Id}?action=appendVolunteer`, { volunteer_Id, })
+    const volunteers = [];
+    const userId = getState().auth.user._id;
+    console.log("this is volunteer ID:" + userId);
+    volunteers.push(userId); // TODO:volunteers
+    const events = [];
+    const stringevents = getState().events.current_event._id;
+    console.log("this is event ID:" + stringevents);
+    events.push(stringevents);
+    axios.put(`/api/events/${stringevents}?action=appendVolunteers`, { volunteers, })
         .then(resp => {
           console.log("updated events object, volunteer array");
+          dispatch();
         });
-    axios.put(`/api/users/:${volunteer_Id}?action=appendEvent`, { event_Id, })
+    axios.put(`/api/users/${userId}?action=appendEvent`, { events, })
         .then(resp => {
           alert("You're signed up!");
         });
@@ -92,15 +101,21 @@ export function onSignUp() {
 
 export function unSignUp() {
   return (dispatch, getState) => {
-    const volunteer_Id = [];
-    volunteer_Id.append(getState.volunteer._id); // TODO:volunteers
-    const event_Id = [];
-    axios.put(`/api/events/:${event_Id}?action=removeVolunteer`, { volunteer_Id, })
+    const volunteers = [];
+    const userId = getState().auth.user._id;
+    console.log("this is volunteer ID:" + userId);
+    volunteers.push(userId); // TODO:volunteers
+    const events = [];
+    const stringeventID = getState().events.current_event._id;
+    console.log("this is event ID:" + stringeventID);
+    events.push(stringeventID);
+    axios.put(`/api/events/${stringeventID}?action=removeVolunteers`, { volunteers, })
         .then(resp => {
           console.log("updated events object, volunteer array");
         });
-    axios.put(`/api/users/:${volunteer_Id}?action=removeEvent`, { event_Id, })
+    axios.put(`/api/users/${userId}?action=removeEvents`, { events, })
         .then(resp => {
+          console.log(resp);
           alert("Successfully unregistered!");
         });
   };
