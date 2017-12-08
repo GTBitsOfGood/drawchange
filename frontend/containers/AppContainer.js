@@ -11,7 +11,7 @@ import EventForm from './forms/EventForm';
 import Dashboard from './Dashboard';
 import VolunteersContainer from './VolunteersContainer';
 import VolunteerDashboard from './VolunteerDashboard';
-import Navbar from '../components/Navbar';
+import { Navbar } from '../components/Navbar';
 
 import * as actions from '../actions/auth';
 
@@ -37,7 +37,7 @@ class AppContainer extends Component {
 
   _authorize(user) {
     if (user.bio.role === 'pending') {
-      return <MainContainer user={user} />;
+      return <PostRegisterSplash user={user} />;
     } else if (user.bio.role === 'rejected') {
       return <h1>Your application has been rejected</h1>;
     } else if (user.bio.role === 'volunteer') {
@@ -53,7 +53,7 @@ class AppContainer extends Component {
   render() {
     return (
       <div>
-        <Navbar logoutAction={this.props.logout} user = {this.props.user} />
+        <Navbar logoutAction={this.props.logout} user ={this.props.user} />
         <Switch>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
