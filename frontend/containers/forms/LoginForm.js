@@ -23,12 +23,13 @@ class LoginForm extends Component {
     }
   }
 
+
   render() {
     return (
       <Form model="forms.user.bio"  >
         <Control required component={Text} model=".email" label="Email" type="email" />
         <Control required component={Text} model=".password" label="Password" type="password" />
-        <Button bsStyle="primary" onClick={this.props.login} >Login</Button>
+        <Button type="submit" bsStyle="primary" onClick={this.props.login} >Login</Button>
         <Link to={"/register"}>Click Here to Register</Link>
         <ReduxSweetAlert />
       </Form>
