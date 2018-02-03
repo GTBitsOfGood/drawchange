@@ -40,7 +40,7 @@ class VolunteersDashboard extends React.Component {
             <Panel header={<h3>My Events</h3>} bsStyle="info">
             <MyEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
-            <Panel header={<h3>All Event</h3>} bsStyle="info">
+            <Panel header={<h3>All Events</h3>} bsStyle="info">
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
 
