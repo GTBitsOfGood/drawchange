@@ -57,8 +57,9 @@ class VolunteersDashboard extends React.Component {
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
           </Col>
-          <DonateButton />
-
+          <Panel header={<h3>Donate</h3>} bsStyle="info">
+            <DonateButton />
+          </Panel>
         </Row>
       </div>
     );
