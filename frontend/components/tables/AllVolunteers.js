@@ -32,6 +32,7 @@ const AllVolunteers = (props) => (
   <div>
     <ReactTable
       data={props.data}
+      filterable
       columns={columns}
       defaultPageSize={5}
       showPageSizeOptions={false}
