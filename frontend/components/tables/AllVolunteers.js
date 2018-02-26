@@ -9,7 +9,8 @@ const columns = [
   {
     id: 'full_name', // Required because our accessor is not a string
     Header: 'Full Name',
-    accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
+    accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`), // Custom value accessors!
+    filterMethod: (filter, row) => row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
   },
   {
     Header: 'Email',
@@ -19,7 +20,8 @@ const columns = [
   {
     Header: 'Phone Number',
     accessor: 'bio.phone_number',
-    maxWidth: 150
+    maxWidth: 150,
+    filterable:false
   }
 ];
 

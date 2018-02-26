@@ -18,8 +18,8 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <br />
 
     <h3> About Volunteer </h3>
-    {/* <p> Availability: {user.availability} </p>
-    <p> Skills: {user.skills_interests} </p> */}
+    {/*<p> Availability: {user.availability} </p>
+    <p> Skills: {user.skills_interests} </p>*/}
     <p> Why are you interested in volunteering: {user.history.volunteer_interest_cause} </p>
     {/* <p> How did you hear about drawchange: {user.referral} </p> */}
     <p> What would you need from us: {user.history.volunteer_support} </p>
@@ -27,6 +27,16 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> Summarize skills and qualifications you have obtained from previous work: {user.history.skills_qualifications} </p>
     <p> Previous Volunteer Experience: {user.history.previous_volunteer_experience} </p>
     <br />
+
+    <h3> Availability </h3>
+    <ul>
+    {user.availability.weekday_mornings && <li> Weekday Morning </li>}
+    {user.availability.weekday_afternoons && <li> Weekday Afternoon </li>}
+    {user.availability.weekday_evenings && <li> Weekday Evenings </li>}
+    {user.availability.weekend_mornings && <li> Weekend Morning </li>}
+    {user.availability.weekend_afternoons && <li> Weekend Afternoon </li>}
+    {user.availability.weekend_evenings && <li> Weekend Evenings </li>}
+    </ul>
 
     <h3> Employment History </h3>
     <p> Current Employer: {user.employment.name} </p>
@@ -46,9 +56,14 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> How long have you known reference: {user.reference.duration} </p>
     <br />
 
-    {/* <h3> Criminal History </h3>
-    <p> {user.criminal} </p>
-    <br /> */}
+    <h3> Criminal History </h3>
+    { user.criminal.felony && <p> Felony: Yes</p>}
+    { user.criminal.sexual_violent && <p> Sexual Violence: Yes</p>}
+    { user.criminal.drugs && <p> Drugs: Yes</p>}
+    { user.criminal.driving && <p> Driving: Yes</p>}
+    { (user.criminal.felony || user.criminal.drugs || user.criminal.sexual_violent || user.criminal.driving) ?
+        <p> Explanation: user.criminal.explanation </p> : <p> No criminal history. </p>}
+
 
     <h3> Emergency Contact </h3>
     <p> Relationship: {user.ice.relationship} </p>
