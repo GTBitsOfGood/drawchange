@@ -15,7 +15,7 @@ const columns = [
   {
     Header: 'Email',
     accessor: 'bio.email',
-    minWidth: 150
+    minWidth: 150,
   },
   {
     Header: 'Phone Number',

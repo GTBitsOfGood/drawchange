@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PhoneNumber from 'react-phone-number';
 
 const VolunteerProfile = ({ user, onClickApprove }) => (
   <div style={{height: '500px', overflow: 'scroll'}}>
@@ -7,8 +8,8 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <h3> Personal Information </h3>
     <p> Current Status: {user.bio.role} </p>
     <p> Name: {`${user.bio.first_name} ${user.bio.last_name}`} </p>
-    <p> Email: {user.bio.email} </p>
-    <p> Phone Number: {user.bio.phone_number} </p>
+    <p> Email: <a href={"mailto:" + user.bio.email}>{user.bio.email}</a> </p>
+    <p> Phone Number: <a href={"tel:" + user.bio.phone_number}> {user.bio.phone_number}</a> </p>
     <p> Date of Birth: {new Date(user.bio.date_of_birth).toDateString()} </p>
     <p> Street Address: {user.bio.street_address} </p>
     <p> City: {user.bio.city} </p>
@@ -40,19 +41,23 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
 
     <h3> Employment History </h3>
     <p> Current Employer: {user.employment.name} </p>
-    <p> Current Position: {user.employment.position} </p>
-    <p> Current Employer Duration: {user.employment.duration} </p>
-    <p> Current Employer Location: {user.employment.location} </p>
+    <ul>
+    <li> Position: {user.employment.position} </li>
+    <li> Duration: {user.employment.duration} </li>
+    <li> Location: {user.employment.location} </li>
+    </ul>
     <p> Previous Employer: {user.employment.previous_name} </p>
-    <p> Previous Employer Location: {user.employment.previous_location} </p>
-    <p> Reason for Leaving: {user.employment.previous_reason_for_leaving} </p>
+    <ul>
+    <li> Location: {user.employment.previous_location} </li>
+    <li> Reason for Leaving: {user.employment.previous_reason_for_leaving} </li>
+    </ul>
     <br />
 
     <h3> Reference </h3>
-    <p> Reference Name: {user.reference.name} </p>
-    <p> Reference Email: {user.reference.email} </p>
-    <p> Reference Phone Number: {user.reference.phone_number} </p>
-    <p> Reference Relationship: {user.reference.relationship} </p>
+    <p> Name: {user.reference.name} </p>
+    <p> Email: {user.reference.email} </p>
+    <p> Phone Number: {user.reference.phone_number} </p>
+    <p> Relationship: {user.reference.relationship} </p>
     <p> How long have you known reference: {user.reference.duration} </p>
     <br />
 
