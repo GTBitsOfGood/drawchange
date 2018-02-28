@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Panel, Nav, NavItem, Button } from 'react-bootstrap';
 
+
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
@@ -15,6 +16,7 @@ import MyEvents from '../components/tables/MyEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import VolunteersEventDetails from '../components/VolunteersEventDetails';
+import DonateButton from '../components/DonateButton';
 
 
 class VolunteersDashboard extends React.Component {
@@ -40,7 +42,7 @@ class VolunteersDashboard extends React.Component {
             <Panel header={<h3>My Events</h3>} bsStyle="info">
             <MyEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
-            <Panel header={<h3>All Event</h3>} bsStyle="info">
+            <Panel header={<h3>All Events</h3>} bsStyle="info">
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
 
@@ -55,6 +57,9 @@ class VolunteersDashboard extends React.Component {
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
           </Col>
+          <Panel header={<h3>Donate</h3>} bsStyle="info">
+            <DonateButton />
+          </Panel>
         </Row>
       </div>
     );
