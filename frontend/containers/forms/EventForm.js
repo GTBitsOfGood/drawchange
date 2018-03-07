@@ -39,7 +39,7 @@ class EventForm extends Component {
             isRequired: (val) => !val
           }}/>
           <Errors className="errors" model=".name" show="focus" messages={{
-            isRequired: 'Please enter your name',
+            isRequired: 'Please enter the name of the event',
           }} />
           <Control required component={Text} model=".date" label="Event Date" type="date"
           errors={{

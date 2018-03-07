@@ -89,7 +89,7 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> Signature: {user.permissions.signature} </p>
     <br />
 
-    <button type="button" onClick={()=>onClickApprove()}> Approve </button>
+    {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickApprove()}> Approve </button>}
   </div>
 );
 
@@ -99,4 +99,3 @@ VolunteerProfile.propTypes = {
 };
 
 export default VolunteerProfile;
-
