@@ -21,6 +21,9 @@ export const VolunteerNavbar = ({ logout }) => (
         <LinkContainer to="/events">
           <NavItem>Events</NavItem>
         </LinkContainer>
+        <LinkContainer to="/">
+          <NavItem>Contact Us</NavItem>
+        </LinkContainer>
       </Nav>
       <Nav pullRight>
         <LinkContainer
@@ -38,4 +41,3 @@ export const VolunteerNavbar = ({ logout }) => (
 VolunteerNavbar.propTypes = {
   logout: PropTypes.func
 };
-
