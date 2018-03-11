@@ -76,6 +76,9 @@ const PendingVolunteers = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
+            style: {
+                background: rowInfo.row.criminal_history === 'Yes' ? 'red' : null
+            }
           onClick: (e) => props.updateVolunteer(rowInfo.original._id)
         };
       }}
