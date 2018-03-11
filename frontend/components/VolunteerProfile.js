@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PhoneNumber from 'react-phone-number';
 
 const VolunteerProfile = ({ user, onClickApprove }) => (
-  <div style={{height: '500px', overflow: 'scroll'}}>
+  <div style={{height: '500px', overflow: 'scroll', backgroundColor: ((user.criminal.felony || user.criminal.sexual_violent || user.criminal.drugs || user.criminal.driving)) ? 'rgba(255, 0, 0, 0.2)' : 'white'}}>
 
     <h3> Personal Information </h3>
     <p> Current Status: {user.bio.role} </p>
