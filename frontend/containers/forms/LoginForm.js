@@ -30,7 +30,7 @@ class LoginForm extends Component {
         <Control required component={Text} model=".email" label="Email" type="email" />
         <Control required component={Text} model=".password" label="Password" type="password" />
         <Button type="submit" bsStyle="primary" onClick={this.props.login} >Login</Button>
-        <Link to={"/register"}>Click Here to Register</Link>
+        <Link style={{marginLeft: 20}} to={"/register"}>Click Here to Register</Link>
         <ReduxSweetAlert />
       </Form>
     );
