@@ -7,7 +7,17 @@ const initialState = {
   current_volunteer: undefined,
   filter: {
     language: "",
-    skills: ""
+    skills: "",
+    birthday: undefined,
+    availability: {
+      set: false,
+      weekday_mornings: false,
+      weekday_afternoons: false,
+      weekday_evenings: false,
+      weekend_mornings: false,
+      weekend_afternoons: false,
+      weekend_evenings: false
+    }
 
   }
 };

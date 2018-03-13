@@ -43,14 +43,21 @@ class VolunteersContainer extends React.Component {
           user.history.previous_volunteer_experience.toLowerCase().includes(filter.skills))) {
       return false;
     }
-    let userBday = new Date(user.bio.date_of_birth);
+    let userBday = new Date(user.bio.date_of_birth.split("T")[0]);
     let filterBday = new Date(filter.birthday);
-    userBday.setHours(0,0,0,0);
-    filterBday.setHours(0,0,0,0);
-    console.log(filterBday instanceof Date && !isNaN(filterBday.valueOf()));
-    if (filterBday instanceof Date && !isNaN(filterBday.valueOf()) && (userBday.toString() !== filterBday.toString())) {
-      //work on this part
-      return false;
+    if (filterBday instanceof Date && !isNaN(filterBday.valueOf())) {
+      if (userBday.getDate() !== filterBday.getDate() || userBday.getMonth() !== filterBday.getMonth()) {
+        return false;
+      }
+    }
+    console.log(filter.availability.set);
+    if (filter.availability.set) {
+      if (user.availability.weekday_mornings !== filter.availability.weekday_mornings) return false;
+      if (user.availability.weekday_afternoons !== filter.availability.weekday_afternoons) return false;
+      if (user.availability.weekday_evenings !== filter.availability.weekday_evenings) return false;
+      if (user.availability.weekend_mornings !== filter.availability.weekend_mornings) return false;
+      if (user.availability.weekend_afternoons !== filter.availability.weekend_afternoons) return false;
+      if (user.availability.weekend_evenings !== filter.availability.weekend_evenings) return false;
     }
     return true;
 
