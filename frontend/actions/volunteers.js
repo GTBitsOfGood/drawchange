@@ -39,6 +39,13 @@ function allVolunteers(all) {
   };
 }
 
+export function updateVolunteerFilter(filter) {
+  return {
+    type: types.UPDATE_VOLUNTEER_FILTER,
+    filter
+  };
+}
+
 
 export function loadNewVolunteers() {
   return dispatch => {

@@ -5,6 +5,21 @@ const initialState = {
   newest: [],
   all: [],
   current_volunteer: undefined,
+  filter: {
+    language: "",
+    skills: "",
+    birthday: undefined,
+    availability: {
+      set: false,
+      weekday_mornings: false,
+      weekday_afternoons: false,
+      weekday_evenings: false,
+      weekend_mornings: false,
+      weekend_afternoons: false,
+      weekend_evenings: false
+    }
+
+  }
 };
 
 export default function volunteers(state = initialState, action) {
@@ -31,6 +46,9 @@ export default function volunteers(state = initialState, action) {
       const newNewest = state.newest.slice();
       newNewest.unshift(volunteerToApprove);
       return Object.assign({}, state, { pending: newPending, all: newAll, newest: newNewest });
+    case types.UPDATE_VOLUNTEER_FILTER:
+      const newFilterObject = Object.assign({}, state.filter, action.filter);
+      return Object.assign({}, state, {filter: newFilterObject});
     default:
       return state;
   }

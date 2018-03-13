@@ -9,6 +9,7 @@ import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
 import '../assets/stylesheets/ItemDisplay.css';
 import * as volunteerActions from '../actions/volunteers.js';
 import VolunteerProfile from '../components/VolunteerProfile';
+import VolunteersFilter from '../components/VolunteersFilter';
 import PendingVolunteersShort from '../components/tables/PendingVolunteersShort';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
@@ -32,6 +33,36 @@ class VolunteersContainer extends React.Component {
 //     return null;
 //   }
 
+  passesFilter(user) {
+    let filter = this.props.filter;
+    if (!user.bio.languages.toLowerCase().includes(filter.language)) {
+      return false;
+    }
+    if (!(user.history.volunteer_interest_cause.toLowerCase().includes(filter.skills) ||
+          user.history.skills_qualifications.toLowerCase().includes(filter.skills) ||
+          user.history.previous_volunteer_experience.toLowerCase().includes(filter.skills))) {
+      return false;
+    }
+    let userBday = new Date(user.bio.date_of_birth.split("T")[0]);
+    let filterBday = new Date(filter.birthday);
+    if (filterBday instanceof Date && !isNaN(filterBday.valueOf())) {
+      if (userBday.getDate() !== filterBday.getDate() || userBday.getMonth() !== filterBday.getMonth()) {
+        return false;
+      }
+    }
+    console.log(filter.availability.set);
+    if (filter.availability.set) {
+      if (user.availability.weekday_mornings !== filter.availability.weekday_mornings) return false;
+      if (user.availability.weekday_afternoons !== filter.availability.weekday_afternoons) return false;
+      if (user.availability.weekday_evenings !== filter.availability.weekday_evenings) return false;
+      if (user.availability.weekend_mornings !== filter.availability.weekend_mornings) return false;
+      if (user.availability.weekend_afternoons !== filter.availability.weekend_afternoons) return false;
+      if (user.availability.weekend_evenings !== filter.availability.weekend_evenings) return false;
+    }
+    return true;
+
+  }
+
   render() {
     return (<div>
         <Row>
@@ -41,9 +72,13 @@ class VolunteersContainer extends React.Component {
         </Row>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+            <Panel header={<h3>Filter</h3>} bsStyle="info">
+              {/* <input type={text}> */}
+              <VolunteersFilter/>
+            </Panel>
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
-              <AllVolunteers data={this.props.all} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <AllVolunteers data={this.props.all.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
               <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
@@ -66,6 +101,8 @@ VolunteersContainer.propTypes = {
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
   approvePendingVolunteer: PropTypes.func,
+  loadAllVolunteers: PropTypes.func,
+  filter: PropTypes.object
 };
 
 const mapStateToProps = ( state, ownProps ) => {
@@ -73,6 +110,7 @@ const mapStateToProps = ( state, ownProps ) => {
     pending: state.volunteers.pending,
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
+    filter: state.volunteers.filter
   };
 };
 
