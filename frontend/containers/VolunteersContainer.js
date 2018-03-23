@@ -38,10 +38,16 @@ class VolunteersContainer extends React.Component {
     if (!user.bio.languages.toLowerCase().includes(filter.language)) {
       return false;
     }
-    if (!(user.history.volunteer_interest_cause.toLowerCase().includes(filter.skills) ||
-          user.history.skills_qualifications.toLowerCase().includes(filter.skills) ||
-          user.history.previous_volunteer_experience.toLowerCase().includes(filter.skills))) {
-      return false;
+    // if (!(user.history.volunteer_interest_cause.toLowerCase().includes(filter.skills) ||
+    //       user.history.skills_qualifications.toLowerCase().includes(filter.skills) ||
+    //       user.history.previous_volunteer_experience.toLowerCase().includes(filter.skills))) {
+    //   return false;
+    // }
+
+    if (filter.skills && filter.skills !== 'no_filter') {
+      if (user.skills_interests[filter.skills] !== true) {
+        return false;
+      }
     }
     let userBday = new Date(user.bio.date_of_birth.split("T")[0]);
     let filterBday = new Date(filter.birthday);
@@ -50,7 +56,6 @@ class VolunteersContainer extends React.Component {
         return false;
       }
     }
-    console.log(filter.availability.set);
     if (filter.availability.set) {
       if (user.availability.weekday_mornings !== filter.availability.weekday_mornings) return false;
       if (user.availability.weekday_afternoons !== filter.availability.weekday_afternoons) return false;

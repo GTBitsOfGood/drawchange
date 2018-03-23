@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { updateVolunteerFilter } from '../actions/volunteers.js';
-import Text from './inputs/Text';
 import { Control, Form, actions } from 'react-redux-form';
 import Button from 'react-bootstrap/lib/Button';
 
@@ -19,7 +18,7 @@ class VolunteersFilter extends React.Component {
   updateTextFields() {
     this.props.updateVolunteerFilter(Object.assign({}, this.props.filter, {
       language: this.languageFilter.value.toLowerCase(),
-      skills: this.skillsFilter.value.toLowerCase(),
+      skills: this.skillsFilter.options[this.skillsFilter.selectedIndex].value,
       birthday: this.birthdayFilter.value,
     }));
   }
@@ -42,6 +41,10 @@ class VolunteersFilter extends React.Component {
     this.props.updateVolunteerFilter(Object.assign({}, this.props.filter, {availability: availabilityObj}));
   }
 
+  updateSkillsFilter() {
+
+  }
+
   noFunction() {
     return false;
   }
@@ -58,12 +61,27 @@ class VolunteersFilter extends React.Component {
                       ref={(input) => { this.languageFilter = input; }}
                       placeholder="Language"/>
                       <br/>
-              <input  type="text"
-                      label="Skills"
-                      onChange={this.updateTextFields}
-                      ref={(input) => { this.skillsFilter = input; }}
-                      placeholder="Skills, Qualificaitons, and Interests"/>
-                      <br/>
+              Skills/Interests: <select name="Skills"
+                              onChange={this.updateTextFields}
+                              ref={(select) => {this.skillsFilter = select;} }
+                              defaultValue="no_filter">
+                        <option value="no_filter">No filter</option>
+                        <option value='admin_in_office'>Admin (In Office)</option>
+                        <option value='admin_virtual'>Admin (Virtual)</option>
+                        <option value='atlanta_shelter'>Atlanta Shelter</option>
+                        <option value='orlando_shelter'>Orlando Shelter</option>
+                        <option value='graphic_web_design'>Graphic Web Design</option>
+                        <option value='special_events'>Special Events</option>
+                        <option value='grant_writing'>Grant Writing</option>
+                        <option value='writing_editing'>Writing Editing</option>
+                        <option value='social_media'>Social Media</option>
+                        <option value='fundraising'>Fundraising</option>
+                        <option value='finance'>Finance</option>
+                        <option value='office_maintenance_housekeeping'>Office Maintenance Housekeeping</option>
+                        <option value='international_projects'>International Projects</option>
+                        <option value='volunteer_coordination'>Volunteer Coordination</option>
+                        <option value='outreach'>Outreach</option>
+                      </select><br/>
               <input  type="date"
                       label="Birthdate"
                       onChange={this.updateTextFields}
@@ -108,14 +126,6 @@ class VolunteersFilter extends React.Component {
                       /> Weekend Evenings<br/>
 
             </form>
-            {/*<Form model="forms.volunteerFilter"  >
-              <Control required component={Text} model=".language" label="Language" type="text" />
-            </Form>
-
-            <Form model="forms.volunteerFilter"  >
-              <Control required component={Text} model=".language" label="Language" ref={(Control) => { this.languageFilter = Control; }} type="text" />
-              <Button type="submit" bsStyle="primary" onClick={this._update} >FilterX</Button>
-            </Form>*/}
           </div>
     );
   }
