@@ -26,6 +26,7 @@ export function register() {
   return (dispatch, getState) => {
     const { bio, history, availability, skills_interests,
       referral, employment, ice, reference, criminal, permissions} = getState().forms.user;
+    bio = Object.assign({}, bio, {role: 'pending'})
     axios.post('/api/users', { bio, history, availability, skills_interests,
       referral, employment, ice, reference, criminal, permissions })
       .then(resp => {

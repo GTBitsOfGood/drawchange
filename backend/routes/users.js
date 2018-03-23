@@ -23,7 +23,6 @@ router.post('/', [
   check('bio.zip_code').isAscii().trim().escape(),
   check('bio.password').isAscii().trim().escape(),
   check('bio.languages').isAscii().trim().escape(),
-  check('bio.role').isAscii().trim().escape(),
   check('history.volunteer_interest_cause').isAscii().trim().escape(),
   check('history.volunteer_support').isAscii().trim().escape(),
   check('history.volunteer_commitment').isAscii().trim().escape(),
