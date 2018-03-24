@@ -13,6 +13,7 @@ class VolunteersFilter extends React.Component {
     this.updateTextFields = this.updateTextFields.bind(this);
     this.updateAvailabilityFilter = this.updateAvailabilityFilter.bind(this);
     this.noFunction = this.noFunction.bind(this);
+    this.updateCriminalHistoryFilter = this.updateCriminalHistoryFilter.bind(this);
   }
 
   updateTextFields() {
@@ -41,9 +42,23 @@ class VolunteersFilter extends React.Component {
     this.props.updateVolunteerFilter(Object.assign({}, this.props.filter, {availability: availabilityObj}));
   }
 
-  updateSkillsFilter() {
+  updateCriminalHistoryFilter() {
+    // this.props.updateVolunteerFilter(Object.assign(
+    //   {},
+    //   this.props.filter,
+    //   {criminal_history: this.props.criminalHistoryFilter.options[this.criminalHistoryFilter.selectedIndex].value}))
+
+    const criminalObj = {
+      no_felony: this.felony_chk.checked,
+      no_sexual_violent: this.sexual_violent_chk.checked,
+      no_drugs: this.drugs_chk.checked,
+      no_driving: this.driving_chk.checked
+    }
+
+    this.props.updateVolunteerFilter(Object.assign({},this.props.filter, {criminal_history: criminalObj}))
 
   }
+
 
   noFunction() {
     return false;
@@ -55,13 +70,24 @@ class VolunteersFilter extends React.Component {
           <div>
 
             <form onSubmit={this.noFunction}>
-              <input  type="text"
+              <b>Language:</b> <input  type="text"
                       label="Language"
                       onChange={this.updateTextFields}
                       ref={(input) => { this.languageFilter = input; }}
                       placeholder="Language"/>
                       <br/>
-              Skills/Interests: <select name="Skills"
+
+
+
+              <b>Birthday:</b> <input  type="date"
+                      label="Birthdate"
+                      onChange={this.updateTextFields}
+                      ref={(input) => { this.birthdayFilter = input; }}
+                      placeholder="Birthdate"/>
+                      <br/>
+
+
+              <b>Skills/Interests:</b> <select name="Skills"
                               onChange={this.updateTextFields}
                               ref={(select) => {this.skillsFilter = select;} }
                               defaultValue="no_filter">
@@ -82,12 +108,36 @@ class VolunteersFilter extends React.Component {
                         <option value='volunteer_coordination'>Volunteer Coordination</option>
                         <option value='outreach'>Outreach</option>
                       </select><br/>
-              <input  type="date"
-                      label="Birthdate"
-                      onChange={this.updateTextFields}
-                      ref={(input) => { this.birthdayFilter = input; }}
-                      placeholder="Birthdate"/>
-              <br/>Availability: <br/>
+
+
+
+              <b>Criminal History:</b> <br/>
+              <input  type="checkbox"
+                      name="felony"
+                      value="felony"
+                      onChange={this.updateCriminalHistoryFilter}
+                      ref={(checkbox) => { this.felony_chk = checkbox; }}
+                      /> No Felonies<br/>
+              <input  type="checkbox"
+                      name="sexual_violent"
+                      value="sexual_violent"
+                      onChange={this.updateCriminalHistoryFilter}
+                      ref={(checkbox) => { this.sexual_violent_chk = checkbox; }}
+                      /> No Sexual Violence Incidents<br/>
+              <input  type="checkbox"
+                      name="drugs"
+                      value="drugs"
+                      onChange={this.updateCriminalHistoryFilter}
+                      ref={(checkbox) => { this.drugs_chk = checkbox; }}
+                      /> No Drug Offences<br/>
+              <input  type="checkbox"
+                      name="driving"
+                      value="driving"
+                      onChange={this.updateCriminalHistoryFilter}
+                      ref={(checkbox) => { this.driving_chk = checkbox; }}
+                      /> No Driving Offences<br/>
+
+              <b>Availability:</b> <br/>
               <input  type="checkbox"
                       name="weekday_mornings"
                       value="weekday_mornings"
