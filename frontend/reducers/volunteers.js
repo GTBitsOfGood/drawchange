@@ -8,7 +8,10 @@ const initialState = {
   filter: {
     language: "",
     skills: "no_filter",
-    birthday: undefined,
+    birthday: {
+      month: 0,
+      day: 0
+    },
     availability: {
       set: false,
       weekday_mornings: false,

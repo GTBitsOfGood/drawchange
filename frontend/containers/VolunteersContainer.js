@@ -56,12 +56,13 @@ class VolunteersContainer extends React.Component {
 
 
     /** BIRTHDAY FILTER **/
-    let userBday = new Date(user.bio.date_of_birth.split("T")[0]);
-    let filterBday = new Date(filter.birthday);
-    if (filterBday instanceof Date && !isNaN(filterBday.valueOf())) {
-      if (userBday.getDate() !== filterBday.getDate() || userBday.getMonth() !== filterBday.getMonth()) {
-        return false;
-      }
+    let userBday = user.bio.date_of_birth.split("T")[0].split("-");
+    userBday = {month: parseInt(userBday[1]), day: parseInt(userBday[2])}
+    if (filter.birthday.month) {
+      if (filter.birthday.month != userBday.month) return false;
+    }
+    if (filter.birthday.day) {
+      if (filter.birthday.day != userBday.day) return false;
     }
 
     /** AVAILABILITY FILTER **/

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PhoneNumber from 'react-phone-number';
+import Moment from 'react-moment';
 
 const VolunteerProfile = ({ user, onClickApprove }) => (
   <div style={{height: '500px', overflow: 'scroll', backgroundColor: ((user.criminal.felony || user.criminal.sexual_violent || user.criminal.drugs || user.criminal.driving)) ? 'rgba(255, 0, 0, 0.2)' : 'white'}}>
@@ -10,7 +11,7 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> Name: {`${user.bio.first_name} ${user.bio.last_name}`} </p>
     <p> Email: <a href={"mailto:" + user.bio.email}>{user.bio.email}</a> </p>
     <p> Phone Number: <a href={"tel:" + user.bio.phone_number}> {user.bio.phone_number}</a> </p>
-    <p> Date of Birth: {new Date(user.bio.date_of_birth).toDateString()} </p>
+    <p> Date of Birth: <Moment format="MM/DD/YYYY">{user.bio.date_of_birth.split("T")[0]}</Moment></p>
     <p> Street Address: {user.bio.street_address} </p>
     <p> City: {user.bio.city} </p>
     <p> State: {user.bio.state} </p>

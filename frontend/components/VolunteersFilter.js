@@ -14,13 +14,13 @@ class VolunteersFilter extends React.Component {
     this.updateAvailabilityFilter = this.updateAvailabilityFilter.bind(this);
     this.noFunction = this.noFunction.bind(this);
     this.updateCriminalHistoryFilter = this.updateCriminalHistoryFilter.bind(this);
+    this.updateBirthdayFilter = this.updateBirthdayFilter.bind(this);
   }
 
   updateTextFields() {
     this.props.updateVolunteerFilter(Object.assign({}, this.props.filter, {
       language: this.languageFilter.value.toLowerCase(),
-      skills: this.skillsFilter.options[this.skillsFilter.selectedIndex].value,
-      birthday: this.birthdayFilter.value,
+      skills: this.skillsFilter.options[this.skillsFilter.selectedIndex].value
     }));
   }
 
@@ -55,15 +55,22 @@ class VolunteersFilter extends React.Component {
       no_driving: this.driving_chk.checked
     }
 
-    this.props.updateVolunteerFilter(Object.assign({},this.props.filter, {criminal_history: criminalObj}))
+    this.props.updateVolunteerFilter(Object.assign({},this.props.filter, {criminal_history: criminalObj}));
 
   }
 
+  updateBirthdayFilter() {
+    const bdayObj = {
+      month: this.birthdayMonthFilter.value,
+      day: this.birthdayDayFilter.value
+    }
+
+    this.props.updateVolunteerFilter(Object.assign({}, this.props.filter, {birthday: bdayObj}));
+  }
 
   noFunction() {
     return false;
   }
-
 
   render() {
     return (
@@ -76,15 +83,23 @@ class VolunteersFilter extends React.Component {
                       ref={(input) => { this.languageFilter = input; }}
                       placeholder="Language"/>
                       <br/>
-
-
-
-              <b>Birthday:</b> <input  type="date"
-                      label="Birthdate"
-                      onChange={this.updateTextFields}
-                      ref={(input) => { this.birthdayFilter = input; }}
-                      placeholder="Birthdate"/>
-                      <br/>
+              <b>Birthday:</b>
+              <input type="number"
+                      placeholder="MM"
+                      onChange={this.updateBirthdayFilter}
+                      ref={(input) => { this.birthdayMonthFilter = input; }}
+                      min="1"
+                      max="12"
+                      step="1"
+              />
+              <input type="number"
+                      placeholder="DD"
+                      onChange={this.updateBirthdayFilter}
+                      ref={(input) => { this.birthdayDayFilter = input; }}
+                      min="1"
+                      max="31"
+                      step="1"
+              /><br/>
 
 
               <b>Skills/Interests:</b> <select name="Skills"
