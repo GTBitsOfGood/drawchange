@@ -17,7 +17,23 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> State: {user.bio.state} </p>
     <p> Zip Code: {user.bio.zip_code} </p>
     <p> Languages: {user.bio.languages} </p>
-    <br />
+
+    <h3> Availability </h3>
+    <ul>
+    {user.availability.weekday_mornings && <li> Weekday Mornings </li>}
+    {user.availability.weekday_afternoons && <li> Weekday Afternoons </li>}
+    {user.availability.weekday_evenings && <li> Weekday Evenings </li>}
+    {user.availability.weekend_mornings && <li> Weekend Mornings </li>}
+    {user.availability.weekend_afternoons && <li> Weekend Afternoons </li>}
+    {user.availability.weekend_evenings && <li> Weekend Evenings </li>}
+    </ul>
+
+    <h3> Skills and Interests </h3>
+    <ul>
+    {Object.keys(user.skills_interests)
+        .filter(key => user.skills_interests[key])
+        .map((skill) => <li key={skill}>{skill}</li>)}
+    </ul>
 
     <h3> About Volunteer </h3>
     {/*<p> Availability: {user.availability} </p>
@@ -28,17 +44,6 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <p> What do you do when you realize you cannot keep a commitment: {user.history.volunteer_commitment} </p>
     <p> Summarize skills and qualifications you have obtained from previous work: {user.history.skills_qualifications} </p>
     <p> Previous Volunteer Experience: {user.history.previous_volunteer_experience} </p>
-    <br />
-
-    <h3> Availability </h3>
-    <ul>
-    {user.availability.weekday_mornings && <li> Weekday Morning </li>}
-    {user.availability.weekday_afternoons && <li> Weekday Afternoon </li>}
-    {user.availability.weekday_evenings && <li> Weekday Evenings </li>}
-    {user.availability.weekend_mornings && <li> Weekend Morning </li>}
-    {user.availability.weekend_afternoons && <li> Weekend Afternoon </li>}
-    {user.availability.weekend_evenings && <li> Weekend Evenings </li>}
-    </ul>
 
     <h3> Employment History </h3>
     <p> Current Employer: {user.employment.name} </p>
@@ -52,15 +57,15 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <li> Location: {user.employment.previous_location} </li>
     <li> Reason for Leaving: {user.employment.previous_reason_for_leaving} </li>
     </ul>
-    <br />
+
+
 
     <h3> Reference </h3>
     <p> Name: {user.reference.name} </p>
-    <p> Email: {user.reference.email} </p>
-    <p> Phone Number: {user.reference.phone_number} </p>
+    <p> Email: <a href={"mailto:" + user.reference.email}>{user.reference.email}</a> </p>
+    <p> Phone Number: <a href={"tel:" + user.reference.phone_number}> {user.reference.phone_number}</a> </p>
     <p> Relationship: {user.reference.relationship} </p>
     <p> How long have you known reference: {user.reference.duration} </p>
-    <br />
 
     <h3> Criminal History </h3>
     { user.criminal.felony && <p> Felony: Yes</p>}
@@ -74,21 +79,19 @@ const VolunteerProfile = ({ user, onClickApprove }) => (
     <h3> Emergency Contact </h3>
     <p> Relationship: {user.ice.relationship} </p>
     <p> Name: {user.ice.name} </p>
-    <p> Email: {user.ice.email} </p>
-    <p> Phone Number: {user.ice.phone_number} </p>
+    <p> Email: <a href={"mailto:" + user.ice.email}>{user.ice.email}</a> </p>
+    <p> Phone Number: <a href={"tel:" + user.ice.phone_number}> {user.ice.phone_number}</a> </p>
     <p> Address: {user.ice.address} </p>
-    <br />
 
     <h3> Additional Comments </h3>
-    <p> {user.permissions.comments} </p>
-    <br />
+    <p>{user.permissions.comments ? user.permissions.comments : "None"} </p>
 
     <h3> Permissions </h3>
     <p> Verify Reference: {user.permissions.reference ? 'Granted' : 'Denied'} </p>
     <p> Use peronsal image: {user.permissions.personal_image ? 'Granted' : 'Denied'} </p>
     <p> Add to Mailing List: {user.permissions.email_list ? 'Granted' : 'Denied'} </p>
     <p> Signature: {user.permissions.signature} </p>
-    <br />
+
 
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickApprove()}> Approve </button>}
   </div>
