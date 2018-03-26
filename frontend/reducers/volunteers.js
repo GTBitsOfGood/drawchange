@@ -31,6 +31,15 @@ export default function volunteers(state = initialState, action) {
       const newNewest = state.newest.slice();
       newNewest.unshift(volunteerToApprove);
       return Object.assign({}, state, { pending: newPending, all: newAll, newest: newNewest });
+    case types.DENY_PENDING_VOLUNTEER:
+        const volunteerToDeny = state.pending.find(item => item._id === action.id);
+        const newPendingD = state.pending.slice();
+        newPendingD.splice(state.pending.indexOf(volunteerToDeny), 1);
+        const newAllD = state.all.slice();
+        newAllD.push(volunteerToDeny);
+        const newNewestD = state.newest.slice();
+        newNewestD.unshift(volunteerToDeny);
+        return Object.assign({}, state, { pending: newPendingD, all: newAllD, newest: newNewestD });
     default:
       return state;
   }

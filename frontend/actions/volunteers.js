@@ -69,6 +69,17 @@ export function approvePendingVolunteer(id) {
   };
 }
 
+export function denyPendingVolunteer(id) {
+  return dispatch => {
+    const body = { 'bio': {'role': 'pending'} }; //change this to denied
+    axios.put(`/api/users/${id}`, body)
+      .then(({ data }) => {
+        if (data.user.bio.role === 'pending') { //change this to denied
+          dispatch(denyVolunteer(id));
+        }
+      });
+  };
+}
 // export function onLoad() {
 //   return dispatch => {
 //     axios.get('/api/users?type=pending')
@@ -106,4 +117,9 @@ function approveVolunteer(id) {
     id
   };
 }
-
+function denyVolunteer(id) {
+  return {
+    type: types.DENY_PENDING_VOLUNTEER,
+    id
+  };
+}
