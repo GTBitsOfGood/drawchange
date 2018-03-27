@@ -28,7 +28,7 @@ const columns = [
 
 function showPagination(size) {
   // return false;
-  return size > 5;
+  return size > 8;
 }
 const AllVolunteers = (props) => (
   <div>
@@ -36,7 +36,8 @@ const AllVolunteers = (props) => (
       data={props.data}
       filterable
       columns={columns}
-      defaultPageSize={5}
+      defaultPageSize={8}
+
       showPageSizeOptions={false}
       showPagination={showPagination(props.data.length)}
       className="-striped -highlight"

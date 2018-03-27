@@ -128,11 +128,11 @@ router.get('/', (req, res) => {
       .then(users => res.status(200).json({users}))
       .catch(errors => {console.log(errors); res.status(500).json({errors});});
   } else if (req.query.type === 'new') {
-    User.find().sort('-createdAt').limit(5)
+    User.find().sort('-createdAt')
       .then(users => res.status(200).json({users}))
       .catch(errors => { console.log(errors); res.status(500).json({ errors }); });
   } else if (req.query.type === 'volunteer') {
-    User.find({ 'bio.role': 'volunteer' }).limit(5)
+    User.find({ 'bio.role': 'volunteer' })
       .then(users => res.status(200).json({ users }))
       .catch(errors => { console.log(errors); res.status(500).json({ errors }); });
   } else {
