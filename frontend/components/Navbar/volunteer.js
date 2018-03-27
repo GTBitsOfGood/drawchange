@@ -21,7 +21,7 @@ export const VolunteerNavbar = ({ logout }) => (
         <LinkContainer to="/events">
           <NavItem>Events</NavItem>
         </LinkContainer>
-        <LinkContainer to="/">
+        <LinkContainer to="/contactus">
           <NavItem>Contact Us</NavItem>
         </LinkContainer>
       </Nav>

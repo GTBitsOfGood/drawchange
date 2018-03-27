@@ -12,7 +12,25 @@ export const VolunteerContainer = () => (
   <Switch>
     <Route path={"/events/:id"} component={EventContainer} />
     <Route path={"/events"} component={EventContainer} />
-    <Route path={"/"} exact component={VolunteerDashboard} />
     <Route path={"/contactus"} component={ContactUsContainer} />
+    <Route path={"/"} exact component={VolunteerDashboard} />
   </Switch>
 );
+
+// class VolunteerContainer extends React.Component {
+//     componenetWillMount() {
+//         console.log("VolunteerContainer reached");
+//     }
+//     render() {
+//         return(
+//             <Switch>
+//                 <Route path={"/events/:id"} component={EventContainer} />
+//                 <Route path={"/events"} component={EventContainer} />
+//                 <Route path={"/"} exact component={VolunteerDashboard} />
+//                 <Route path={"/contactus"} component={ContactUsContainer} />
+//             </Switch>
+//         )
+//     }
+// }
+//
+// export default VolunteerContainer;

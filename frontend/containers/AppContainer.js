@@ -41,7 +41,7 @@ class AppContainer extends Component {
     } else if (user.bio.role === 'rejected') {
       return <h1>Your application has been rejected</h1>;
     } else if (user.bio.role === 'volunteer') {
-      return <VolunteerDashboard user={user} />;
+      return <MainContainer user={user} />;
     }
     return <MainContainer user={user} />;
   }
