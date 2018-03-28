@@ -35,32 +35,48 @@ class VolunteersContainer extends React.Component {
 
   passesFilter(user) {
     let filter = this.props.filter;
+
+    /** LANGUAGES FILTER **/
     if (!user.bio.languages.toLowerCase().includes(filter.language)) {
       return false;
     }
-    if (!(user.history.volunteer_interest_cause.toLowerCase().includes(filter.skills) ||
-          user.history.skills_qualifications.toLowerCase().includes(filter.skills) ||
-          user.history.previous_volunteer_experience.toLowerCase().includes(filter.skills))) {
-      return false;
-    }
-    let userBday = new Date(user.bio.date_of_birth.split("T")[0]);
-    let filterBday = new Date(filter.birthday);
-    if (filterBday instanceof Date && !isNaN(filterBday.valueOf())) {
-      if (userBday.getDate() !== filterBday.getDate() || userBday.getMonth() !== filterBday.getMonth()) {
+
+    /** SKILLS FILTER **/
+    if (filter.skills && filter.skills !== 'no_filter') {
+      if (user.skills_interests[filter.skills] !== true) {
         return false;
       }
     }
-    console.log(filter.availability.set);
-    if (filter.availability.set) {
-      if (user.availability.weekday_mornings !== filter.availability.weekday_mornings) return false;
-      if (user.availability.weekday_afternoons !== filter.availability.weekday_afternoons) return false;
-      if (user.availability.weekday_evenings !== filter.availability.weekday_evenings) return false;
-      if (user.availability.weekend_mornings !== filter.availability.weekend_mornings) return false;
-      if (user.availability.weekend_afternoons !== filter.availability.weekend_afternoons) return false;
-      if (user.availability.weekend_evenings !== filter.availability.weekend_evenings) return false;
-    }
-    return true;
 
+    /** CRIMINAL HISTORY FILTER **/
+    if (user.criminal.felony && filter.criminal_history.no_felony) return false;
+    if (user.criminal.sexual_violent && filter.criminal_history.no_sexual_violent) return false;
+    if (user.criminal.drugs && filter.criminal_history.no_drugs) return false;
+    if (user.criminal.driving && filter.criminal_history.no_driving) return false;
+
+
+    /** BIRTHDAY FILTER **/
+    let userBday = user.bio.date_of_birth.split("T")[0].split("-");
+    userBday = {month: parseInt(userBday[1]), day: parseInt(userBday[2])}
+    if (filter.birthday.month) {
+      if (filter.birthday.month != userBday.month) return false;
+    }
+    if (filter.birthday.day) {
+      if (filter.birthday.day != userBday.day) return false;
+    }
+
+    /** AVAILABILITY FILTER **/
+    if (filter.availability.set) {
+      if (!user.availability.weekday_mornings && filter.availability.weekday_mornings) return false;
+      if (!user.availability.weekday_afternoons && filter.availability.weekday_afternoons) return false;
+      if (!user.availability.weekday_evenings && filter.availability.weekday_evenings) return false;
+      if (!user.availability.weekend_mornings && filter.availability.weekend_mornings) return false;
+      if (!user.availability.weekend_afternoons && filter.availability.weekend_afternoons) return false;
+      if (!user.availability.weekend_evenings && filter.availability.weekend_evenings) return false;
+    }
+
+    /** PASSES ALL FILTERS **/
+    return true;
   }
 
   render() {
@@ -81,7 +97,7 @@ class VolunteersContainer extends React.Component {
               <AllVolunteers data={this.props.all.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <PendingVolunteersShort data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4}>

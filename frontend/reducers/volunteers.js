@@ -7,8 +7,11 @@ const initialState = {
   current_volunteer: undefined,
   filter: {
     language: "",
-    skills: "",
-    birthday: undefined,
+    skills: "no_filter",
+    birthday: {
+      month: 0,
+      day: 0
+    },
     availability: {
       set: false,
       weekday_mornings: false,
@@ -17,8 +20,13 @@ const initialState = {
       weekend_mornings: false,
       weekend_afternoons: false,
       weekend_evenings: false
+    },
+    criminal_history: {
+      no_felony: false,
+      no_sexual_violent: false,
+      no_drugs: false,
+      no_driving: false
     }
-
   }
 };
 
