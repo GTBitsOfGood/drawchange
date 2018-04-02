@@ -27,7 +27,8 @@ const initialState = {
       no_drugs: false,
       no_driving: false
     }
-  }
+  },
+  selected_volunteers: []
 };
 
 export default function volunteers(state = initialState, action) {
@@ -57,6 +58,19 @@ export default function volunteers(state = initialState, action) {
     case types.UPDATE_VOLUNTEER_FILTER:
       const newFilterObject = Object.assign({}, state.filter, action.filter);
       return Object.assign({}, state, {filter: newFilterObject});
+    case types.ADD_SELECTED_VOLUNTEER:
+      const volunteerToAddAll = state.all.find(item => item._id === action.id);
+      const volunteerToAddPending = state.pending.find(item => item._id === action.id);
+      const selected_volunteers_cpy = state.selected_volunteers.slice();
+      const volunteerToAdd = volunteerToAddAll || volunteerToAddPending;
+      selected_volunteers_cpy.push({
+          _id: volunteerToAdd._id,
+          email: volunteerToAdd.bio.email
+        });
+      return Object.assign({}, state, {selected_volunteers: selected_volunteers_cpy});
+    case types.REMOVE_SELECTED_VOLUNTEER:
+      const selected_volunteers_new = state.selected_volunteers.filter(volunteer => volunteer._id !== action.id);
+      return Object.assign({}, state, {selected_volunteers: selected_volunteers_new});
     default:
       return state;
   }

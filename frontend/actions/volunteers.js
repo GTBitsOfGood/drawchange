@@ -46,6 +46,19 @@ export function updateVolunteerFilter(filter) {
   };
 }
 
+export function addSelectedVolunteer(id) {
+  return {
+    type: types.ADD_SELECTED_VOLUNTEER,
+    id
+  }
+}
+
+export function removeSelectedVolunteer(id) {
+  return {
+    type: types.REMOVE_SELECTED_VOLUNTEER,
+    id
+  }
+}
 
 export function loadNewVolunteers() {
   return dispatch => {

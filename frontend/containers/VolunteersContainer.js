@@ -33,6 +33,7 @@ class VolunteersContainer extends React.Component {
 //     return null;
 //   }
 
+
   passesFilter(user) {
     let filter = this.props.filter;
 
@@ -79,6 +80,8 @@ class VolunteersContainer extends React.Component {
     return true;
   }
 
+
+
   render() {
     return (<div>
         <Row>
@@ -94,10 +97,10 @@ class VolunteersContainer extends React.Component {
             </Panel>
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
-              <AllVolunteers data={this.props.all.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <AllVolunteers data={this.props.all.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer}/>
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <AllVolunteers data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4}>
@@ -126,7 +129,7 @@ const mapStateToProps = ( state, ownProps ) => {
     pending: state.volunteers.pending,
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
-    filter: state.volunteers.filter
+    filter: state.volunteers.filter,
   };
 };
 
