@@ -81,7 +81,6 @@ class VolunteersContainer extends React.Component {
   }
 
 
-
   render() {
     return (<div>
         <Row>
@@ -94,6 +93,10 @@ class VolunteersContainer extends React.Component {
             <Panel header={<h3>Filter</h3>} bsStyle="info">
               {/* <input type={text}> */}
               <VolunteersFilter/>
+            </Panel>
+            <Panel header={<h3>Actions</h3>} bsStyle="info">
+            {this.props.selected_volunteers.length > 0
+              && <a href={"mailto:?bcc=" + this.props.selected_volunteers.map((volunteer) => volunteer.email).join(",")}> Email</a>}
             </Panel>
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
@@ -130,6 +133,7 @@ const mapStateToProps = ( state, ownProps ) => {
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
     filter: state.volunteers.filter,
+    selected_volunteers: state.volunteers.selected_volunteers
   };
 };
 
