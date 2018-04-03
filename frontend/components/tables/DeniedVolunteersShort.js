@@ -36,7 +36,7 @@ const columns = [
 function showPagination(size) {
   return size > 5;
 }
-const PendingVolunteersShort = (props) => { console.log(props) ;return (
+const DeniedVolunteersShort = (props) => { console.log(props) ;return (
   <div>
     <ReactTable
       data={props.data}
@@ -54,8 +54,8 @@ const PendingVolunteersShort = (props) => { console.log(props) ;return (
   </div>
 );
 }
-PendingVolunteersShort.propTypes = {
+DeniedVolunteersShort.propTypes = {
   data: PropTypes.array,
 };
 
-export default PendingVolunteersShort;
+export default DeniedVolunteersShort;

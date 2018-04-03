@@ -14,6 +14,7 @@ import MainPane from '../components/MainPane';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
 import MyEvents from '../components/tables/MyEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
+import DeniedVolunteersShort from '../components/tables/DeniedVolunteersShort'
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import VolunteersEventDetails from '../components/VolunteersEventDetails';
 import DonateButton from '../components/DonateButton';

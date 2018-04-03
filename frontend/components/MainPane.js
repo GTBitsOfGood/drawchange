@@ -22,6 +22,7 @@ class MainPane extends React.Component {
             {this.isEvent && !this.isNewEvent && this.props.currentItem ? this.props.currentItem._id : "None Selected"}
             {this.isVolunteer && this.props.currentItem ? this.props.currentItem : "None Selected"}
             {this.isVolunteer && this.props.currentItem ? this.props.currentItem.role === "pending" ? <Button bsStyle="primary">Approve</Button> : <Button bsStyle="primary" >Remove</Button> : null}
+            {this.isVolunteer && this.props.currentItem ? this.props.currentItem.role === "volunteer" ? <Button bsStyle="primary">Deny</Button> : <Button bsStyle="primary" >Remove</Button> : null}
         </div>
     );
   }
