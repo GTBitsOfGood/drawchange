@@ -20,4 +20,3 @@ export const AdminContainer = () => (
     <Route path={"/"}  component={Dashboard} />
   </Switch>
 );
-

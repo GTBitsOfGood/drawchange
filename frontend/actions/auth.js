@@ -15,7 +15,7 @@ export function login() {
       .then(resp => {
         dispatch(loginGenerator(resp.data.user));
       })
-      .catch(err => dispatch(loginGenerator()));
+      .catch(err => dispatch(loginGenerator())); 
   };
 }
 
