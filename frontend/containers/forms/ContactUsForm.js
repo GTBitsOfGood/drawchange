@@ -18,7 +18,8 @@ class ContactUsForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            didsend: false,
+            isEmpty: false
         }
     }
     handleChange(event) {
@@ -27,15 +28,53 @@ class ContactUsForm extends Component {
             [event.target.name]:event.target.value
         });
     }
+    // handleSubmit(event) {
+    //     // event.preventDefault();
+    //     this.handleForm.bind(event);
+    //     event.target.reset();
+    // }
     handleForm(event) {
         event.preventDefault();
-        console.log(this.state);
+        if (!this.state.firstName ||
+            !this.state.lastName ||
+            !this.state.email ||
+            !this.state.phoneNumber ||
+            !this.state.subject ||
+            !this.state.message) {
+            this.setState({isEmpty: true});
+            return;
+        }
+        fetch('/contact', {
+            method: 'POST',
+            body: JSON.stringify({
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                subject: this.state.subject,
+                message: this.state.message,
+            })
+        })
+        .then(res => res.json())
+        .then(json => {
+            this.setState({didsend: true});
+            console.log(json);
+        })
+        .catch(err => {
+
+        })
     }
   render() {
       return (
       <div>
       <Col md={6} mdOffset={3}>
-        <form onSubmit={this.handleForm.bind(this)}>
+        {this.state.didsend &&
+            <p>Sent</p>
+        }
+        {this.state.isEmpty &&
+            <p>Please fill in all the information.</p>
+        }
+        <form onSubmit={this.handleForm.bind(event)}>
             <Text name="firstName" label="First Name" onChange={this.handleChange.bind(this)} placeholder="First Name"/>
             <Text name="lastName" label="Last Name" onChange={this.handleChange.bind(this)} placeholder="Last Name"/>
             <Text name="email" label="Email" onChange={this.handleChange.bind(this)} placeholder="example@gmail.com"/>
@@ -44,48 +83,6 @@ class ContactUsForm extends Component {
             <Text name="message" label="Message" onChange={this.handleChange.bind(this)} placeholder="Message"/>
             <Button bsStyle="primary" type="submit">Submit</Button>
         </form>
-        {/*LocalForm name="ContactUsForm" onSubmit={v  => console.log(v)}>
-            <Control required component={Text} label="First Name" placeholder="First Name" type= "text"
-                errors={{isRequired: (val) => !val}}/>
-            <Errors className="errors" show = "focus" messages={{
-                isRequired: 'Please enter a last name',
-            }} />
-
-            <Control required component={Text} label="Last Name" placeholder="Last Name" type= "text"
-                errors={{isRequired: (val) => !val}}/>
-            <Errors className="errors" show = "focus" messages={{
-                isRequired: 'Please enter a last name',
-            }} />
-
-            <Control required component={Text} label="Email" placeholder="Email" type="email"
-                errors={{isEmail: (val) => !validator.isEmail(val)}}/>
-            <Errors className="errors" show = "focus" messages={{
-                isEmail: 'Please enter a valid email',
-            }} />
-
-            <Control required component={Text} label="Phone Number" placeholder="982-004-3178" type="tel"
-                errors={{isPhoneNumber: (val) => !isPhoneNumber(val)}}/>
-            <Errors className="errors" show = "focus" messages={{
-              isPhoneNumber: 'Enter a valid phone number of form: 982-004-3178',
-            }} />
-
-            <Control required component={Text} label="Subject" placeholder="Subject" type= "text"
-                errors={{isRequired: (val) => !val}}/>
-            <Errors className="errors" show = "focus" messages={{
-                isRequired: 'Please enter a subject',
-            }} />
-
-            <Control required component={Text} label="Message" placeholder="Message" type= "text"
-                errors={{isRequired: (val) => !val}}/>
-            <Errors className="errors" show = "focus" messages={{
-                isRequired: 'Please enter your message',
-            }} />
-
-            /*Do the onClick function
-            // <Button bsStyle="primary" type="submit">Send</Button>
-            // onClick={}
-
-        </LocalForm>*/}
       </Col>
       </div>
     )
