@@ -14,6 +14,7 @@ const User = require('../models/user');
 const events = require('./events');
 const emails = require('./emails');
 const users = require('./users');
+const contact = require('./contact');
 
 // Middleware
 router.use(morgan('dev'));
@@ -80,6 +81,6 @@ router.use((req, res, next) => {
 // Restful endpoints
 router.use('/events', events);
 router.use('/emails', emails);
+router.use('/contact', contact);
 
 module.exports = router;
-
