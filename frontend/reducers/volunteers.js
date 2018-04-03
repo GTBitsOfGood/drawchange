@@ -10,11 +10,13 @@ const initialState = {
 export default function volunteers(state = initialState, action) {
   switch(action.type) {
     case types.LOAD_ALL_VOLUNTEERS:
-      return Object.assign({}, state, { all: action.all });
+      return Object.assign({}, state, { all:(action.all ? action.all : []) });
     case types.LOAD_PENDING_VOLUNTEERS:
       return Object.assign({}, state, {pending: action.pending});
     case types.LOAD_NEWEST_VOLUNTEERS:
       return Object.assign({}, state, { newest: action.newest });
+    case types.LOAD_DENIED_VOLUNTEERS:
+      return Object.assign({}, state, {denied: action.denied});
     case types.UPDATE_CURRENT_VOLUNTEER:
       if (state.all.length === 0) return state;
       const pendingVolunteers = state.pending.find(item => item._id === action.id);

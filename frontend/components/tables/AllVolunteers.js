@@ -42,7 +42,7 @@ const AllVolunteers = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => props.updateVolunteer(rowInfo.original._id)
+          onClick: (e) => rowInfo ? props.updateVolunteer(rowInfo.original._id) : null
         };
       }}
     />

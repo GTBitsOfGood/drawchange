@@ -36,7 +36,7 @@ const columns = [
 function showPagination(size) {
   return size > 5;
 }
-const PendingVolunteersShort = (props) => (
+const PendingVolunteersShort = (props) => { console.log(props) ;return (
   <div>
     <ReactTable
       data={props.data}
@@ -47,13 +47,13 @@ const PendingVolunteersShort = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => props.updateVolunteer(rowInfo.original._id)
+            onClick: (e) => rowInfo ? props.updateVolunteer(rowInfo.original._id) : null
         };
       }}
     />
   </div>
 );
-
+}
 PendingVolunteersShort.propTypes = {
   data: PropTypes.array,
 };

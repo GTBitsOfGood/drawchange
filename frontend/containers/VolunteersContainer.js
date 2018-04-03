@@ -22,6 +22,7 @@ class VolunteersContainer extends React.Component {
   componentWillMount() {
     this.props.loadAllVolunteers(this.props.match.params.id);
     this.props.loadPendingVolunteers();
+    // this.props.loadDeniedVolunteers();
   }
 
   // eventually we should move this logic to redux...
@@ -46,6 +47,9 @@ class VolunteersContainer extends React.Component {
               <AllVolunteers data={this.props.all} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
+              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
+            </Panel>
+            <Panel header={<h3>Denied Volunteers</h3>} bsStyle="info">
               <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>

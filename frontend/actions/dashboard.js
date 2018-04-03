@@ -18,6 +18,10 @@ export function loadNewVolunteers() {
       .then(({ data }) => {
         dispatch(loadPendingVolunteers(data.users));
       });
+    axios.get('/api/users?type=denied')
+      .then(({ data }) => {
+        dispatch(loadDeniedVolunteers(data.users));
+      });
     axios.get('/api/users?type=new')
       .then(({ data }) => {
         dispatch(loadNewVolunteers(data.users));
@@ -45,11 +49,28 @@ export function loadPendingVolunteers() {
   };
 }
 
+export function loadDeniedVolunteers() {
+  return dispatch => {
+    axios.get('/api/users?type=denied')
+      .then(({ data }) => {
+        dispatch(loadDeniedVolunteers(data.users));
+      });
+    axios.get('/api/events?type=new')
+      .then(({ data }) => {
+        dispatch(loadNewEvents(data.events));
+      });
+  };
+}
+
 export function onLoad() {
   return dispatch => {
     axios.get('/api/users?type=pending')
       .then(({ data }) => {
         dispatch(loadPendingVolunteers(data.users));
+      });
+    axios.get('/api/users?type=denied')
+      .then(({ data }) => {
+        dispatch(loadDeniedVolunteers(data.users));
       });
     axios.get('/api/users?type=new')
       .then(({ data }) => {
@@ -66,6 +87,12 @@ function loadPendingVolunteers(pending) {
   return {
     type: types.LOAD_PENDING_VOLUNTEERS,
     pending
+  };
+}
+function loadDeniedVolunteers(denied) {
+  return {
+    type: types.LOAD_DENIED_VOLUNTEERS,
+    denied
   };
 }
 

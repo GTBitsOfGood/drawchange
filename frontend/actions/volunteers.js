@@ -56,7 +56,14 @@ export function loadPendingVolunteers() {
       });
   };
 }
-
+export function loadDeniedVolunteers() {
+  return dispatch => {
+    axios.get('/api/users?type=denied')
+      .then(({ data }) => {
+        dispatch(deniedVolunteers(data.users));
+      });
+  };
+}
 export function approvePendingVolunteer(id) {
   return dispatch => {
     const body = { 'bio': {'role': 'volunteer'} };
@@ -101,6 +108,13 @@ function pendingVolunteers(pending) {
   return {
     type: types.LOAD_PENDING_VOLUNTEERS,
     pending
+  };
+}
+
+function deniedVolunteers(denied) {
+  return {
+    type: types.LOAD_DENIED_VOLUNTEERS,
+    denied
   };
 }
 
