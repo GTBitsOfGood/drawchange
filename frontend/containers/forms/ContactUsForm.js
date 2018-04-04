@@ -20,7 +20,8 @@ class ContactUsForm extends Component {
         this.state = {
             didsend: false,
             isEmpty: false
-        }
+        };
+        // this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
         console.log(event)
@@ -35,6 +36,7 @@ class ContactUsForm extends Component {
     // }
     handleForm(event) {
         event.preventDefault();
+        console.log(this.state)
         if (!this.state.firstName ||
             !this.state.lastName ||
             !this.state.email ||
@@ -44,7 +46,7 @@ class ContactUsForm extends Component {
             this.setState({isEmpty: true});
             return;
         }
-        fetch('/contact', {
+        fetch('/api/contact', {
             method: 'POST',
             body: JSON.stringify({
                 firstName: this.state.firstName,
@@ -74,7 +76,7 @@ class ContactUsForm extends Component {
         {this.state.isEmpty &&
             <p>Please fill in all the information.</p>
         }
-        <form onSubmit={this.handleForm.bind(event)}>
+        <form onSubmit={this.handleForm.bind(this)}>
             <Text name="firstName" label="First Name" onChange={this.handleChange.bind(this)} placeholder="First Name"/>
             <Text name="lastName" label="Last Name" onChange={this.handleChange.bind(this)} placeholder="Last Name"/>
             <Text name="email" label="Email" onChange={this.handleChange.bind(this)} placeholder="example@gmail.com"/>

@@ -72,6 +72,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.use('/users', users);
+router.use('/contact', contact);
 
 //* ************* LOGIN WALL *******************
 router.use((req, res, next) => {
@@ -81,6 +82,5 @@ router.use((req, res, next) => {
 // Restful endpoints
 router.use('/events', events);
 router.use('/emails', emails);
-router.use('/contact', contact);
 
 module.exports = router;

@@ -10,8 +10,7 @@ const EmailHelper = require('../services/emailService');
 const Email = require('../models/email');
 
 
-router.route('/')
-  .post([ //TODO Add validations for recipients Array
+router.post('/', check([ //TODO Add validations for recipients Array
     check('firstName').exists().isAscii().trim().escape(),
     check('lastName').exists().isAscii().trim().escape(),
     check('email').exists().isAscii().trim().escape(),
@@ -21,8 +20,11 @@ router.route('/')
     // check('recipients').custom(value => {
     //   if ()
     // })
-  ], (req, res) => {
+]), (req, res) => {
+      // console.log(req.body)
+      // return res.send(200);
     const errors = validationResult(req);
+    console.log(matchedData(req));
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
     }
