@@ -56,10 +56,11 @@ class VolunteersDashboard extends React.Component {
                 {this.props.unSignUp} allVolunteers={this.findEvent()}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
+            <Panel header={<h3>Donate</h3>} bsStyle="info">
+              <DonateButton />
+            </Panel>
           </Col>
-          <Panel header={<h3>Donate</h3>} bsStyle="info">
-            <DonateButton />
-          </Panel>
+
         </Row>
       </div>
     );

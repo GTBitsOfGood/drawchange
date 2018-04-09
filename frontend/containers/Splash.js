@@ -9,7 +9,7 @@ import LoginForm from './forms/LoginForm';
 // Home component
 const Splash = () => (
   <div>
-    <Jumbotron style={{ backgroundColor: '#deffcf' }}>
+    <Jumbotron style={{ backgroundColor: '#f06afn', opacity:.8 }}>
       <div style={{ paddingLeft: '25px' }}>
         <h1>Welcome to the drawchange Volunteer Portal!</h1>
         <p>From here you can become a volunteer and sign up for events!</p>
