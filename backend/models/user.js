@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     languages: { type: String, default: '' },
     role: { type: String, default: 'pending',
-      enum: ['pending', 'admin', 'manager', 'volunteer']
+      enum: ['pending', 'admin', 'manager', 'volunteer', 'denied']
     }
   },
   history: {
