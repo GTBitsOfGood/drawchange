@@ -11,7 +11,7 @@ const Splash = () => (
   <div>
     <Jumbotron style={{ backgroundColor: '#f06afn', opacity:.8 }}>
       <div style={{ paddingLeft: '25px' }}>
-        <h1>Welcome to the drawchange Volunteer Portal!</h1>
+        <h1>Welcome to the DrawChange Volunteer Portal!</h1>
         <p>From here you can become a volunteer and sign up for events!</p>
       </div>
     </Jumbotron>
