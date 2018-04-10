@@ -36,7 +36,6 @@ class ContactUsForm extends Component {
     // }
     handleForm(event) {
         event.preventDefault();
-        console.log(this.state)
         if (!this.state.firstName ||
             !this.state.lastName ||
             !this.state.email ||
@@ -46,7 +45,7 @@ class ContactUsForm extends Component {
             this.setState({isEmpty: true});
             return;
         }
-        fetch('/api/contact', {
+        fetch('/api/contact/', {
             method: 'POST',
             body: JSON.stringify({
                 firstName: this.state.firstName,
@@ -55,7 +54,10 @@ class ContactUsForm extends Component {
                 phoneNumber: this.state.phoneNumber,
                 subject: this.state.subject,
                 message: this.state.message,
-            })
+            }),
+            headers: {
+                'Content-Type' : 'application/json',
+            }
         })
         .then(res => res.json())
         .then(json => {

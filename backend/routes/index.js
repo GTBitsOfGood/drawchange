@@ -71,8 +71,8 @@ router.get('/logout', (req, res) => {
   return res.status(200).json({ logout: 'success' });
 });
 
-router.use('/users', users);
 router.use('/contact', contact);
+router.use('/users', users);
 
 //* ************* LOGIN WALL *******************
 router.use((req, res, next) => {

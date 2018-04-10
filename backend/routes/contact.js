@@ -10,21 +10,16 @@ const EmailHelper = require('../services/emailService');
 const Email = require('../models/email');
 
 
-router.post('/', check([ //TODO Add validations for recipients Array
-    check('firstName').exists().isAscii().trim().escape(),
+router.post('/', [ //TODO Add validations for recipients Array
+    check('firstName').exists(),
     check('lastName').exists().isAscii().trim().escape(),
     check('email').exists().isAscii().trim().escape(),
     check('phoneNumber').exists().isAscii().trim().escape(),
     check('subject').exists().isAscii().trim().escape(),
-    check('message').exists().isAscii().trim().escape(),
-    // check('recipients').custom(value => {
-    //   if ()
-    // })
-]), (req, res) => {
-      // console.log(req.body)
-      // return res.send(200);
+    check('message').exists()
+], (req, res) => {
     const errors = validationResult(req);
-    console.log(matchedData(req));
+    console.log(matchedData(req, { locations: ['body'] }));
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
     }
@@ -32,7 +27,7 @@ router.post('/', check([ //TODO Add validations for recipients Array
 
     const formattedData = {
         from: emailData.email,
-        recipients: [{email: 'test@test.com'}],
+        recipients: [{email: 'akhila@ballari.com'}],
         subject: emailData.subject,
         text: `Name: ${emailData.firstName} ${emailData.lastName}\n\nPhone: ${emailData.phoneNumber}\n\n${emailData.message}`
     }
