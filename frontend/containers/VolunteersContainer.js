@@ -23,6 +23,7 @@ class VolunteersContainer extends React.Component {
   componentWillMount() {
     this.props.loadAllVolunteers(this.props.match.params.id);
     this.props.loadPendingVolunteers();
+    // this.props.loadDeniedVolunteers();
   }
 
   // eventually we should move this logic to redux...
@@ -105,10 +106,13 @@ class VolunteersContainer extends React.Component {
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
               <AllVolunteers data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
+            <Panel header={<h3>Denied Volunteers</h3>} bsStyle="info">
+              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
+            </Panel>
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} />}
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} />}
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
@@ -123,6 +127,7 @@ VolunteersContainer.propTypes = {
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
   approvePendingVolunteer: PropTypes.func,
+  denyPendingVolunteer: PropTypes.func,
   loadAllVolunteers: PropTypes.func,
   filter: PropTypes.object
 };

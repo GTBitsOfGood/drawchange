@@ -14,6 +14,7 @@ import MainPane from '../components/MainPane';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
 import MyEvents from '../components/tables/MyEvents';
 import AllVolunteers from '../components/tables/AllVolunteers';
+import DeniedVolunteersShort from '../components/tables/DeniedVolunteersShort'
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import VolunteersEventDetails from '../components/VolunteersEventDetails';
 import DonateButton from '../components/DonateButton';
@@ -56,10 +57,11 @@ class VolunteersDashboard extends React.Component {
                 {this.props.unSignUp} allVolunteers={this.findEvent()}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>
+            <Panel header={<h3>Donate</h3>} bsStyle="info">
+              <DonateButton />
+            </Panel>
           </Col>
-          <Panel header={<h3>Donate</h3>} bsStyle="info">
-            <DonateButton />
-          </Panel>
+
         </Row>
       </div>
     );
