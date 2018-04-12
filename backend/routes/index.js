@@ -71,6 +71,7 @@ router.get('/logout', (req, res) => {
   return res.status(200).json({ logout: 'success' });
 });
 
+router.use('/contact', contact);
 router.use('/users', users);
 
 //* ************* LOGIN WALL *******************
@@ -81,6 +82,5 @@ router.use((req, res, next) => {
 // Restful endpoints
 router.use('/events', events);
 router.use('/emails', emails);
-router.use('/contact', contact);
 
 module.exports = router;
