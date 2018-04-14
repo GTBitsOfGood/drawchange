@@ -135,6 +135,10 @@ router.get('/', (req, res) => {
     User.find({ 'bio.role': 'volunteer' })
       .then(users => res.status(200).json({ users }))
       .catch(errors => { console.log(errors); res.status(500).json({ errors }); });
+  } else if (req.query.type === 'denied') {
+    User.find({ 'bio.role': 'denied' })
+      .then(users => res.status(200).json({ users }))
+      .catch(errors => { console.log(errors); res.status(500).json({ errors }); });
   } else {
     User.find()
       .then(users => res.status(200).json({ users }))
