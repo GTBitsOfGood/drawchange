@@ -3,7 +3,7 @@ import React from 'react';
 
 // React SpashInfo Text Component
 const SplashInfo = () => (
-  <div style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
+  <div>
     <h3>Volunteering at drawchange</h3>
     <p>
       Thank you for your interest in volunteering with us!
