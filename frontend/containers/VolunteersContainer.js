@@ -116,7 +116,7 @@ class VolunteersContainer extends React.Component {
           </Col>
           <Col sm={5} lg={4}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} />}
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} onClickDelete={() => this.props.deleteVolunteer(this.props.current_volunteer._id)} />}
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
@@ -140,6 +140,7 @@ const mapStateToProps = ( state, ownProps ) => {
   return {
     pending: state.volunteers.pending,
     denied: state.volunteers.denied,
+    deleted: state.volunteers.deleted, //delete when done.
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
     filter: state.volunteers.filter,

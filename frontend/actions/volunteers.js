@@ -107,6 +107,17 @@ export function denyPendingVolunteer(id) {
       });
   };
 }
+export function deleteVolunteer(id) {
+  return dispatch => {
+    const body = { 'bio': {'role': 'deleted'} }; //change this to denied
+    axios.put(`/api/users/${id}`, body)
+      .then(({ data }) => {
+        if (data.user.bio.role === 'deleted') { //change this to denied
+          dispatch(deleteVolunteerMain(id));
+        }
+      });
+  };
+}
 // export function onLoad() {
 //   return dispatch => {
 //     axios.get('/api/users?type=pending')
@@ -154,6 +165,12 @@ function approveVolunteer(id) {
 function denyVolunteer(id) {
   return {
     type: types.DENY_VOLUNTEER,
+    id
+  };
+}
+function deleteVolunteerMain(id) {
+  return {
+    type: types.DELETE_VOLUNTEER,
     id
   };
 }

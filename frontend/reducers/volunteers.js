@@ -5,6 +5,7 @@ const initialState = {
   newest: [],
   all: [],
   denied: [],
+  deleted: [],
   current_volunteer: undefined,
   filter: {
     language: "",
@@ -42,6 +43,8 @@ export default function volunteers(state = initialState, action) {
       return Object.assign({}, state, { newest: action.newest });
     case types.LOAD_DENIED_VOLUNTEERS:
       return Object.assign({}, state, {denied: action.denied});
+    case types.LOAD_DELETED_VOLUNTEERS:
+      return Object.assign({}, state, {deleted: action.deleted});
     case types.UPDATE_CURRENT_VOLUNTEER:
       if (state.all.length === 0) return state;
       const pendingVolunteers = state.pending.find(item => item._id === action.id);
@@ -91,6 +94,32 @@ export default function volunteers(state = initialState, action) {
         const newNewestD = state.newest.slice();
         newNewestD.unshift(volunteerToDenyA);
         return Object.assign({}, state, { all: newAll, denied: newDenied, newest: newNewestD });
+      }
+
+    case types.DELETE_VOLUNTEER:
+      const volunteerToDelete = state.all.find(item => item._id === action.id);
+      if (volunteerToDelete) {
+        const newAll = state.all.slice();
+        newAll.splice(state.all.indexOf(volunteerToDelete), 1);
+        const newDeleted = state.deleted.slice();
+        newDeleted.push(volunteerToDelete);
+        return Object.assign({}, state, { all: newAll, deleted: newDeleted });
+      } else {
+        const volunteerToDeleteP = state.pending.find(item => item._id === action.id);
+        if (volunteerToDeleteP) {
+          const newPending = state.pending.slice();
+          newPending.splice(state.pending.indexOf(volunteerToDeleteP), 1);
+          const newDeleted = state.deleted.slice();
+          newDeleted.push(volunteerToDeleteP);
+          return Object.assign({}, state, { pending: newPending, deleted: newDeleted });
+        } else {
+          const volunteerToDeleteD = state.denied.find(item => item._id === action.id);
+          const newDenied = state.denied.slice();
+          newDenied.splice(state.denied.indexOf(volunteerToDeleteD), 1);
+          const newDeleted = state.deleted.slice();
+          newDeleted.push(volunteerToDeleteD);
+          return Object.assign({}, state, { all: newAll, deleted: newDeleted });
+        }
       }
 
     case types.UPDATE_VOLUNTEER_FILTER:
