@@ -147,13 +147,13 @@ function newVolunteers(newest) {
 
 function approveVolunteer(id) {
   return {
-    type: types.APPROVE_PENDING_VOLUNTEER,
+    type: types.APPROVE_VOLUNTEER,
     id
   };
 }
 function denyVolunteer(id) {
   return {
-    type: types.DENY_PENDING_VOLUNTEER,
+    type: types.DENY_VOLUNTEER,
     id
   };
 }

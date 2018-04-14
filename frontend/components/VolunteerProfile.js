@@ -94,8 +94,9 @@ const VolunteerProfile = ({ user, onClickApprove, onClickDeny }) => (
 
 
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickApprove()}> Approve </button>}
-    {user.bio.role === 'volunteer' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
+    {user.bio.role === 'volunteer' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
+    {user.bio.role === 'denied' && <button type="button" onClick={()=>onClickDeny()}> Approve </button>}
   </div>
 );
 
