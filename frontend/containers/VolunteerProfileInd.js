@@ -4,7 +4,7 @@ import { Jumbotron } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 // Local Imports
-import VolunteerForm from './forms/VolunteerForm';
+import EditProfileForm from './forms/EditProfileForm';
 
 // Home component
 
@@ -17,7 +17,7 @@ const VolunteerProfileInd = () => {
                 <p>Please fill out the information below, and we will get back to you soon!</p>
               </div>
             </Jumbotron>
-            <VolunteerForm />
+            <EditProfileForm />
           </div>
       )
 };
