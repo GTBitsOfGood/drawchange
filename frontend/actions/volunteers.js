@@ -98,10 +98,10 @@ export function approvePendingVolunteer(id) {
 
 export function denyPendingVolunteer(id) {
   return dispatch => {
-    const body = { 'bio': {'role': 'pending'} }; //change this to denied
+    const body = { 'bio': {'role': 'denied'} }; //change this to denied
     axios.put(`/api/users/${id}`, body)
       .then(({ data }) => {
-        if (data.user.bio.role === 'pending') { //change this to denied
+        if (data.user.bio.role === 'denied') { //change this to denied
           dispatch(denyVolunteer(id));
         }
       });

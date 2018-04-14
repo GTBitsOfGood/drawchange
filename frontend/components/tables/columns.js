@@ -38,8 +38,10 @@ const phone_number = { Header: 'Phone Number', accessor: 'bio.phone_number', max
 
 const PENDING_VOLUNTEERS_FULL = [ full_name, age, phone_number, email, criminal_history, referral ];
 const PENDING_VOLUNTEERS_SHORT = [ full_name, phone_number, email ];
+// const DENIED_VOLUNTEERS_SHORT = [ full_name, phone_number, email ];
 
 export {
   PENDING_VOLUNTEERS_FULL,
   PENDING_VOLUNTEERS_SHORT,
+  // DENIED_VOLUNTEERS_SHORT,
 };

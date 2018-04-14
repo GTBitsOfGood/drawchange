@@ -13,6 +13,7 @@ import VolunteersFilter from '../components/VolunteersFilter';
 import PendingVolunteersShort from '../components/tables/PendingVolunteersShort';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
+import DENIED_VOLUNTEERS_SHORT from '../components/tables/columns';
 
 
 class VolunteersContainer extends React.Component {
@@ -107,7 +108,7 @@ class VolunteersContainer extends React.Component {
               <AllVolunteers data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Denied Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <PendingVolunteersShort data={this.props.denied} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4}>
