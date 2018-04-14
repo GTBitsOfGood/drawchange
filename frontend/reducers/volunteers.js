@@ -4,6 +4,7 @@ const initialState = {
   pending: [],
   newest: [],
   all: [],
+  denied: [],
   current_volunteer: undefined,
   filter: {
     language: "",

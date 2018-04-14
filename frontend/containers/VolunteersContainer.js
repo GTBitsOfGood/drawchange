@@ -24,7 +24,7 @@ class VolunteersContainer extends React.Component {
   componentWillMount() {
     this.props.loadAllVolunteers(this.props.match.params.id);
     this.props.loadPendingVolunteers();
-    // this.props.loadDeniedVolunteers();
+    this.props.loadDeniedVolunteers();
   }
 
   // eventually we should move this logic to redux...
@@ -84,6 +84,8 @@ class VolunteersContainer extends React.Component {
 
 
   render() {
+    console.log(this.props.pending);
+    console.log(this.props.denied);
     return (<div>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
@@ -108,7 +110,8 @@ class VolunteersContainer extends React.Component {
               <AllVolunteers data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Denied Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.denied} updateVolunteer={this.props.updateCurrentVolunteer} />
+
+              <AllVolunteers data={this.props.denied.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4}>
@@ -136,6 +139,7 @@ VolunteersContainer.propTypes = {
 const mapStateToProps = ( state, ownProps ) => {
   return {
     pending: state.volunteers.pending,
+    denied: state.volunteers.denied,
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
     filter: state.volunteers.filter,
