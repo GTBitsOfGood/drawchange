@@ -46,8 +46,9 @@ export default function volunteers(state = initialState, action) {
       if (state.all.length === 0) return state;
       const pendingVolunteers = state.pending.find(item => item._id === action.id);
       const allVolunteers = state.all.find(item => item._id === action.id);
+      const deniedVolunteers = state.denied.find(item => item._id === action.id);
       return Object.assign({}, state,
-        { current_volunteer: pendingVolunteers || allVolunteers || undefined}
+        { current_volunteer: pendingVolunteers || allVolunteers || deniedVolunteers || /*deletedVolunteer*/ undefined }
       );
     case types.APPROVE_PENDING_VOLUNTEER:
       const volunteerToApprove = state.pending.find(item => item._id === action.id);
@@ -63,11 +64,11 @@ export default function volunteers(state = initialState, action) {
       const volunteerToDeny = state.pending.find(item => item._id === action.id);
       const newPendingD = state.pending.slice();
       newPendingD.splice(state.pending.indexOf(volunteerToDeny), 1);
-      const newAllD = state.all.slice();
+      const newDenied = state.denied.slice();
       newAllD.push(volunteerToDeny);
       const newNewestD = state.newest.slice();
       newNewestD.unshift(volunteerToDeny);
-      return Object.assign({}, state, { pending: newPendingD, all: newAllD, newest: newNewestD });
+      return Object.assign({}, state, { pending: newPendingD, denied: newDenied, newest: newNewestD });
 
     case types.UPDATE_VOLUNTEER_FILTER:
       const newFilterObject = Object.assign({}, state.filter, action.filter);
