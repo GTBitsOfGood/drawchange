@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
+import { Col, Row, Panel, Nav, NavItem, ButtonGroup, Button,Collapse } from 'react-bootstrap';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
@@ -82,6 +82,7 @@ class VolunteersContainer extends React.Component {
   }
 
 
+
   render() {
     return (<div>
         <Row>
@@ -96,9 +97,21 @@ class VolunteersContainer extends React.Component {
               <VolunteersFilter/>
             </Panel>
             <Panel header={<h3>Actions</h3>} bsStyle="info">
-            {this.props.selected_volunteers.length > 0
-              && <a href={"mailto:?bcc=" + this.props.selected_volunteers.map((volunteer) => volunteer.email).join(",")}> Email</a>}
+            {this.props.selected_volunteers.length > 0 &&
+
+                  <ButtonGroup>
+                    {/*Email action*/}
+                    <Button><a href={"mailto:?bcc=" + this.props.selected_volunteers.map((volunteer) => volunteer.email).join(",")}> Email</a></Button>
+                    {/*Approve action*/}
+                    <Button>Approve</Button>
+                    <Button>Deny</Button>
+                    <Button>Delete</Button>
+                  </ButtonGroup>
+
+
+            }
             </Panel>
+
             <Panel header={<h3>All Volunteers</h3>} bsStyle="info">
               {/* <input type={text}> */}
               <AllVolunteers data={this.props.all.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer}/>
