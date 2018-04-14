@@ -56,12 +56,13 @@ export default function volunteers(state = initialState, action) {
     case types.APPROVE_VOLUNTEER:
       const volunteerToApprove = state.pending.find(item => item._id === action.id);
       if (!volunteerToApprove) { //approving from denied
+        const volunteerToApproveD = state.denied.find(item => item._id === action.id);
         const newDenied = state.pending.slice();
-        newDenied.splice(state.pending.indexOf(volunteerToApprove), 1);
+        newDenied.splice(state.pending.indexOf(volunteerToApproveD), 1);
         const newAll = state.all.slice();
-        newAll.push(volunteerToApprove);
+        newAll.push(volunteerToApproveD);
         const newNewest = state.newest.slice();
-        newNewest.unshift(volunteerToApprove);
+        newNewest.unshift(volunteerToApproveD);
         return Object.assign({}, state, { denied: newDenied, all: newAll, newest: newNewest });
       } else {
         const newPending = state.pending.slice();
