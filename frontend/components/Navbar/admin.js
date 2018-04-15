@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+//import './assets/stylesheets/base.scss';
 
 
 export const AdminNavbar = ({logout}) => (
-    <Navbar inverse collapseOnSelect>
+    <Navbar inverse collapseOnSelect className="navBar">
       <Navbar.Header>
         <Navbar.Brand>
           <Link to="/">drawchange Volunteer Portal</Link>

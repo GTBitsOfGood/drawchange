@@ -7,7 +7,7 @@ import 'sweetalert/dist/sweetalert.css';
 // Local Imports & Constants
 import { configureStore, history } from './store/configureStore';
 import { saveState } from './store/sessionStorage';
-import './assets/stylesheets/base.scss';
+require('./assets/stylesheets/base.scss');
 import Root from './containers/Root';
 const store = configureStore(history);
 

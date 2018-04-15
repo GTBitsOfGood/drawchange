@@ -10,11 +10,21 @@ body {
 	background-image: url("https://secure.donationpay.org/drawchange/images/pattern.jpg");
 	padding-bottom: 280px;
 	padding-top: 30px;
-}
+} 
 .navBar {
 	background-image: url("https://secure.donationpay.org/drawchange/images/pattern.jpg");
+	color: rgba(255, 255, 255, 0.7);
+	padding-top: 30px;
+	padding-bottom: 100px;
+	
 }
-
+.narbar-text {
+	font-family: helvetica;
+    font-weight: 300;
+}
+.navbar-inverse {
+	color: rgba(255, 255, 255, 0.7);
+}
 h3 {
 	text-align: center;
 }
