@@ -13,7 +13,7 @@ var isValidDate = require('is-valid-date');
 var Tabs = require('react-simpletabs');
 
 // Local Components
-import { register } from '../../actions/auth';
+import { updateProfile } from '../../actions/auth';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import Text from '../../components/inputs/Text';
 import TextArea from '../../components/inputs/Textarea';
@@ -40,6 +40,7 @@ class EditProfileForm extends Component {
     }
   }
 
+
   render() {
     return (
       <div>
@@ -57,58 +58,54 @@ class EditProfileForm extends Component {
               <Fieldset model=".bio">
                 <div>
                     <Control required component={Text}
-                        model=".last_name"
+                        model=".first_name"
                         label="First Name"
-                        placeholder="First Name"
+                        defaultValue={String(this.props.user.bio.first_name)}
                         type="text"
                         errors={{
                           isRequired: (val) => !val
                         }}/>
+
                     <Errors className="errors" model=".first_name" show="focus" messages={{
                       isRequired: 'Please enter a first name',
                     }} />
                 </div>
-            <Control required component={Text} model=".last_name" label="Last Name" placeholder="Last Name" type= "text"
+            <Control required component={Text} model=".last_name" label="Last Name" defaultValue={String(this.props.user.bio.last_name)} type= "text"
             errors={{isRequired: (val) => !val}}/>
                 <Errors className="errors" model=".last_name" show = "focus" messages={{
                   isRequired: 'Please enter a last name',
                 }} />
-            <Control required component={Text} model=".email" label="Email" placeholder="Email" type="email"
+            <Control required component={Text} model=".email" label="Email" defaultValue={String(this.props.user.bio.email)} type="email"
             errors={{isEmail: (val) => !validator.isEmail(val)}}/>
                 <Errors className="errors" model=".email" show = "focus" messages={{
                   isEmail: 'Please enter a valid email',
                 }} />
-            <Control required component={Text} model=".password" label="Password" placeholder="Password" type="password"
-            errors={{isRequired: (val) => !val || !(val.length >= 5)}}/>
-                <Errors className="errors" model=".password" show = "focus" messages={{
-                  isRequired: 'Please enter a valid password',
-                }} />
-            <Control required component={Text} model=".phone_number" label="Phone Number" placeholder="982-004-3178" type="tel"
+            <Control required component={Text} model=".phone_number" label="Phone Number" defaultValue={String(this.props.user.bio.phone_number)} type="tel"
             errors={{isPhoneNumber: (val) => !isPhoneNumber(val)}}/>
                 <Errors className="errors" model=".phone_number" show = "focus" messages={{
                   isPhoneNumber: 'Enter a valid phone number of form: 982-004-3178',
                 }} />
-            <Control required component={Text} model=".date_of_birth" label="Date of Birth" type="date" placeholder="2017-11-27"
+            <Control required component={Text} model=".date_of_birth" label="Date of Birth" type="date" defaultValue={String(this.props.user.bio.date_of_birth)}
             errors={{isRequired: (val) => !val || !isValidDate(val)}}/>
                 <Errors className="errors" model=".date_of_birth" show = "focus" messages={{
                   isRequired: 'Please enter a date of birth',
                 }} />
-            <Control required component={Text} model=".street_address" label="Street Address" type="text"   placeholder="711 Techwood Dr NW"
+            <Control required component={Text} model=".street_address" label="Street Address" type="text"  defaultValue={String(this.props.user.bio.street_address)}
             errors={{isRequired: (val) => !val}}/>
                 <Errors className="errors" model=".street_address" show = "focus" messages={{
                   isRequired: 'Please enter a street address',
                 }} />
-            <Control required component={Text} model=".city" label="City" type="text"   placeholder="Atlanta"
+            <Control required component={Text} model=".city" label="City" type="text"  defaultValue={String(this.props.user.bio.city)}
             errors={{isRequired: (val) => !val}}/>
                 <Errors className="errors" model=".city" show = "focus" messages={{
                   isRequired: 'Please enter a city',
                 }} />
-            <Control required component={Text} model=".state" label="State" type="text"   placeholder="GA"
+            <Control required component={Text} model=".state" label="State" type="text" defaultValue={String(this.props.user.bio.state)}
             errors={{isRequired: (val) => !val}}/>
                 <Errors className="errors" model=".state" show = "focus" messages={{
                   isRequired: 'Please enter a state',
                 }} />
-            <Control required component={Text} model=".zip_code" label="Zip Code" type="text"   placeholder="30318"
+            <Control required component={Text} model=".zip_code" label="Zip Code" type="text" defaultValue={String(this.props.user.bio.zip_code)}
             errors={{isRequired: (val) => !val || !isValidZip(val)}}/>
                 <Errors className="errors" model=".zip_code" show = "focus" messages={{
                   isRequired: 'Please enter a zip code',
@@ -120,73 +117,73 @@ class EditProfileForm extends Component {
           <h2>Tell Us About You</h2>
           <p><b>When are you available to volunteer?</b></p>
           <Fieldset model=".availability">
-            <Control.checkbox component={Checkbox} model=".weekday_mornings" label="Weekday Mornings"/>
-            <Control.checkbox component={Checkbox} model=".weekday_afternoons" label="Weekday Afternoons" />
-            <Control.checkbox component={Checkbox} model=".weekday_evenings" label="Weekday Evenings" />
-            <Control.checkbox component={Checkbox} model=".weekend_mornings" label="Weekend Mornings" />
-            <Control.checkbox component={Checkbox} model=".weekend_afternoons" label="Weekend Afternoons" />
-            <Control.checkbox component={Checkbox} model=".weekend_evenings" label="Weekend Evenings" />
+            <Control.checkbox component={Checkbox} model=".weekday_mornings" label="Weekday Mornings" defaultValue={Boolean(this.props.user.availability.weekday_mornings)} />
+            <Control.checkbox component={Checkbox} model=".weekday_afternoons" label="Weekday Afternoons" defaultValue={Boolean(this.props.user.availability.weekday_afternoons)}/>
+            <Control.checkbox component={Checkbox} model=".weekday_evenings" label="Weekday Evenings" defaultValue={Boolean(this.props.user.availability.weekday_evenings)}/>
+            <Control.checkbox component={Checkbox} model=".weekend_mornings" label="Weekend Mornings" defaultValue={Boolean(this.props.user.availability.weekend_mornings)}/>
+            <Control.checkbox component={Checkbox} model=".weekend_afternoons" label="Weekend Afternoons" defaultValue={Boolean(this.props.user.availability.weekend_afternoons)}/>
+            <Control.checkbox component={Checkbox} model=".weekend_evenings" label="Weekend Evenings" defaultValue={Boolean(this.props.user.availability.weekend_evenings)}/>
           </Fieldset>
           <p><b>In what areas do you have skills or interests that you would enjoy using to support drawchange? </b></p>
           <Fieldset model=".skills_interests">
-            <Control.checkbox component={Checkbox} model=".admin_in_office" label="Administrative In Office Support"/>
-            <Control.checkbox component={Checkbox} model=".admin_virtual" label="Administrative Virtual Support" />
-            <Control.checkbox component={Checkbox} model=".atlanta_shelter" label="Atlanta Homeless Shelter Program" />
-            <Control.checkbox component={Checkbox} model=".orlando_shelter" label="Orlando Homeless Shelter Program" />
-            <Control.checkbox component={Checkbox} model=".graphic_web_design" label="Graph/Web Design" />
-            <Control.checkbox component={Checkbox} model=".special_events" label="Special Events (planning & execution)" />
-            <Control.checkbox component={Checkbox} model=".grant_writing" label="Grant Writing" />
-            <Control.checkbox component={Checkbox} model=".writing_editing" label="General Writing & Editing" />
-            <Control.checkbox component={Checkbox} model=".social_media" label="Social Media Assistance" />
-            <Control.checkbox component={Checkbox} model=".fundraising" label="Fundraising (coordination & execution)" />
-            <Control.checkbox component={Checkbox} model=".finance" label="Financing Assistance (Quickbooks)" />
-            <Control.checkbox component={Checkbox} model=".office_maintenance_housekeeping" label="Office Maintenance & Housekeeping" />
-            <Control.checkbox component={Checkbox} model=".international_projects" label="International Projects/Trips (planning & cordinating)" />
-            <Control.checkbox component={Checkbox} model=".volunteer_coordination" label="Volunteer Coordination" />
-            <Control.checkbox component={Checkbox} model=".outreach" label="Outreach - Sharing with others. Start today on social media!" />
+            <Control.checkbox component={Checkbox} model=".admin_in_office" label="Administrative In Office Support" defaultValue={Boolean(this.props.user.skills_interests.admin_in_office)}/>
+            <Control.checkbox component={Checkbox} model=".admin_virtual" label="Administrative Virtual Support" defaultValue={Boolean(this.props.user.skills_interests.admin_virtual)} />
+            <Control.checkbox component={Checkbox} model=".atlanta_shelter" label="Atlanta Homeless Shelter Program" defaultValue={Boolean(this.props.user.skills_interests.atlanta_shelter)} />
+            <Control.checkbox component={Checkbox} model=".orlando_shelter" label="Orlando Homeless Shelter Program" defaultValue={Boolean(this.props.user.skills_interests.orlando_shelter)} />
+            <Control.checkbox component={Checkbox} model=".graphic_web_design" label="Graph/Web Design" defaultValue={Boolean(this.props.user.skills_interests.graphic_web_design)} />
+            <Control.checkbox component={Checkbox} model=".special_events" label="Special Events (planning & execution)" defaultValue={Boolean(this.props.user.skills_interests.special_events)} />
+            <Control.checkbox component={Checkbox} model=".grant_writing" label="Grant Writing" defaultValue={Boolean(this.props.user.skills_interests.grant_writing)} />
+            <Control.checkbox component={Checkbox} model=".writing_editing" label="General Writing & Editing" defaultValue={Boolean(this.props.user.skills_interests.writing_editing)} />
+            <Control.checkbox component={Checkbox} model=".social_media" label="Social Media Assistance" defaultValue={Boolean(this.props.user.skills_interests.social_media)} />
+            <Control.checkbox component={Checkbox} model=".fundraising" label="Fundraising (coordination & execution)" defaultValue={Boolean(this.props.user.skills_interests.fundraising)} />
+            <Control.checkbox component={Checkbox} model=".finance" label="Financing Assistance (Quickbooks)" defaultValue={Boolean(this.props.user.skills_interests.finance)} />
+            <Control.checkbox component={Checkbox} model=".office_maintenance_housekeeping" label="Office Maintenance & Housekeeping" defaultValue={Boolean(this.props.user.skills_interests.office_maintenance_housekeeping)} />
+            <Control.checkbox component={Checkbox} model=".international_projects" label="International Projects/Trips (planning & cordinating)" defaultValue={Boolean(this.props.user.skills_interests.international_projects)} />
+            <Control.checkbox component={Checkbox} model=".volunteer_coordination" label="Volunteer Coordination" defaultValue={Boolean(this.props.user.skills_interests.volunteer_coordination)} />
+            <Control.checkbox component={Checkbox} model=".outreach" label="Outreach - Sharing with others. Start today on social media!" defaultValue={Boolean(this.props.user.skills_interests.outreach)} />
           </Fieldset>
 
           <p><b>How did you hear about drawchange?</b></p>
           <Fieldset model=".referral">
-            <Control.checkbox component={Checkbox} model=".friend" label="Friend" />
-            <Control.checkbox component={Checkbox} model=".newsletter" label="Newsletter" />
-            <Control.checkbox component={Checkbox} model=".event" label="Event" />
-            <Control.checkbox component={Checkbox} model=".volunteer_match" label="VolunteerMatch.org" />
-            <Control.checkbox component={Checkbox} model=".internet" label="Internet Search" />
-            <Control.checkbox component={Checkbox} model=".social_media" label="Social Media" />
+            <Control.checkbox component={Checkbox} model=".friend" label="Friend" defaultValue={Boolean(this.props.user.referral.friend)} />
+            <Control.checkbox component={Checkbox} model=".newsletter" label="Newsletter" defaultValue={Boolean(this.props.user.referral.newsletter)} />
+            <Control.checkbox component={Checkbox} model=".event" label="Event" defaultValue={Boolean(this.props.user.referral.event)} />
+            <Control.checkbox component={Checkbox} model=".volunteer_match" label="VolunteerMatch.org" defaultValue={Boolean(this.props.user.referral.volunteer_match)} />
+            <Control.checkbox component={Checkbox} model=".internet" label="Internet Search" defaultValue={Boolean(this.props.user.referral.internet)} />
+            <Control.checkbox component={Checkbox} model=".social_media" label="Social Media" defaultValue={Boolean(this.props.user.referral.social_media)} />
           </Fieldset>
 
           <Control required component={Text} model=".bio.languages" label="Please list any languages you speak, read, or write fluently (other than English.)" type="text"
-          placeholder="Languages"
+          defaultValue={String(this.props.user.bio.languages)}
           errors={{isRequired: (val) => !val}}/>
           <Errors className="errors" model=".bio.languages" show = "focus" messages={{
             isRequired: 'Please enter spoken languages'}}/>
           <Fieldset model=".history">
-            <Control required component={TextArea} model=".volunteer_interest_cause" label="Why are you interested in volunteering with drawchange?"
+            <Control required component={TextArea} model=".volunteer_interest_cause" label="Why are you interested in volunteering with drawchange?" defaultValue={String(this.props.user.history.volunteer_interest_cause)}
             errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
-        <Errors className="errors" model=".volunteer_interest_cause" show = "focus" messages={{
-          isRequired: 'Enter a valid answer',
-        }} />
+              <Errors className="errors" model=".volunteer_interest_cause" show = "focus" messages={{
+                isRequired: 'Enter a valid answer',
+              }} />
             <Control required component={TextArea} model=".volunteer_support" label="What would you need FROM us to support your timely completion of tasks? What supports your productivity? What sorts of recognition do you most value?"
-            placeholder="support" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
-            <Errors className="errors" model=".volunteer_support" show = "focus" messages={{
-              isRequired: 'Enter a valid answer',
-            }} />
+            defaultValue={String(this.props.user.history.volunteer_interest_cause)} errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+              <Errors className="errors" model=".volunteer_support" show = "focus" messages={{
+                isRequired: 'Enter a valid answer',
+              }} />
             <Control required component={TextArea} model=".volunteer_commitment" label="What do you do when you realize you cannot keep a commitment? "
-            placeholder="commitment" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
-            <Errors className="errors" model=".volunteer_commitment" show = "focus" messages={{
-              isRequired: 'Enter a valid answer',
-            }} />
+            defaultValue={String(this.props.user.history.volunteer_commitment)} errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+              <Errors className="errors" model=".volunteer_commitment" show = "focus" messages={{
+                isRequired: 'Enter a valid answer',
+              }} />
             <Control required component={TextArea} model=".skills_qualifications" label="Please summarize special skills and qualifications you have acquired from employment, previous volunteer  work, or through other activities, including hobbies or sports."
-            placeholder="skills and qualifications" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
-            <Errors className="errors" model=".skills_qualifications" show = "focus" messages={{
-              isRequired: 'Enter a valid answer',
-            }} />
+            defaultValue={String(this.props.user.history.skills_qualifications)} errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+              <Errors className="errors" model=".skills_qualifications" show = "focus" messages={{
+                isRequired: 'Enter a valid answer',
+              }} />
             <Control required component={TextArea} model=".previous_volunteer_experience" label="What are your previous volunteer experiences? Please list the organization name, city and state, position and duties. How long you were there?"
-            placeholder="previous volunteer experience" errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
-            <Errors className="errors" model=".previous_volunteer_experience" show = "focus" messages={{
-              isRequired: 'Enter a valid answer',
-            }} />
+            defaultValue={String(this.props.user.history.previous_volunteer_experience)} errors={{isRequired: (val)=> !val || !(val.length >= 10)}}/>
+              <Errors className="errors" model=".previous_volunteer_experience" show = "focus" messages={{
+                isRequired: 'Enter a valid answer',
+              }} />
           </Fieldset>
             <br />
         </Tabs.Panel>
@@ -195,27 +192,27 @@ class EditProfileForm extends Component {
           <h2>Reference</h2>
           <Fieldset model=".reference">
             <Control required component={Text} type="text" model=".name" label="Reference Name"
-            placeholder = "reference name" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
+            defaultValue={String(this.props.user.reference.name)} errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
             <Errors className="errors" model=".name" show = "focus" messages={{
               isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="tel" model=".phone_number" label="Reference Phone Number"
-            placeholder = "982-004-45613"errors={{isRequired: (val) => !val || !(isPhoneNumber(val))}}/>
+            defaultValue={String(this.props.user.reference.phone_number)} errors={{isRequired: (val) => !val || !(isPhoneNumber(val))}}/>
             <Errors className="errors" model=".phone_number" show = "focus" messages={{
               isRequired: 'Enter a valid phone number of form: 982-004-3178',
             }} />
             <Control required component={Text} type="email" model=".email" label="Reference Email"
-            placeholder = "randome@random.com" errors={{isRequired: (val) => !val || !(validator.isEmail(val))}}/>
+            defaultValue={String(this.props.user.reference.email)} errors={{isRequired: (val) => !val || !(validator.isEmail(val))}}/>
             <Errors className="errors" model=".email" show = "focus" messages={{
               isRequired: 'Enter a valid email address',
             }} />
             <Control required component={Text} type="text" model=".relationship" label="How does this person know you?"
-            placeholder = "relationship" errors={{isRequired: (val) => !val || !(val.length >= 3)}}/>
+            defaultValue={String(this.props.user.reference.relationship)} errors={{isRequired: (val) => !val || !(val.length >= 3)}}/>
             <Errors className="errors" model=".relationship" show = "focus" messages={{
               isRequired: 'Enter a valid answer',
             }} />
             <Control required component={Text} type="text" model=".duration" label="How long have you know this person?"
-            placeholder = "duration" errors={{isRequired: (val) => !val || !(val.length >= 5)}}/>
+            defaultValue={String(this.props.user.reference.duration)} errors={{isRequired: (val) => !val || !(val.length >= 5)}}/>
             <Errors className="errors" model=".duration" show = "focus" messages={{
               isRequired: 'Enter a valid answer',
             }} />
@@ -226,57 +223,36 @@ class EditProfileForm extends Component {
         <Tabs.Panel title='Emergency Contact'>
           <h2>Emergency Contact</h2>
           <Fieldset model=".ice">
-            <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" placeholder = "Emergency Contact Name"
+            <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" defaultValue={String(this.props.user.ice.name)}
             errors={{isRequired: (val) => !val}}/>
             <Errors className="errors" model=".name" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
-            <Control required component={Text} type="tel" model=".phone_number" label="Emergency Contact Phone Number" placeholder = "Emergency Contact Number"
+            <Control required component={Text} type="tel" model=".phone_number" label="Emergency Contact Phone Number" defaultValue={String(this.props.user.ice.phone_number)}
             errors={{isRequired: (val) => !val || !(isPhoneNumber(val))}}/>
             <Errors className="errors" model=".phone_number" show = "focus" messages={{
               isRequired: 'Enter a valid phone number of form: 982-004-3178',
             }} />
-            <Control required component={Text} type="email" model=".email" label="Emergency Contact Email" placeholder = "Emergency Contact Email"
+            <Control required component={Text} type="email" model=".email" label="Emergency Contact Email"  defaultValue={String(this.props.user.ice.email)}
             errors={{isRequired: (val) => !(val) || !(validator.isEmail(val))}}/>
             <Errors className="errors" model=".email" show = "focus" messages={{
               isRequired: 'Enter a valid email address',
             }} />
-            <Control required component={Text} type="text" model=".relationship" label="Relation to Emergency Contact" placeholder = "Emergency Contact Relation"
+            <Control required component={Text} type="text" model=".relationship" label="Relation to Emergency Contact"  defaultValue={String(this.props.user.ice.relationship)}
             errors={{isRequired: (val) => !val || !(val.length >= 3)}}/>
             <Errors className="errors" model=".relationship" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
-            <Control required component={Text} type="text" model=".address" label="Emergency Contact Address" placeholder = "Emergency Contact Address"
+            <Control required component={Text} type="text" model=".address" label="Emergency Contact Address"  defaultValue={String(this.props.user.ice.address)}
             errors={{isRequired: (val) => !val}}/>
             <Errors className="errors" model=".address" show = "focus" messages={{
               isRequired: 'This is a required field',
             }} />
           </Fieldset>
         </Tabs.Panel>
-        <Tabs.Panel title='Additionals'>
-          <Fieldset model=".permissions">
-              <br />
-          <h2>Additional Comments</h2>
-            <Control required component={Text} type="text" model=".comments" label="Is there anything else we should know about you? Any Questions, Comments, or Concerns?" />
-
-              <br />
-          <h2>Permissions</h2>
-          <p><b>drawchange has my permission to:</b></p>
-
-            <Control.checkbox component={Checkbox} model=".reference" label="Verify the reference I have provided" />
-            <Control.checkbox component={Checkbox} model=".personal_image" label="Include my name and/or picture in drawchange promotional materials, newspapers, TV, radio, brochures, videos, website(s), etc" />
-            <Control.checkbox component={Checkbox} model=".email_list" label="Add me to their mailing list. (We only send 1 email per month and never share your email address)" />
-            <p>By submitting this application, I affirm that the facts set forth in it are true and complete. I understand that if I am accepted as a volunteer, any false statements, omissions, or other misrepresentations made by me on this application may result in my immediate dismissal.</p>
-            <Control required component={Text} type="text" model=".signature" label="Please enter your full legal name here, to confirm agreement."
-                errors={{ isRequired: (val) => !val || !(val.length >= 3) }}/>
-            <Errors className="errors" model=".signature" show="focus" messages={{
-              isRequired: 'This is a required field',
-            }} />
-          </Fieldset>
-        </Tabs.Panel>
       </Tabs>
 
-          <Button bsStyle="primary" type="submit" onClick={this.props.register}>Submit Volunteer Application</Button>
+          <Button bsStyle="primary" type="submit" /*onClick={this.props.updateProfile}*/>Submit Changes</Button>
           <ReduxSweetAlert />
         </Form>
       </Col>
@@ -286,7 +262,7 @@ class EditProfileForm extends Component {
 }
 
 EditProfileForm.propTypes = {
-  register: PropTypes.func,
+  updateProfile: PropTypes.func,
   error: PropTypes.bool,
   success: PropTypes.bool,
   swal: PropTypes.func.isRequired,
@@ -298,6 +274,7 @@ function mapStateToProps(state) {
   return {
     error: state.auth.registrationFailed,
     success: state.auth.registrationSuccess,
+    user: state.auth.user,
   };
 }
 
@@ -306,8 +283,10 @@ function mapDispatchToProps(dispatch) {
     {},
     { swal: bindActionCreators(swal, dispatch) },
     { close: bindActionCreators(close, dispatch) },
-    { register: () => dispatch(register()) },
+    { updateProfile: () => dispatch(updateProfile()) },
+//    { setDefaultUser: (values) => actions.merge('user', values) },
   );
 }
 
+//const ConnectedForm = connect(null, mapDispatchToProps)(UserForm);
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileForm);
