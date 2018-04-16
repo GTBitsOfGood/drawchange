@@ -69,6 +69,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
     "react-simpletabs": "^0.7.0",
+    "react-social-icons": "^2.8.1",
     "react-table": "^6.7.4",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.0",
