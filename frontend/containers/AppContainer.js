@@ -52,9 +52,9 @@ class AppContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{paddingTop:"10px"}}>
         <Navbar logout={this.props.logout} user ={this.props.user} />
-        <Switch>
+        <Switch style={{paddingTop:"0px"}}>
           <Route exact path={'/login'} render={this._login}/>
           <Route exact path={'/register'} render={this._register} />
           {/* <Route exact path={'/newEvent'} render={this._createEvent} /> */}
