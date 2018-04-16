@@ -7,15 +7,16 @@ import { Navbar, Nav, NavItem } from "react-bootstrap";
 //import './assets/stylesheets/base.scss';
 
 export const VolunteerNavbar = ({ logout }) => (
-  <Navbar inverse collapseOnSelect className="navBar">
+  <Navbar collapseOnSelect className="navBar row-fluid">
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to="/">drawchange Volunteer Portal</Link>
+        <Link to="/"><img style={{width:"70%"}} src="http://drawchange.org/wp-content/uploads/2014/02/LOGO_dc.png"></img></Link>
       </Navbar.Brand>
+      
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
-      <Nav>
+      <Nav style={{marginTop:"20px"}}>
         <LinkContainer exact to="/">
           <NavItem>Dashboard</NavItem>
         </LinkContainer>
