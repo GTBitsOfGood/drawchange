@@ -39,7 +39,7 @@ class VolunteersDashboard extends React.Component {
     return (
       <div>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+          <Col md={7} mdOffset={1} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px"}} smOffset={1} lgOffset={2} lg={4} sm={5} >
             <Panel header={<h3>My Events</h3>} bsStyle="info">
             <MyEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
@@ -48,7 +48,7 @@ class VolunteersDashboard extends React.Component {
             </Panel>
 
           </Col>
-          <Col sm={5} lg={4}>
+          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"100px", paddingTop:"10px"}}>
             <Panel header={<h3>Event Details</h3>} bsStyle="info">
 
                 {/* {this.props.current_event && this.props.} */}
