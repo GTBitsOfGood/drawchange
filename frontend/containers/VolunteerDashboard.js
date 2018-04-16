@@ -42,7 +42,7 @@ class VolunteersDashboard extends React.Component {
     return (
       <div>
         <Row style={{marginBottom:"0px"}}>
-        <Col smOffset={1} lgOffset={2} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px", paddingBottom:"20px", paddingLeft:"20px", paddingRight:"20px"}}>
+        <Col md={8} smOffset={1} lgOffset={2} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px", paddingBottom:"20px", paddingLeft:"20px", paddingRight:"20px"}}>
         <Panel header={<h3>Welcome</h3>} bsStyle="info" >
               <p>Welcome to our volunteer portal. The place for volunteers
               whose application has been filled out and approved! Thank you in
@@ -64,7 +64,7 @@ class VolunteersDashboard extends React.Component {
         </Col>
         </Row>
         <Row>
-          <Col md={7} mdOffset={1} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px", marginTop:"0px"}} smOffset={1} lgOffset={2} lg={4} sm={5} >
+          <Col md={7} mdOffset={1} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px"}} smOffset={1} lgOffset={2} lg={4} sm={5} >
             <Panel header={<h3>Quick Links</h3>} bsStyle="info">
               <ul>
                 <li><a target="_blank" href="http://signup.com/go/A8nqmi"> Atlanta Homeless Shelter and special event opportunities</a> </li>
@@ -101,7 +101,7 @@ class VolunteersDashboard extends React.Component {
 
 
           </Col>
-          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px"}}>
+          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px", paddingBottom:"243px"}}>
             {/*<Panel header={<h3>Event Details</h3>} bsStyle="info">
 >>>>>>> refs/remotes/origin/master
 

@@ -36,10 +36,10 @@ class EventContainer extends React.Component {
   render() {
     return (<div>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"3px"}}>
             <h1>Volunteer Events</h1>
           </Col>
-          <Col sm={5} lg={4}>
+          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
             <Nav pullRight style={{ marginTop: "20px", marginBottom: "10px", fontSize: "initial" }} bsStyle="pills" >
               <LinkContainer exact to="/events/new">
                 <NavItem>+ New Event</NavItem>
@@ -48,7 +48,7 @@ class EventContainer extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
             <Panel header={<h3>All Event</h3>} bsStyle="info">
               {/* <input type={text}> */}
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent} />
@@ -58,7 +58,7 @@ class EventContainer extends React.Component {
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent} />
             </Panel>
           </Col>
-          <Col sm={5} lg={4}>
+          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"344px"}}>
             <Panel header={<h3>Event Detail</h3>} bsStyle="info">
               {this.props.current_event && <EventDetails event={this.props.current_event} />}
               {!this.props.current_event && <h3> Click an Event to view details </h3>}
