@@ -71,7 +71,7 @@ class ContactUsForm extends Component {
   render() {
       return (
       <div>
-      <Col md={6} mdOffset={3}>
+      <Col md={7} mdOffset={2} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
         {this.state.didsend &&
             <p>Sent</p>
         }

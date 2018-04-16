@@ -85,12 +85,12 @@ class VolunteersContainer extends React.Component {
   render() {
     return (<div>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+          <Col smOffset={1} lgOffset={2} lg={8} sm={7} md={8} style={{backgroundColor: "rgba(255, 255, 255, 1)",paddingBottom:"3px"}}>
             <h1>Manage Volunteers</h1>
           </Col>
         </Row>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5}>
+          <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
             <Panel header={<h3>Filter</h3>} bsStyle="info">
               {/* <input type={text}> */}
               <VolunteersFilter/>
@@ -110,7 +110,7 @@ class VolunteersContainer extends React.Component {
               <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
-          <Col sm={5} lg={4}>
+          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"1098px"}}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
               {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} />}
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
