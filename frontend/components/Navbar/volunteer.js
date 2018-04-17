@@ -26,6 +26,9 @@ export const VolunteerNavbar = ({ logout }) => (
         <LinkContainer to="/contactus">
           <NavItem>Contact Us</NavItem>
         </LinkContainer>
+        <LinkContainer to="/profile">
+          <NavItem>Edit Profile</NavItem>
+        </LinkContainer>
       </Nav>
       <Nav pullRight>
         <LinkContainer

@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import VolunteerDashboard from '../VolunteerDashboard';
 import EventContainer from "../EventContainer";
 import ContactUsContainer from "../ContactUsContainer";
+import VolunteerProfileInd from "../VolunteerProfileInd";
 
 export const VolunteerContainer = () => (
   <Switch>
@@ -14,6 +15,7 @@ export const VolunteerContainer = () => (
     <Route path={"/events"} component={EventContainer} />
     <Route path={"/contactus"} component={ContactUsContainer} />
     <Route path={"/"} exact component={VolunteerDashboard} />
+    <Route path={"/profile"} exact component={VolunteerProfileInd} />
   </Switch>
 );
 

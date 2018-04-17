@@ -12,6 +12,14 @@ export function loadAllVolunteers() {
       });
   };
 }
+export function loadDeletedVolunteers() {
+  return dispatch => {
+    axios.get('/api/users?type=deleted')
+      .then(({ data }) => {
+        dispatch(loadDeletedVolunteers(data.users));
+      });
+  };
+}
 export function loadNewVolunteers() {
   return dispatch => {
     axios.get('/api/users?type=pending')
@@ -93,6 +101,12 @@ function loadDeniedVolunteers(denied) {
   return {
     type: types.LOAD_DENIED_VOLUNTEERS,
     denied
+  };
+}
+function loadDeletedVolunteers(deleted) {
+  return {
+    type: types.LOAD_DELETED_VOLUNTEERS,
+    deleted
   };
 }
 
