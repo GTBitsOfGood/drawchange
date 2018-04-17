@@ -13,6 +13,7 @@ import VolunteersFilter from '../components/VolunteersFilter';
 import PendingVolunteersShort from '../components/tables/PendingVolunteersShort';
 import AllVolunteers from '../components/tables/AllVolunteers';
 import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
+import DENIED_VOLUNTEERS_SHORT from '../components/tables/columns';
 
 
 class VolunteersContainer extends React.Component {
@@ -23,7 +24,7 @@ class VolunteersContainer extends React.Component {
   componentWillMount() {
     this.props.loadAllVolunteers(this.props.match.params.id);
     this.props.loadPendingVolunteers();
-    // this.props.loadDeniedVolunteers();
+    this.props.loadDeniedVolunteers();
   }
 
   // eventually we should move this logic to redux...
@@ -83,6 +84,8 @@ class VolunteersContainer extends React.Component {
 
 
   render() {
+    console.log(this.props.pending);
+    console.log(this.props.denied);
     return (<div>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={8} sm={7} md={8} style={{backgroundColor: "rgba(255, 255, 255, 1)",paddingBottom:"3px"}}>
@@ -107,12 +110,13 @@ class VolunteersContainer extends React.Component {
               <AllVolunteers data={this.props.pending.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
             <Panel header={<h3>Denied Volunteers</h3>} bsStyle="info">
-              <PendingVolunteersShort data={this.props.pending} updateVolunteer={this.props.updateCurrentVolunteer} />
+
+              <AllVolunteers data={this.props.denied.filter((user) => this.passesFilter(user))} updateVolunteer={this.props.updateCurrentVolunteer} />
             </Panel>
           </Col>
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"1098px"}}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} />}
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} onClickDelete={() => this.props.deleteVolunteer(this.props.current_volunteer._id)} />}
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
@@ -135,6 +139,8 @@ VolunteersContainer.propTypes = {
 const mapStateToProps = ( state, ownProps ) => {
   return {
     pending: state.volunteers.pending,
+    denied: state.volunteers.denied,
+    deleted: state.volunteers.deleted, //delete when done.
     all: state.volunteers.all,
     current_volunteer: state.volunteers.current_volunteer,
     filter: state.volunteers.filter,

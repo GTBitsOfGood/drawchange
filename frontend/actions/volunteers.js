@@ -98,11 +98,22 @@ export function approvePendingVolunteer(id) {
 
 export function denyPendingVolunteer(id) {
   return dispatch => {
-    const body = { 'bio': {'role': 'pending'} }; //change this to denied
+    const body = { 'bio': {'role': 'denied'} }; //change this to denied
     axios.put(`/api/users/${id}`, body)
       .then(({ data }) => {
-        if (data.user.bio.role === 'pending') { //change this to denied
+        if (data.user.bio.role === 'denied') { //change this to denied
           dispatch(denyVolunteer(id));
+        }
+      });
+  };
+}
+export function deleteVolunteer(id) {
+  return dispatch => {
+    const body = { 'bio': {'role': 'deleted'} }; //change this to denied
+    axios.put(`/api/users/${id}`, body)
+      .then(({ data }) => {
+        if (data.user.bio.role === 'deleted') { //change this to denied
+          dispatch(deleteVolunteerMain(id));
         }
       });
   };
@@ -147,13 +158,19 @@ function newVolunteers(newest) {
 
 function approveVolunteer(id) {
   return {
-    type: types.APPROVE_PENDING_VOLUNTEER,
+    type: types.APPROVE_VOLUNTEER,
     id
   };
 }
 function denyVolunteer(id) {
   return {
-    type: types.DENY_PENDING_VOLUNTEER,
+    type: types.DENY_VOLUNTEER,
+    id
+  };
+}
+function deleteVolunteerMain(id) {
+  return {
+    type: types.DELETE_VOLUNTEER,
     id
   };
 }
