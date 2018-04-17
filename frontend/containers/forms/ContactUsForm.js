@@ -85,7 +85,7 @@ class ContactUsForm extends Component {
             <Text name="phoneNumber" label="Phone Number" onChange={this.handleChange.bind(this)} placeholder="999-999-9999"/>
             <Text name="subject" label="Subject" onChange={this.handleChange.bind(this)} placeholder="Subject"/>
             <Text name="message" label="Message" onChange={this.handleChange.bind(this)} placeholder="Message"/>
-            <Button bsStyle="primary" type="submit">Submit</Button>
+            <p className="submitbutton"><Button bsStyle="primary" type="submit">Submit</Button></p>
         </form>
       </Col>
       </div>

@@ -45,10 +45,8 @@ class EditProfileForm extends Component {
     return (
       <div>
 
-      <Col md={6} mdOffset={3}>
-          <Image style={{paddingLeft: "33%"}} src={"http://drawchange.org/wp-content/uploads/2014/02/LOGO_dc.png"} />
-          <p>Thank you for your interest in volunteering with us! You can volunteer to help us with a specific project, event, going to the homeless shelters with us or helping us out around the office. Whatever it is, you are guaranteed to leave with a full heart and ear to ear smile!</p>
-          <p>While we greatly need and appreciate all of the volunteer assistance we receive, we do not have a full time volunteer manager on staff. Thank you in advance for understanding that your application may take a few weeks to get processed.</p>
+      <Col md={6} mdOffset={3} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"30px"}}>
+          
         <Form model="forms.user" onSubmit={v => console.log(v)}>
 
         <Tabs>
@@ -251,8 +249,9 @@ class EditProfileForm extends Component {
           </Fieldset>
         </Tabs.Panel>
       </Tabs>
-
+        <p className="submitbutton">
           <Button bsStyle="primary" type="submit" /*onClick={this.props.updateProfile}*/>Submit Changes</Button>
+          </p>
           <ReduxSweetAlert />
         </Form>
       </Col>
