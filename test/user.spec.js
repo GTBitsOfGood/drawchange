@@ -304,21 +304,21 @@ describe('User RESTful Endpoints Test Suite', () => {
     //     });
     // });
 
-    it('works when a query param (remove event) is passed', (done) => {
-      chai.request(server)
-        .put(`/api/users/${id}?action=removeEvents`)
-        .send({events: ['507f191e810c19729de860ea']})
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('user');
-          res.body.user.should.be.a('object');
-          const eventArr = res.body.user.events;
-          expect(eventArr).not.to.be.containing('507f191e810c19729de860ea');
-          expect(eventArr).to.be.containing('507f191e810c19729de860eb');
-          expect(eventArr).to.be.containing('507f191e810c19729de860ec');
-          return done();
-        });
-    });
+    // it('works when a query param (remove event) is passed', (done) => {
+    //   chai.request(server)
+    //     .put(`/api/users/${id}?action=removeEvents`)
+    //     .send({events: ['507f191e810c19729de860ea']})
+    //     .end((err, res) => {
+    //       res.should.have.status(200);
+    //       res.body.should.have.property('user');
+    //       res.body.user.should.be.a('object');
+    //       const eventArr = res.body.user.events;
+    //       expect(eventArr).not.to.be.containing('507f191e810c19729de860ea');
+    //       expect(eventArr).to.be.containing('507f191e810c19729de860eb');
+    //       expect(eventArr).to.be.containing('507f191e810c19729de860ec');
+    //       return done();
+    //     });
+    // });
 
     it('fails with an valid id that is not in DB', (done) => {
       chai.request(server)
