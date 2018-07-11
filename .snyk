@@ -20,3 +20,20 @@ patch:
   'npm:tunnel-agent:20170305':
     - node-sass > request > tunnel-agent:
         patched: '2018-06-25T23:04:23.400Z'
+  'npm:hoek:20180212':
+    - node-sass > request > hawk > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > request > hawk > boom > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > request > hawk > sntp > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > node-gyp > request > hawk > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > node-gyp > request > hawk > boom > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > node-gyp > request > hawk > sntp > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
+    - node-sass > node-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-06-19T07:08:38.826Z'
