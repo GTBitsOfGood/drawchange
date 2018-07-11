@@ -17,6 +17,9 @@ patch:
         patched: '2017-11-28T21:56:59.916Z'
     - is-valid-zip > tape > glob > minimatch:
         patched: '2017-11-28T21:56:59.916Z'
+  'npm:lodash:20180130':
+    - nodemailer-sendgrid-transport > sendgrid > lodash:
+        patched: '2018-07-02T22:58:28.814Z'
   'npm:tunnel-agent:20170305':
     - node-sass > request > tunnel-agent:
         patched: '2018-06-26T07:08:45.115Z'
