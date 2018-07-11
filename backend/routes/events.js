@@ -28,6 +28,7 @@ router.route('/')
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
     check('max_volunteers').isNumeric(),
+    check('link').optional().isAscii().trim()
     // check('volunteers').custom(value => {
     //   if ()
     // })

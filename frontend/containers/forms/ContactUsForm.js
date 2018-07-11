@@ -72,13 +72,9 @@ class ContactUsForm extends Component {
       return (
       <div>
       <Col md={7} mdOffset={2} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
-        {this.state.didsend &&
-            <p>Sent</p>
-        }
-        {this.state.isEmpty &&
-            <p>Please fill in all the information.</p>
-        }
-        <form onSubmit={this.handleForm.bind(this)}>
+        {this.state.didsend ?
+            <p>Sent</p> :
+            <form onSubmit={this.handleForm.bind(this)}>
             <Text name="firstName" label="First Name" onChange={this.handleChange.bind(this)} placeholder="First Name"/>
             <Text name="lastName" label="Last Name" onChange={this.handleChange.bind(this)} placeholder="Last Name"/>
             <Text name="email" label="Email" onChange={this.handleChange.bind(this)} placeholder="example@gmail.com"/>
@@ -86,7 +82,12 @@ class ContactUsForm extends Component {
             <Text name="subject" label="Subject" onChange={this.handleChange.bind(this)} placeholder="Subject"/>
             <Text name="message" label="Message" onChange={this.handleChange.bind(this)} placeholder="Message"/>
             <p className="submitbutton"><Button bsStyle="primary" type="submit">Submit</Button></p>
-        </form>
+            </form>
+        }
+        {this.state.isEmpty &&
+            <p>Please fill in all the information.</p>
+        }
+        
       </Col>
       </div>
     )

@@ -39,6 +39,8 @@ class EventContainer extends React.Component {
           <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"3px"}}>
             <h1>Volunteer Events</h1>
           </Col>
+          {this.props.role === 'admin' &&
+
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
             <Nav pullRight style={{ marginTop: "20px", marginBottom: "10px", fontSize: "initial" }} bsStyle="pills" >
               <LinkContainer exact to="/events/new">
@@ -46,6 +48,8 @@ class EventContainer extends React.Component {
               </LinkContainer>
             </Nav>
           </Col>
+                    }
+
         </Row>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
@@ -74,13 +78,15 @@ EventContainer.propTypes = {
   currentVolunteer: PropTypes.string,
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
+  role: PropTypes.string
 };
 
 const mapStateToProps = (state) => {
   return {
     pending: state.volunteers.pending,
     all: state.events.all,
-    current_event: state.events.current_event
+    current_event: state.events.current_event,
+    role: state.auth.user.bio.role
   };
 };
 
