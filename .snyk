@@ -19,7 +19,7 @@ patch:
         patched: '2017-11-28T21:56:59.916Z'
   'npm:tunnel-agent:20170305':
     - node-sass > request > tunnel-agent:
-        patched: '2018-06-25T23:04:23.400Z'
+        patched: '2018-06-26T07:08:45.115Z'
   'npm:hoek:20180212':
     - node-sass > request > hawk > hoek:
         patched: '2018-06-19T07:08:38.826Z'
