@@ -5,6 +5,7 @@ const event = {
   "description": '',
   "contact": '',
   "max_volunteers": '',
+  "link": ''
 };
 
 export default event;

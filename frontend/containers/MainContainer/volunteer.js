@@ -15,7 +15,7 @@ export const VolunteerContainer = () => (
     <Route path={"/events"} component={EventContainer} />
     <Route path={"/contactus"} component={ContactUsContainer} />
     <Route path={"/"} exact component={VolunteerDashboard} />
-    <Route path={"/profile"} exact component={VolunteerProfileInd} />
+    {/* <Route path={"/profile"} exact component={VolunteerProfileInd} /> */}
   </Switch>
 );
 

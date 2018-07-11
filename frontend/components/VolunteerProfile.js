@@ -4,7 +4,7 @@ import PhoneNumber from 'react-phone-number';
 import Moment from 'react-moment';
 
 const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) => (
-  <div style={{height: '500px', overflow: 'scroll', backgroundColor: ((user.criminal.felony || user.criminal.sexual_violent || user.criminal.drugs || user.criminal.driving)) ? 'rgba(255, 0, 0, 0.2)' : 'white'}}>
+  <div style={{height: '500px', overflow: 'scroll'}}>
 
     <h3> Personal Information </h3>
     <p> Current Status: {user.bio.role} </p>
@@ -73,7 +73,7 @@ const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) 
     { user.criminal.drugs && <p> Drugs: Yes</p>}
     { user.criminal.driving && <p> Driving: Yes</p>}
     { (user.criminal.felony || user.criminal.drugs || user.criminal.sexual_violent || user.criminal.driving) ?
-        <p> Explanation: user.criminal.explanation </p> : <p> No criminal history. </p>}
+        <p> Explanation: {user.criminal.explanation} </p> : <p> No criminal history. </p>}
 
 
     <h3> Emergency Contact </h3>
@@ -88,7 +88,7 @@ const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) 
 
     <h3> Permissions </h3>
     <p> Verify Reference: {user.permissions.reference ? 'Granted' : 'Denied'} </p>
-    <p> Use peronsal image: {user.permissions.personal_image ? 'Granted' : 'Denied'} </p>
+    <p> Use personal image: {user.permissions.personal_image ? 'Granted' : 'Denied'} </p>
     <p> Add to Mailing List: {user.permissions.email_list ? 'Granted' : 'Denied'} </p>
     <p> Signature: {user.permissions.signature} </p>
 
@@ -97,7 +97,10 @@ const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) 
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
     {user.bio.role === 'volunteer' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
     {user.bio.role === 'denied' && <button type="button" onClick={()=>onClickDeny()}> Approve </button>}
-    <button type="button" onClick={()=>onClickDelete()}> DELETE VOLUNTEER </button>
+    <button type="button" onClick={()=>{
+      confirm("Are you sure you want to delete this volunteer?") ?
+                                  onClickDelete() : null;
+    }}> DELETE </button>
   </div>
 );
 

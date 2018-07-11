@@ -5,6 +5,7 @@ const eventCreate = {
   description: "",
   contact: "",
   max_volunteers: "",
+  link: ""
 };
 
 export default eventCreate;

@@ -29,6 +29,10 @@ const eventSchema = mongoose.Schema({
   max_volunteers: {
     type: Number,
     required: true
+  },
+  link: {
+    type: String,
+    required: false
   }
 }, { timestamps: true });
 

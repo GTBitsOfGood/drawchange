@@ -60,8 +60,8 @@ export function loadAllEvents(id) {
 
 export function onCreateEvent() {
   return (dispatch, getState) => {
-    const { name, description, date, location, max_volunteers, contact } = getState().forms.event;
-    axios.post('/api/events', { name, description, date, location, max_volunteers, contact})
+    const { name, description, date, location, max_volunteers, contact, link } = getState().forms.event;
+    axios.post('/api/events', { name, description, date, location, max_volunteers, contact, link})
       .then(({data}) => {
         console.log(data);
         dispatch(push('/'));

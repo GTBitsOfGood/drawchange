@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem, Button } from 'react-bootstrap';
+import { Col, Row, Panel, Nav, NavItem, Button, ButtonToolbar } from 'react-bootstrap';
 import { SocialIcons } from 'react-social-icons';
 
 
@@ -65,14 +65,6 @@ class VolunteersDashboard extends React.Component {
         </Row>
         <Row>
           <Col md={7} mdOffset={1} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px"}} smOffset={1} lgOffset={2} lg={4} sm={5} >
-            <Panel header={<h3>Quick Links</h3>} bsStyle="info">
-              <ul>
-                <li><a target="_blank" href="http://signup.com/go/A8nqmi"> Atlanta Homeless Shelter and special event opportunities</a> </li>
-                <li><a target="_blank" href="http://signup.com/go/OHsNfaH"> Orlando Homeless Shelter opportunities</a> </li>
-                <li><a target="_blank" href="https://www.volunteermatch.org/search/org260116.jsp"> Miscellaneous opportunities</a> </li>
-              </ul>
-
-            </Panel>
 
 
             <Panel header={<h3>Documents</h3>} bsStyle="info">
@@ -111,8 +103,22 @@ class VolunteersDashboard extends React.Component {
                 {this.props.unSignUp} allVolunteers={this.findEvent()}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>*/}
-            <Panel header={<h3>Donate</h3>} bsStyle="info">
+            
+            {/* <Panel header={<h3>Donate</h3>} bsStyle="info">
+            
               <DonateButton />
+            </Panel> */}
+            <Panel header={<h3>Quick Links</h3>} bsStyle="info">
+            <div>
+              <ul>
+                <li><a href="mailto:karachtani@gmail.com"> Contact Us!</a> </li>
+                <li><a target="_blank" href="https://secure.donationpay.org/drawchange/"> Donate</a> </li>
+                <li><a target="_blank" href="http://signup.com/go/A8nqmi"> Atlanta Homeless Shelter and special event opportunities</a> </li>
+                <li><a target="_blank" href="http://signup.com/go/OHsNfaH"> Orlando Homeless Shelter opportunities</a> </li>
+                <li><a target="_blank" href="https://www.volunteermatch.org/search/org260116.jsp"> Miscellaneous opportunities</a> </li>
+              </ul>
+            </div>
+
             </Panel>
             <Panel header={<h3>All Events</h3>} bsStyle="info">
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>

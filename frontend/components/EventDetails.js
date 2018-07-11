@@ -16,6 +16,12 @@ class EventDetails extends React.Component {
             <p><b>Contact:</b> {this.props.event.contact}</p>
             <p><b>Description:</b> {this.props.event.description}</p>
             <p><b>Volunteers:</b> {this.props.event.volunteers.length === 0 ?  <span>No Volunteers Registered</span> : this.props.event.volunteers.length}</p>
+            {this.props.event.link  && <p> <b>Sign-Up Link:</b>
+            <a target="_blank" href={
+              (this.props.event.link).includes("http://") || (this.props.event.link).includes("https://") ?
+                this.props.event.link : "http://" + this.props.event.link}> {this.props.event.link}
+            </a></p> }
+
             </div>
     );
   }

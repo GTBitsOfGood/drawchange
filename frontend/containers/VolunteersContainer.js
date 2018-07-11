@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem, ButtonGroup, Button,Collapse } from 'react-bootstrap';
+import { Col, Row, Panel, ButtonGroup, Button } from 'react-bootstrap';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as volunteerActions from '../actions/volunteers.js';
 import VolunteerProfile from '../components/VolunteerProfile';
 import VolunteersFilter from '../components/VolunteersFilter';
-import PendingVolunteersShort from '../components/tables/PendingVolunteersShort';
 import AllVolunteers from '../components/tables/AllVolunteers';
-import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
-import DENIED_VOLUNTEERS_SHORT from '../components/tables/columns';
 
 
 class VolunteersContainer extends React.Component {
@@ -82,11 +79,7 @@ class VolunteersContainer extends React.Component {
     return true;
   }
 
-
-
   render() {
-    console.log(this.props.pending);
-    console.log(this.props.denied);
     return (<div>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={8} sm={7} md={8} style={{backgroundColor: "rgba(255, 255, 255, 1)",paddingBottom:"3px"}}>
@@ -105,13 +98,7 @@ class VolunteersContainer extends React.Component {
                   <ButtonGroup>
                     {/*Email action*/}
                     <Button><a href={"mailto:?bcc=" + this.props.selected_volunteers.map((volunteer) => volunteer.email).join(",")}> Email</a></Button>
-                    {/*Approve action*/}
-                    <Button>Approve</Button>
-                    <Button>Deny</Button>
-                    <Button>Delete</Button>
                   </ButtonGroup>
-
-
             }
             </Panel>
 
@@ -129,7 +116,10 @@ class VolunteersContainer extends React.Component {
           </Col>
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"1098px"}}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} onClickDelete={() => this.props.deleteVolunteer(this.props.current_volunteer._id)} />}
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} 
+              onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} 
+              onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} 
+              onClickDelete={() => this.props.deleteVolunteer(this.props.current_volunteer._id)} />}
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
@@ -146,10 +136,15 @@ VolunteersContainer.propTypes = {
   approvePendingVolunteer: PropTypes.func,
   denyPendingVolunteer: PropTypes.func,
   loadAllVolunteers: PropTypes.func,
-  filter: PropTypes.object
+  deleteVolunteer: PropTypes.func,
+  filter: PropTypes.object,
+  denied: PropTypes.array,
+  all: PropTypes.array,
+  pending: PropTypes.array,
+  selected_volunteers: PropTypes.array
 };
 
-const mapStateToProps = ( state, ownProps ) => {
+const mapStateToProps = ( state ) => {
   return {
     pending: state.volunteers.pending,
     denied: state.volunteers.denied,
