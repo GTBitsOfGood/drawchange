@@ -3,22 +3,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem, Button, ButtonToolbar } from 'react-bootstrap';
+import { Col, Row, Panel } from 'react-bootstrap';
 import { SocialIcons } from 'react-social-icons';
 
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
-import LeftPane from '../components/LeftPane';
-import MainPane from '../components/MainPane';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
-import MyEvents from '../components/tables/MyEvents';
-import AllVolunteers from '../components/tables/AllVolunteers';
-import DeniedVolunteersShort from '../components/tables/DeniedVolunteersShort'
-import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
-import VolunteersEventDetails from '../components/VolunteersEventDetails';
-import DonateButton from '../components/DonateButton';
 
 
 class VolunteersDashboard extends React.Component {
@@ -143,7 +135,7 @@ VolunteersDashboard.propTypes = {
   user: PropTypes.object
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     pending: state.volunteers.pending,
     all: state.events.all,

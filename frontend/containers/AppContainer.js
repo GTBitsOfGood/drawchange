@@ -8,9 +8,6 @@ import PostRegisterSplash from '../components/PostRegisterSplash';
 import { MainContainer } from './MainContainer/';
 import VolunteerForm from './forms/VolunteerForm';
 import EventForm from './forms/EventForm';
-import Dashboard from './Dashboard';
-import VolunteersContainer from './VolunteersContainer';
-import VolunteerDashboard from './VolunteerDashboard';
 import { Navbar } from '../components/Navbar';
 
 import * as actions from '../actions/auth';

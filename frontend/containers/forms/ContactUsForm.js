@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Control, LocalForm, actions, Fieldset, Errors } from 'react-redux-form';
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
-import validator from 'validator';
-var isPhoneNumber = require('is-phone-number');
-var isValidDate = require('is-valid-date');
 
 // Local Components
 import Text from '../../components/inputs/Text';
-import TextArea from '../../components/inputs/Textarea';
-import Checkbox from '../../components/inputs/Checkbox';
 import '../../assets/stylesheets/ItemDisplay.css';
-import {isRequired, isEmail, isLong} from './Validation';
 class ContactUsForm extends Component {
     constructor(props) {
         super(props);
@@ -64,9 +55,8 @@ class ContactUsForm extends Component {
             this.setState({didsend: true});
             console.log(json);
         })
-        .catch(err => {
-
-        })
+        .catch(() => {
+            })
     }
   render() {
       return (

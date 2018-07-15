@@ -3,21 +3,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Row, Panel, Nav, NavItem, Button } from 'react-bootstrap';
-import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
+import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
-import LeftPane from '../components/LeftPane';
-import MainPane from '../components/MainPane';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
-import AllVolunteers from '../components/tables/AllVolunteers';
-import PENDING_VOLUNTEERS_SHORT from '../components/tables/columns';
 import EventDetails from '../components/EventDetails';
-import EventForm from './forms/EventForm';
-import VolunteerForm from './forms/VolunteerForm';
 
 
 class EventContainer extends React.Component {

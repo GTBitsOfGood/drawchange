@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { updateVolunteerFilter } from '../actions/volunteers.js';
-import { Control, Form, actions } from 'react-redux-form';
-import Button from 'react-bootstrap/lib/Button';
 
 
 class VolunteersFilter extends React.Component {
@@ -202,7 +199,7 @@ VolunteersFilter.propTypes = {
   filter: PropTypes.object
 };
 
-const mapStateToProps = ( state, ownProps ) => {
+const mapStateToProps = ( state ) => {
   return {
     filter: state.volunteers.filter
   };

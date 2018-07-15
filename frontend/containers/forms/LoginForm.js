@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Control, Form, actions } from 'react-redux-form';
+import { Control, Form } from 'react-redux-form';
 import ReduxSweetAlert, { swal, close } from 'react-redux-sweetalert';
 import { bindActionCreators } from 'redux';
 import Button from 'react-bootstrap/lib/Button';
