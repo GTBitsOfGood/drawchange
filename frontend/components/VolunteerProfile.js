@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PhoneNumber from 'react-phone-number';
 import Moment from 'react-moment';
 
 const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) => (

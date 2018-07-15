@@ -1,5 +1,3 @@
-// NPM Packages
-import PropTypes from "prop-types";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
@@ -7,7 +5,6 @@ import { Switch, Route } from "react-router-dom";
 import VolunteerDashboard from '../VolunteerDashboard';
 import EventContainer from "../EventContainer";
 import ContactUsContainer from "../ContactUsContainer";
-import VolunteerProfileInd from "../VolunteerProfileInd";
 
 export const VolunteerContainer = () => (
   <Switch>

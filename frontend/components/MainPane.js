@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Control, Form, actions } from 'react-redux-form';
 
 import '../assets/stylesheets/ItemDisplay.css';
 import EventCreate from './EventCreate';

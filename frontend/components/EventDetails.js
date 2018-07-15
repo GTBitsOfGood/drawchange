@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'react-bootstrap';
-
 
 class EventDetails extends React.Component {
   constructor(props) {

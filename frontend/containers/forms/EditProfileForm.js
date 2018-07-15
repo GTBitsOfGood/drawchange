@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Control, Form, actions, Fieldset, Errors } from 'react-redux-form';
+import { Control, Form, Fieldset, Errors } from 'react-redux-form';
 import { bindActionCreators } from 'redux';
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
-import Image from 'react-bootstrap/lib/Image';
 import validator from 'validator';
 var isPhoneNumber = require('is-phone-number');
 var isValidZip = require('is-valid-zip');
@@ -20,7 +19,6 @@ import TextArea from '../../components/inputs/Textarea';
 import Checkbox from '../../components/inputs/Checkbox';
 import '../../assets/stylesheets/ItemDisplay.css';
 import '../../assets/stylesheets/react-simpletabs.css';
-import {isRequired, isLong} from './Validation';
 class EditProfileForm extends Component {
 
   componentWillReceiveProps(nextProps) {
