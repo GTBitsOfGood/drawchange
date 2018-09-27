@@ -64,6 +64,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# For mac developers
+.DS_Store
+
 public/*.json
 public/*.js
 public/bundle.js
