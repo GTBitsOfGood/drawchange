@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// define schema for user collection (user model)
+// define schema
 const eventSchema = mongoose.Schema({
   name: {
     type: String,
@@ -31,6 +31,10 @@ const eventSchema = mongoose.Schema({
     required: true
   },
   link: {
+    type: String,
+    required: false
+  },
+  additional_background_check: {
     type: String,
     required: false
   }
