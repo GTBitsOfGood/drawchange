@@ -31,7 +31,8 @@ class EventDetails extends React.Component {
 
 EventDetails.propTypes = {
   event: PropTypes.object,
-  signUp: PropTypes.func,
+  onSignUp: PropTypes.func,
+  unSignUp: PropTypes.func
 };
 
 export default EventDetails;

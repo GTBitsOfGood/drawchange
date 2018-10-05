@@ -97,6 +97,9 @@ export function onSignUp() {
     axios.put(`/api/users/${userId}?action=appendEvent`, { events, })
       .then(resp => {
         alert("You're signed up!");
+      }).catch(resp => {
+          console.log("appendEvent")
+          console.log(resp)
       });
   };
 }
