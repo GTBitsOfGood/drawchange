@@ -116,10 +116,23 @@ class VolunteersContainer extends React.Component {
           </Col>
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"1098px"}}>
             <Panel header={<h3>Volunteer Details</h3>} bsStyle="info">
-              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer} 
-              onClickApprove={() => this.props.approvePendingVolunteer(this.props.current_volunteer._id)} 
-              onClickDeny={() => this.props.denyPendingVolunteer(this.props.current_volunteer._id)} 
-              onClickDelete={() => this.props.deleteVolunteer(this.props.current_volunteer._id)} />}
+              {this.props.current_volunteer && <VolunteerProfile user={this.props.current_volunteer}
+              onClickApprove={() => {
+                  this.props.approvePendingVolunteer(this.props.current_volunteer._id)
+                  location.reload(true)
+                }
+              }
+              onClickDeny={() => {
+                  this.props.denyPendingVolunteer(this.props.current_volunteer._id)
+                  location.reload(true)
+                }
+              }
+              onClickDelete={() => {
+                  this.props.deleteVolunteer(this.props.current_volunteer._id)
+                  location.reload(true)
+                }
+              } />}
+
               {!this.props.current_volunteer && <h3>Click on a Volunteer to view details</h3>}
             </Panel>
           </Col>
