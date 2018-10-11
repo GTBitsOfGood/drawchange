@@ -22,6 +22,11 @@ class EventDetails extends React.Component {
             {this.props.event.additional_background_check  && <p> <b>Additional Background Check Info: </b>
             {this.props.event.additional_background_check}</p> }
 
+            {this.props.user.bio.role == "volunteer" ?
+                (this.props.event.volunteers.includes(this.props.user._id) ?
+                    <button type="button" onClick={()=>this.props.unSignUp()}> Un-Sign Up </button> :
+                    <button type="button" onClick={()=>this.props.onSignUp()}> Sign Up </button>) : ""
+            }
 
             </div>
     );
