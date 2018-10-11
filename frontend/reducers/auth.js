@@ -32,6 +32,11 @@ function Auth(state = initialState, action) {
       });
     case types.LOGOUT:
       return initialState;
+    case types.AUTH_FAILURE_ACCEPTED:
+      return Object.assign({}, state, {
+        loginFailed: null,
+        registrationFailed: null,
+      });
     default:
       return state;
   }

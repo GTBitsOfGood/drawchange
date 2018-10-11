@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import Button from 'react-bootstrap/lib/Button';
 import { Link } from 'react-router-dom';
 // Local Components
-import { login } from '../../actions/auth';
+import { login, acceptAuthFailure } from '../../actions/auth';
 import Text from '../../components/inputs/Text';
 
 
@@ -18,7 +18,10 @@ class LoginForm extends Component {
       this.props.swal({
         title: "Login Failed!",
         type: "error",
-        confirmButtonText: "Ok"
+        confirmButtonText: "Ok",
+        onConfirm: () => {
+          this.props.acceptAuthFailure();
+        }
       });
     }
   }
@@ -39,10 +42,10 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   login: PropTypes.func,
+  acceptAuthFailure: PropTypes.func,
   error: PropTypes.bool,
   swal: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-
 };
 
 function mapStateToProps(state) {
@@ -56,7 +59,14 @@ function mapDispatchToProps(dispatch) {
     {},
     { swal: bindActionCreators(swal, dispatch) },
     { close: bindActionCreators(close, dispatch) },
-    { login: () => dispatch(login()) }
+    { login: () => {
+        dispatch(login());
+      }
+    },
+    { acceptAuthFailure: () => {
+        dispatch(acceptAuthFailure());
+      }
+    }
   );
 }
 
