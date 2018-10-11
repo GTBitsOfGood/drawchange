@@ -87,7 +87,6 @@ class VolunteersDashboard extends React.Component {
           </Col>
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"10px", paddingBottom:"243px"}}>
             {/*<Panel header={<h3>Event Details</h3>} bsStyle="info">
->>>>>>> refs/remotes/origin/master
 
                  {this.props.current_event && this.props.}
               {this.props.current_event && <VolunteersEventDetails user = {this.props.userId} event=

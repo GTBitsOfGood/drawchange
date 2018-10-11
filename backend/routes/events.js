@@ -12,11 +12,11 @@ const User = require('../models/user');
 router.route('/')
   .get((req, res) => {
     if (req.query.type === 'new') {
-      Event.find().sort('-createdAt').limit(5)
+      Event.find().sort({createdAt : -1}).limit(5)
         .then(events => res.status(200).json({ events }))
         .catch(({ errors }) => res.status(500).json({ errors }));
     } else {
-      Event.find()
+      Event.find().sort({date : -1})
         .then(events => res.status(200).json({ events }))
         .catch(({ errors }) => res.status(500).json({ errors }));
     }
@@ -28,13 +28,15 @@ router.route('/')
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
     check('max_volunteers').isNumeric(),
-    check('link').optional().isAscii().trim()
+    check('link').trim(),
+    check('additional_background_check').trim()
     // check('volunteers').custom(value => {
     //   if ()
     // })
   ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log(errors.mapped());
       return res.status(400).json({ errors: errors.mapped() });
     }
     const eventData = matchedData(req);

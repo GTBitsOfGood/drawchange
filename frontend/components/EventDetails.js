@@ -19,6 +19,9 @@ class EventDetails extends React.Component {
               (this.props.event.link).includes("http://") || (this.props.event.link).includes("https://") ?
                 this.props.event.link : "http://" + this.props.event.link}> {this.props.event.link}
             </a></p> }
+            {this.props.event.additional_background_check  && <p> <b>Additional Background Check Info: </b>
+            {this.props.event.additional_background_check}</p> }
+
 
             </div>
     );
