@@ -5,6 +5,8 @@ const EmailService = require('./emailService');
 require('dotenv').config(); // load env vars
 
 // Connect to MongoDB
+
+
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
