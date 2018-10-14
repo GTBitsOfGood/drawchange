@@ -6,7 +6,6 @@ import { VolunteerContainer } from './volunteer';
 import { PendingContainer } from "./pending";
 
 export const MainContainer = ({ user, ...props }) => {
-  debugger;
   if (user && user.bio.role === "admin") {
     return <AdminContainer {...props} />;
   } else if (user && user.bio.role === "volunteer") {
