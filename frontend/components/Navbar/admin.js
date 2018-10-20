@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import Logo from '../../assets/images/drawchange_logo.png'
 //import './assets/stylesheets/base.scss';
 
 
@@ -11,7 +12,7 @@ export const AdminNavbar = ({logout}) => (
     <Navbar collapseOnSelect className="navBar">
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/"><img style={{width:"200px", overflow:"hidden"}} src="http://drawchange.org/wp-content/uploads/2014/02/LOGO_dc.png"></img></Link>
+          <Link to="/"><img style={{width:"200px", overflow:"hidden"}} src={Logo}/></Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
