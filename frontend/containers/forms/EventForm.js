@@ -76,7 +76,15 @@ class EventForm extends Component {
           <Errors className="errors" model=".max_volunteers" show="focus" messages={{
             isRequired: 'Please enter a maximum number of volunteers',
           }} />
-          <Control component={Text} model=".link" label="Link to Sign Up" type="text" min={1} placeholder = "https://signup.com/client/invitation2/secure/12345/false#/invitation"/>
+          <Control required component={Text} model=".link" label="Link to Sign Up" type="text" min={1} placeholder = "https://signup.com/client/invitation2/secure/12345/false#/invitation"
+          errors = {{
+            isRequired: (val) => !val
+          }}/>
+          <Errors className="errors" model=".link" show="focus" messages={{
+            isRequired: 'Please enter an event link'
+          }} />
+          <Control component={Text} model=".additional_background_check" label="Additional Background Check Information" type="text" placeholder = "Email BackgroundCheck@HomelessShelter.com saying you want to volunteer"/>
+
           <Button bsStyle="primary" type="submit" onClick={this.props.onCreateEvent}>Create New Event</Button>
           <ReduxSweetAlert />
         </Form>

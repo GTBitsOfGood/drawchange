@@ -5,7 +5,8 @@ const eventCreate = {
   description: "",
   contact: "",
   max_volunteers: "",
-  link: ""
+  link: "",
+  additional_background_check: ""
 };
 
 export default eventCreate;

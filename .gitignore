@@ -1,3 +1,5 @@
+.idea/
+
 #Config
 config.js
 
@@ -70,3 +72,5 @@ typings/
 public/*.json
 public/*.js
 public/bundle.js
+
+.DS_Store
