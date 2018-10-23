@@ -91,10 +91,12 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-watch": "^3.1.0",
+    "file-loader": "^2.0.0",
     "ignore-styles": "^5.0.1",
     "nodemon": "^1.11.0",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
+    "url-loader": "^1.1.2",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.18.0"
