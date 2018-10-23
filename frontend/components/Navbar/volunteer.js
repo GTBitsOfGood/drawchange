@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
-import Logo from '../../assets/images/drawchange_logo.png'
+import Logo from '../../assets/images/drawchange_logo.png';
 //import './assets/stylesheets/base.scss';
 
 export const VolunteerNavbar = ({ logout }) => (

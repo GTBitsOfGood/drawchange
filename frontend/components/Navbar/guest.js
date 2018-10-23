@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/lib/Navbar";
-import Logo from '../../assets/images/drawchange_logo.png'
+import Logo from '../../assets/images/drawchange_logo.png';
 //import './assets/stylesheets/base.scss';
 
 export const GuestNavbar = () => (
