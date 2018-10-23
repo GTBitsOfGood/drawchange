@@ -57,7 +57,7 @@ class EventContainer extends React.Component {
           </Col>
           <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"344px"}}>
             <Panel header={<h3>Event Detail</h3>} bsStyle="info">
-              {this.props.current_event && <EventDetails event={this.props.current_event} />}
+              {this.props.current_event && <EventDetails event={this.props.current_event} user={this.props.user} onSignUp={this.props.onSignUp} unSignUp={this.props.unSignUp} />}
               {!this.props.current_event && <h3> Click an Event to view details </h3>}
             </Panel>
           </Col>
@@ -71,7 +71,9 @@ EventContainer.propTypes = {
   currentVolunteer: PropTypes.string,
   volunteersList: PropTypes.array,
   updateCurrentVolunteer: PropTypes.func,
-  role: PropTypes.string
+  role: PropTypes.string,
+  onSignUp: PropTypes.func,
+  unSignUp: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
@@ -79,7 +81,8 @@ const mapStateToProps = (state) => {
     pending: state.volunteers.pending,
     all: state.events.all,
     current_event: state.events.current_event,
-    role: state.auth.user.bio.role
+    role: state.auth.user.bio.role,
+    user: state.auth.user
   };
 };
 

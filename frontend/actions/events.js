@@ -60,11 +60,11 @@ export function loadAllEvents(id) {
 
 export function onCreateEvent() {
   return (dispatch, getState) => {
-    const { name, description, date, location, max_volunteers, contact, link } = getState().forms.event;
-    axios.post('/api/events', { name, description, date, location, max_volunteers, contact, link})
+    const { name, description, date, location, max_volunteers, contact, link, additional_background_check } = getState().forms.event;
+    axios.post('/api/events', { name, description, date, location, max_volunteers, contact, link, additional_background_check})
       .then(({data}) => {
         console.log(data);
-        dispatch(push('/'));
+        dispatch(push('/events'));
       });
   };
 }
@@ -97,6 +97,10 @@ export function onSignUp() {
     axios.put(`/api/users/${userId}?action=appendEvent`, { events, })
       .then(resp => {
         alert("You're signed up!");
+        location.reload(true)
+      }).catch(resp => {
+          console.log("appendEvent")
+          console.log(resp)
       });
   };
 }
@@ -119,6 +123,7 @@ export function unSignUp() {
       .then(resp => {
         console.log(resp);
         alert("Successfully unregistered!");
+        location.reload(true)
       });
   };
 }

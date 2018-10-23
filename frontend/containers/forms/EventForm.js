@@ -83,6 +83,8 @@ class EventForm extends Component {
           <Errors className="errors" model=".link" show="focus" messages={{
             isRequired: 'Please enter an event link'
           }} />
+          <Control component={Text} model=".additional_background_check" label="Additional Background Check Information" type="text" placeholder = "Email BackgroundCheck@HomelessShelter.com saying you want to volunteer"/>
+
           <Button bsStyle="primary" type="submit" onClick={this.props.onCreateEvent}>Create New Event</Button>
           <ReduxSweetAlert />
         </Form>

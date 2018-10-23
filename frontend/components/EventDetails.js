@@ -19,6 +19,14 @@ class EventDetails extends React.Component {
               (this.props.event.link).includes("http://") || (this.props.event.link).includes("https://") ?
                 this.props.event.link : "http://" + this.props.event.link}> {this.props.event.link}
             </a></p> }
+            {this.props.event.additional_background_check  && <p> <b>Additional Background Check Info: </b>
+            {this.props.event.additional_background_check}</p> }
+
+            {this.props.user.bio.role == "volunteer" ?
+                (this.props.event.volunteers.includes(this.props.user._id) ?
+                    <button type="button" onClick={()=>this.props.unSignUp()}> Cancel Sign Up </button> :
+                    <button type="button" onClick={()=>this.props.onSignUp()}> Sign Up </button>) : ""
+            }
 
             </div>
     );
@@ -28,7 +36,8 @@ class EventDetails extends React.Component {
 
 EventDetails.propTypes = {
   event: PropTypes.object,
-  signUp: PropTypes.func,
+  onSignUp: PropTypes.func,
+  unSignUp: PropTypes.func
 };
 
 export default EventDetails;

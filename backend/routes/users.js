@@ -247,7 +247,7 @@ router.route('/:id')
       const userData = matchedData(req);
       userData.events = req.body.events;
 
-      if (userData.bio.password) { // if we want to update password
+      if (userData.bio != undefined && userData.bio.password) { // if we want to update password
         bcrypt.hash(userData.bio.password, 10)
           .then(hash => {
             userData.bio.password = hash;
@@ -280,7 +280,7 @@ router.route('/:id')
           .then(user => {
             if (!user) {
               return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
-            } else if (req.query.action === 'appendEvents') {
+            } else if (req.query.action === 'appendEvent') {
               userData.events.forEach(eventId => user.events.push(eventId));
               userData.events = undefined;
             } else if (req.query.action === 'removeEvents') {
