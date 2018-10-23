@@ -15,9 +15,18 @@ export function login() {
       .then(resp => {
         dispatch(loginGenerator(resp.data.user));
       })
-      .catch(err => dispatch(loginGenerator())); 
+      .catch(err => dispatch(loginGenerator()));
   };
 }
+
+/*
+ * Login/Registration Failure Acceptance Async Action Creator
+ */
+ export function acceptAuthFailure() {
+   return (dispatch, getState) => {
+     dispatch(authFailureAcceptanceGenerator());
+   };
+ }
 
 /*
  * Registration Async Action Creator
@@ -63,4 +72,8 @@ function registerGenerator(user) {
 
 function logoutGenerator() {
   return { type: types.LOGOUT };
+}
+
+function authFailureAcceptanceGenerator() {
+  return { type: types.AUTH_FAILURE_ACCEPTED };
 }
