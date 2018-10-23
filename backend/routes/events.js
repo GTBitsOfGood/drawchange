@@ -28,8 +28,8 @@ router.route('/')
     check('description').isAscii().trim().escape(),
     check('contact').isAscii().trim().escape(),
     check('max_volunteers').isNumeric(),
-    check('link').isAscii().trim().escape(),
-    check('additional_background_check').isAscii().trim().escape()
+    check('link').optional().isAscii().trim().escape(),
+    check('additional_background_check').optional().isAscii().trim().escape()
     // check('volunteers').custom(value => {
     //   if ()
     // })
