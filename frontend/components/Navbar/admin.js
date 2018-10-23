@@ -12,7 +12,7 @@ export const AdminNavbar = ({logout}) => (
     <Navbar collapseOnSelect className="navBar">
       <Navbar.Header>
         <Navbar.Brand>
-        <Link to="/"><img style={{width:"200px"}} src={Logo} /></Link>
+        <Link to="/"><img style={{width:"200px", overflow:"hidden"}} src={Logo} /></Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
