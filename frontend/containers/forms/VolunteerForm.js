@@ -7,10 +7,11 @@ import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 import validator from 'validator';
+import ScrollUpButton from "react-scroll-up-button";
+
 var isPhoneNumber = require('is-phone-number');
 var isValidZip = require('is-valid-zip');
 var isValidDate = require('is-valid-date');
-var Tabs = require('react-simpletabs');
 
 // Local Components
 import { register } from '../../actions/auth';
@@ -44,16 +45,14 @@ class VolunteerForm extends Component {
   render() {
     return (
       <div>
+        <Col md={6} mdOffset={3} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"30px"}}>
+            <Image style={{paddingLeft: "33%"}} src={Logo} />
+            <p>Thank you for your interest in volunteering with us! You can volunteer to help us with a specific project, event, going to the homeless shelters with us or helping us out around the office. Whatever it is, you are guaranteed to leave with a full heart and ear to ear smile!</p>
+            <p>While we greatly need and appreciate all of the volunteer assistance we receive, we do not have a full time volunteer manager on staff. Thank you in advance for understanding that your application may take a few weeks to get processed.</p>
 
-      <Col md={6} mdOffset={3} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingTop:"30px"}}>
-          <Image style={{paddingLeft: "33%"}} src={Logo} />
-          <p>Thank you for your interest in volunteering with us! You can volunteer to help us with a specific project, event, going to the homeless shelters with us or helping us out around the office. Whatever it is, you are guaranteed to leave with a full heart and ear to ear smile!</p>
-          <p>While we greatly need and appreciate all of the volunteer assistance we receive, we do not have a full time volunteer manager on staff. Thank you in advance for understanding that your application may take a few weeks to get processed.</p>
         <Form model="forms.user" onSubmit={v => console.log(v)}>
 
-        <Tabs>
-        <Tabs.Panel title='Personal Information'>
-              <h2>Personal Information</h2>
+              <h2 id="PersonalInformation">Personal Information</h2>
 
               <Fieldset model=".bio">
                   <div>
@@ -116,9 +115,8 @@ class VolunteerForm extends Component {
             }} />
               </Fieldset>
               <br/>
-        </Tabs.Panel>
-        <Tabs.Panel title='About You'>
-          <h2>Tell Us About You</h2>
+
+          <h2 id="TellUsAboutYou">Tell Us About You</h2>
           <p><b>When are you available to volunteer?</b></p>
           <Fieldset model=".availability">
             <Control.checkbox component={Checkbox} model=".weekday_mornings" label="Weekday Mornings"/>
@@ -190,9 +188,8 @@ class VolunteerForm extends Component {
             }} />
           </Fieldset>
             <br />
-        </Tabs.Panel>
-        <Tabs.Panel title='Employment History'>
-          <h2>Employment History</h2>
+
+          <h2 id="EmploymentHistory">Employment History</h2>
           <Fieldset model=".employment">
             <Control required component={Text} type="text" model=".name" label="Current employer's name"
             placeholder = "current employer's name "errors={{isRequired: (val)=> !val || !(val.length >= 5)}}/>
@@ -231,9 +228,8 @@ class VolunteerForm extends Component {
             }} />
           </Fieldset>
             <br />
-        </Tabs.Panel>
-        <Tabs.Panel title='Reference'>
-          <h2>Reference</h2>
+
+          <h2 id="Reference">Reference</h2>
           <Fieldset model=".reference">
             <Control required component={Text} type="text" model=".name" label="Reference Name"
             placeholder = "reference name" errors={{isRequired: (val)=> !val || !(val.length >= 2)}}/>
@@ -262,9 +258,8 @@ class VolunteerForm extends Component {
             }} />
           </Fieldset>
             <br />
-        </Tabs.Panel>
-        <Tabs.Panel title='Criminal History'>
-          <h2>Criminal History</h2>
+
+          <h2 id="CriminalHistory">Criminal History</h2>
           <Fieldset model=".criminal">
             <p><b>Please indicate if you have been convicted of any of the following.</b></p>
             <Control.checkbox component={Checkbox} model=".felony" label="A felony" />
@@ -274,9 +269,8 @@ class VolunteerForm extends Component {
             <Control required component={Text} type="text" model=".explanation" label="If you indicated yes to any of the above please explain and list when the offense occured." />
           </Fieldset>
             <br />
-        </Tabs.Panel>
-        <Tabs.Panel title='Emergency Contact'>
-          <h2>Emergency Contact</h2>
+
+          <h2 id="EmergencyContact">Emergency Contact</h2>
           <Fieldset model=".ice">
             <Control required component={Text} type="text" model=".name" label="Emergency Contact Name" placeholder = "Emergency Contact Name"
             errors={{isRequired: (val) => !val}}/>
@@ -304,15 +298,13 @@ class VolunteerForm extends Component {
               isRequired: 'This is a required field',
             }} />
           </Fieldset>
-        </Tabs.Panel>
-        <Tabs.Panel title='Additionals'>
+
           <Fieldset model=".permissions">
               <br />
-          <h2>Additional Comments</h2>
+          <h2 id="AdditionalComments">Additional Comments</h2>
             <Control required component={Text} type="text" model=".comments" label="Is there anything else we should know about you? Any Questions, Comments, or Concerns?" />
-
               <br />
-          <h2>Permissions</h2>
+          <h2 id="Permissions">Permissions</h2>
           <p><b>drawchange has my permission to:</b></p>
 
             <Control.checkbox component={Checkbox} model=".reference" label="Verify the reference I have provided" />
@@ -325,15 +317,16 @@ class VolunteerForm extends Component {
               isRequired: 'This is a required field',
             }} />
           </Fieldset>
-        </Tabs.Panel>
-      </Tabs>
+
         <p className="submitbutton">
           <Button bsStyle="primary" type="submit" onClick={this.props.register}>Submit Volunteer Application</Button>
-        </p>  
+        </p>
           <ReduxSweetAlert />
+          <ScrollUpButton />
         </Form>
       </Col>
       </div>
+
     );
   }
 }
