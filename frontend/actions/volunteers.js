@@ -89,7 +89,8 @@ export function approvePendingVolunteer(id) {
     const body = { 'bio': {'role': 'volunteer'} };
     axios.put(`/api/users/${id}`, body)
       .then(({ data }) => {
-        if (data.user.bio.role === 'volunteer') {
+        if (data.user.bio.role === 'volunteer'
+          || data.user.bio.role === 'denied') {
           dispatch(approveVolunteer(id));
         }
       });

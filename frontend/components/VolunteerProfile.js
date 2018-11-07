@@ -95,7 +95,7 @@ const VolunteerProfile = ({ user, onClickApprove, onClickDeny, onClickDelete }) 
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickApprove()}> Approve </button>}
     {user.bio.role === 'pending' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
     {user.bio.role === 'volunteer' && <button type="button" onClick={()=>onClickDeny()}> Deny </button>}
-    {user.bio.role === 'denied' && <button type="button" onClick={()=>onClickDeny()}> Approve </button>}
+    {user.bio.role === 'denied' && <button type="button" onClick={()=>onClickApprove()}> Approve </button>}
     <button type="button" onClick={()=>{
       confirm("Are you sure you want to delete this volunteer?") ?
                                   onClickDelete() : null;
