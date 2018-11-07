@@ -2,7 +2,7 @@
 const express = require('express');
 const { check, oneOf, validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 // Local Imports
