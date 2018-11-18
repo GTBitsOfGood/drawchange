@@ -11,6 +11,7 @@ import { SocialIcons } from 'react-social-icons';
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
+import EventsRegistered from '../components/tables/EventsRegistered';
 
 
 class VolunteersDashboard extends React.Component {
@@ -94,11 +95,14 @@ class VolunteersDashboard extends React.Component {
                 {this.props.unSignUp} allVolunteers={this.findEvent()}/>}
               {!this.props.current_event && <h2>Click an Event to view details</h2>}
             </Panel>*/}
-            
+
             {/* <Panel header={<h3>Donate</h3>} bsStyle="info">
-            
+
               <DonateButton />
             </Panel> */}
+            <Panel header={<h3>Events Currently Registered For</h3>} bsStyle="info">
+              <EventsRegistered id={this.props.userId} data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
+            </Panel>
             <Panel header={<h3>Quick Links</h3>} bsStyle="info">
             <div>
               <ul>
