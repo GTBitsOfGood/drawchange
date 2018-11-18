@@ -64,6 +64,7 @@ function filterData(data, id) {
   }
   return eventsSignedUpFor;
 }
+
 const EventsRegistered = (props) => (
   <div>
     <ReactTable

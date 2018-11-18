@@ -10,6 +10,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import '../assets/stylesheets/ItemDisplay.css';
 import * as eventActions from '../actions/events.js';
 import UpcomingEvents from '../components/tables/UpcomingEvents';
+import EventsRegistered from '../components/tables/EventsRegistered';
 import EventDetails from '../components/EventDetails';
 
 
@@ -46,6 +47,9 @@ class EventContainer extends React.Component {
         </Row>
         <Row>
           <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
+            <Panel header={<h3>Registered Events</h3>} bsStyle="info">
+              <EventsRegistered id={this.props.user['_id']} data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
+            </Panel>
             <Panel header={<h3>All Event</h3>} bsStyle="info">
               {/* <input type={text}> */}
               <UpcomingEvents data={this.props.all} updateEvent={this.props.updateCurrentEvent} />

@@ -100,7 +100,7 @@ class VolunteersDashboard extends React.Component {
 
               <DonateButton />
             </Panel> */}
-            <Panel header={<h3>Events Currently Registered For</h3>} bsStyle="info">
+            <Panel header={<h3>Registered Events</h3>} bsStyle="info">
               <EventsRegistered id={this.props.userId} data={this.props.all} updateEvent={this.props.updateCurrentEvent}/>
             </Panel>
             <Panel header={<h3>Quick Links</h3>} bsStyle="info">
