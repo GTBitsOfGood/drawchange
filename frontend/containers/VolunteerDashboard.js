@@ -42,7 +42,7 @@ class VolunteersDashboard extends React.Component {
               advance for your time and energy dedicated to help us achieve our
               mission of empowering children through the use of art! Check out our
               social media presence to see some really cool pictures and experiences :)</p>
-              <SocialIcons
+              {/*<SocialIcons
                             urls={["https://twitter.com/drawchange",
                                 "https://www.facebook.com/drawchange",
                                 "http://www.flickr.com/photos/drawchange",
@@ -51,7 +51,7 @@ class VolunteersDashboard extends React.Component {
                                 "https://www.tumblr.com/tagged/drawchange",
                                 "http://instagram.com/drawchange",
                                 "https://www.pinterest.com/drawchange/",
-                                "https://plus.google.com/102192290642344173249"]} />
+                                "https://plus.google.com/102192290642344173249"]} /> */}
 
             </Panel>
         </Col>
