@@ -87,7 +87,7 @@
     "style-loader": "^0.16.1",
     "url-loader": "^1.1.2",
     "validator": "^9.4.1",
-    "webpack": "^2.3.3"
+    "webpack": "^2.7.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
