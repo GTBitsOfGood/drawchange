@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 class App extends Component {
   componentDidMount() {
-    fetch("/ping")
+    fetch('/ping')
       .then(res => res.text())
-      .then(console.log);
+      .then(console.log)
   }
 
   render() {
@@ -27,8 +27,8 @@ class App extends Component {
           </a>
         </header>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
