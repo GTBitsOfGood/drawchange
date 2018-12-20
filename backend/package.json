@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "PORT=3001 node ./src/bin/www",
+    "dev": "PORT=3001 nodemon ./src/bin/www --watch src --ignore src/logs",
+    "format": "prettier --write '{src,test}/**/*.{js,jsx,json,css}'",
+    "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
+    "test": "NODE_ENV=test mocha tests --opts ./tests/mocha.opts"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "helmet": "^3.15.0",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "prettier": "^1.15.3"
+  }
+}
