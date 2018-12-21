@@ -1,10 +1,14 @@
 {
-  "name": "myapp",
+  "name": "drawchange",
   "description": "a really cool app",
   "version": "1.0.0",
+  "cacheDirectories": ["frontend/node_modules", "backend/node_modules"],
   "scripts": {
     "start": "cd backend/ && yarn start",
-    "postinstall": "cd frontend/ && yarn build"
+    "install-frontend": "yarn install --cwd frontend",
+    "install-backend": "yarn install --cwd backend",
+    "build-frontend": "cd frontend/ && yarn build",
+    "postinstall": "yarn install-frontend && yarn install-backend && yarn build-frontend"
   },
   "engines": {
     "yarn": "1.12.3",
