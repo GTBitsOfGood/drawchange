@@ -7,12 +7,11 @@ import EditProfileForm from './forms/EditProfileForm';
 // Home component
 
 const VolunteerProfileInd = () => {
-    return (
-          <div>
-            
-            <EditProfileForm />
-          </div>
-      )
+  return (
+    <div>
+      <EditProfileForm />
+    </div>
+  );
 };
 
 export default VolunteerProfileInd;

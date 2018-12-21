@@ -8,8 +8,8 @@ const initialState = {
   deleted: [],
   current_volunteer: undefined,
   filter: {
-    language: "",
-    skills: "no_filter",
+    language: '',
+    skills: 'no_filter',
     birthday: {
       month: 0,
       day: 0
@@ -34,28 +34,30 @@ const initialState = {
 };
 
 export default function volunteers(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case types.LOAD_ALL_VOLUNTEERS:
-      return Object.assign({}, state, { all:(action.all ? action.all : []) });
+      return Object.assign({}, state, { all: action.all ? action.all : [] });
     case types.LOAD_PENDING_VOLUNTEERS:
-      return Object.assign({}, state, {pending: action.pending});
+      return Object.assign({}, state, { pending: action.pending });
     case types.LOAD_NEWEST_VOLUNTEERS:
       return Object.assign({}, state, { newest: action.newest });
     case types.LOAD_DENIED_VOLUNTEERS:
-      return Object.assign({}, state, {denied: action.denied});
+      return Object.assign({}, state, { denied: action.denied });
     case types.LOAD_DELETED_VOLUNTEERS:
-      return Object.assign({}, state, {deleted: action.deleted});
+      return Object.assign({}, state, { deleted: action.deleted });
     case types.UPDATE_CURRENT_VOLUNTEER:
       if (state.all.length === 0) return state;
       const pendingVolunteers = state.pending.find(item => item._id === action.id);
       const allVolunteers = state.all.find(item => item._id === action.id);
       const deniedVolunteers = state.denied.find(item => item._id === action.id);
-      return Object.assign({}, state,
-        { current_volunteer: pendingVolunteers || allVolunteers || deniedVolunteers || /*deletedVolunteer*/ undefined }
-      );
+      return Object.assign({}, state, {
+        current_volunteer:
+          pendingVolunteers || allVolunteers || deniedVolunteers || /*deletedVolunteer*/ undefined
+      });
     case types.APPROVE_VOLUNTEER:
       const volunteerToApprove = state.pending.find(item => item._id === action.id);
-      if (!volunteerToApprove) { //approving from denied
+      if (!volunteerToApprove) {
+        //approving from denied
         const volunteerToApproveD = state.denied.find(item => item._id === action.id);
         const newDenied = state.pending.slice();
         newDenied.splice(state.pending.indexOf(volunteerToApproveD), 1);
@@ -74,9 +76,7 @@ export default function volunteers(state = initialState, action) {
         return Object.assign({}, state, { pending: newPending, all: newAll, newest: newNewest });
       }
 
-
     case types.DENY_VOLUNTEER:
-
       const volunteerToDeny = state.pending.find(item => item._id === action.id);
       if (!volunteerToDeny) {
         const newPendingD = state.pending.slice();
@@ -85,7 +85,11 @@ export default function volunteers(state = initialState, action) {
         newDenied.push(volunteerToDeny);
         const newNewestD = state.newest.slice();
         newNewestD.unshift(volunteerToDeny);
-        return Object.assign({}, state, { pending: newPendingD, denied: newDenied, newest: newNewestD });
+        return Object.assign({}, state, {
+          pending: newPendingD,
+          denied: newDenied,
+          newest: newNewestD
+        });
       } else {
         const volunteerToDenyA = state.all.find(item => item._id === action.id);
         const newAll = state.all.slice();
@@ -125,20 +129,22 @@ export default function volunteers(state = initialState, action) {
 
     case types.UPDATE_VOLUNTEER_FILTER:
       const newFilterObject = Object.assign({}, state.filter, action.filter);
-      return Object.assign({}, state, {filter: newFilterObject});
+      return Object.assign({}, state, { filter: newFilterObject });
     case types.ADD_SELECTED_VOLUNTEER:
       const volunteerToAddAll = state.all.find(item => item._id === action.id);
       const volunteerToAddPending = state.pending.find(item => item._id === action.id);
       const selected_volunteers_cpy = state.selected_volunteers.slice();
       const volunteerToAdd = volunteerToAddAll || volunteerToAddPending;
       selected_volunteers_cpy.push({
-          _id: volunteerToAdd._id,
-          email: volunteerToAdd.bio.email
-        });
-      return Object.assign({}, state, {selected_volunteers: selected_volunteers_cpy});
+        _id: volunteerToAdd._id,
+        email: volunteerToAdd.bio.email
+      });
+      return Object.assign({}, state, { selected_volunteers: selected_volunteers_cpy });
     case types.REMOVE_SELECTED_VOLUNTEER:
-      const selected_volunteers_new = state.selected_volunteers.filter(volunteer => volunteer._id !== action.id);
-      return Object.assign({}, state, {selected_volunteers: selected_volunteers_new});
+      const selected_volunteers_new = state.selected_volunteers.filter(
+        volunteer => volunteer._id !== action.id
+      );
+      return Object.assign({}, state, { selected_volunteers: selected_volunteers_new });
 
     default:
       return state;

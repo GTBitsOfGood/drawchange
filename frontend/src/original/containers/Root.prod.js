@@ -7,7 +7,6 @@ import { ConnectedRouter } from 'react-router-redux';
 // Local Imports
 import AppContainer from './AppContainer.js';
 
-
 export default function Root({ store, history }) {
   return (
     <Provider store={store}>

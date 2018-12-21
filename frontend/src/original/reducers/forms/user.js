@@ -10,14 +10,14 @@ const user = {
     state: '',
     zip_code: '',
     password: '',
-    languages: '',
+    languages: ''
   },
   history: {
     volunteer_interest_cause: '',
     volunteer_support: '',
     volunteer_commitment: '',
     skills_qualifications: '',
-    previous_volunteer_experience: '',
+    previous_volunteer_experience: ''
   },
   availability: {
     weekday_mornings: false,
@@ -25,7 +25,7 @@ const user = {
     weekday_evenings: false,
     weekend_mornings: false,
     weekend_afternoons: false,
-    weekend_evenings: false,
+    weekend_evenings: false
   },
   skills_interests: {
     admin_in_office: false,
@@ -42,7 +42,7 @@ const user = {
     office_maintenance_housekeeping: false,
     international_projects: false,
     volunteer_coordination: false,
-    outreach: false,
+    outreach: false
   },
   referral: {
     friend: false,
@@ -50,7 +50,7 @@ const user = {
     event: false,
     volunteer_match: false,
     internet: false,
-    social_media: false,
+    social_media: false
   },
   employment: {
     name: '',
@@ -80,7 +80,7 @@ const user = {
     relationship: '',
     phone_number: '',
     email: '',
-    address: '',
+    address: ''
   },
   permissions: {
     comments: 'n/a',
@@ -88,8 +88,7 @@ const user = {
     personal_image: false,
     email_list: false,
     signature: ''
-  },
-
+  }
 };
 
 export default user;

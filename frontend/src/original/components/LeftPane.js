@@ -8,23 +8,29 @@ class LeftPane extends React.Component {
   constructor(props) {
     super(props);
 
-    this.isEvent = this.props.view === "Event" ? true : null;
-    this.isVolunteer = this.props.view === "Volunteer" ? true : null;
+    this.isEvent = this.props.view === 'Event' ? true : null;
+    this.isVolunteer = this.props.view === 'Volunteer' ? true : null;
   }
 
   render() {
     return (
       <div className="parentItem">
         <h1>Item Page</h1>
-        {this.isEvent && <EventList
-                items = {this.props.itemList}
-                updateCurrentEvent = {this.props.updateCurrentEvent}
-                view = {this.props.view}/>}
-        {this.isVolunteer && <VolunteersList
-                items = {this.props.itemList}
-                updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-                view = {this.props.view}/>}
-        </div>
+        {this.isEvent && (
+          <EventList
+            items={this.props.itemList}
+            updateCurrentEvent={this.props.updateCurrentEvent}
+            view={this.props.view}
+          />
+        )}
+        {this.isVolunteer && (
+          <VolunteersList
+            items={this.props.itemList}
+            updateCurrentVolunteer={this.props.updateCurrentVolunteer}
+            view={this.props.view}
+          />
+        )}
+      </div>
     );
   }
 }

@@ -14,9 +14,9 @@ export default function events(state = initialState, action) {
       return Object.assign({}, state, { all: action.all });
     case types.UPDATE_CURRENT_EVENT:
       if (state.all.length === 0) return state;
-      return Object.assign({}, state,
-        { current_event: state.all.find((item) => item._id === action.id)}
-      );
+      return Object.assign({}, state, {
+        current_event: state.all.find(item => item._id === action.id)
+      });
     default:
       return state;
   }

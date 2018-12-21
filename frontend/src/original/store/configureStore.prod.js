@@ -11,11 +11,7 @@ const persistedState = loadState();
 
 export function configureStore(history) {
   const middleware = [thunk, routerMiddleware(history)];
-  return createStore(
-    rootReducer,
-    persistedState,
-    compose(applyMiddleware(...middleware))
-  );
+  return createStore(rootReducer, persistedState, compose(applyMiddleware(...middleware)));
 }
 
 export const history = createHistory();

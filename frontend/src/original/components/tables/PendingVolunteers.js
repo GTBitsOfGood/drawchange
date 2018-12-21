@@ -4,12 +4,11 @@ import ReactTable from 'react-table';
 
 import 'react-table/react-table.css';
 
-
 const columns = [
   {
     id: 'full_name', // Required because our accessor is not a string
     Header: 'Full Name',
-    accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
+    accessor: d => `${d.bio.first_name}  ${d.bio.last_name}` // Custom value accessors!
   },
   {
     id: 'age',
@@ -32,7 +31,7 @@ const columns = [
       return 'None';
     },
     maxWidth: 140,
-    minWidth: 100,
+    minWidth: 100
   },
   {
     id: 'referral',
@@ -60,11 +59,10 @@ const columns = [
   }
 ];
 
-
 function showPagination(size) {
   return size > 5;
 }
-const PendingVolunteers = (props) => (
+const PendingVolunteers = props => (
   <div>
     <ReactTable
       data={props.data}
@@ -76,7 +74,7 @@ const PendingVolunteers = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => props.updateVolunteer(rowInfo.original._id)
+          onClick: e => props.updateVolunteer(rowInfo.original._id)
         };
       }}
     />
@@ -84,7 +82,7 @@ const PendingVolunteers = (props) => (
 );
 
 PendingVolunteers.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.array
 };
 
 export default PendingVolunteers;

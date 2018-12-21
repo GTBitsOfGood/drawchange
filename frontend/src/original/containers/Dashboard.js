@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Row, Panel, Nav, NavItem } from 'react-bootstrap';
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 // Local Imports
 import '../assets/stylesheets/ItemDisplay.css';
@@ -16,9 +16,7 @@ import UpcomingEvents from '../components/tables/UpcomingEvents';
 import NewVolunteers from '../components/tables/NewVolunteers';
 import { PENDING_VOLUNTEERS_FULL } from '../components/tables/columns';
 
-
 class Dashboard extends Component {
-
   constructor(props) {
     super(props);
   }
@@ -30,16 +28,29 @@ class Dashboard extends Component {
   // background-color: #a8dfff91;
   // color: black;
 
-
   render() {
     return (
       <div>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"3px", marginBottom:"0px"}}>
+          <Col
+            smOffset={1}
+            lgOffset={2}
+            lg={4}
+            sm={5}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 1)',
+              paddingBottom: '3px',
+              marginBottom: '0px'
+            }}
+          >
             <h1>Welcome, {this.props.name}</h1>
           </Col>
-          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
-            <Nav pullRight style={{ marginTop: "20px", marginBottom: "10px", fontSize: "initial" }} bsStyle="pills">
+          <Col sm={5} lg={4} style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}>
+            <Nav
+              pullRight
+              style={{ marginTop: '20px', marginBottom: '10px', fontSize: 'initial' }}
+              bsStyle="pills"
+            >
               <LinkContainer exact to="/events/new">
                 <NavItem>+ New Event</NavItem>
               </LinkContainer>
@@ -47,25 +58,52 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={8} sm={10} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
+          <Col
+            smOffset={1}
+            lgOffset={2}
+            lg={8}
+            sm={10}
+            style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+          >
             <Panel header={<h3>Pending Volunteers</h3>} bsStyle="info">
-              <PendingVolunteers data={this.props.pending} columns={PENDING_VOLUNTEERS_FULL} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <PendingVolunteers
+                data={this.props.pending}
+                columns={PENDING_VOLUNTEERS_FULL}
+                updateVolunteer={this.props.updateCurrentVolunteer}
+              />
             </Panel>
           </Col>
         </Row>
         <Row>
-          <Col smOffset={1} lgOffset={2} lg={4} sm={5} style={{backgroundColor: "rgba(255, 255, 255, 1)"}}>
+          <Col
+            smOffset={1}
+            lgOffset={2}
+            lg={4}
+            sm={5}
+            style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+          >
             <Panel header={<h3>New Volunteers</h3>} bsStyle="info">
-              <NewVolunteers data={this.props.newest} updateVolunteer={this.props.updateCurrentVolunteer} />
+              <NewVolunteers
+                data={this.props.newest}
+                updateVolunteer={this.props.updateCurrentVolunteer}
+              />
             </Panel>
           </Col>
-          <Col sm={5} lg={4} style={{backgroundColor: "rgba(255, 255, 255, 1)", paddingBottom:"46px"}}>
+          <Col
+            sm={5}
+            lg={4}
+            style={{ backgroundColor: 'rgba(255, 255, 255, 1)', paddingBottom: '46px' }}
+          >
             <Panel header={<h3>Upcoming Events</h3>} bsStyle="info">
-              <UpcomingEvents data={this.props.upcoming} updateEvent={this.props.updateCurrentEvent} />
+              <UpcomingEvents
+                data={this.props.upcoming}
+                updateEvent={this.props.updateCurrentEvent}
+              />
             </Panel>
           </Col>
         </Row>
-      </div>);
+      </div>
+    );
   }
 }
 
@@ -81,8 +119,7 @@ Dashboard.propTypes = {
   eventList: PropTypes.array,
   onCreateEvent: PropTypes.func,
   createEvent: PropTypes.string,
-  name: PropTypes.string,
-
+  name: PropTypes.string
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -90,16 +127,20 @@ const mapStateToProps = (state, ownProps) => {
     name: state.auth.user.bio.first_name,
     pending: state.volunteers.pending,
     newest: state.volunteers.newest,
-    upcoming: state.events.newest,
+    upcoming: state.events.newest
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return Object.assign({},
+const mapDispatchToProps = dispatch => {
+  return Object.assign(
+    {},
     bindActionCreators(dashboardActions, dispatch),
     bindActionCreators(eventActions, dispatch),
-    bindActionCreators(volunteerActions, dispatch),
+    bindActionCreators(volunteerActions, dispatch)
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);

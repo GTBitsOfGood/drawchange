@@ -14,5 +14,5 @@ export default combineReducers({
   current,
   forms,
   sweetalert: reducer,
-  router,
+  router
 });

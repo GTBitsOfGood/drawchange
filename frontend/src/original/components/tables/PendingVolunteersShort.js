@@ -4,12 +4,11 @@ import ReactTable from 'react-table';
 
 import 'react-table/react-table.css';
 
-
 const columns = [
   {
     id: 'full_name', // Required because our accessor is not a string
     Header: 'Full Name',
-    accessor: d => (`${d.bio.first_name}  ${d.bio.last_name}`) // Custom value accessors!
+    accessor: d => `${d.bio.first_name}  ${d.bio.last_name}` // Custom value accessors!
   },
   {
     id: 'age',
@@ -32,30 +31,31 @@ const columns = [
   }
 ];
 
-
 function showPagination(size) {
   return size > 5;
 }
-const PendingVolunteersShort = (props) => { console.log(props) ;return (
-  <div>
-    <ReactTable
-      data={props.data}
-      columns={columns}
-      defaultPageSize={5}
-      showPageSizeOptions={false}
-      showPagination={showPagination(props.data.length)}
-      className="-striped -highlight"
-      getTdProps={(state, rowInfo, column, instance) => {
-        return {
-            onClick: (e) => rowInfo ? props.updateVolunteer(rowInfo.original._id) : null
-        };
-      }}
-    />
-  </div>
-);
-}
+const PendingVolunteersShort = props => {
+  console.log(props);
+  return (
+    <div>
+      <ReactTable
+        data={props.data}
+        columns={columns}
+        defaultPageSize={5}
+        showPageSizeOptions={false}
+        showPagination={showPagination(props.data.length)}
+        className="-striped -highlight"
+        getTdProps={(state, rowInfo, column, instance) => {
+          return {
+            onClick: e => (rowInfo ? props.updateVolunteer(rowInfo.original._id) : null)
+          };
+        }}
+      />
+    </div>
+  );
+};
 PendingVolunteersShort.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.array
 };
 
 export default PendingVolunteersShort;

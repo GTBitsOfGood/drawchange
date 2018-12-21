@@ -8,57 +8,58 @@ const data = [
   {
     name: 'Event 1',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 2',
     date: new Date(),
-    volunteers: ['1', '2', '3'],
+    volunteers: ['1', '2', '3']
   },
   {
     name: 'Event 3',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 4',
     date: new Date(),
-    volunteers: [],
+    volunteers: []
   },
   {
     name: 'Event 5',
     date: new Date(),
-    volunteers: ['1' ],
+    volunteers: ['1']
   },
   {
     name: 'Event 6',
     date: new Date(),
-    volunteers: [],
-  },
+    volunteers: []
+  }
 ];
 
-const columns = [{
-  Header: 'Event Name',
-  accessor: 'name' // String-based value accessors!
-},
-{
-  Header: 'Event Date',
-  id: 'event_date',
-  accessor: d => new Date(d.date).toDateString() // String-based value accessors!
-},
-{
-  id: 'volunteers', // Required because our accessor is not a string
-  Header: 'Volunteers',
-  accessor: d => d.volunteers.length,
-  maxWidth: 100
-}, ];
-
+const columns = [
+  {
+    Header: 'Event Name',
+    accessor: 'name' // String-based value accessors!
+  },
+  {
+    Header: 'Event Date',
+    id: 'event_date',
+    accessor: d => new Date(d.date).toDateString() // String-based value accessors!
+  },
+  {
+    id: 'volunteers', // Required because our accessor is not a string
+    Header: 'Volunteers',
+    accessor: d => d.volunteers.length,
+    maxWidth: 100
+  }
+];
 
 function showPagination(size) {
   return false;
   // return size > 5;
 }
-const UpcomingEvents = (props) => (
+const UpcomingEvents = props => (
   <div>
     <ReactTable
       data={props.data}
@@ -69,14 +70,13 @@ const UpcomingEvents = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => props.updateEvent(rowInfo.original._id)
+          onClick: e => props.updateEvent(rowInfo.original._id)
         };
       }}
     />
   </div>
 );
 
-UpcomingEvents.propTypes = {
-};
+UpcomingEvents.propTypes = {};
 
 export default UpcomingEvents;

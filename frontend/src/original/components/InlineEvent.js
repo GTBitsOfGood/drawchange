@@ -3,22 +3,12 @@ import PropTypes from 'prop-types';
 
 import '../assets/stylesheets/ItemDisplay.css';
 
-
-const InlineEvent = ({id, name, date, location, description, updateCurrentEvent}) => (
+const InlineEvent = ({ id, name, date, location, description, updateCurrentEvent }) => (
   <div className="singleItem" onClick={() => updateCurrentEvent(id)}>
-
-    <div className="itemName">
-      {name}
-    </div>
-    <div className="itemDate">
-      {date}
-    </div>
-    <div className="itemLocation">
-      {location}
-    </div>
-    <div className="itemDescription" >
-      {description}
-    </div>
+    <div className="itemName">{name}</div>
+    <div className="itemDate">{date}</div>
+    <div className="itemLocation">{location}</div>
+    <div className="itemDescription">{description}</div>
   </div>
 );
 
@@ -28,7 +18,7 @@ InlineEvent.propTypes = {
   location: PropTypes.string,
   description: PropTypes.string,
   id: PropTypes.string,
-  updateCurrentEvent: PropTypes.func,
+  updateCurrentEvent: PropTypes.func
 };
 
 export default InlineEvent;
@@ -59,6 +49,5 @@ export default InlineEvent;
 //   }
 
 // }
-
 
 // export default InlineEvent;

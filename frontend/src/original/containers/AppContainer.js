@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Splash from './Splash';
@@ -12,7 +12,6 @@ import { Navbar } from '../components/Navbar';
 
 import * as actions from '../actions/auth';
 
-
 class AppContainer extends Component {
   constructor(props) {
     super(props);
@@ -23,13 +22,13 @@ class AppContainer extends Component {
   }
 
   _login() {
-    return ( this.props.user ? <Redirect to={'/'} /> : <Splash /> );
+    return this.props.user ? <Redirect to={'/'} /> : <Splash />;
   }
   _register() {
-    return (this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />);
+    return this.props.user ? <Redirect to={'/'} /> : <VolunteerForm />;
   }
   _home() {
-    return (this.props.user ? this._authorize(this.props.user) : <Redirect to={'/login'} />);
+    return this.props.user ? this._authorize(this.props.user) : <Redirect to={'/login'} />;
   }
 
   _authorize(user) {
@@ -44,34 +43,32 @@ class AppContainer extends Component {
   }
 
   _createEvent() {
-    return ( <EventForm/>);
+    return <EventForm />;
   }
 
   render() {
     return (
-      <div style={{paddingTop:"10px"}}>
-        <Navbar logout={this.props.logout} user ={this.props.user} />
-        <Switch style={{paddingTop:"0px"}}>
-          <Route exact path={'/login'} render={this._login}/>
+      <div style={{ paddingTop: '10px' }}>
+        <Navbar logout={this.props.logout} user={this.props.user} />
+        <Switch style={{ paddingTop: '0px' }}>
+          <Route exact path={'/login'} render={this._login} />
           <Route exact path={'/register'} render={this._register} />
           {/* <Route exact path={'/newEvent'} render={this._createEvent} /> */}
-          <Route path={'/*'} render={this._home}/>
+          <Route path={'/*'} render={this._home} />
         </Switch>
       </div>
-
     );
   }
 }
 
-
 AppContainer.propTypes = {
   logout: PropTypes.func,
-  user: PropTypes.object,
+  user: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    user: state.auth.user,
+    user: state.auth.user
   };
 }
 
@@ -79,7 +76,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(actions, dispatch);
 }
 
-export default withRouter(connect(
+export default withRouter(
+  connect(
     mapStateToProps,
     mapDispatchToProps
-)(AppContainer));
+  )(AppContainer)
+);

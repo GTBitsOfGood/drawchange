@@ -2,7 +2,6 @@ import * as types from './types.js';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-
 export function updateCurrentVolunteer(id) {
   return (dispatch, getState) => {
     dispatch(push(`/volunteers/${id}`));
@@ -18,17 +17,15 @@ function currentVolunteer(id) {
 }
 
 export function updateVolunteerStatus(role) {
-  return { type: types.VOLUNTEER_STATUS, role};
+  return { type: types.VOLUNTEER_STATUS, role };
 }
-
 
 export function loadAllVolunteers(id) {
   return dispatch => {
-    axios.get('/api/users?type=volunteer')
-      .then(({ data }) => {
-        dispatch(allVolunteers(data.users));
-        if (id) dispatch(currentVolunteer(id));
-      });
+    axios.get('/api/users?type=volunteer').then(({ data }) => {
+      dispatch(allVolunteers(data.users));
+      if (id) dispatch(currentVolunteer(id));
+    });
   };
 }
 
@@ -50,73 +47,68 @@ export function addSelectedVolunteer(id) {
   return {
     type: types.ADD_SELECTED_VOLUNTEER,
     id
-  }
+  };
 }
 
 export function removeSelectedVolunteer(id) {
   return {
     type: types.REMOVE_SELECTED_VOLUNTEER,
     id
-  }
+  };
 }
 
 export function loadNewVolunteers() {
   return dispatch => {
-    axios.get('/api/users?type=new')
-      .then(({ data }) => {
-        dispatch(newVolunteers(data.users));
-      });
+    axios.get('/api/users?type=new').then(({ data }) => {
+      dispatch(newVolunteers(data.users));
+    });
   };
 }
 export function loadPendingVolunteers() {
   return dispatch => {
-    axios.get('/api/users?type=pending')
-      .then(({ data }) => {
-        dispatch(pendingVolunteers(data.users));
-      });
+    axios.get('/api/users?type=pending').then(({ data }) => {
+      dispatch(pendingVolunteers(data.users));
+    });
   };
 }
 export function loadDeniedVolunteers() {
   return dispatch => {
-    axios.get('/api/users?type=denied')
-      .then(({ data }) => {
-        dispatch(deniedVolunteers(data.users));
-      });
+    axios.get('/api/users?type=denied').then(({ data }) => {
+      dispatch(deniedVolunteers(data.users));
+    });
   };
 }
 export function approvePendingVolunteer(id) {
   return dispatch => {
-    const body = { 'bio': {'role': 'volunteer'} };
-    axios.put(`/api/users/${id}`, body)
-      .then(({ data }) => {
-        if (data.user.bio.role === 'volunteer'
-          || data.user.bio.role === 'denied') {
-          dispatch(approveVolunteer(id));
-        }
-      });
+    const body = { bio: { role: 'volunteer' } };
+    axios.put(`/api/users/${id}`, body).then(({ data }) => {
+      if (data.user.bio.role === 'volunteer' || data.user.bio.role === 'denied') {
+        dispatch(approveVolunteer(id));
+      }
+    });
   };
 }
 
 export function denyPendingVolunteer(id) {
   return dispatch => {
-    const body = { 'bio': {'role': 'denied'} }; //change this to denied
-    axios.put(`/api/users/${id}`, body)
-      .then(({ data }) => {
-        if (data.user.bio.role === 'denied') { //change this to denied
-          dispatch(denyVolunteer(id));
-        }
-      });
+    const body = { bio: { role: 'denied' } }; //change this to denied
+    axios.put(`/api/users/${id}`, body).then(({ data }) => {
+      if (data.user.bio.role === 'denied') {
+        //change this to denied
+        dispatch(denyVolunteer(id));
+      }
+    });
   };
 }
 export function deleteVolunteer(id) {
   return dispatch => {
-    const body = { 'bio': {'role': 'deleted'} }; //change this to denied
-    axios.put(`/api/users/${id}`, body)
-      .then(({ data }) => {
-        if (data.user.bio.role === 'deleted') { //change this to denied
-          dispatch(deleteVolunteerMain(id));
-        }
-      });
+    const body = { bio: { role: 'deleted' } }; //change this to denied
+    axios.put(`/api/users/${id}`, body).then(({ data }) => {
+      if (data.user.bio.role === 'deleted') {
+        //change this to denied
+        dispatch(deleteVolunteerMain(id));
+      }
+    });
   };
 }
 // export function onLoad() {

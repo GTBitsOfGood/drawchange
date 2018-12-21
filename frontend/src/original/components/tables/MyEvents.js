@@ -8,52 +8,52 @@ const data = [
   {
     name: 'Event 1',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 2',
     date: new Date(),
-    volunteers: ['1', '2', '3'],
+    volunteers: ['1', '2', '3']
   },
   {
     name: 'Event 3',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 4',
     date: new Date(),
-    volunteers: [],
+    volunteers: []
   },
   {
     name: 'Event 5',
     date: new Date(),
-    volunteers: ['1' ],
+    volunteers: ['1']
   },
   {
     name: 'Event 6',
     date: new Date(),
-    volunteers: [],
+    volunteers: []
+  }
+];
+
+const columns = [
+  {
+    Header: 'Event Name',
+    accessor: 'name' // String-based value accessors!
   },
+  {
+    Header: 'Event Date',
+    id: 'event_date',
+    accessor: d => new Date(d.date).toDateString() // String-based value accessors!
+  }
 ];
-
-const columns = [{
-  Header: 'Event Name',
-  accessor: 'name' // String-based value accessors!
-},
-{
-  Header: 'Event Date',
-  id: 'event_date',
-  accessor: d => new Date(d.date).toDateString() // String-based value accessors!
-},
-];
-
 
 function showPagination(size) {
   return false;
   // return size > 5;
 }
-const MyEvents = (props) => (
+const MyEvents = props => (
   <div>
     <ReactTable
       data={props.data}
@@ -64,7 +64,7 @@ const MyEvents = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => {
+          onClick: e => {
             props.updateEvent(rowInfo.original._id);
             console.log(rowInfo.original);
           }
@@ -74,7 +74,6 @@ const MyEvents = (props) => (
   </div>
 );
 
-MyEvents.propTypes = {
-};
+MyEvents.propTypes = {};
 
 export default MyEvents;

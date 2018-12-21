@@ -11,49 +11,46 @@ class VolunteersList extends React.Component {
 
   renderItem() {
     return (
-        <div className="ItemList">
-        {
-         this.props.items.map((item) => (
-            (item.role === "pending")
-           ? <InlineVolunteer
-            key={item._id}
-            first_name = {item.first_name}
-            last_name = {item.last_name}
-            street_address = {item.street_address}
-            city = {item.city}
-            state = {item.state}
-            phone_number = {item.phone_number}
-            id = {item._id}
-            updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-          />
-          : <InlineVolunteer
-          key={item._id}
-          first_name = {item.first_name}
-          last_name = {item.last_name}
-          street_address = {item.street_address}
-          city = {item.city}
-          state = {item.state}
-          phone_number = {item.phone_number}
-          id = {item._id}
-          updateCurrentVolunteer = {this.props.updateCurrentVolunteer}
-        />
-        )) }
+      <div className="ItemList">
+        {this.props.items.map(item =>
+          item.role === 'pending' ? (
+            <InlineVolunteer
+              key={item._id}
+              first_name={item.first_name}
+              last_name={item.last_name}
+              street_address={item.street_address}
+              city={item.city}
+              state={item.state}
+              phone_number={item.phone_number}
+              id={item._id}
+              updateCurrentVolunteer={this.props.updateCurrentVolunteer}
+            />
+          ) : (
+            <InlineVolunteer
+              key={item._id}
+              first_name={item.first_name}
+              last_name={item.last_name}
+              street_address={item.street_address}
+              city={item.city}
+              state={item.state}
+              phone_number={item.phone_number}
+              id={item._id}
+              updateCurrentVolunteer={this.props.updateCurrentVolunteer}
+            />
+          )
+        )}
       </div>
     );
   }
 
   render() {
-    return (
-          <div>
-              {this.renderItem()}
-            </div>
-    );
+    return <div>{this.renderItem()}</div>;
   }
 }
 
 VolunteersList.propTypes = {
   items: PropTypes.array,
-  updateCurrentVolunteer: PropTypes.func,
+  updateCurrentVolunteer: PropTypes.func
 };
 
 export default VolunteersList;

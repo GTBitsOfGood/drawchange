@@ -8,45 +8,46 @@ const data = [
   {
     name: 'Event 1',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 2',
     date: new Date(),
-    volunteers: ['1', '2', '3'],
+    volunteers: ['1', '2', '3']
   },
   {
     name: 'Event 3',
     date: new Date(),
-    volunteers: ['1', '2'],
+    volunteers: ['1', '2']
   },
   {
     name: 'Event 4',
     date: new Date(),
-    volunteers: [],
+    volunteers: []
   },
   {
     name: 'Event 5',
     date: new Date(),
-    volunteers: ['1' ],
+    volunteers: ['1']
   },
   {
     name: 'Event 6',
     date: new Date(),
-    volunteers: [],
-  },
+    volunteers: []
+  }
 ];
 
-const columns = [{
-  Header: 'Event Name',
-  accessor: 'name' // String-based value accessors!
-},
-{
-  Header: 'Event Date',
-  id: 'event_date',
-  accessor: d => new Date(d.date).toDateString() // String-based value accessors!
-}];
-
+const columns = [
+  {
+    Header: 'Event Name',
+    accessor: 'name' // String-based value accessors!
+  },
+  {
+    Header: 'Event Date',
+    id: 'event_date',
+    accessor: d => new Date(d.date).toDateString() // String-based value accessors!
+  }
+];
 
 function showPagination(size) {
   return false;
@@ -65,7 +66,7 @@ function filterData(data, id) {
   return eventsSignedUpFor;
 }
 
-const EventsRegistered = (props) => (
+const EventsRegistered = props => (
   <div>
     <ReactTable
       data={filterData(props.data, props.id)}
@@ -76,14 +77,13 @@ const EventsRegistered = (props) => (
       className="-striped -highlight"
       getTdProps={(state, rowInfo, column, instance) => {
         return {
-          onClick: (e) => props.updateEvent(rowInfo.original._id)
+          onClick: e => props.updateEvent(rowInfo.original._id)
         };
       }}
     />
   </div>
 );
 
-EventsRegistered.propTypes = {
-};
+EventsRegistered.propTypes = {};
 
 export default EventsRegistered;

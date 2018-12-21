@@ -1,5 +1,5 @@
-const isRequired = (val) => !val;
+const isRequired = val => !val;
 
-const isEmail = (val) => !val.contains("@") && !(val.contains("."));
+const isEmail = val => !val.contains('@') && !val.contains('.');
 
-const isLong = (val) => val.length >= 5;
+const isLong = val => val.length >= 5;

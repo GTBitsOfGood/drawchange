@@ -13,7 +13,7 @@ export const loadState = () => {
 };
 
 // saves state to session storage
-export const saveState = (state) => {
+export const saveState = state => {
   try {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem('state', serializedState);

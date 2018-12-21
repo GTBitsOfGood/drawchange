@@ -10,15 +10,13 @@ import { Link } from 'react-router-dom';
 import { login, acceptAuthFailure } from '../../actions/auth';
 import Text from '../../components/inputs/Text';
 
-
 class LoginForm extends Component {
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
       this.props.swal({
-        title: "Login Failed!",
-        type: "error",
-        confirmButtonText: "Ok",
+        title: 'Login Failed!',
+        type: 'error',
+        confirmButtonText: 'Ok',
         onConfirm: () => {
           this.props.acceptAuthFailure();
         }
@@ -26,14 +24,17 @@ class LoginForm extends Component {
     }
   }
 
-
   render() {
     return (
-      <Form model="forms.user.bio"  >
+      <Form model="forms.user.bio">
         <Control required component={Text} model=".email" label="Email" type="email" />
         <Control required component={Text} model=".password" label="Password" type="password" />
-        <Button type="submit" bsStyle="primary" onClick={this.props.login} >Login</Button>
-        <Link style={{marginLeft: 20}} to={"/register"}>Click Here to Register</Link>
+        <Button type="submit" bsStyle="primary" onClick={this.props.login}>
+          Login
+        </Button>
+        <Link style={{ marginLeft: 20 }} to={'/register'}>
+          Click Here to Register
+        </Link>
         <ReduxSweetAlert />
       </Form>
     );
@@ -45,12 +46,12 @@ LoginForm.propTypes = {
   acceptAuthFailure: PropTypes.func,
   error: PropTypes.bool,
   swal: PropTypes.func.isRequired,
-  close: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    error: state.auth.loginFailed,
+    error: state.auth.loginFailed
   };
 }
 
@@ -59,15 +60,20 @@ function mapDispatchToProps(dispatch) {
     {},
     { swal: bindActionCreators(swal, dispatch) },
     { close: bindActionCreators(close, dispatch) },
-    { login: () => {
+    {
+      login: () => {
         dispatch(login());
       }
     },
-    { acceptAuthFailure: () => {
+    {
+      acceptAuthFailure: () => {
         dispatch(acceptAuthFailure());
       }
     }
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
