@@ -1,5 +1,5 @@
-const EmailService = require('../backend/services/emailService');
-const Email = require('../backend/models/email');
+const EmailService = require('../src/services/emailService');
+const Email = require('../src/models/email');
 const chai = require('chai');
 // const chaiAsPromised = require('chai-as-promised');
 const assert = chai.assert;
@@ -22,7 +22,6 @@ describe('Email Service Test Suite', () => {
     //         assert.equal(data.emailSent, true);
     //       });
     // });
-
     // it('should throw error message for no recipients', (done) => {
     //   const testEmailNoRecipients = new Email({
     //     from: '"Fred Foo 👻" <foo@blurdybloop.com>',
@@ -30,7 +29,6 @@ describe('Email Service Test Suite', () => {
     //     text: '<b>Hello world?</b>',
     //     is_html: false
     //   });
-
     //   EmailService.sendEmail(testEmailNoRecipients).catch((data) => {
     //     assert.equal(data.emailSent, false);
     //     done();

@@ -6,13 +6,12 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
 
-const api = require('./backend/routes');
+const api = require('./routes');
 const app = express();
 
 // Connect to MongoDB
 mongoose.connect(
   process.env.MONGODB_URI,
-  { useMongoClient: true },
   err => {
     if (err) throw err;
     console.log('Conected to MongoDB');
