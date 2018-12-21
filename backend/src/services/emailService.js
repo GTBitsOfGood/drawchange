@@ -1,6 +1,6 @@
-'use strict'
-const nodemailer = require('nodemailer')
-const nodemailerSendgrid = require('nodemailer-sendgrid')
+'use strict';
+const nodemailer = require('nodemailer');
+const nodemailerSendgrid = require('nodemailer-sendgrid');
 
 // Local Imports & Constants
 // require('dotenv').config() // load env vars
@@ -10,7 +10,7 @@ function sendEmail(email) {
     // Sendgrid info for SMTP
     const options = {
       apiKey: process.env.SENDGRID_API_KEY
-    }
+    };
 
     // Settings for testing with local smtp
     // const transporter = nodemailer.createTransport({
@@ -22,7 +22,7 @@ function sendEmail(email) {
     //   // secure: false, // true for 465, false for other ports
     // });
 
-    const transporter = nodemailer.createTransport(nodemailerSendgrid(options))
+    const transporter = nodemailer.createTransport(nodemailerSendgrid(options));
 
     // setup email data with unicode symbols
     const mailOptions = {
@@ -31,7 +31,7 @@ function sendEmail(email) {
       subject: email.subject, // Subject line
       // text: "<b> test </b>", // plain text body
       html: email.text // html body
-    }
+    };
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, error => {
@@ -39,18 +39,18 @@ function sendEmail(email) {
         return reject({
           errorMessage: error,
           emailSent: false
-        })
+        });
       }
 
       resolve({
         emailSent: true
-      })
-    })
-  })
+      });
+    });
+  });
 }
 
 function parseRecipientEmails(recipients) {
-  return recipients.map(recipient => recipient.email)
+  return recipients.map(recipient => recipient.email);
 }
 
-module.exports = { sendEmail }
+module.exports = { sendEmail };

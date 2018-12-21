@@ -1,29 +1,29 @@
-const path = require('path')
-const logger = require('morgan')
-const express = require('express')
-const mongoose = require('mongoose')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-const MongoStore = require('connect-mongo')(session)
+const path = require('path');
+const logger = require('morgan');
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session);
 
-const api = require('./backend/routes')
-const app = express()
+const api = require('./backend/routes');
+const app = express();
 
 // Connect to MongoDB
 mongoose.connect(
   process.env.MONGODB_URI,
   { useMongoClient: true },
   err => {
-    if (err) throw err
-    console.log('Conected to MongoDB')
+    if (err) throw err;
+    console.log('Conected to MongoDB');
   }
-)
-mongoose.Promise = global.Promise
+);
+mongoose.Promise = global.Promise;
 
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SECRET,
@@ -31,16 +31,16 @@ app.use(
     resave: true,
     saveUninitialized: false
   })
-)
+);
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Route API Calls to seperate router
-app.use('/api', api)
+app.use('/api', api);
 
 // Render React page
 app.get('/*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html') // For React/Redux
-})
+  res.sendFile(__dirname + '/public/index.html'); // For React/Redux
+});
 
-module.exports = app
+module.exports = app;

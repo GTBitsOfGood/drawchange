@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 // define schema
 const eventSchema = mongoose.Schema(
@@ -41,7 +41,7 @@ const eventSchema = mongoose.Schema(
     }
   },
   { timestamps: true }
-)
+);
 
 // export Event model to app
-module.exports = mongoose.model('Event', eventSchema)
+module.exports = mongoose.model('Event', eventSchema);

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 // define schema for user collection (user model)
 const emailSchema = mongoose.Schema(
@@ -34,10 +34,10 @@ const emailSchema = mongoose.Schema(
     }
   },
   { timestamps: true }
-)
+);
 
 function minNumRecipients(val) {
-  return val.length > 0
+  return val.length > 0;
 }
 // export Event model to app
-module.exports = mongoose.model('Email', emailSchema)
+module.exports = mongoose.model('Email', emailSchema);

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 // define schema for user collection (user model)
 const userSchema = mongoose.Schema(
@@ -106,20 +106,20 @@ const userSchema = mongoose.Schema(
     }
   },
   { timestamps: true }
-)
+);
 
 userSchema.virtual('name').get(function() {
-  return this.bio.first_name + this.bio.last_name
-})
+  return this.bio.first_name + this.bio.last_name;
+});
 
 userSchema.virtual('age').get(function() {
-  const current = new Date()
-  return current.getYear() - this.bio.date_of_birth.getYear()
-})
+  const current = new Date();
+  return current.getYear() - this.bio.date_of_birth.getYear();
+});
 
 userSchema.methods.verifyPassword = function(password) {
-  return bcrypt.compareSync(password, this.bio.password)
-}
+  return bcrypt.compareSync(password, this.bio.password);
+};
 
 // export user model to app
-module.exports = mongoose.model('Users', userSchema)
+module.exports = mongoose.model('Users', userSchema);

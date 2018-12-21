@@ -9,15 +9,34 @@ const EmailHelper = require('../services/emailService');
 // Local Imports
 const Email = require('../models/email');
 
-
-router.post('/', [ //TODO Add validations for recipients Array
+router.post(
+  '/',
+  [
+    //TODO Add validations for recipients Array
     check('firstName').exists(),
-    check('lastName').exists().isAscii().trim().escape(),
-    check('email').exists().isAscii().trim().escape(),
-    check('phoneNumber').exists().isAscii().trim().escape(),
-    check('subject').exists().isAscii().trim().escape(),
+    check('lastName')
+      .exists()
+      .isAscii()
+      .trim()
+      .escape(),
+    check('email')
+      .exists()
+      .isAscii()
+      .trim()
+      .escape(),
+    check('phoneNumber')
+      .exists()
+      .isAscii()
+      .trim()
+      .escape(),
+    check('subject')
+      .exists()
+      .isAscii()
+      .trim()
+      .escape(),
     check('message').exists()
-], (req, res) => {
+  ],
+  (req, res) => {
     const errors = validationResult(req);
     console.log(matchedData(req, { locations: ['body'] }));
     if (!errors.isEmpty()) {
@@ -26,24 +45,26 @@ router.post('/', [ //TODO Add validations for recipients Array
     const emailData = matchedData(req);
 
     const formattedData = {
-        from: emailData.email,
-        recipients: [{email: 'akhila@ballari.com'}],
-        subject: emailData.subject,
-        text: `Name: ${emailData.firstName} ${emailData.lastName}\n\nPhone: ${emailData.phoneNumber}\n\n${emailData.message}`
-    }
-    EmailHelper
-        .sendEmail(formattedData)
-        .then(() => {
-            res.status(200).json({
-                message: 'Email was sent!'
-            });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({
-                message: 'Email was not sent!'
-            });
+      from: emailData.email,
+      recipients: [{ email: 'akhila@ballari.com' }],
+      subject: emailData.subject,
+      text: `Name: ${emailData.firstName} ${emailData.lastName}\n\nPhone: ${
+        emailData.phoneNumber
+      }\n\n${emailData.message}`
+    };
+    EmailHelper.sendEmail(formattedData)
+      .then(() => {
+        res.status(200).json({
+          message: 'Email was sent!'
         });
-  });
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({
+          message: 'Email was not sent!'
+        });
+      });
+  }
+);
 
 module.exports = router;
