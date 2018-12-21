@@ -32,14 +32,16 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../frontend/build/')));
 
 // Route API Calls to seperate router
 app.use('/api', api);
 
 // Render React page
 app.get('/*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html'); // For React/Redux
+  // res.sendFile(__dirname + '/public/index.html'); // For React/Redux
+  res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
 });
 
 module.exports = app;

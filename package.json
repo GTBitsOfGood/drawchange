@@ -1,0 +1,13 @@
+{
+  "name": "myapp",
+  "description": "a really cool app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd backend/ && yarn start",
+    "postinstall": "cd frontend/ && yarn build"
+  },
+  "engines": {
+    "yarn": "1.12.3",
+    "node": "10.14.2"
+  }
+}
