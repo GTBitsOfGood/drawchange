@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+import { Button } from 'reactstrap';
 
 class App extends Component {
   componentDidMount() {
-    fetch('/ping')
-      .then(res => res.text())
-      .then(console.log)
+    console.log('loaded!');
+    // fetch('/ping')
+    //   .then(res => res.text())
+    //   .then(console.log)
   }
 
   render() {
@@ -25,10 +28,11 @@ class App extends Component {
           >
             Learn React
           </a>
+          <Button>Click Here</Button>
         </header>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
