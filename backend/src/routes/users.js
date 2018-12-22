@@ -203,7 +203,7 @@ router.post(
       .then(user => {
         if (user) {
           emailInUse = true;
-          throw new Error('Email already in use');
+          throw new Error(`Email ${userData.bio.email} already in use`);
         }
         return bcrypt.hash(userData.bio.password, 10);
       })
@@ -213,6 +213,7 @@ router.post(
         return newUser.save();
       })
       .then(user => {
+        // Remove password before sending
         user.bio.password = undefined;
         res.status(200).json({ user });
       })
@@ -231,6 +232,7 @@ router.use((req, res, next) => {
   return req.user ? next() : res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
 });
 
+// FIXME do not respond back with user passwords
 router.get('/', (req, res) => {
   if (req.query.type === 'pending') {
     User.find({ 'bio.role': 'pending' })
@@ -284,9 +286,11 @@ router
     }
     User.findById(req.params.id)
       .then(user => {
-        user
-          ? res.status(200).json({ user })
-          : res.status(404).json({ errors: `No User found with id: ${req.params.id}` });
+        if (!user) {
+          return res.status(404).json({ errors: `No User found with id: ${req.params.id}` });
+        }
+        user.bio.password = undefined;
+        res.status(200).json({ user })
       })
       .catch(errors => res.status(500).json({ errors }));
   })
@@ -513,6 +517,8 @@ router
             }
 
             user.save();
+            // Do not return back user password
+            user.bio.password = undefined;
             return res.status(200).json({ user });
           })
           .catch(errors => {
@@ -550,6 +556,8 @@ router
             }
 
             user.save();
+            // Do not return back user password
+            user.bio.password = undefined;
             return res.status(200).json({ user });
           })
           .catch(errors => res.status(500).json({ errors }));

@@ -44,12 +44,23 @@ passport.deserializeUser((id, done) => {
 });
 
 // Login Route
-router.post('/login', (req, res) => {
-  passport.authenticate('local', (errors, user) => {
-    req.logIn(user, () => {
-      if (errors) return res.status(500).json({ errors });
-      return res.status(user ? 200 : 400).json(user ? { user } : { errors: 'Login Failed' });
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) {
+      return next(err)
+    } else if (!user) {
+      return res.status(401).json({ errors: 'Login Failed' });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err)
+      }
+      // Remove password before sending user
+      user.bio.password = undefined;
+      return res.status(200).json({ user });
     });
+
   })(req, res);
 });
 
@@ -70,5 +81,13 @@ router.use((req, res, next) => {
 // Restful endpoints
 router.use('/events', events);
 router.use('/emails', emails);
+
+// Error handler
+router.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(500).json({
+    'error': err.message
+  })
+});
 
 module.exports = router;
