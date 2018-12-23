@@ -7,11 +7,7 @@ import styles from '../styles/Form.module.css';
 
 const minVolunteerAge = 10;
 const dob_min = new Date();
-
-// => Tue Oct 01 2017 00:00:00 GMT-0700 (PDT)
-
 dob_min.setFullYear(dob_min.getFullYear() + minVolunteerAge);
-// => Tue Oct 01 2019 00:00:00 GMT-0700 (PDT)
 
 const personalInfoSchema = Yup.object().shape({
   firstName: Yup.string()
