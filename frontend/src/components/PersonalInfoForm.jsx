@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
 import FormField from './FormField';
-import styles from '../styles/Form.module.css'
+import styles from '../styles/Form.module.css';
+
+const minVolunteerAge = 10;
+const dob_min = new Date();
+
+// => Tue Oct 01 2017 00:00:00 GMT-0700 (PDT)
+
+dob_min.setFullYear(dob_min.getFullYear() + minVolunteerAge);
+// => Tue Oct 01 2019 00:00:00 GMT-0700 (PDT)
 
 const personalInfoSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -18,13 +26,19 @@ const personalInfoSchema = Yup.object().shape({
     .email('Invalid email')
     .required('Required'),
   phoneNumber: Yup.string()
-  .matches(/^((?!_).)*$/, 'Invalid phone number')
-  .required('Required'),
-  dob: Yup.date().required('Required'),
+    .matches(/^((?!_).)*$/, 'Invalid phone number')
+    .required('Required'),
+  dob: Yup.date()
+    .min(dob_min, `Volunteers must have at least ${minVolunteerAge} years of age`)
+    .required('Required'),
   streetAddress: Yup.string().required('Required'),
   city: Yup.string().required('Required'),
-  state: Yup.string().max(2, 'Please use 2 letter abbreviation').required('Required'),
-  zipcode: Yup.string().matches(/^[0-9]{5}$/, 'Invalid zipcode').required('Required')
+  state: Yup.string()
+    .max(2, 'Please use 2 letter abbreviation')
+    .required('Required'),
+  zipcode: Yup.string()
+    .matches(/^[0-9]{5}$/, 'Invalid zipcode')
+    .required('Required')
 });
 
 class PersonalInfoForm extends Component {
@@ -40,7 +54,7 @@ class PersonalInfoForm extends Component {
       city: '',
       state: '',
       zipcode: ''
-    }
+    };
   }
 
   render() {
@@ -68,15 +82,25 @@ class PersonalInfoForm extends Component {
             /* and other goodies */
           }) => (
             <Form className={styles.form}>
-              <FormField label="First Name" name="firstName" placeholder="Jane"/>
-              <FormField label="Last Name" name="lastName" placeholder="Smith"/>
-              <FormField label="Email" name="email" type="email" placeholder="jane.smith@gmail.com"/>
-              <FormField label="Phone Number" type="tel" name="phoneNumber" placeholder="(000)000-0000"/>
-              <FormField label="Date of Birth" type="date" name="dob" placeholder="MM/DD/YYYY"/>
-              <FormField label="Street Address" name="streetAddress" placeholder="123 Maple St"/>
-              <FormField label="City" name="city" placeholder="Atlanta"/>
-              <FormField label="State" name="state" placeholder="GA"/>
-              <FormField label="Zipcode" name="zipcode" placeholder="30313"/>
+              <FormField label="First Name" name="firstName" placeholder="Jane" />
+              <FormField label="Last Name" name="lastName" placeholder="Smith" />
+              <FormField
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="jane.smith@gmail.com"
+              />
+              <FormField
+                label="Phone Number"
+                type="tel"
+                name="phoneNumber"
+                placeholder="(000)000-0000"
+              />
+              <FormField label="Date of Birth" type="date" name="dob" placeholder="MM/DD/YYYY" />
+              <FormField label="Street Address" name="streetAddress" placeholder="123 Maple St" />
+              <FormField label="City" name="city" placeholder="Atlanta" />
+              <FormField label="State" name="state" placeholder="GA" />
+              <FormField label="Zipcode" name="zipcode" placeholder="30313" />
               <button className={styles.button} type="submit" disabled={isSubmitting}>
                 Submit
               </button>

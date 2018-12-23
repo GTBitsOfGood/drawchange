@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 
-import { EmploymentInfoForm } from './components';
+import { PersonalInfoForm } from './components';
 import Basic from './components/formik-ex';
 
 class App extends Component {
   render() {
     return (
-      <EmploymentInfoForm />
+      <PersonalInfoForm />
       // <div className="App">
       //   <header className="App-header">
       //     <img src={logo} className="App-logo" alt="logo" />
