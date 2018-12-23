@@ -205,14 +205,19 @@ router.post(
           emailInUse = true;
           throw new Error('Email already in use');
         }
-        return bcrypt.hash(userData.bio.password, 10);
+        // Generate new salt for each user
+        const salt = bcrypt.genSaltSync(10);
+        return bcrypt.hash(userData.bio.password, salt);
+        // Note: The salt is encoded directly in the hash, no need to save salt in DB
       })
       .then(hash => {
+        // Only store hash in DB!
         userData.bio.password = hash;
         const newUser = new User(userData);
         return newUser.save();
       })
       .then(user => {
+        // Don't respond back with password or hash
         user.bio.password = undefined;
         res.status(200).json({ user });
       })
