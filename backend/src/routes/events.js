@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const Event = require('../models/event');
-const User = require('../models/user');
+const User = require('../models/userData');
 
 router
   .route('/')
