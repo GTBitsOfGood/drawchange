@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const UserData = require('../models/userData');
+const auth = require('./auth');
 
 // Validations
 // TODO Add validations for events and survey_responses Array
@@ -44,145 +45,145 @@ const USER_DATA_VALIDATIONS = [
   check('bio.zip_code')
     .isAscii()
     .trim()
+    .escape(),
+  check('bio.languages')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('history.volunteer_interest_cause')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('history.volunteer_support')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('history.volunteer_commitment')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('history.skills_qualifications')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('history.previous_volunteer_experience')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('availability.weekday_mornings').isBoolean(),
+  check('availability.weekday_afternoons').isBoolean(),
+  check('availability.weekday_evenings').isBoolean(),
+  check('availability.weekend_mornings').isBoolean(),
+  check('availability.weekend_afternoons').isBoolean(),
+  check('availability.weekend_evenings').isBoolean(),
+  check('skills_interests.admin_in_office').isBoolean(),
+  check('skills_interests.admin_virtual').isBoolean(),
+  check('skills_interests.atlanta_shelter').isBoolean(),
+  check('skills_interests.orlando_shelter').isBoolean(),
+  check('skills_interests.graphic_web_design').isBoolean(),
+  check('skills_interests.special_events').isBoolean(),
+  check('skills_interests.grant_writing').isBoolean(),
+  check('skills_interests.writing_editing').isBoolean(),
+  check('skills_interests.social_media').isBoolean(),
+  check('skills_interests.fundraising').isBoolean(),
+  check('skills_interests.finance').isBoolean(),
+  check('skills_interests.office_maintenance_housekeeping').isBoolean(),
+  check('skills_interests.international_projects').isBoolean(),
+  check('skills_interests.volunteer_coordination').isBoolean(),
+  check('skills_interests.outreach').isBoolean(),
+  check('referral.friend').isBoolean(),
+  check('referral.newsletter').isBoolean(),
+  check('referral.event').isBoolean(),
+  check('referral.volunteer_match').isBoolean(),
+  check('referral.internet').isBoolean(),
+  check('referral.social_media').isBoolean(),
+  check('employment.name')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.position')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.duration')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.location')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.previous_name')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.previous_reason_for_leaving')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('employment.previous_location')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('reference.name')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('reference.phone_number')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('reference.email')
+    .isEmail()
+    .trim()
+    .escape(),
+  check('reference.relationship')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('reference.duration')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('criminal.felony').isBoolean(),
+  check('criminal.sexual_violent').isBoolean(),
+  check('criminal.drugs').isBoolean(),
+  check('criminal.driving').isBoolean(),
+  check('criminal.explanation')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('ice.name')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('ice.relationship')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('ice.phone_number')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('ice.email')
+    .isEmail()
+    .trim()
+    .escape(),
+  check('ice.address')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('permissions.comments')
+    .isAscii()
+    .trim()
+    .escape(),
+  check('permissions.reference').isBoolean(),
+  check('permissions.personal_image').isBoolean(),
+  check('permissions.email_list').isBoolean(),
+  check('permissions.signature')
+    .isAscii()
+    .trim()
     .escape()
-  // check('bio.languages')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('history.volunteer_interest_cause')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('history.volunteer_support')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('history.volunteer_commitment')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('history.skills_qualifications')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('history.previous_volunteer_experience')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('availability.weekday_mornings').isBoolean(),
-  // check('availability.weekday_afternoons').isBoolean(),
-  // check('availability.weekday_evenings').isBoolean(),
-  // check('availability.weekend_mornings').isBoolean(),
-  // check('availability.weekend_afternoons').isBoolean(),
-  // check('availability.weekend_evenings').isBoolean(),
-  // check('skills_interests.admin_in_office').isBoolean(),
-  // check('skills_interests.admin_virtual').isBoolean(),
-  // check('skills_interests.atlanta_shelter').isBoolean(),
-  // check('skills_interests.orlando_shelter').isBoolean(),
-  // check('skills_interests.graphic_web_design').isBoolean(),
-  // check('skills_interests.special_events').isBoolean(),
-  // check('skills_interests.grant_writing').isBoolean(),
-  // check('skills_interests.writing_editing').isBoolean(),
-  // check('skills_interests.social_media').isBoolean(),
-  // check('skills_interests.fundraising').isBoolean(),
-  // check('skills_interests.finance').isBoolean(),
-  // check('skills_interests.office_maintenance_housekeeping').isBoolean(),
-  // check('skills_interests.international_projects').isBoolean(),
-  // check('skills_interests.volunteer_coordination').isBoolean(),
-  // check('skills_interests.outreach').isBoolean(),
-  // check('referral.friend').isBoolean(),
-  // check('referral.newsletter').isBoolean(),
-  // check('referral.event').isBoolean(),
-  // check('referral.volunteer_match').isBoolean(),
-  // check('referral.internet').isBoolean(),
-  // check('referral.social_media').isBoolean(),
-  // check('employment.name')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.position')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.duration')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.location')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.previous_name')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.previous_reason_for_leaving')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('employment.previous_location')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('reference.name')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('reference.phone_number')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('reference.email')
-  //   .isEmail()
-  //   .trim()
-  //   .escape(),
-  // check('reference.relationship')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('reference.duration')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('criminal.felony').isBoolean(),
-  // check('criminal.sexual_violent').isBoolean(),
-  // check('criminal.drugs').isBoolean(),
-  // check('criminal.driving').isBoolean(),
-  // check('criminal.explanation')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('ice.name')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('ice.relationship')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('ice.phone_number')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('ice.email')
-  //   .isEmail()
-  //   .trim()
-  //   .escape(),
-  // check('ice.address')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('permissions.comments')
-  //   .isAscii()
-  //   .trim()
-  //   .escape(),
-  // check('permissions.reference').isBoolean(),
-  // check('permissions.personal_image').isBoolean(),
-  // check('permissions.email_list').isBoolean(),
-  // check('permissions.signature')
-  //   .isAscii()
-  //   .trim()
-  //   .escape()
 ];
 
 // This method is purposely put before the login wall so that
@@ -233,12 +234,7 @@ router.post('/', USER_DATA_VALIDATIONS, (req, res, next) => {
   }
 );
 
-//* ************* LOGIN WALL *******************
-router.use((req, res, next) => {
-  return req.user && req.user.userDataId ? next() : res.status(401).send('YOU MUST BE AUTHENTICATED TO ACCESS THIS ROUTE');
-});
-
-router.get('/', (req, res, next) => {
+router.get('/', auth.isAuthenticated, (req, res, next) => {
   if (req.query.type === 'pending') {
     UserData.find({ 'bio.role': 'pending' })
       .then(users => res.status(200).json({ users }))
@@ -269,7 +265,7 @@ router.get('/', (req, res, next) => {
 
 router
   .route('/:id')
-  .get([check('id').isMongoId()], (req, res, next) => {
+  .get(auth.isAuthenticated, [check('id').isMongoId()], (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
@@ -284,6 +280,7 @@ router
       .catch(err => next(err));
   })
   .put(
+    auth.isAuthenticated,
     [check('id').isMongoId()],
     oneOf(USER_DATA_VALIDATIONS),
     (req, res, next) => {
@@ -329,8 +326,7 @@ router
         .catch(err => next(err));
     }
   )
-  .delete([check('id').isMongoId()], (req, res, next) => {
-    // TODO do we need to remove creds as well
+  .delete(auth.isAuthenticated, [check('id').isMongoId()], (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
