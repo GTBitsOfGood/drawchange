@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { FormGroup, Input, Label } from 'reactstrap';
 
-import styles from '../styles/Form.module.css';
+import styles from '../../styles/Form.module.css';
 
 const Checkbox = props => (
   <div className={styles.flex_field}>

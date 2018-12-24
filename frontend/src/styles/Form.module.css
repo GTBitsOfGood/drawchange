@@ -16,6 +16,10 @@
   flex-direction: column
 }
 
+.section_header {
+  text-align: center; 
+}
+
 .subtitle {
   margin-left: 5px;
   margin-bottom: 0px;

@@ -1,15 +1,5 @@
-import EmploymentInfoForm from './EmploymentInfoForm';
-import VolunteerInfoForm from './VolunteerInfoForm';
-import PersonalInfoForm from './PersonalInfoForm';
-import PermissionsForm from './PermissionsForm';
-import ShortAnswerForm from './ShortAnswerForm';
-import ICEForm from './ICEForm';
+import VolunteerInfoForm from './VolunteerApp/VolunteerInfoForm';
 
-export {
-  PersonalInfoForm,
-  EmploymentInfoForm,
-  ICEForm,
-  VolunteerInfoForm,
-  PermissionsForm,
-  ShortAnswerForm
-};
+import ShortAnswerForm from './ShortAnswerForm';
+
+export { VolunteerInfoForm, ShortAnswerForm };
