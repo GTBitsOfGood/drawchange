@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
 
+const auth = require('./auth');
 const api = require('./routes');
 const app = express();
 
@@ -32,11 +33,13 @@ app.use(
   })
 );
 
-// app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '../../frontend/build/')));
+// Initialize passport authentication on the entire app
+auth.initAuth(app);
 
-// Route API Calls to seperate router
+// Route API Calls to separate router
 app.use('/api', api);
+
+app.use(express.static(path.join(__dirname, '../../frontend/build/')));
 
 // Render React page
 app.get('/*', (req, res) => {

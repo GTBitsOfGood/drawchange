@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const UserData = require('../models/userData');
-const auth = require('./auth');
+const auth = require('../auth');
 
 // Validations
 // TODO Add validations for events and survey_responses Array
@@ -265,20 +265,23 @@ router.get('/', auth.isAuthenticated, (req, res, next) => {
 
 router
   .route('/:id')
-  .get(auth.isAuthenticated, [check('id').isMongoId()], (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.mapped() });
-    }
-    UserData.findById(req.params.id)
-      .then(user => {
-        if (!user) {
-          return res.status(404).json({ errors: `No User found with id: ${req.params.id}` });
-        }
-        res.status(200).json({ user });
-      })
-      .catch(err => next(err));
-  })
+  .get(
+    auth.isAuthenticated,
+    [check('id').isMongoId()],
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.mapped() });
+      }
+      UserData.findById(req.params.id)
+        .then(user => {
+          if (!user) {
+            return res.status(404).json({ errors: `No User found with id: ${req.params.id}` });
+          }
+          res.status(200).json({ user });
+        })
+        .catch(err => next(err));
+    })
   .put(
     auth.isAuthenticated,
     [check('id').isMongoId()],

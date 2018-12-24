@@ -3,13 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 // Local Imports
-const auth = require('./auth');
+const auth = require('../auth');
 const events = require('./events');
 const emails = require('./emails');
 const users = require('./users');
 const contact = require('./contact');
 
-router.use('/auth', auth.router);
 router.use('/contact', contact);
 router.use('/users', users);
 
