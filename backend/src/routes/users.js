@@ -334,6 +334,14 @@ router
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.mapped() });
     }
+
+    if (req.user && req.user.userDataId === req.params.id) {
+      // User is trying to remove themselves, don't let that happen...
+      return res.status(403).json({
+        error: 'Cannot delete yourself!'
+      });
+    }
+
     UserData.findByIdAndRemove(req.params.id)
       .then(removed => {
         removed
