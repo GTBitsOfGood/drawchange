@@ -1,51 +1,48 @@
 import React from 'react';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
-import { Form, FormField, Checkbox, NextButton, Header, Text } from '../Forms';
+import { Form, FormField, Checkbox, SubmitButton, BackButton, Header, Text } from '../Forms';
 
 const validation = Yup.object().shape({
-  comments: Yup.string(),
-  reference: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-  personal_image: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-  email_list: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-  signature: Yup.string().required('Required')
+  permissions: Yup.object().shape({
+    comments: Yup.string(),
+    reference: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+    personal_image: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+    email_list: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+    signature: Yup.string().required('Required')
+  })
 });
 
 const defaultValues = {
-  comments: '',
-  reference: false,
-  personal_image: false,
-  email_list: false,
-  signature: ''
+  permissions: {
+    comments: '',
+    reference: false,
+    personal_image: false,
+    email_list: false,
+    signature: ''
+  }
 };
 
-const defaultOnSubmit = (values, { setSubmitting }) => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-    setSubmitting(false);
-  }, 400);
-};
-
-const PermissionsForm = props => {
-  const initValues = props.initValues || defaultValues;
-  const submitHandler = props.onSubmit || defaultOnSubmit;
+const PermissionsForm = ({ initValues, onBack, ...props }) => {
+  const values = { permissions: { ...defaultValues.permissions, ...initValues.permissions } };
   return (
-    <Form initialValues={initValues} validationSchema={validation} onSubmit={submitHandler}>
+    <Form initialValues={values} validationSchema={validation} {...props}>
       <Header>Permissions</Header>
       <FormField
         type="textarea"
-        name="comments"
+        name="permissions.comments"
         label="Is there anything else we should know about you? Any questions, comments, or concerns?"
       />
       <br />
       <Text bold>drawchange has my permission to:</Text>
-      <Checkbox name="reference" value="Verify the reference I have provided" />
+      <Checkbox name="permissions.reference" value="Verify the reference I have provided" />
       <Checkbox
-        name="personal_image"
+        name="permissions.personal_image"
         value="Include my name and/or picture in drawchange promotional materials, newspapers, TV, radio, brochures, videos, website(s), etc"
       />
       <Checkbox
-        name="email_list"
+        name="permissions.email_list"
         value="Add me to their mailing list. (We only send 1 email per month and never share your email address) "
       />
       <br />
@@ -56,13 +53,21 @@ const PermissionsForm = props => {
         immediate dismissal.
       </Text>
       <FormField
-        name="signature"
+        name="permissions.signature"
         label="Please enter your full legal name here, to confirm agreement."
       />
-
-      <NextButton />
+      <div style={{ display: 'flex' }}>
+        <BackButton onClick={onBack} />
+        <SubmitButton />
+      </div>
     </Form>
   );
+};
+
+PermissionsForm.propTypes = {
+  initValues: PropTypes.object.isRequired,
+  onBack: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default PermissionsForm;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import CriminalForm from './components/VolunteerApp/CriminalForm';
+import VolunteerApp from './components/VolunteerApp';
 
 class App extends Component {
   render() {
-    return <CriminalForm />;
+    return <VolunteerApp onSubmit={console.log} />;
   }
 }
 

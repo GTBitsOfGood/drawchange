@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 
-import { Form, FormField, NextButton, Header } from '../Forms';
+import { Form, FormField, SubmitButton, Header } from './Forms';
 
 const minVolunteerAge = 10;
 const dob_max = new Date();
@@ -69,7 +69,7 @@ const PersonalInfoForm = props => {
       <FormField label="City" name="city" placeholder="Atlanta" />
       <FormField label="State" name="state" placeholder="GA" />
       <FormField label="Zipcode" name="zipcode" placeholder="30313" />
-      <NextButton />
+      <SubmitButton />
     </Form>
   );
 };
