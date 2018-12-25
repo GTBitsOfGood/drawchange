@@ -47,6 +47,7 @@ const CriminalForm = ({ initValues, onBack, ...props }) => {
       />
       <FormField
         name="criminal.explanation"
+        type="textarea"
         label="If you indicated yes to any of the above please explain and list when the offense occured."
       />
       <div style={{ display: 'flex' }}>
