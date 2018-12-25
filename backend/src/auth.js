@@ -28,13 +28,6 @@ function initAuth(app) {
     });
   });
 
-  // Logout Route
-  app.get('auth/logout', (req, res) => {
-    req.logout();
-    req.session.destroy();
-    return res.status(200).json({ logout: 'success' });
-  });
-
   // Google Auth config via passport
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -91,6 +84,19 @@ function initAuth(app) {
       }
     }
   );
+
+  // Logout Route
+  app.get('/auth/logout', (req, res, next) => {
+    req.logout();
+    req.session.destroy(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.clearCookie('connect.sid', {path: '/'});
+      res.redirect('/');
+    });
+  });
+
 }
 
 module.exports = {
