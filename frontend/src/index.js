@@ -5,7 +5,8 @@ import configureStore from './store/store';
 
 
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/scss/custom.scss';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

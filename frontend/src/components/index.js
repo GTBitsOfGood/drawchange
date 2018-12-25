@@ -1,5 +1,6 @@
-import VolunteerInfoForm from './VolunteerApp/VolunteerInfoForm';
+import VolunteerApp from './VolunteerApp';
+import ProfileForm from './ProfileForm';
+import Header from './Header';
+import Splash from './Splash';
 
-import ShortAnswerForm from './ShortAnswerForm';
-
-export { VolunteerInfoForm, ShortAnswerForm };
+export { VolunteerApp, ProfileForm, Header, Splash };
