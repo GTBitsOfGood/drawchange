@@ -39,9 +39,8 @@ auth.initAuth(app);
 // Route API Calls to separate router
 app.use('/api', api);
 
-app.use(express.static(path.join(__dirname, '../../frontend/build/')));
-
 // Render React page
+app.use(express.static(path.join(__dirname, '../../frontend/build/')));
 app.get('/*', (req, res) => {
   // res.sendFile(__dirname + '/public/index.html'); // For React/Redux
   res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));

@@ -6,17 +6,21 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // Local imports
 const UserCreds = require('./models/userCreds');
 
+/**
+ * Initializes passport and authentication-related endpoints for the entire express application.
+ */
 function initAuth(app) {
 
-// Middleware
+  // Middleware to use passport
   app.use(passport.initialize());
   app.use(passport.session());
 
-// Passport Config
+  // For saving user creds in cookie
   passport.serializeUser((userCreds, done) => {
     return done(null, userCreds.id);
   });
 
+  // For retrieving user creds object from cookie
   passport.deserializeUser((userCredsIdString, done) => {
     const userCredsId = mongoose.Types.ObjectId(userCredsIdString);
     UserCreds.findById(userCredsId, (err, userCreds) => {
@@ -24,14 +28,14 @@ function initAuth(app) {
     });
   });
 
-// Logout Route
+  // Logout Route
   app.get('auth/logout', (req, res) => {
     req.logout();
     req.session.destroy();
     return res.status(200).json({ logout: 'success' });
   });
 
-  // Google Auth
+  // Google Auth config via passport
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -66,18 +70,24 @@ function initAuth(app) {
     }
   ));
 
+  // User must visit this endpoint in their web browser to authenticate with google
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })
   );
 
+  // User will be redirected to here after authentication via Google
   app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/loginError' }),
+    passport.authenticate('google', {
+      failureRedirect: '/loginRedirect?userId=error' // Occurs if user denies google auth, etc.
+    }),
     function(req, res) {
       // Authentication successful, redirect to correct page based on linked user data
       if (req.user.userDataId) {
+        // User creds have linked user data
         return res.redirect('/loginRedirect?userId=' + req.user.userDataId);
       } else {
-        return res.redirect('/createProfile');
+        // First time user, no linked user data
+        return res.redirect('/loginRedirect?userId=null');
       }
     }
   );
@@ -85,7 +95,12 @@ function initAuth(app) {
 
 module.exports = {
   initAuth,
+  /**
+   * Express middleware to check if current user is authenticated.
+   */
   isAuthenticated: function(req, res, next) {
-    return req.user ? next() : res.redirect('/login');
+    return req.user ? next() : res.status(401).json({
+      error: 'User not authenticated (must sign in)'
+    });
   }
 };

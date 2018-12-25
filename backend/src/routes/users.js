@@ -39,7 +39,7 @@ const USER_DATA_VALIDATIONS = [
     .trim()
     .escape(),
   check('bio.state')
-    .isAscii()
+    .isAlpha()
     .trim()
     .escape(),
   check('bio.zip_code')
