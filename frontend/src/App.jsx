@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { Header, VolunteerApp, Splash, PendingVolunteer } from './components';
+import { Header, VolunteerApp, Splash, AcceptPolicies } from './components';
 
 class App extends Component {
   render() {
@@ -9,7 +9,7 @@ class App extends Component {
       <Router>
         <div>
           <Header />
-          <PendingVolunteer />
+          <AcceptPolicies />
           {/* <Route path="/" exact component={Splash} />
           <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} /> */}
         </div>
