@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { Container, Row, Col, Button, Jumbotron } from 'reactstrap';
-import { SocialIcon } from 'react-social-icons';
 
 class AcceptPolicies extends Component {
   state = { readVM: false, readCPC: false };

@@ -10,8 +10,8 @@ class App extends Component {
         <div>
           <Header />
           <AcceptPolicies />
-          {/* <Route path="/" exact component={Splash} />
-          <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} /> */}
+          <Route path="/" exact component={Splash} />
+          <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} />
         </div>
       </Router>
     );
