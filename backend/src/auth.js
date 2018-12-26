@@ -7,8 +7,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const UserCreds = require('./models/userCreds');
 
 // Global variables
-const PORT_URL_COMPONENT = `:${process.env.PORT || 3000}`;
-const AUTH_CALLBACK_URL = `${process.env.BASE_URL}${PORT_URL_COMPONENT}/auth/google/callback`;
+const PUBLIC_FACING_AUTH_CALLBACK_URL = `${process.env.BASE_URL_WITH_PORT}/auth/google/callback`;
 
 /**
  * Initializes passport and authentication-related endpoints for the entire express application.
@@ -36,7 +35,7 @@ function initAuth(app) {
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: AUTH_CALLBACK_URL
+      callbackURL: PUBLIC_FACING_AUTH_CALLBACK_URL
     },
     (accessToken, refreshToken, profile, done) => {
       UserCreds.findOne({ googleId: profile.id })
