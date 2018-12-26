@@ -10,6 +10,7 @@ class App extends Component {
       <Router>
         <div>
           <Header />
+
           <Route path="/" exact render={_ => <AuthWall user={user} />} />
           <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} />
         </div>

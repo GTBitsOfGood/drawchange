@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import { Container, Row, Col, Button, Jumbotron } from 'reactstrap';
 
+import styles from '../styles/AcceptPolicies.module.css';
+
 class AcceptPolicies extends Component {
   state = { readVM: false, readCPC: false };
-  delay = 5000; // 5 seconds
+  delay = 10000; // 10 seconds
 
   handleReadVM = _ => {
     window.open(
@@ -31,14 +33,7 @@ class AcceptPolicies extends Component {
       <Container>
         <Row>
           <Col lg={{ offset: 2, size: 8 }} md={12}>
-            <Jumbotron
-              style={{
-                marginTop: '50px',
-                backgroundColor: 'rgb(255, 220, 172)',
-                borderRadius: '.9rem',
-                minWidth: '350px'
-              }}
-            >
+            <Jumbotron className={styles.jumbotron}>
               <h1 className="display-3">Congrats!</h1>
               <p className="lead">
                 We have reviewed your application and are thrilled to have you join our team!
@@ -48,18 +43,16 @@ class AcceptPolicies extends Component {
                 Before you may start volunteering with drawchange, you must read and agree to the
                 terms and conditions outlined in the Volunteer Manual and Child Protection Clause.
               </p>
-              <p className="lead" style={{ marginBottom: '0' }}>
+              <p className="lead" className={styles.mb_0}>
                 <Button
                   onClick={this.handleReadVM}
-                  color={readVM ? 'success' : 'danger'}
-                  style={{ margin: '5px' }}
+                  className={readVM ? styles.btn_valid : styles.btn_invalid}
                 >
                   Read Volunteer Manual
                 </Button>
                 <Button
                   onClick={this.handleReadCPC}
-                  color={readCPC ? 'success' : 'danger'}
-                  style={{ margin: '5px' }}
+                  className={readCPC ? styles.btn_valid : styles.btn_invalid}
                 >
                   Read Child Protection Clause
                 </Button>
