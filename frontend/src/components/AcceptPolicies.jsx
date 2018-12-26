@@ -30,15 +30,16 @@ class AcceptPolicies extends Component {
     return (
       <Container>
         <Row>
-          <Col md={{ offset: 2, size: 8 }}>
+          <Col lg={{ offset: 2, size: 8 }} md={12}>
             <Jumbotron
               style={{
                 marginTop: '50px',
                 backgroundColor: 'rgb(255, 220, 172)',
-                borderRadius: '.9rem'
+                borderRadius: '.9rem',
+                minWidth: '350px'
               }}
             >
-              <h1 className="display-3">Congratulations!</h1>
+              <h1 className="display-3">Congrats!</h1>
               <p className="lead">
                 We have reviewed your application and are thrilled to have you join our team!
               </p>
@@ -47,20 +48,28 @@ class AcceptPolicies extends Component {
                 Before you may start volunteering with drawchange, you must read and agree to the
                 terms and conditions outlined in the Volunteer Manual and Child Protection Clause.
               </p>
-              <p className="lead">
+              <p className="lead" style={{ marginBottom: '0' }}>
                 <Button
                   onClick={this.handleReadVM}
                   color={readVM ? 'success' : 'danger'}
-                  style={{ marginRight: '10px' }}
+                  style={{ margin: '5px' }}
                 >
                   Read Volunteer Manual
                 </Button>
-                <Button onClick={this.handleReadCPC} color={readCPC ? 'success' : 'danger'}>
+                <Button
+                  onClick={this.handleReadCPC}
+                  color={readCPC ? 'success' : 'danger'}
+                  style={{ margin: '5px' }}
+                >
                   Read Child Protection Clause
                 </Button>
               </p>
               <p className="lead">
-                <Button disabled={!read} color={read ? 'primary' : 'secondary'}>
+                <Button
+                  disabled={!read}
+                  color={read ? 'primary' : 'secondary'}
+                  style={{ margin: '5px' }}
+                >
                   {read ? 'Continue' : 'Please Read the Policies Before Continuing'}
                 </Button>
               </p>
