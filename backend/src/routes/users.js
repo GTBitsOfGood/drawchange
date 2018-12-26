@@ -299,8 +299,7 @@ router
         .then(user => {
           if (!user) {
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
-          } else if (req.query.action ==
-                     'appendEvent') {
+          } else if (req.query.action === 'appendEvent') {
             userDataReq.events.forEach(eventId => user.events.push(eventId));
             userDataReq.events = undefined;
           } else if (req.query.action === 'removeEvents') {

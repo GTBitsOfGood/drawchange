@@ -38,7 +38,7 @@ function initAuth(app) {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: AUTH_CALLBACK_URL
     },
-    function(accessToken, refreshToken, profile, done) {
+    (accessToken, refreshToken, profile, done) => {
       UserCreds.findOne({ googleId: profile.id })
         .then(userCreds => {
           if (userCreds) {
@@ -51,8 +51,8 @@ function initAuth(app) {
           // First time login, create the UserCreds document
           const newUserCreds = new UserCreds({
             googleId: profile.id,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
+            accessToken,
+            refreshToken,
             userDataId: null  // User does not have any data in the system yet
           });
           return newUserCreds.save();
@@ -77,11 +77,11 @@ function initAuth(app) {
     passport.authenticate('google', {
       failureRedirect: '/loginRedirect?userId=error' // Occurs if user denies google auth, etc.
     }),
-    function(req, res) {
+    (req, res) => {
       // Authentication successful, redirect to correct page based on linked user data
       if (req.user.userDataId) {
         // User creds have linked user data
-        return res.redirect('/loginRedirect?userId=' + req.user.userDataId);
+        return res.redirect(`/loginRedirect?userId=${req.user.userDataId}`);
       } else {
         // First time user, no linked user data
         return res.redirect('/loginRedirect?userId=null');
@@ -92,7 +92,7 @@ function initAuth(app) {
   // Logout Route
   app.get('/auth/logout', (req, res, next) => {
     req.logout();
-    req.session.destroy(function (err) {
+    req.session.destroy(err => {
       if (err) {
         return next(err);
       }
@@ -108,7 +108,7 @@ module.exports = {
   /**
    * Express middleware to check if current user is authenticated.
    */
-  isAuthenticated: function(req, res, next) {
+  isAuthenticated: (req, res, next) => {
     return req.user ? next() : res.status(401).json({
       error: 'User not authenticated (must sign in)'
     });
