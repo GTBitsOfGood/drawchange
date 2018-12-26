@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const ObjectId = mongoose.Schema.ObjectId;
 
 // define schema for user collection (user model)

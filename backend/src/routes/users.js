@@ -301,15 +301,15 @@ router
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
           } else if (req.query.action === 'appendEvent') {
             userDataReq.events.forEach(eventId => user.events.push(eventId));
-            userDataReq.events = undefined;
+            delete userDataReq.events;
           } else if (req.query.action === 'removeEvents') {
             userDataReq.events.forEach(eventId =>
               user.events.splice(user.events.indexOf(eventId), 1)
             );
-            userDataReq.events = undefined;
+            delete userDataReq.events;
           }
 
-          userDataReq.id = undefined; // we do not want to update the user's id
+          delete userDataReq.id; // we do not want to update the user's id
           for (const key1 in userDataReq) {
             if (userDataReq.hasOwnProperty(key1)) {
               const obj = userDataReq[key1];

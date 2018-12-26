@@ -7,7 +7,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const UserCreds = require('./models/userCreds');
 
 // Global variables
-const PORT_URL_COMPONENT = process.env.PORT? `:${process.env.PORT}` : ':3000';
+const PORT_URL_COMPONENT = `:${process.env.PORT || 3000}`;
 const AUTH_CALLBACK_URL = `${process.env.BASE_URL}${PORT_URL_COMPONENT}/auth/google/callback`;
 
 /**
