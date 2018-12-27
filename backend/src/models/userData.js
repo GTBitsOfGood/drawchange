@@ -1,20 +1,18 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 // define schema for user collection (user model)
-const userSchema = mongoose.Schema(
+const userDataSchema = mongoose.Schema(
   {
     bio: {
       first_name: { type: String, required: true },
       last_name: { type: String, required: true },
       phone_number: { type: String, required: true },
-      email: { type: String, required: true },
+      email: { type: String, required: true, index: true, unique: true },
       date_of_birth: { type: Date, required: true },
       street_address: { type: String, required: true },
       city: { type: String, required: true },
       state: { type: String, required: true },
       zip_code: { type: String, required: true },
-      password: { type: String, required: true },
       languages: { type: String, default: '' },
       role: {
         type: String,
@@ -108,18 +106,14 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.virtual('name').get(function() {
+userDataSchema.virtual('name').get(function() {
   return this.bio.first_name + this.bio.last_name;
 });
 
-userSchema.virtual('age').get(function() {
+userDataSchema.virtual('age').get(function() {
   const current = new Date();
   return current.getYear() - this.bio.date_of_birth.getYear();
 });
 
-userSchema.methods.verifyPassword = function(password) {
-  return bcrypt.compareSync(password, this.bio.password);
-};
-
 // export user model to app
-module.exports = mongoose.model('Users', userSchema);
+module.exports = mongoose.model('UserData', userDataSchema);
