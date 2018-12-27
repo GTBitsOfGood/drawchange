@@ -62,6 +62,7 @@ class AcceptPolicies extends Component {
                   disabled={!read}
                   color={read ? 'primary' : 'secondary'}
                   style={{ margin: '5px' }}
+                  onClick={this.props.onSubmit}
                 >
                   {read ? 'Continue' : 'Please Read the Policies Before Continuing'}
                 </Button>

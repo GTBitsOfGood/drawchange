@@ -34,6 +34,7 @@ class VolunteerApp extends Component {
       this.setState(({ step, data }) => ({ step: step + 1, data: { ...data, ...formData } }));
     } else if (this.state.step === this.steps.length) {
       this.props.onSubmit({ ...this.state.data, ...formData });
+      console.log('we submitted');
     }
   };
 
