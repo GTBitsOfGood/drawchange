@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const Event = require('../models/event');
-const User = require('../models/user');
+const User = require('../models/userData');
 
 router
   .route('/')
@@ -146,12 +146,12 @@ router
             return res.status(404).json({ errors: `No event found with id: ${req.params.id}` });
           } else if (req.query.action === 'appendVolunteers') {
             eventData.volunteers.forEach(volunteerId => event.volunteers.push(volunteerId));
-            eventData.events = undefined;
+            delete eventData.events;
           } else if (req.query.action === 'removeVolunteers') {
             eventData.volunteers.forEach(volunteerId =>
               event.volunteers.splice(event.volunteers.indexOf(volunteerId), 1)
             );
-            eventData.volunteers = undefined;
+            delete eventData.volunteers;
           }
           for (const key in event) {
             event[key] = eventData[key] !== undefined ? eventData[key] : event[key];
