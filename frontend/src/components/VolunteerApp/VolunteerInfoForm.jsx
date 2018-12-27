@@ -44,7 +44,7 @@ const VolunteerInfoForm = ({ initValues, ...props }) => {
   return (
     <Form initialValues={values} {...props}>
       <Header>Volunteer Information</Header>
-      <Subtitle>Volunteer Availability</Subtitle>
+      <Subtitle>Your Availability</Subtitle>
       <Row>
         <Col xs={6}>
           <Checkbox name="volunteer_info.availability.weekday_mornings" value="Weekday Mornings" />
@@ -73,7 +73,7 @@ const VolunteerInfoForm = ({ initValues, ...props }) => {
           />
           <Checkbox
             name="volunteer_info.skills_interests.atlanta_shelter"
-            value="Atlanta Shelter"
+            value="Atlanta Homeless Shelters"
           />
           <Checkbox
             name="volunteer_info.skills_interests.graphic_web_design"
@@ -103,7 +103,7 @@ const VolunteerInfoForm = ({ initValues, ...props }) => {
           />
           <Checkbox
             name="volunteer_info.skills_interests.orlando_shelter"
-            value="Orlando Shelter"
+            value="Orlando Homeless Shelters"
           />
           <Checkbox
             name="volunteer_info.skills_interests.social_media"
