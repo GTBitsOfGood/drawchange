@@ -6,6 +6,7 @@ import { Header, VolunteerApp, AuthWall } from './components';
 class App extends Component {
   render() {
     const user = {};
+    const authenticated 
     return (
       <Router>
         <div>

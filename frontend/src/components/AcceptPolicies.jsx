@@ -43,7 +43,7 @@ class AcceptPolicies extends Component {
                 Before you may start volunteering with drawchange, you must read and agree to the
                 terms and conditions outlined in the Volunteer Manual and Child Protection Clause.
               </p>
-              <p className="lead" className={styles.mb_0}>
+              <p className={styles.mb_0}>
                 <Button
                   onClick={this.handleReadVM}
                   className={readVM ? styles.btn_valid : styles.btn_invalid}

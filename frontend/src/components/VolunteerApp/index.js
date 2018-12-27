@@ -28,15 +28,6 @@ class VolunteerApp extends Component {
     };
   }
   steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7];
-  // images = [
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net',
-  //   'https://instagram.fdtw1-1.fna.fbcdn.net/vp/9c5624e3811b2841f731eb475fad12d3/5CB9924C/t51.2885-15/fr/e15/p1080x1080/45392920_319675921954039_5351273267706353166_n.jpg?_nc_ht=instagram.fdtw1-1.fna.fbcdn.net'
-  // ];
 
   onSubmit = formData => {
     if (this.state.step < this.steps.length) {
