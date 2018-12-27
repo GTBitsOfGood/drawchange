@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../styles/Home.module.css';
 import GoogleButton from 'react-google-button';
+// import { Button } from 'reactstrap';
 
 class Footer extends Component {
   render() {
@@ -13,11 +14,22 @@ class Footer extends Component {
                 <p>If you have been approved, please login here with Google</p>
             </div>
         </div>
-        <div >
-            <GoogleButton className={styles.googleButton} type="light" onClick={() => { console.log('Google button clicked') }}/>
+        <div>
+          <GoogleButton className={styles.googleButton} type="light" onClick={() => { console.log('Google button clicked') }}/>
         </div>
       </div>
-    </div>);
+      <div className={styles.donate}>
+        <div className={styles.donateInner}>
+          <p>
+            Help Us Continue Our Life-Altering Programming
+          </p>
+        </div>
+        <div className={styles.donateButtonWrapper}>
+          <a className={styles.donateButton} rel="noopener noreferrer" target="_blank" href="https://secure.donationpay.org/drawchange/"color="success">Donate</a>
+        </div>
+      </div>
+    </div>
+    );
   }
 }
 

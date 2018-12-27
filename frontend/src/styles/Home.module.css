@@ -40,9 +40,11 @@
     display: inline-block;
 }
 .gallery {
-    display: block;
     min-height: 1px;
-    width: 100%;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-content: center; */
+    width: 60%;
     overflow: auto;
 }
 .footerBackground {
@@ -57,6 +59,7 @@
     margin: auto;
     padding-top: 2em;
     margin-top: -2px;
+    padding-bottom: 1em;
 }
 
 .footer {
@@ -69,6 +72,40 @@
 .googleButton {
     display: inline-block !important;
 }
-/* .test {
+.donate {
+    background-color: rgb(169, 95, 209);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    margin-bottom: -2px;
+    flex-direction: column;
+    padding: 2em;
+    
+}
 
-} */
+.donate p {
+    font-size: 34px;
+}
+
+.donateButtonWrapper a{
+    text-decoration: none;
+    color: white;
+    -webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
+    transition: background-color 1s;
+}
+
+.donateButton {
+    background-color: rgba(32, 206, 136, 1);
+    color: white;
+    padding: .6em 3.7em;
+    vertical-align: middle;
+}
+.donateButton:hover{
+    background-color: rgb(78, 165, 116);
+}
+
+.donateInner {
+    padding: 1em;
+}
