@@ -14,6 +14,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 
+import logo from '../images/drawchange_logo_white.webp';
 // import styles from '../styles/Header.module.css'
 
 class Header extends Component {
@@ -36,11 +37,7 @@ class Header extends Component {
       <div>
         <Navbar color="dark" dark expand="md" style={{height: '70px' }}>
           <NavbarBrand tag={Link} to="/">
-            <img
-              style={{ width: '175px' }}
-              alt="drawchange logo"
-              src="https://static.wixstatic.com/media/20c70b_cc3866fe6cb14a1faae95ae5bbe8e58b~mv2.png/v1/fill/w_352,h_112,al_c,q_80,usm_0.66_1.00_0.01/LOGOw_dc.webp"
-            />
+            <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
           </NavbarBrand>
 
           <NavbarToggler onClick={this.toggle} />
