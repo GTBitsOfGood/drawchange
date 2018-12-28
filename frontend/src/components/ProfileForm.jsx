@@ -3,10 +3,6 @@ import * as Yup from 'yup';
 
 import { Form, FormField, SubmitButton, Header } from './Forms';
 
-const minVolunteerAge = 10;
-const dob_max = new Date();
-dob_max.setFullYear(dob_max.getFullYear() - minVolunteerAge);
-
 const validation = Yup.object().shape({
   first_name: Yup.string()
     .min(2, 'Too Short!')
@@ -23,7 +19,7 @@ const validation = Yup.object().shape({
     .matches(/^((?!_).)*$/, 'Invalid phone number')
     .required('Required'),
   dob: Yup.date()
-    .max(dob_max, `Volunteers must have at least ${minVolunteerAge} years of age`)
+    .max(new Date(), `Invalid date of birth`)
     .required('Required'),
   streetAddress: Yup.string().required('Required'),
   city: Yup.string().required('Required'),
