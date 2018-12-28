@@ -14,7 +14,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-import logo from '../images/drawchange_logo_white.webp';
+import logo from '../images/drawchange_logo_white.png';
 // import styles from '../styles/Header.module.css'
 
 class Header extends Component {
