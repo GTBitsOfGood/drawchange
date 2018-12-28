@@ -11,7 +11,9 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Container,
+  Row,
 } from 'reactstrap';
 
 import logo from '../images/drawchange_logo_white.webp';
@@ -20,12 +22,31 @@ import logo from '../images/drawchange_logo_white.webp';
 class Header extends Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
+    // this.hover = this.hover.bind(this);
+    // this.onMouseEnter = this.onMouseEnter.bind(this);
+    // this.onMouseLeave = this.onMouseLeave.bind(this);
+    // this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      // dropdownOpen: false
     };
   }
+
+  // hover() {
+  //   this.setState(prevState => ({
+  //     dropdownOpen: !prevState.dropdownOpen
+  //   }));
+  // }
+  // onMouseOver={this.onMouseEnter} onMouseLeave={this.onMouseLeave} isOpen={this.state.dropdownOpen} hover={this.hover}
+  // onMouseEnter() {
+  //   this.setState({dropdownOpen: true});
+  // }
+
+  // onMouseLeave() {
+  //   this.setState({dropdownOpen: false});
+  // }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -36,34 +57,73 @@ class Header extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md" style={{height: '70px' }}>
-          <NavbarBrand tag={Link} to="/">
-            <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
-          </NavbarBrand>
-
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/apply">
-                  Apply
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
+          <Container>
+            <Row>
+              <NavbarBrand tag={Link} to="/">
+                <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
+              </NavbarBrand>
+            </Row>
+            <Row>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink  href="http://www.drawchange.org">
+                    Home
+                  </NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar >
+                  <DropdownToggle  nav caret >
+                    About Us
+                  </DropdownToggle>
+                  <DropdownMenu left >
+                    <DropdownItem href="http://www.drawchange.org/faqs" target="_blank">FAQs</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/foundersstory" target="_blank">Founder's Story</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/curriculum-blueprint" target="_blank">Curriculum & Blueprint</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/friends-partners" target="_blank">Our Friends & Partners</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/store" target="_blank">Store</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/press-kit" target="_blank">Press Kit</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar >
+                  <DropdownToggle  nav caret >
+                    Contribute
+                  </DropdownToggle>
+                  <DropdownMenu left>
+                    <DropdownItem href="https://secure.donationpay.org/drawchange/" target="_blank">Donate</DropdownItem>
+                    <DropdownItem href="/apply" target="_blank">Volunteer With Us</DropdownItem>
+                    <DropdownItem href="http://www.drawchange.org/wishlist" target="_blank">Wish List</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <NavItem>
+                  <NavLink href="http://www.drawchange.org/blog" target="_blank">News</NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Activities
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Option 1</DropdownItem>
+                    <DropdownItem>Option 2</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Reset</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <NavItem>
+                  <NavLink href="http://www.drawchange.org/contactus" target="_blank">
+                    Contact
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="https://secure.donationpay.org/drawchange/" target="_blank">
+                    Donate
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+            </Row>
+          </Container>
+          
         </Navbar>
       </div>
     );
