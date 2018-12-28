@@ -30,10 +30,11 @@ class Header extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     return (
       <div>
-        <Navbar color="dark" dark expand="md" style={{ height: '70px' }}>
+        <Navbar color="dark" dark expand="md" style={{height: '70px' }}>
           <NavbarBrand tag={Link} to="/">
             <img
               style={{ width: '175px' }}
@@ -41,6 +42,7 @@ class Header extends Component {
               src="https://static.wixstatic.com/media/20c70b_cc3866fe6cb14a1faae95ae5bbe8e58b~mv2.png/v1/fill/w_352,h_112,al_c,q_80,usm_0.66_1.00_0.01/LOGOw_dc.webp"
             />
           </NavbarBrand>
+
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

@@ -6,7 +6,9 @@ class Intro extends Component {
     return (
     <div>
       <div className={styles.title}>
-        <h1>Volunteer Portal</h1>
+        <div>
+          <h1>Volunteer Application</h1>
+        </div>
       </div>
       <div className={styles.description}>
         <div className={styles.descriptionInner}>
