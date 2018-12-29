@@ -1,56 +1,74 @@
 'use strict';
+
+// npm imports
 const nodemailer = require('nodemailer');
 const nodemailerSendgrid = require('nodemailer-sendgrid');
 
-// Local Imports & Constants
-// require('dotenv').config() // load env vars
+// Local imports
+const { SendEmailError } = require('../util/errors');
 
-function sendEmail(email) {
+// Sendgrid info for SMTP
+const options = {
+  auth: {
+    apiKey: process.env.SENDGRID_API_KEY
+  }
+};
+const transporter = nodemailer.createTransport(
+  nodemailerSendgrid(options)
+);
+
+function sendEmail(recipients, subject, html) {
   return new Promise((resolve, reject) => {
-    // Sendgrid info for SMTP
-    const options = {
-      apiKey: process.env.SENDGRID_API_KEY
-    };
-
-    // Settings for testing with local smtp
-    // const transporter = nodemailer.createTransport({
-    //   // host: account.smtp.host,
-    //   // port: account.smtp.port,
-    //   // secure: account.smtp.secure,
-    //   // host: process.env.SMTP_HOST,
-    //   // port: process.env.SMTP_PORT,
-    //   // secure: false, // true for 465, false for other ports
-    // });
-
-    const transporter = nodemailer.createTransport(nodemailerSendgrid(options));
 
     // setup email data with unicode symbols
     const mailOptions = {
-      from: email.from, // sender address
-      to: parseRecipientEmails(email.recipients), // list of receivers
-      subject: email.subject, // Subject line
-      // text: "<b> test </b>", // plain text body
-      html: email.text // html body
+      from: 'TODO@gmail.com',
+      to: recipients,
+      subject: subject,
+      html: html
     };
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, error => {
       if (error) {
-        return reject({
-          errorMessage: error,
-          emailSent: false
-        });
+        return reject(new SendEmailError(error));
       }
 
-      resolve({
-        emailSent: true
-      });
+      return resolve();
     });
+
   });
 }
 
-function parseRecipientEmails(recipients) {
-  return recipients.map(recipient => recipient.email);
+function sendApplicationConfirmation(user) {
+  const recipients = [user.bio.email];
+  const subject = 'Drawchange Volunteer Registration';
+  const html = `<h1> Application Submitted Confirmation </h1>`;
+
+  // Send email synchronously (promise)
+  return sendEmail(recipients, subject, html);
 }
 
-module.exports = { sendEmail };
+function sendApplicationRejected(user) {
+  const recipients = [user.bio.email];
+  const subject = 'Drawchange Volunteer Registration';
+  const html = `<h1> Application Submitted Rejected </h1>`;
+
+  // Send email synchronously (promise)
+  return sendEmail(recipients, subject, html);
+}
+
+function sendApplicationAccepted(user) {
+  const recipients = [user.bio.email];
+  const subject = 'Drawchange Volunteer Registration';
+  const html = `<h1> Application Submitted Accepted as a ${user.bio.role} </h1>`;
+
+  // Send email synchronously (promise)
+  return sendEmail(recipients, subject, html);
+}
+
+module.exports = {
+  sendApplicationConfirmation,
+  sendApplicationRejected,
+  sendApplicationAccepted
+};

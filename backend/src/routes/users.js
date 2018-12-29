@@ -1,207 +1,27 @@
 // NPM Packages
 const express = require('express');
+const router = express.Router();
 const { check, oneOf, validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
-const router = express.Router();
 
 // Local Imports
 const UserData = require('../models/userData');
-const auth = require('../auth');
+const EmailService = require('../services/emailService');
+const { SendEmailError, EmailInUseError } = require('../util/errors');
+const { USER_DATA_VALIDATOR } = require('../util/validators');
 
-// Validations
-// TODO Add validations for events and survey_responses Array
-const USER_DATA_VALIDATIONS = [
-  check('bio.first_name')
-    .isAlpha()
-    .trim()
-    .escape(),
-  check('bio.last_name')
-    .isAlpha()
-    .trim()
-    .escape(),
-  check('bio.phone_number')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('bio.email')
-    .isEmail()
-    .trim(),
-  check('bio.date_of_birth')
-    .exists()
-    .trim()
-    .escape(),
-  check('bio.street_address')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('bio.city')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('bio.state')
-    .isAlpha()
-    .trim()
-    .escape(),
-  check('bio.zip_code')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('bio.languages')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('history.volunteer_interest_cause')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('history.volunteer_support')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('history.volunteer_commitment')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('history.skills_qualifications')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('history.previous_volunteer_experience')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('availability.weekday_mornings').isBoolean(),
-  check('availability.weekday_afternoons').isBoolean(),
-  check('availability.weekday_evenings').isBoolean(),
-  check('availability.weekend_mornings').isBoolean(),
-  check('availability.weekend_afternoons').isBoolean(),
-  check('availability.weekend_evenings').isBoolean(),
-  check('skills_interests.admin_in_office').isBoolean(),
-  check('skills_interests.admin_virtual').isBoolean(),
-  check('skills_interests.atlanta_shelter').isBoolean(),
-  check('skills_interests.orlando_shelter').isBoolean(),
-  check('skills_interests.graphic_web_design').isBoolean(),
-  check('skills_interests.special_events').isBoolean(),
-  check('skills_interests.grant_writing').isBoolean(),
-  check('skills_interests.writing_editing').isBoolean(),
-  check('skills_interests.social_media').isBoolean(),
-  check('skills_interests.fundraising').isBoolean(),
-  check('skills_interests.finance').isBoolean(),
-  check('skills_interests.office_maintenance_housekeeping').isBoolean(),
-  check('skills_interests.international_projects').isBoolean(),
-  check('skills_interests.volunteer_coordination').isBoolean(),
-  check('skills_interests.outreach').isBoolean(),
-  check('referral.friend').isBoolean(),
-  check('referral.newsletter').isBoolean(),
-  check('referral.event').isBoolean(),
-  check('referral.volunteer_match').isBoolean(),
-  check('referral.internet').isBoolean(),
-  check('referral.social_media').isBoolean(),
-  check('employment.name')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.position')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.duration')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.location')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.previous_name')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.previous_reason_for_leaving')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('employment.previous_location')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('reference.name')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('reference.phone_number')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('reference.email')
-    .isEmail()
-    .trim()
-    .escape(),
-  check('reference.relationship')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('reference.duration')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('criminal.felony').isBoolean(),
-  check('criminal.sexual_violent').isBoolean(),
-  check('criminal.drugs').isBoolean(),
-  check('criminal.driving').isBoolean(),
-  check('criminal.explanation')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('ice.name')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('ice.relationship')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('ice.phone_number')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('ice.email')
-    .isEmail()
-    .trim()
-    .escape(),
-  check('ice.address')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('permissions.comments')
-    .isAscii()
-    .trim()
-    .escape(),
-  check('permissions.reference').isBoolean(),
-  check('permissions.personal_image').isBoolean(),
-  check('permissions.email_list').isBoolean(),
-  check('permissions.signature')
-    .isAscii()
-    .trim()
-    .escape()
-];
-
-// This method is purposely put before the login wall so that
-// new users can be created w/o needing to be signed in...
-router.post('/', USER_DATA_VALIDATIONS, (req, res, next) => {
+router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log(errors.mapped());
       return res.status(400).json({ errors: errors.mapped() });
     }
     const newUserData = matchedData(req);
-    let emailInUse = false;
     let userData = null;
     UserData.findOne({ 'bio.email': newUserData.bio.email })
       .then(user => {
         if (user) {
-          emailInUse = true;
-          throw new Error(`Email ${newUserData.bio.email} already in use`);
+          throw new EmailInUseError(`Email ${newUserData.bio.email} already in use`, newUserData.bio.email);
         }
         return Promise.resolve();
       })
@@ -223,18 +43,34 @@ router.post('/', USER_DATA_VALIDATIONS, (req, res, next) => {
         return Promise.resolve();
       })
       .then(() => {
+        // Volunteer application confirmation email
+        return EmailService.sendApplicationConfirmation(userData);
+      })
+      .then(() => {
         res.status(200).json({ userData });
       })
       .catch(err => {
-        if (emailInUse) {
-          return res.status(400).json({ error: 'Email in use' });
+        if (err instanceof EmailInUseError) {
+          return res.status(400).json({
+            error: 'Email in use',
+            emailInUse: true
+          });
         }
-        next(err);
+
+        if (err instanceof SendEmailError) {
+          return res.status(400).json({
+            error: err.message,
+            emailError: true
+          });
+        }
+
+        // Generic error handler
+        return next(err);
       });
   }
 );
 
-router.get('/', auth.isAuthenticated, (req, res, next) => {
+router.get('/', (req, res, next) => {
   if (req.query.type === 'pending') {
     UserData.find({ 'bio.role': 'pending' })
       .then(users => res.status(200).json({ users }))
@@ -266,13 +102,13 @@ router.get('/', auth.isAuthenticated, (req, res, next) => {
 router
   .route('/:id')
   .get(
-    auth.isAuthenticated,
     [check('id').isMongoId()],
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.mapped() });
       }
+
       UserData.findById(req.params.id)
         .then(user => {
           if (!user) {
@@ -283,9 +119,8 @@ router
         .catch(err => next(err));
     })
   .put(
-    auth.isAuthenticated,
     [check('id').isMongoId()],
-    oneOf(USER_DATA_VALIDATIONS),
+    oneOf(USER_DATA_VALIDATOR),
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -293,62 +128,103 @@ router
       }
 
       const userDataReq = matchedData(req);
-      userDataReq.events = req.body.events;
+      const events = req.body.events;
 
+      let savedUserData = null;
       UserData.findById(req.params.id)
         .then(user => {
           if (!user) {
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
-          } else if (req.query.action === 'appendEvent') {
-            userDataReq.events.forEach(eventId => user.events.push(eventId));
-            delete userDataReq.events;
+          }
+
+          if (req.query.action === 'appendEvent') {
+            events.forEach(eventId => user.events.push(eventId));
           } else if (req.query.action === 'removeEvents') {
-            userDataReq.events.forEach(eventId =>
+            events.forEach(eventId =>
               user.events.splice(user.events.indexOf(eventId), 1)
             );
-            delete userDataReq.events;
           }
 
           delete userDataReq.id; // we do not want to update the user's id
-          for (const key1 in userDataReq) {
-            if (userDataReq.hasOwnProperty(key1)) {
-              const obj = userDataReq[key1];
-              const userObj = user[key1];
-              for (const key2 in obj) {
-                if (obj.hasOwnProperty(key2)) {
-                  userObj[key2] = obj[key2] !== undefined ? obj[key2] : userObj[key2];
-                }
-              }
-              user[key1] = userObj;
-            }
+          updateUserObjectFromRequest(userDataReq, user);
+
+          // Save to db
+          return user.save();
+        })
+        .then(user => {
+          // Save user for later
+          savedUserData = user;
+
+          // Send email if volunteer status has changed
+          if (userDataReq.bio.role === 'pending' && (user.bio.role === 'denied' || user.bio.role === 'deleted')) {
+            // In these cases, the user was rejected
+            return EmailService.sendApplicationRejected(user);
+          } else if (userDataReq.bio.role === 'pending' && user.bio.role !== 'pending') {
+            // All other cases where the role changed, the user was accepted
+            return EmailService.sendApplicationAccepted(user);
           }
 
-          user.save();
-          return res.status(200).json({ user });
+          // All other cases, no change in role
+          return Promise.resolve();
         })
-        .catch(err => next(err));
+        .then(() => {
+          return res.status(200).json({ savedUserData });
+        })
+        .catch(err => {
+          if (err instanceof SendEmailError) {
+            return res.status(400).json({
+              error: err.message,
+              emailError: true
+            });
+          }
+
+          // Generic error handler
+          return next(err);
+        });
     }
   )
-  .delete(auth.isAuthenticated, [check('id').isMongoId()], (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.mapped() });
-    }
+  .delete(
+    [check('id').isMongoId()],
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.mapped() });
+      }
 
-    if (req.user && req.user.userDataId === req.params.id) {
-      // User is trying to remove themselves, don't let that happen...
-      return res.status(403).json({
-        error: 'Cannot delete yourself!'
-      });
-    }
+      if (req.user && req.user.userDataId === req.params.id) {
+        // User is trying to remove themselves, don't let that happen...
+        return res.status(403).json({
+          error: 'Cannot delete yourself!'
+        });
+      }
 
-    UserData.findByIdAndRemove(req.params.id)
-      .then(removed => {
-        removed
-          ? res.status(200).json({ removed })
-          : res.status(404).json({ errors: `No response found with id: ${req.params.id}` });
-      })
-      .catch(err => next(err));
-  });
+      UserData.findByIdAndRemove(req.params.id)
+        .then(removed => {
+          if (!removed) {
+            return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
+          }
+
+          return res.status(200).json({ removed })
+        })
+        .catch(err => next(err));
+    });
+
+/**
+ * Side Affect: Modifies `dbUser`
+ */
+function updateUserObjectFromRequest(reqUser, dbUser) {
+  for (const key1 in reqUser) {
+    if (reqUser.hasOwnProperty(key1)) {
+      const obj = reqUser[key1];
+      const userObj = dbUser[key1];
+      for (const key2 in obj) {
+        if (obj.hasOwnProperty(key2)) {
+          userObj[key2] = obj[key2] !== undefined ? obj[key2] : userObj[key2];
+        }
+      }
+      dbUser[key1] = userObj;
+    }
+  }
+}
 
 module.exports = router;
