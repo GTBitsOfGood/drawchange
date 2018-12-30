@@ -42,10 +42,8 @@
 }
 .gallery {
     min-height: 1px;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-content: center; */
-    /* width: 60%; */
+    display: block;
+    width: 100%;
     overflow: auto;
 }
 .footerBackground {
