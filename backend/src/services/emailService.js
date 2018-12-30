@@ -9,9 +9,7 @@ const { SendEmailError } = require('../util/errors');
 
 // Sendgrid info for SMTP
 const options = {
-  auth: {
-    apiKey: process.env.SENDGRID_API_KEY
-  }
+  apiKey: process.env.SENDGRID_API_KEY
 };
 const transporter = nodemailer.createTransport(
   nodemailerSendgrid(options)
@@ -22,7 +20,7 @@ function sendEmail(recipients, subject, html) {
 
     // setup email data with unicode symbols
     const mailOptions = {
-      from: 'TODO@gmail.com',
+      from: process.env.SENDGRID_FROM_EMAIL,
       to: recipients,
       subject: subject,
       html: html

@@ -204,7 +204,7 @@ router
             return res.status(404).json({ errors: `No user found with id: ${req.params.id}` });
           }
 
-          return res.status(200).json({ removed })
+          return res.status(200).json({ removed });
         })
         .catch(err => next(err));
     });
