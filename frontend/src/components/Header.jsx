@@ -58,11 +58,11 @@ class Header extends Component {
             <Row >
               <Col md="1" lg="2"className ={styles.dark} style={{padding: '0' }}></Col>
               <Col sm="12" md="11" lg="10" style={{padding: '0' }}>
-              <Navbar color="dark" dark expand="md" toggleable>
+              <Navbar color="dark" dark expand="md">
                 <NavbarBrand tag={Link} to="/">
                   <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
                 </NavbarBrand>
-                <NavbarToggler onClick={this.toggle} right/>
+                <NavbarToggler onClick={this.toggle}/>
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav navbar>
                     <NavItem>
@@ -74,7 +74,7 @@ class Header extends Component {
                       <DropdownToggle  nav >
                         About Us
                       </DropdownToggle>
-                      <DropdownMenu left >
+                      <DropdownMenu>
                         <DropdownItem href="http://www.drawchange.org/faqs" target="_blank">FAQs</DropdownItem>
                         <DropdownItem href="http://www.drawchange.org/foundersstory" target="_blank">Founder's Story</DropdownItem>
                         <DropdownItem href="http://www.drawchange.org/curriculum-blueprint" target="_blank">Curriculum & Blueprint</DropdownItem>
@@ -87,7 +87,7 @@ class Header extends Component {
                       <DropdownToggle  nav >
                         Contribute
                       </DropdownToggle>
-                      <DropdownMenu left>
+                      <DropdownMenu>
                         <DropdownItem href="https://secure.donationpay.org/drawchange/" target="_blank">Donate</DropdownItem>
                         <DropdownItem href="/apply" target="_blank">Volunteer With Us</DropdownItem>
                         <DropdownItem href="http://www.drawchange.org/wishlist" target="_blank">Wish List</DropdownItem>
