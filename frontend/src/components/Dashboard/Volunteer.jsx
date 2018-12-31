@@ -31,7 +31,7 @@ export default class VolunteerDashboard extends Component {
           <div className={styles.gallery}>
             <Gallery enableImageSelection={false} maxRows={1} images={IMAGES} />
           </div>
-          <Footer googleClick={this.props.onAuth} />
+          <Footer/>
         </div>}
       </div>
     );
