@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 import VolunteerApp from '../VolunteerApp';
 import AcceptPolicies from '../AcceptPolicies';
+import Intro from './Intro';
+import styles from '../../styles/VolunteerDash.module.css';
+import {IMAGES} from '../../images/volunteer_app/images.js';
+import Gallery from 'react-grid-gallery';
+import Footer from './Footer'
 
 export default class VolunteerDashboard extends Component {
   constructor(props) {
@@ -21,7 +26,13 @@ export default class VolunteerDashboard extends Component {
         {this.state.hasApplied && !this.state.hasPolicies && (
           <AcceptPolicies onSubmit={this.handlePolicies} />
         )}
-        {this.state.hasApplied && this.state.hasPolicies && <h1>Volunteer Dashboard :) </h1>}
+      {this.state.hasApplied && this.state.hasPolicies && <div>
+          <Intro />
+          <div className={styles.gallery}>
+            <Gallery enableImageSelection={false} maxRows={1} images={IMAGES} />
+          </div>
+          <Footer googleClick={this.props.onAuth} />
+        </div>}
       </div>
     );
   }

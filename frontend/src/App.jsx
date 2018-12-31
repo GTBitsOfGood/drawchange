@@ -20,8 +20,7 @@ class App extends Component {
       <Router>
         <div>
           <Header />
-          {this.state.authenticated ? <Dashboard user={user} /> : <Splash onAuth={this.fakeAuth} />}
-
+          {this.state.authenticated  ? <Dashboard user={user} /> : <Splash onAuth={this.fakeAuth} />}
           {/* <Route path="/" exact render={_ => <AuthWall user={user} />} /> */}
           <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} />
         </div>

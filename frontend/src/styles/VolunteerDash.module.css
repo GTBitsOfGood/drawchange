@@ -1,3 +1,11 @@
+.gallery {
+    min-height: 1px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    overflow: auto;
+}
+
 .title {
     background-color: yellow;
     color: #747575;
@@ -57,19 +65,54 @@
     flex-direction: column;
     text-align: center;
     margin: auto;
-    padding-top: 2em;
+    padding-top: 1.5em;
     margin-top: -2px;
     padding-bottom: 1em;
 }
 
 .footer {
-    width: 50%;
+    width: 58%;
     margin: auto;
 }
 
-.googleButton {
-    display: inline-block !important;
+.informationWrapper {
+    background-color: #68CAFA;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
+    font-size:1.15em;
+    padding-bottom: 1em;
 }
+.informationWrapper h5{
+    font-size: 1.8em;
+    color: #F5F685;
+}
+
+.information {
+    width: 58%;
+}
+
+.informationCloser {
+    font-size: 1.3em;
+    text-align: center;
+    padding: .5em;
+}
+
+.policyWrapper {
+    display: flex;
+    background-color: orange;
+    justify-content: center;
+}
+.policyWrapper a {
+    color: black;
+    text-decoration: underline;
+}
+
+.policy {
+    text-align: center;
+}
+
 .donate {
     background-color: rgb(169, 95, 209);
     display: flex;
