@@ -9,6 +9,10 @@ const validation = Yup.object().shape({
     sexual_violent: Yup.boolean(),
     drugs: Yup.boolean(),
     driving: Yup.boolean(),
+    none: Yup.boolean().when(['sexual_violent', 'drugs', 'driving'], {
+      is: (first, second, third) => !(first || second || third),
+      then: Yup.boolean().oneOf([true], 'If no other boxes apply, check this box.')
+    }),
     explanation: Yup.string().when(['sexual_violent', 'drugs', 'driving'], {
       is: (first, second, third) => first || second || third,
       then: Yup.string()
@@ -23,6 +27,7 @@ const defaultValues = {
     sexual_violent: false,
     drugs: false,
     driving: false,
+    none: false,
     explanation: ''
   }
 };
@@ -45,6 +50,7 @@ const CriminalForm = ({ initValues, onBack, ...props }) => {
         name="criminal.driving"
         value="Reckless driving, operating a motor vehicle while under the influence, or driving to endanger?"
       />
+      <Checkbox name="criminal.none" value="No criminal record." />
       <FormField
         name="criminal.explanation"
         type="textarea"

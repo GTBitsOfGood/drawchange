@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Local Imports
 const Event = require('../models/event');
-const User = require('../models/userData');
+const { EVENT_VALIDATOR } = require('../util/validators');
 
 router
   .route('/')
@@ -25,40 +25,7 @@ router
     }
   })
   .post(
-    [
-      // TODO Add validations for voluntters Array
-      check('name')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('date').exists(),
-      check('location')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('description')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('contact')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('max_volunteers').isNumeric(),
-      check('link')
-        .optional()
-        .isAscii()
-        .trim()
-        .escape(),
-      check('additional_background_check')
-        .optional()
-        .isAscii()
-        .trim()
-        .escape()
-      // check('volunteers').custom(value => {
-      //   if ()
-      // })
-    ],
+    EVENT_VALIDATOR,
     (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -95,31 +62,7 @@ router
   })
   .put(
     [check('id').isMongoId()],
-    oneOf([
-      // TODO Add validations for voluntters Array
-      check('name')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('date').exists(),
-      check('location')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('description')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('contact')
-        .isAscii()
-        .trim()
-        .escape(),
-      check('max_volunteers').isNumeric(),
-      check('volunteers').exists()
-      // check('volunteers').custom(value => {
-      //   if ()
-      // })
-    ]),
+    oneOf(EVENT_VALIDATOR),
     (req, res, query) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
