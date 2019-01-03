@@ -111,7 +111,6 @@ module.exports = {
    * Express middleware to check if current user is authenticated.
    */
   isAuthenticated: (req, res, next) => {
-    return next();
     return req.user
       ? next()
       : res.status(401).json({
