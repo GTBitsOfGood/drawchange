@@ -5,6 +5,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  /* font-size: 40px !important; */
+  /* background-color: yellow;
+  color: #747575;
+  min-height: 10em;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
   /* font-size: 40px !important; */
 }
 
