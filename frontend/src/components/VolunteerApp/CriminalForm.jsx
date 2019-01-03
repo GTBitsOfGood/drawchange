@@ -6,6 +6,7 @@ import { Form, FormField, Checkbox, NextButton, BackButton, Header, Text } from 
 
 const validation = Yup.object().shape({
   criminal: Yup.object().shape({
+    felony: Yup.boolean(),
     sexual_violent: Yup.boolean(),
     drugs: Yup.boolean(),
     driving: Yup.boolean(),
@@ -24,6 +25,7 @@ const validation = Yup.object().shape({
 
 const defaultValues = {
   criminal: {
+    felony: false,
     sexual_violent: false,
     drugs: false,
     driving: false,
@@ -38,6 +40,7 @@ const CriminalForm = ({ initValues, onBack, ...props }) => {
     <Form initialValues={values} validationSchema={validation} {...props}>
       <Header>Criminal History</Header>
       <Text bold>Please indicate if you have been convicted of any of the following.</Text>
+      <Checkbox name="criminal.felony" value="Any felony crime? " />
       <Checkbox
         name="criminal.sexual_violent"
         value="Any crime involving a sexual offense, an assault or the use of a weapon? "

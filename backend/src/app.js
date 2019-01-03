@@ -14,6 +14,7 @@ const app = express();
 // Connect to MongoDB
 mongoose.connect(
   process.env.MONGODB_URI,
+  { useNewUrlParser: true, useCreateIndex: true },
   err => {
     if (err) throw err;
     console.log('Conected to MongoDB');
@@ -23,9 +24,10 @@ mongoose.Promise = global.Promise;
 
 // Setup morgan logging
 morgan.token('id', req => req.id);
-const logger = morgan(process.env.NODE_ENV === 'production' ?
-  ':id - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]' :
-  'dev'
+const logger = morgan(
+  process.env.NODE_ENV === 'production'
+    ? ':id - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'
+    : 'dev'
 );
 
 app.use(addRequestId);
