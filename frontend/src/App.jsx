@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Header, Authenticated, Splash } from './components';
+import VolunteerDashboard from './components/Dashboard/Volunteer';
 
 // import styles from './styles/Main.module.css'
 
@@ -20,11 +21,12 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
-          {this.state.authenticated ? (
+          <VolunteerDashboard />
+          {/* {this.state.authenticated ? (
             <Authenticated user={user} />
           ) : (
             <Splash onAuth={this.fakeAuth} />
-          )}
+          )} */}
         </div>
       </BrowserRouter>
     );

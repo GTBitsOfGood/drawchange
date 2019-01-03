@@ -12,8 +12,8 @@ export default class VolunteerDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasApplied: false,
-      hasPolicies: false
+      hasApplied: true,
+      hasPolicies: true
     };
   }
 
