@@ -11,7 +11,7 @@ const mustache = require('mustache');
 const { SendEmailError } = require('../util/errors');
 
 // Constants
-const EMAIL_TEMPLATE_RELATIVE_LOCATION = '../../res/templates/email/';
+const EMAIL_TEMPLATE_RELATIVE_LOCATION = '../templates/email/';
 
 // Import templates and compile
 const mustacheFileNameEntries = Object.entries({
@@ -30,13 +30,10 @@ const mustacheTemplates = new Map(mustacheTemplateEntries); // Map of emailType 
 const options = {
   apiKey: process.env.SENDGRID_API_KEY
 };
-const transporter = nodemailer.createTransport(
-  nodemailerSendgrid(options)
-);
+const transporter = nodemailer.createTransport(nodemailerSendgrid(options));
 
 function sendEmail(recipients, subject, html) {
   return new Promise((resolve, reject) => {
-
     // setup email data with unicode symbols
     const mailOptions = {
       from: process.env.SENDGRID_FROM_EMAIL,
@@ -53,7 +50,6 @@ function sendEmail(recipients, subject, html) {
 
       return resolve();
     });
-
   });
 }
 

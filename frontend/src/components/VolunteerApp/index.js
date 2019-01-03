@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Progress } from 'reactstrap';
+import axios from 'axios';
 
 import Step0 from './ProfileForm';
 import Step1 from './VolunteerInfoForm';
@@ -26,10 +27,17 @@ export default class VolunteerApp extends Component {
   steps = [Step0, Step1, Step2, Step3, Step4, Step5, Step6, Step7];
 
   postApp = _ => {
-    //TODO Post data to backend
-    setTimeout(() => alert(JSON.stringify(this.state.data, null, 2)), 400);
     console.log('we submitted');
-    this.setState({ submitted: true });
+    console.log(this.state.data);
+
+    axios
+      .post('/api/users', this.state.data)
+      .then(res => {
+        console.log('Success', res);
+        this.setState({ submitted: true });
+      })
+      .catch(er => console.log('ERROR: ', er));
+    // TODO Add error handling
   };
 
   onSubmit = formData => {

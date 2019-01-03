@@ -48,11 +48,11 @@
   display: inline-block;
 }
 .gallery {
-    min-height: 1px;
-    display: block;
-    text-align: center;
-    width: 100%;
-    overflow: auto;
+  min-height: 1px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
   /* min-height: 1px; */
   /* display: flex; */
   /* justify-content: center; */
@@ -76,8 +76,8 @@
 }
 
 .footer {
-    width: 50%;
-    margin: auto;
+  width: 50%;
+  margin: auto;
   /* display: inline-block;
     width: 60%; */
   /* width: 50%; */

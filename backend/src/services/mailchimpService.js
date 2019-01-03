@@ -20,14 +20,15 @@ const mailchimp = new Mailchimp(process.env.MAILCHIMP_API_KEY);
  * @returns a promise
  */
 function addSubscriber(firstName, lastName, email) {
-  return mailchimp.post(SUBSCRIBER_LIST_API_PATH, {
-    'email_address': email,
-    'status': 'subscribed',
-    'merge_fields': {
-      'FNAME': firstName,
-      'LNAME': lastName
-    }
-  })
+  return mailchimp
+    .post(SUBSCRIBER_LIST_API_PATH, {
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: {
+        FNAME: firstName,
+        LNAME: lastName
+      }
+    })
     .then(() => {
       // Ignore result, it was successful. Do not pass result to caller (abstraction)
       return Promise.resolve();

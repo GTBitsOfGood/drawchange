@@ -5,7 +5,7 @@ class SendEmailError extends Error {
   constructor(error) {
     super(`Send Email Error: ${error.message}`);
     this.name = this.constructor.name;
-    this.data = { error }
+    this.data = { error };
   }
 }
 
@@ -27,7 +27,7 @@ class SubscribeUserError extends Error {
   constructor(error) {
     super(`Subscribe User Error: ${error.message}`);
     this.name = this.constructor.name;
-    this.data = { error }
+    this.data = { error };
   }
 }
 
@@ -35,4 +35,4 @@ module.exports = {
   SendEmailError,
   EmailInUseError,
   SubscribeUserError
-}
+};

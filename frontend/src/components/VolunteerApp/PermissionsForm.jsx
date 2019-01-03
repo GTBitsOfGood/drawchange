@@ -9,7 +9,7 @@ const validation = Yup.object().shape({
     comments: Yup.string(),
     reference: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
     personal_image: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-    email_list: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+    email_list: Yup.boolean(),
     signature: Yup.string().required('Required')
   })
 });
