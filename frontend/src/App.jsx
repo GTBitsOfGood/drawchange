@@ -3,8 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Header, Authenticated, Splash } from './components';
 
-// import styles from './styles/Main.module.css'
-
 class App extends Component {
   state = { user: null };
   componentWillMount(props) {
