@@ -22,7 +22,7 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 
 // Setup morgan logging
-morgan.token('id', function getId(req) {
+morgan.token('id', req => {
   return req.id;
 });
 const logger = morgan(process.env.NODE_ENV === 'production' ?
