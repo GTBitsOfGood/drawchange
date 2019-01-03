@@ -16,42 +16,19 @@ import {
   Row
 } from 'reactstrap';
 
-import logo from '../images/drawchange_logo_white.webp';
+import logo from '../images/drawchange_logo_white.png';
 // import styles from '../styles/Header.module.css'
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    // this.hover = this.hover.bind(this);
-    // this.onMouseEnter = this.onMouseEnter.bind(this);
-    // this.onMouseLeave = this.onMouseLeave.bind(this);
-    // this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-      // dropdownOpen: false
-    };
-  }
+  state = {
+    isOpen: false
+  };
 
-  // hover() {
-  //   this.setState(prevState => ({
-  //     dropdownOpen: !prevState.dropdownOpen
-  //   }));
-  // }
-  // onMouseOver={this.onMouseEnter} onMouseLeave={this.onMouseLeave} isOpen={this.state.dropdownOpen} hover={this.hover}
-  // onMouseEnter() {
-  //   this.setState({dropdownOpen: true});
-  // }
-
-  // onMouseLeave() {
-  //   this.setState({dropdownOpen: false});
-  // }
-
-  toggle() {
+  toggle = _ => {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
 
   render() {
     return (
@@ -108,7 +85,6 @@ class Header extends Component {
                   <NavItem>
                     <NavLink href="http://www.drawchange.org/blog">News</NavLink>
                   </NavItem>
-
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
                       Activities
@@ -125,7 +101,6 @@ class Header extends Component {
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-
                   <NavItem>
                     <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
                   </NavItem>
