@@ -7,7 +7,7 @@ import { Form, FormField, Checkbox, NextButton, BackButton, Header, Subtitle } f
 
 const validation = Yup.object().shape({
   history: Yup.object().shape({
-    voluteer_interest_cause: Yup.string()
+    volunteer_interest_cause: Yup.string()
       .min(80, 'Please elaborate')
       .required('Required'),
     volunteer_support: Yup.string()
@@ -32,7 +32,7 @@ const validation = Yup.object().shape({
 
 const defaultValues = {
   history: {
-    voluteer_interest_cause: '',
+    volunteer_interest_cause: '',
     volunteer_support: '',
     volunteer_commitment: '',
     previous_volunteer_experience: ''
@@ -57,7 +57,7 @@ const ShortAnswerForm = ({ initValues, onBack, ...props }) => {
       <Header>Volunteer Information</Header>
       <FormField
         type="textarea"
-        name="history.voluteer_interest_cause"
+        name="history.volunteer_interest_cause"
         label="Why are you interested in volunteering with drawchange?"
       />
       <FormField

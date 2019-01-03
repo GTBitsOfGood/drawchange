@@ -82,7 +82,7 @@ const userDataSchema = mongoose.Schema(
       drugs: { type: Boolean, required: true },
       driving: { type: Boolean, required: true },
       none: { type: Boolean, required: true },
-      explanation: { type: String }
+      explanation: { type: String, required: false }
     },
     ice: {
       name: { type: String, required: true },
@@ -92,7 +92,7 @@ const userDataSchema = mongoose.Schema(
       address: { type: String, required: true }
     },
     permissions: {
-      comments: { type: String },
+      comments: { type: String, required: false },
       reference: { type: Boolean, required: true },
       personal_image: { type: Boolean, required: true },
       email_list: { type: Boolean, required: true },

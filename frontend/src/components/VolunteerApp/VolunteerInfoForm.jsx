@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
 
-import { Form, FormField, Checkbox, Header, Subtitle, NextButton } from '../Forms';
+import { Form, FormField, Checkbox, Header, Subtitle, NextButton, BackButton } from '../Forms';
 
 const defaultValues = {
   availability: {
@@ -34,7 +34,7 @@ const defaultValues = {
   }
 };
 
-const VolunteerInfoForm = ({ initValues, ...props }) => {
+const VolunteerInfoForm = ({ initValues, onBack, ...props }) => {
   const values = {
     availability: { ...defaultValues.availability, ...initValues.availability },
     skills_interests: { ...defaultValues.skills_interests, ...initValues.skills_interests }
@@ -103,7 +103,10 @@ const VolunteerInfoForm = ({ initValues, ...props }) => {
         name="skills_interests.skills_qualifications"
         label="Please summarize special skills and qualifications you have acquired from employment, previous volunteer  work, or through other activities, including hobbies or sports."
       />
-      <NextButton />
+      <div style={{ display: 'flex' }}>
+        <BackButton onClick={onBack} />
+        <NextButton />
+      </div>
     </Form>
   );
 };

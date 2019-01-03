@@ -40,7 +40,7 @@ const defaultValues = {
     last_name: '',
     email: '',
     phone_number: '',
-    date_of_birth: new Date(),
+    date_of_birth: new Date().toISOString().substring(0, 10),
     street_address: '',
     city: '',
     state: '',
@@ -48,10 +48,16 @@ const defaultValues = {
   }
 };
 
-const PersonalInfoForm = ({ initValues, ...props }) => {
+const PersonalInfoForm = ({ initValues, onSubmit, ...props }) => {
   const values = { bio: { ...defaultValues.bio, ...initValues.bio } };
+  const submit = formData => {
+    const tz = new Date().toISOString().substring(10);
+    formData.bio.date_of_birth = new Date(`${formData.bio.date_of_birth}${tz}`);
+    onSubmit(formData);
+  };
+
   return (
-    <Form initialValues={values} validationSchema={validation} {...props}>
+    <Form initialValues={values} validationSchema={validation} onSubmit={submit} {...props}>
       <Header>Personal Information</Header>
       <FormField label="First Name" name="bio.first_name" placeholder="Jane" />
       <FormField label="Last Name" name="bio.last_name" placeholder="Smith" />
