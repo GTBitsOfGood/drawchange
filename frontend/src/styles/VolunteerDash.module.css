@@ -76,13 +76,19 @@
 }
 
 .informationWrapper {
-    background-color: #68CAFA;
+    /* background-color: #68CAFA; */
+    background-color: #33caff;
     color: white;
     display: flex;
     justify-content: center;
     padding-top: 1em;
     font-size:1.15em;
     padding-bottom: 1em;
+}
+
+.informationWrapper a {
+    color: white;
+    text-decoration: underline;
 }
 .informationWrapper h5{
     font-size: 1.8em;

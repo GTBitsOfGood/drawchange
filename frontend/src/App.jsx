@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Header, Authenticated, Splash } from './components';
-import VolunteerDashboard from './components/Dashboard/Volunteer';
 
 // import styles from './styles/Main.module.css'
 
 class App extends Component {
-  state = { authenticated: false };
+  state = { authenticated: true };
   componentWillMount(props) {
     // check url for user id
   }
@@ -15,18 +14,17 @@ class App extends Component {
   fakeAuth = _ => this.setState({ authenticated: true });
 
   render() {
-    const user = { admin: false };
+    const user = { role: 'volunteer' };
 
     return (
       <BrowserRouter>
         <div>
           <Header />
-          <VolunteerDashboard />
-          {/* {this.state.authenticated ? (
+          {this.state.authenticated ? (
             <Authenticated user={user} />
           ) : (
             <Splash onAuth={this.fakeAuth} />
-          )} */}
+          )}
         </div>
       </BrowserRouter>
     );
