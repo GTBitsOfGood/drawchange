@@ -5,16 +5,11 @@ const router = express.Router();
 // Local Imports
 const auth = require('../auth');
 const events = require('./events');
-const emails = require('./emails');
 const users = require('./users');
-const contact = require('./contact');
-
-router.use('/contact', contact);
-router.use('/users', users);
 
 // Restful endpoints
+router.use('/users', auth.isAuthenticated, users);
 router.use('/events', auth.isAuthenticated, events);
-router.use('/emails', auth.isAuthenticated, emails);
 
 // Error handler
 router.use((err, req, res, next) => {
