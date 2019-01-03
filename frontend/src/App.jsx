@@ -6,22 +6,20 @@ import { Header, Authenticated, Splash } from './components';
 // import styles from './styles/Main.module.css'
 
 class App extends Component {
-  state = { authenticated: true };
+  state = { user: null };
   componentWillMount(props) {
     // check url for user id
   }
 
-  fakeAuth = _ => this.setState({ authenticated: true });
+  fakeAuth = _ => this.setState({ user: { role: null } });
 
   render() {
-    const user = { role: 'volunteer' };
-
     return (
       <BrowserRouter>
         <div>
           <Header />
-          {this.state.authenticated ? (
-            <Authenticated user={user} />
+          {this.state.user ? (
+            <Authenticated user={this.state.user} />
           ) : (
             <Splash onAuth={this.fakeAuth} />
           )}
