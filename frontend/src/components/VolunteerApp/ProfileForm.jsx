@@ -20,15 +20,15 @@ const validation = Yup.object().shape({
     phone_number: Yup.string()
       .matches(/^((?!_).)*$/, 'Invalid phone number')
       .required('Required'),
-    dob: Yup.date()
+    date_of_birth: Yup.date()
       .max(new Date(), `Invalid date of birth`)
       .required('Required'),
-    streetAddress: Yup.string().required('Required'),
+    street_address: Yup.string().required('Required'),
     city: Yup.string().required('Required'),
     state: Yup.string()
       .max(2, 'Please use 2 letter abbreviation')
       .required('Required'),
-    zipcode: Yup.string()
+    zip_code: Yup.string()
       .matches(/^[0-9]{5}$/, 'Invalid zipcode')
       .required('Required')
   })
@@ -40,11 +40,11 @@ const defaultValues = {
     last_name: '',
     email: '',
     phone_number: '',
-    dob: new Date(),
-    streetAddress: '',
+    date_of_birth: new Date(),
+    street_address: '',
     city: '',
     state: '',
-    zipcode: ''
+    zip_code: ''
   }
 };
 
@@ -62,11 +62,16 @@ const PersonalInfoForm = ({ initValues, ...props }) => {
         name="bio.phone_number"
         placeholder="(000)000-0000"
       />
-      <FormField label="Date of Birth" type="date" name="bio.dob" placeholder="MM/DD/YYYY" />
-      <FormField label="Street Address" name="bio.streetAddress" placeholder="123 Maple St" />
+      <FormField
+        label="Date of Birth"
+        type="date"
+        name="bio.date_of_birth"
+        placeholder="MM/DD/YYYY"
+      />
+      <FormField label="Street Address" name="bio.street_address" placeholder="123 Maple St" />
       <FormField label="City" name="bio.city" placeholder="Atlanta" />
       <FormField label="State" name="bio.state" placeholder="GA" />
-      <FormField label="Zipcode" name="bio.zipcode" placeholder="30313" />
+      <FormField label="Zipcode" name="bio.zip_code" placeholder="30313" />
       <NextButton />
     </Form>
   );

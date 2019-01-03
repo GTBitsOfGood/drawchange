@@ -29,6 +29,7 @@ export default class VolunteerApp extends Component {
     //TODO Post data to backend
     setTimeout(() => alert(JSON.stringify(this.state.data, null, 2)), 400);
     console.log('we submitted');
+    console.log(this.state.data);
     this.setState({ submitted: true });
   };
 
