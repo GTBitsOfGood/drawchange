@@ -3,7 +3,7 @@ import styles from '../../styles/Home.module.css';
 import Gallery from 'react-grid-gallery';
 import Intro from './Intro';
 import Footer from './Footer';
-import {IMAGES} from '../../images/volunteer_app/images.js';
+import { IMAGES } from '../../images/volunteer_app/images.js';
 
 class Splash extends Component {
   render() {

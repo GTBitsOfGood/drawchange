@@ -27,10 +27,9 @@ export default class VolunteerApp extends Component {
   steps = [Step0, Step1, Step2, Step3, Step4, Step5, Step6, Step7];
 
   postApp = _ => {
-    //TODO Post data to backend
     console.log('we submitted');
     console.log(this.state.data);
-    // setTimeout(() => alert(JSON.stringify(this.state.data, null, 2)), 400);
+
     axios
       .post('/api/users', this.state.data)
       .then(res => {
@@ -38,6 +37,7 @@ export default class VolunteerApp extends Component {
         this.setState({ submitted: true });
       })
       .catch(er => console.log('ERROR: ', er));
+    // TODO Add error handling
   };
 
   onSubmit = formData => {
