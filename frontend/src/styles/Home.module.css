@@ -48,12 +48,17 @@
   display: inline-block;
 }
 .gallery {
-  min-height: 1px;
+    min-height: 1px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    overflow: auto;
+  /* min-height: 1px; */
   /* display: flex; */
   /* justify-content: center; */
   /* align-content: center; */
   /* width: 60%; */
-  overflow: auto;
+  /* overflow: auto; */
 }
 .footerBackground {
   background-color: orange;
@@ -71,10 +76,12 @@
 }
 
 .footer {
+    width: 50%;
+    margin: auto;
   /* display: inline-block;
     width: 60%; */
-  width: 50%;
-  margin: auto;
+  /* width: 50%; */
+  /* margin: auto; */
 }
 
 .googleButton {
