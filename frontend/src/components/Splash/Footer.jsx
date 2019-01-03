@@ -8,7 +8,7 @@ class Footer extends Component {
     return (
       <div>
         <div className={styles.footerBackground}>
-          <div className={styles.test}>
+          <div>
             <div className={styles.footer}>
               <p>
                 While we greatly need and appreciate all of the volunteer assistance we receive, we
