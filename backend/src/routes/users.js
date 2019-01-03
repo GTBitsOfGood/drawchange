@@ -6,8 +6,9 @@ const { matchedData } = require('express-validator/filter');
 
 // Local Imports
 const UserData = require('../models/userData');
-const EmailService = require('../services/emailService');
-const { SendEmailError, EmailInUseError } = require('../util/errors');
+const SendgridService = require('../services/sendgridService');
+const MailchimpService = require('../services/mailchimpService');
+const { SendEmailError, EmailInUseError, SubscribeUserError } = require('../util/errors');
 const { USER_DATA_VALIDATOR } = require('../util/validators');
 
 router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
@@ -43,8 +44,20 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
         return Promise.resolve();
       })
       .then(() => {
+        // Add to mailchimp (if permission given)
+        if (userData.permissions.email_list) {
+          return MailchimpService.addSubscriber(
+            userData.bio.first_name,
+            userData.bio.last_name,
+            userData.bio.email
+          );
+        }
+        // If no permission, just move on
+        return Promise.resolve();
+      })
+      .then(() => {
         // Volunteer application confirmation email
-        return EmailService.sendApplicationConfirmation(userData);
+        return SendgridService.sendApplicationConfirmation(userData);
       })
       .then(() => {
         res.status(200).json({ userData });
@@ -53,14 +66,14 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
         if (err instanceof EmailInUseError) {
           return res.status(400).json({
             error: 'Email in use',
-            emailInUse: true
+            errorType: err.name
           });
         }
 
-        if (err instanceof SendEmailError) {
+        if (err instanceof SendEmailError || err instanceof SubscribeUserError) {
           return res.status(400).json({
             error: err.message,
-            emailError: true
+            errorType: err.name
           });
         }
 
@@ -158,10 +171,10 @@ router
           // Send email if volunteer status has changed
           if (userDataReq.bio.role === 'pending' && (user.bio.role === 'denied' || user.bio.role === 'deleted')) {
             // In these cases, the user was rejected
-            return EmailService.sendApplicationRejected(user);
+            return SendgridService.sendApplicationRejected(user);
           } else if (userDataReq.bio.role === 'pending' && user.bio.role !== 'pending') {
             // All other cases where the role changed, the user was accepted
-            return EmailService.sendApplicationAccepted(user);
+            return SendgridService.sendApplicationAccepted(user);
           }
 
           // All other cases, no change in role
@@ -174,7 +187,7 @@ router
           if (err instanceof SendEmailError) {
             return res.status(400).json({
               error: err.message,
-              emailError: true
+              errorType: err.name
             });
           }
 
