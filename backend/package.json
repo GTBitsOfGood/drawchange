@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-request-id": "^1.4.1",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.0",
     "helmet": "^3.15.0",

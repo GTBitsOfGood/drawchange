@@ -1,6 +1,7 @@
 const path = require('path');
-const logger = require('morgan');
+const morgan = require('morgan');
 const express = require('express');
+const addRequestId = require('express-request-id')();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -20,7 +21,17 @@ mongoose.connect(
 );
 mongoose.Promise = global.Promise;
 
-app.use(logger('dev'));
+// Setup morgan logging
+morgan.token('id', function getId(req) {
+  return req.id;
+});
+const logger = morgan(process.env.NODE_ENV === 'production' ?
+  ':id - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]' :
+  'dev'
+);
+
+app.use(addRequestId);
+app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
