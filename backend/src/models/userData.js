@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 // define schema for user collection (user model)
 const userDataSchema = mongoose.Schema(
   {
+    role: {
+      type: String,
+      default: 'pending',
+      enum: ['pending', 'admin', 'manager', 'volunteer', 'denied', 'deleted']
+    },
     bio: {
       first_name: { type: String, required: true },
       last_name: { type: String, required: true },
@@ -12,12 +17,7 @@ const userDataSchema = mongoose.Schema(
       street_address: { type: String, required: true },
       city: { type: String, required: true },
       state: { type: String, required: true },
-      zip_code: { type: String, required: true },
-      role: {
-        type: String,
-        default: 'pending',
-        enum: ['pending', 'admin', 'manager', 'volunteer', 'denied', 'deleted']
-      }
+      zip_code: { type: String, required: true }
     },
     history: {
       volunteer_interest_cause: { type: String, required: true },

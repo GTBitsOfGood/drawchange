@@ -38,7 +38,7 @@ const USER_DATA_VALIDATOR = [
     .isAscii()
     .trim()
     .escape(),
-  check('bio.languages')
+  check('skills_interests.languages')
     .isAscii()
     .trim()
     .escape(),
@@ -54,7 +54,7 @@ const USER_DATA_VALIDATOR = [
     .isAscii()
     .trim()
     .escape(),
-  check('history.skills_qualifications')
+  check('skills_interests.skills_qualifications')
     .isAscii()
     .trim()
     .escape(),
@@ -68,7 +68,7 @@ const USER_DATA_VALIDATOR = [
   check('availability.weekend_mornings').isBoolean(),
   check('availability.weekend_afternoons').isBoolean(),
   check('availability.weekend_evenings').isBoolean(),
-  check('skills_interests.admin_in_office').isBoolean(),
+  check('skills_interests.admin_office').isBoolean(),
   check('skills_interests.admin_virtual').isBoolean(),
   check('skills_interests.atlanta_shelter').isBoolean(),
   check('skills_interests.orlando_shelter').isBoolean(),
@@ -141,6 +141,7 @@ const USER_DATA_VALIDATOR = [
   check('criminal.sexual_violent').isBoolean(),
   check('criminal.drugs').isBoolean(),
   check('criminal.driving').isBoolean(),
+  check('criminal.none').isBoolean(),
   check('criminal.explanation')
     .isAscii()
     .trim()

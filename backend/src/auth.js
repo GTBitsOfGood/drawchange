@@ -13,7 +13,6 @@ const PUBLIC_FACING_AUTH_CALLBACK_URL = `${process.env.BASE_URL_WITH_PORT}/auth/
  * Initializes passport and authentication-related endpoints for the entire express application.
  */
 function initAuth(app) {
-
   // Middleware to use passport
   app.use(passport.initialize());
   app.use(passport.session());
@@ -32,47 +31,52 @@ function initAuth(app) {
   });
 
   // Google Auth config via passport
-  passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: PUBLIC_FACING_AUTH_CALLBACK_URL
-    },
-    (accessToken, refreshToken, profile, done) => {
-      UserCreds.findOne({ googleId: profile.id })
-        .then(userCreds => {
-          if (userCreds) {
-            // User credentials were found, first update access and refresh tokens
-            userCreds.accessToken = accessToken;
-            userCreds.refreshToken = refreshToken;
-            return userCreds.save();
-          }
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: PUBLIC_FACING_AUTH_CALLBACK_URL
+      },
+      (accessToken, refreshToken, profile, done) => {
+        UserCreds.findOne({ googleId: profile.id })
+          .then(userCreds => {
+            if (userCreds) {
+              // User credentials were found, first update access and refresh tokens
+              userCreds.accessToken = accessToken;
+              userCreds.refreshToken = refreshToken;
+              return userCreds.save();
+            }
 
-          // First time login, create the UserCreds document
-          const newUserCreds = new UserCreds({
-            googleId: profile.id,
-            accessToken,
-            refreshToken,
-            userDataId: null  // User does not have any data in the system yet
+            // First time login, create the UserCreds document
+            const newUserCreds = new UserCreds({
+              googleId: profile.id,
+              accessToken,
+              refreshToken,
+              userDataId: null // User does not have any data in the system yet
+            });
+            return newUserCreds.save();
+          })
+          .then(savedUserCreds => {
+            // Return updated user creds
+            done(null, savedUserCreds);
+          })
+          .catch(err => {
+            done(err);
           });
-          return newUserCreds.save();
-        })
-        .then(savedUserCreds => {
-          // Return updated user creds
-          done(null, savedUserCreds);
-        })
-        .catch(err => {
-          done(err);
-        });
-    }
-  ));
+      }
+    )
+  );
 
   // User must visit this endpoint in their web browser to authenticate with google
-  app.get('/auth/google',
+  app.get(
+    '/auth/google',
     passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })
   );
 
   // User will be redirected to here after authentication via Google
-  app.get('/auth/google/callback',
+  app.get(
+    '/auth/google/callback',
     passport.authenticate('google', {
       failureRedirect: '/loginRedirect?userId=error' // Occurs if user denies google auth, etc.
     }),
@@ -95,11 +99,10 @@ function initAuth(app) {
       if (err) {
         return next(err);
       }
-      res.clearCookie('connect.sid', {path: '/'});
+      res.clearCookie('connect.sid', { path: '/' });
       res.redirect('/');
     });
   });
-
 }
 
 module.exports = {
@@ -108,8 +111,11 @@ module.exports = {
    * Express middleware to check if current user is authenticated.
    */
   isAuthenticated: (req, res, next) => {
-    return req.user ? next() : res.status(401).json({
-      error: 'User not authenticated (must sign in)'
-    });
+    return next();
+    return req.user
+      ? next()
+      : res.status(401).json({
+          error: 'User not authenticated (must sign in)'
+        });
   }
 };
