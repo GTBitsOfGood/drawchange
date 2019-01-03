@@ -1,5 +1,4 @@
 const EmailService = require('../src/services/emailService');
-const Email = require('../src/models/email');
 const chai = require('chai');
 // const chaiAsPromised = require('chai-as-promised');
 const assert = chai.assert;

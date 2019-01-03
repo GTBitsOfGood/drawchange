@@ -28,13 +28,13 @@ const PermissionsForm = ({ initValues, onBack, ...props }) => {
   const values = { permissions: { ...defaultValues.permissions, ...initValues.permissions } };
   return (
     <Form initialValues={values} validationSchema={validation} {...props}>
-      <Header>Permissions</Header>
+      <Header>Anything else?</Header>
       <FormField
         type="textarea"
         name="permissions.comments"
         label="Is there anything else we should know about you? Any questions, comments, or concerns?"
       />
-      <br />
+      <Header>Permissions</Header>
       <Text bold>drawchange has my permission to:</Text>
       <Checkbox name="permissions.reference" value="Verify the reference I have provided" />
       <Checkbox

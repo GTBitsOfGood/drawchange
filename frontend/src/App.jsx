@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import { Header, VolunteerApp, Dashboard, Splash } from './components';
+import { Header, Authenticated, Splash } from './components';
 
 // import styles from './styles/Main.module.css'
 
@@ -17,15 +17,16 @@ class App extends Component {
     const user = { admin: false };
 
     return (
-      <Router>
+      <BrowserRouter>
         <div>
           <Header />
-          {this.state.authenticated ? <Dashboard user={user} /> : <Splash onAuth={this.fakeAuth} />}
-
-          {/* <Route path="/" exact render={_ => <AuthWall user={user} />} /> */}
-          <Route path="/apply" exact render={_ => <VolunteerApp onSubmit={console.log} />} />
+          {this.state.authenticated ? (
+            <Authenticated user={user} />
+          ) : (
+            <Splash onAuth={this.fakeAuth} />
+          )}
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
