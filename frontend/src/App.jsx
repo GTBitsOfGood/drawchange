@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Header, Authenticated, Splash } from './components';
+import { Header, Authenticated, Splash, AdminDash } from './components';
 
 class App extends Component {
   state = { user: null };
@@ -16,11 +16,12 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
-          {this.state.user ? (
+          <AdminDash />
+          {/* {this.state.user ? (
             <Authenticated user={this.state.user} />
           ) : (
             <Splash onAuth={this.fakeAuth} />
-          )}
+          )} */}
         </div>
       </BrowserRouter>
     );

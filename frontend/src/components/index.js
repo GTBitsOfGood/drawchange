@@ -5,7 +5,7 @@ import PendingVolunteer from './PendingVolunteer';
 import AcceptPolicies from './AcceptPolicies';
 import Authenticated from './Authenticated';
 import VolunteerDash from './VolunteerDash';
-import AdminDash from './AdminDash';
+import AdminDash from './AdminDash/AdminDash';
 
 export {
   VolunteerApp,
