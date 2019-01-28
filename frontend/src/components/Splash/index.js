@@ -13,7 +13,7 @@ class Splash extends Component {
         <div className={styles.gallery}>
           <Gallery enableImageSelection={false} maxRows={1} images={IMAGES} />
         </div>
-        <Footer googleClick={this.props.onAuth} />
+        <Footer onAuth={this.props.onAuth} />
       </div>
     );
   }
