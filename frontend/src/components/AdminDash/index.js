@@ -4,84 +4,7 @@ import ApplicantList from './ApplicantList';
 import ApplicantInfo from './AppInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
-
-const dummyUsers = [
-  {
-    name: 'John Adams',
-    email: 'jadams76@foundingfathers.gov',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Henry Clay',
-    email: 'greatcompromiser@unelectable.edu',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Benjamin Franklin',
-    email: 'tobefrankwithyou@unsungheros.net',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Alexander Hamilton',
-    email: 'bigbanks@dieyoung.com',
-    role: 'Volunteer'
-  },
-  {
-    name: 'James K. Polk',
-    email: 'napoleonofthestump@forgotten.gov',
-    role: 'Pending'
-  },
-  {
-    name: 'John Adams',
-    email: 'jadams76@foundingfathers.gov',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Henry Clay',
-    email: 'greatcompromiser@unelectable.edu',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Benjamin Franklin',
-    email: 'tobefrankwithyou@unsungheros.net',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Alexander Hamilton',
-    email: 'bigbanks@dieyoung.com',
-    role: 'Volunteer'
-  },
-  {
-    name: 'James K. Polk',
-    email: 'napoleonofthestump@forgotten.gov',
-    role: 'Pending'
-  },
-  {
-    name: 'John Adams',
-    email: 'jadams76@foundingfathers.gov',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Henry Clay',
-    email: 'greatcompromiser@unelectable.edu',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Benjamin Franklin',
-    email: 'tobefrankwithyou@unsungheros.net',
-    role: 'Volunteer'
-  },
-  {
-    name: 'Alexander Hamilton',
-    email: 'bigbanks@dieyoung.com',
-    role: 'Volunteer'
-  },
-  {
-    name: 'James K. Polk',
-    email: 'napoleonofthestump@forgotten.gov',
-    role: 'Pending'
-  }
-];
+import dummyUsers from './mockUserData';
 
 export default class AdminDash extends Component {
   constructor() {
@@ -90,24 +13,22 @@ export default class AdminDash extends Component {
       selectedApplicantIndex: 0,
       showFilterModal: false
     };
-    this.onSelectApplicant = this.onSelectApplicant.bind(this);
-    this.onShowFilterModal = this.onShowFilterModal.bind(this);
   }
-  onSelectApplicant(index) {
+  onSelectApplicant = index => {
     this.setState({
       selectedApplicantIndex: index
     });
-  }
-  onShowFilterModal() {
+  };
+  onShowFilterModal = () => {
     this.setState({
       showFilterModal: !this.state.showFilterModal
     });
-  }
+  };
   render() {
     const { selectedApplicantIndex, showFilterModal } = this.state;
     return (
       <div className={styles.container}>
-        <h1 style={{ fontSize: '1.4em', padding: '1rem 2rem' }}>Admin Dashboard</h1>
+        <h1 className={styles['page-header']}>Admin Dashboard</h1>
         <div className={styles.main}>
           <ApplicantList
             applicants={dummyUsers}

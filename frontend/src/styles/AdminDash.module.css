@@ -1,3 +1,8 @@
+.page-header {
+  font-size: 1.4em;
+  padding: 1rem 2rem;
+}
+
 .container {
   background: white;
   height: 100%;
