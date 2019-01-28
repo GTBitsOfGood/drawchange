@@ -2,16 +2,21 @@
   max-width: 20em;
   height: 100%;
   overflow-y: scroll;
-  margin: auto 2rem;
+  margin: 0 1rem;
   padding-bottom: 5rem;
 }
 
 .list-item {
   text-align: left;
   width: 100%;
-  padding: 1rem 0;
+  padding: 1rem;
   border: none;
   border-bottom: 0.05rem solid #ccc;
+}
+
+.list-item.selected {
+  background-color: #b35fd0;
+  border-radius: 0.3rem;
 }
 
 .list-item:hover {
@@ -19,9 +24,17 @@
   transition: background-color 0.2s;
 }
 
+.list-item.selected:hover {
+  background-color: #c98adf;
+}
+
 .list-item p {
   margin: 0 0 1rem 0;
   color: #777;
+}
+
+.list-item.selected p {
+  color: white;
 }
 
 .list-item p.header {
@@ -29,4 +42,8 @@
   font-size: 1.3em;
   font-weight: 700;
   color: #333;
+}
+
+.list-item.selected p.header {
+  color: white;
 }

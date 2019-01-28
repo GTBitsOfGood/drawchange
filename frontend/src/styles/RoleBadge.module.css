@@ -13,3 +13,8 @@
   background-color: #F8F3BE;
   color: #89850B;
 }
+
+.badge--selected {
+  background-color: white;
+  color: #b35fd0;
+}

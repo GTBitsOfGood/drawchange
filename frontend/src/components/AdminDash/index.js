@@ -81,12 +81,30 @@ const dummyUsers = [
 ];
 
 export default class AdminDash extends Component {
+  constructor() {
+    super();
+    this.state = {
+      selectedApplicantIndex: -1
+    };
+    this.onSelectApplicant = this.onSelectApplicant.bind(this);
+  }
+  onSelectApplicant(index) {
+    console.log(dummyUsers[index]);
+    this.setState({
+      selectedApplicantIndex: index
+    });
+  }
   render() {
+    const { selectedApplicantIndex } = this.state;
     return (
-      <div class={styles.container}>
+      <div className={styles.container}>
         <h1 style={{ fontSize: '1.4em', padding: '1rem 2rem' }}>Admin Dashboard</h1>
-        <div class={styles.main}>
-          <ApplicantList applicants={dummyUsers} />
+        <div className={styles.main}>
+          <ApplicantList
+            applicants={dummyUsers}
+            selectApplicantCallback={this.onSelectApplicant}
+            selectedIndex={selectedApplicantIndex}
+          />
           <div className={styles["applicant-info-container"]}>
           </div>
         </div>
