@@ -11,12 +11,10 @@ class App extends Component {
 
   logout = e => {
     e.preventDefault();
-    console.log('logout from app');
     this.setState({ isAuthenticated: false, user: null });
     axios.get('/auth/logout');
   };
   auth = user => {
-    console.log('inside auth fn', user);
     this.setState({ isAuthenticated: true, user });
   };
 
