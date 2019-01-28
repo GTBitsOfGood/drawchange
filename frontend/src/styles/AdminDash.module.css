@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+.filter-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
 .main {
   display: flex;
   height: 100%;

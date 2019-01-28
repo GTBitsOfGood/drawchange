@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styles from '../../styles/ApplicantList.module.css';
 import RoleBadge from './RoleBadge';
 
-const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex }) => (
+const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, children }) => (
   <div className={styles['list']}>
+    {children}
     {applicants.map(({ name, email, role }, index) => (
       <button
         key={index}
@@ -22,7 +23,8 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex }) =
 ApplicantList.propTypes = {
   applicants: PropTypes.array.isRequired,
   selectApplicantCallback: PropTypes.func.isRequired,
-  selectedIndex: PropTypes.number.isRequired
+  selectedIndex: PropTypes.number.isRequired,
+  children: PropTypes.object
 };
 
 export default ApplicantList;
