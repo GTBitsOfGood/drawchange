@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styles from '../src/styles/App.module.css';
 
-import { Header, Authenticated, Splash, AdminDash } from './components';
+import { Header, Authenticated, Splash } from './components';
 
 class App extends Component {
   state = { user: { role: 'admin' } };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Col, Row, Progress, Label, Button } from 'reactstrap'
+import { Container, Col, Row, Label, Button } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
 
 const userData = [

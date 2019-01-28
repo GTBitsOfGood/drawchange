@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, Label } from 'reactstrap';
+import { Button, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, Label } from 'reactstrap';
 
 class Filters extends React.Component {
   render() {
