@@ -1,13 +1,10 @@
 // npm imports
-const mongoose = require('mongoose');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleTokenStrategy = require('passport-google-token').Strategy;
 
 // Local imports
 const UserCreds = require('./models/userCreds');
-
-// Global variables
-const PUBLIC_FACING_AUTH_CALLBACK_URL = `${process.env.BASE_URL_WITH_PORT}/auth/google/callback`;
+const UserData = require('./models/userData');
 
 /**
  * Initializes passport and authentication-related endpoints for the entire express application.
@@ -18,77 +15,37 @@ function initAuth(app) {
   app.use(passport.session());
 
   // For saving user creds in cookie
-  passport.serializeUser((userCreds, done) => {
-    return done(null, userCreds.id);
-  });
+  passport.serializeUser(({ id }, done) => done(null, id));
 
   // For retrieving user creds object from cookie
-  passport.deserializeUser((userCredsIdString, done) => {
-    const userCredsId = mongoose.Types.ObjectId(userCredsIdString);
-    UserCreds.findById(userCredsId, (err, userCreds) => {
-      return done(err, userCreds);
-    });
-  });
+  passport.deserializeUser((id, done) => UserData.findById(id, done));
 
   // Google Auth config via passport
   passport.use(
-    new GoogleStrategy(
+    new GoogleTokenStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: PUBLIC_FACING_AUTH_CALLBACK_URL
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET
       },
       (accessToken, refreshToken, profile, done) => {
-        UserCreds.findOne({ googleId: profile.id })
-          .then(userCreds => {
-            if (userCreds) {
-              // User credentials were found, first update access and refresh tokens
-              userCreds.accessToken = accessToken;
-              userCreds.refreshToken = refreshToken;
-              return userCreds.save();
-            }
-
-            // First time login, create the UserCreds document
-            const newUserCreds = new UserCreds({
-              googleId: profile.id,
-              accessToken,
-              refreshToken,
-              userDataId: null // User does not have any data in the system yet
-            });
-            return newUserCreds.save();
-          })
-          .then(savedUserCreds => {
-            // Return updated user creds
-            done(null, savedUserCreds);
-          })
-          .catch(err => {
-            done(err);
+        UserCreds.upsertGoogleUser(accessToken, refreshToken, profile, function(err, userCred) {
+          if (err) return done(err, null);
+          UserData.findById(userCred.userDataId, (err2, user) => {
+            return done(err2, user);
           });
+        });
       }
     )
   );
 
-  // User must visit this endpoint in their web browser to authenticate with google
-  app.get(
+  app.post(
     '/auth/google',
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })
-  );
-
-  // User will be redirected to here after authentication via Google
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google', {
-      failureRedirect: '/loginRedirect?userId=error' // Occurs if user denies google auth, etc.
-    }),
-    (req, res) => {
-      // Authentication successful, redirect to correct page based on linked user data
-      if (req.user.userDataId) {
-        // User creds have linked user data
-        return res.redirect(`/loginRedirect?userId=${req.user.userDataId}`);
-      } else {
-        // First time user, no linked user data
-        return res.redirect('/loginRedirect?userId=null');
+    passport.authenticate('google-token', { session: true }),
+    (req, res, next) => {
+      if (!req.user) {
+        return res.send(401, 'User Not Authenticated');
       }
+      return res.status(200).send(JSON.stringify(req.user));
     }
   );
 
@@ -100,7 +57,7 @@ function initAuth(app) {
         return next(err);
       }
       res.clearCookie('connect.sid', { path: '/' });
-      res.redirect('/');
+      return res.sendStatus(200);
     });
   });
 }

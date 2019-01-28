@@ -6,10 +6,20 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 
 const auth = require('./auth');
 const api = require('./routes');
 const app = express();
+
+app.use(
+  cors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+    // exposedHeaders: ['x-auth-token']
+  })
+);
 
 // Connect to MongoDB
 mongoose.connect(
@@ -53,8 +63,7 @@ app.use('/api', api);
 // Render React page
 app.use(express.static(path.join(__dirname, '../../frontend/build/')));
 app.get('/*', (req, res) => {
-  // res.sendFile(__dirname + '/public/index.html'); // For React/Redux
-  res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
+  return res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
 });
 
 module.exports = app;
