@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../styles/AdminDash.module.css';
 import ApplicantList from './ApplicantList';
+import ApplicantInfo from './AppInfo';
 
 const dummyUsers = [
   {
@@ -84,7 +85,7 @@ export default class AdminDash extends Component {
   constructor() {
     super();
     this.state = {
-      selectedApplicantIndex: -1
+      selectedApplicantIndex: 0
     };
     this.onSelectApplicant = this.onSelectApplicant.bind(this);
   }
@@ -106,6 +107,7 @@ export default class AdminDash extends Component {
             selectedIndex={selectedApplicantIndex}
           />
           <div className={styles["applicant-info-container"]}>
+            <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
           </div>
         </div>
       </div>
