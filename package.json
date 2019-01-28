@@ -11,7 +11,7 @@
     "postinstall": "yarn install-frontend && yarn install-backend && yarn build-frontend"
   },
   "engines": {
-    "yarn": "1.12.3",
-    "node": "10.14.2"
+    "yarn": "1.13.0",
+    "node": "11.6.0"
   }
 }
