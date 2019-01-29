@@ -28,7 +28,7 @@ function initAuth(app) {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET
       },
       (accessToken, refreshToken, profile, done) => {
-        UserCreds.upsertGoogleUser(accessToken, refreshToken, profile, function(err, userCred) {
+        UserCreds.findOrCreate(accessToken, refreshToken, profile, (err, userCred) => {
           if (err) return done(err, null);
           UserData.findById(userCred.userDataId, (err2, user) => {
             return done(err2, user);
@@ -38,16 +38,12 @@ function initAuth(app) {
     )
   );
 
-  app.post(
-    '/auth/google',
-    passport.authenticate('google-token', { session: true }),
-    (req, res, next) => {
-      if (!req.user) {
-        return res.send(401, 'User Not Authenticated');
-      }
-      return res.status(200).send(JSON.stringify(req.user));
+  app.post('/auth/google', passport.authenticate('google-token', { session: true }), (req, res) => {
+    if (!req.user) {
+      return res.send(401, 'User Not Authenticated');
     }
-  );
+    return res.status(200).send(JSON.stringify(req.user));
+  });
 
   // Logout Route
   app.get('/auth/logout', (req, res, next) => {

@@ -19,7 +19,7 @@ const userCredsSchema = mongoose.Schema(
   }
 );
 
-userCredsSchema.statics.upsertGoogleUser = function(accessToken, refreshToken, profile, cb) {
+userCredsSchema.statics.findOrCreate = function(accessToken, refreshToken, profile, cb) {
   const that = this;
   return this.findOne(
     {
@@ -41,10 +41,7 @@ userCredsSchema.statics.upsertGoogleUser = function(accessToken, refreshToken, p
             refreshToken,
             userDataId: savedUserData.id
           });
-          newUser.save((error, savedUser) => {
-            if (error) console.log(error);
-            return cb(error, savedUser);
-          });
+          newUser.save((error, savedUser) => cb(error, savedUser));
         });
       } else {
         // user found.
