@@ -12,15 +12,6 @@ const auth = require('./auth');
 const api = require('./routes');
 const app = express();
 
-app.use(
-  cors({
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
-    // exposedHeaders: ['x-auth-token']
-  })
-);
-
 // Connect to MongoDB
 mongoose.connect(
   process.env.MONGODB_URI,
