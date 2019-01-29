@@ -6,7 +6,7 @@ import Footer from './Footer';
 import AcceptPolicies from '../AcceptPolicies';
 
 import styles from '../../styles/VolunteerDash.module.css';
-import { IMAGES } from '../../images/volunteer_app/images.js';
+import { IMAGES } from '../../images/gallery';
 
 export default class VolunteerDashboard extends Component {
   state = {

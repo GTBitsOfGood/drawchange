@@ -5,25 +5,25 @@ const userDataSchema = mongoose.Schema(
   {
     role: {
       type: String,
-      default: 'pending',
-      enum: ['pending', 'admin', 'manager', 'volunteer', 'denied', 'deleted']
+      default: 'new',
+      enum: ['new', 'pending', 'admin', 'volunteer', 'denied', 'deleted']
     },
     bio: {
-      first_name: { type: String, required: true },
-      last_name: { type: String, required: true },
-      phone_number: { type: String, required: true },
-      email: { type: String, required: true, index: true, unique: true },
-      date_of_birth: { type: Date, required: true },
-      street_address: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      zip_code: { type: String, required: true }
+      first_name: { type: String },
+      last_name: { type: String },
+      phone_number: { type: String },
+      email: { type: String, index: true, unique: true },
+      date_of_birth: { type: Date },
+      street_address: { type: String },
+      city: { type: String },
+      state: { type: String },
+      zip_code: { type: String }
     },
     history: {
-      volunteer_interest_cause: { type: String, required: true },
-      volunteer_support: { type: String, required: true },
-      volunteer_commitment: { type: String, required: true },
-      previous_volunteer_experience: { type: String, required: true }
+      volunteer_interest_cause: { type: String },
+      volunteer_support: { type: String },
+      volunteer_commitment: { type: String },
+      previous_volunteer_experience: { type: String }
     },
     availability: {
       weekday_mornings: { type: Boolean, default: false },
@@ -50,7 +50,7 @@ const userDataSchema = mongoose.Schema(
       volunteer_coordination: { type: Boolean, default: false },
       outreach: { type: Boolean, default: false },
       languages: { type: String, default: '' },
-      skills_qualifications: { type: String, required: true }
+      skills_qualifications: { type: String }
     },
     referral: {
       friend: { type: Boolean, default: false },
@@ -61,42 +61,42 @@ const userDataSchema = mongoose.Schema(
       social_media: { type: Boolean, default: false }
     },
     employment: {
-      name: { type: String, required: true },
-      position: { type: String, required: true },
-      duration: { type: String, required: true },
-      location: { type: String, required: true },
+      name: { type: String },
+      position: { type: String },
+      duration: { type: String },
+      location: { type: String },
       previous_name: { type: String },
       previous_reason_for_leaving: { type: String },
       previous_location: { type: String }
     },
     reference: {
-      name: { type: String, required: true },
-      phone_number: { type: String, required: true },
-      email: { type: String, required: true },
-      relationship: { type: String, required: true },
-      duration: { type: String, required: true }
+      name: { type: String },
+      phone_number: { type: String },
+      email: { type: String },
+      relationship: { type: String },
+      duration: { type: String }
     },
     criminal: {
-      felony: { type: Boolean, required: true },
-      sexual_violent: { type: Boolean, required: true },
-      drugs: { type: Boolean, required: true },
-      driving: { type: Boolean, required: true },
-      none: { type: Boolean, required: true },
-      explanation: { type: String, required: false }
+      felony: { type: Boolean },
+      sexual_violent: { type: Boolean },
+      drugs: { type: Boolean },
+      driving: { type: Boolean },
+      none: { type: Boolean },
+      explanation: { type: String }
     },
     ice: {
-      name: { type: String, required: true },
-      relationship: { type: String, required: true },
-      phone_number: { type: String, required: true },
-      email: { type: String, required: true },
-      address: { type: String, required: true }
+      name: { type: String },
+      relationship: { type: String },
+      phone_number: { type: String },
+      email: { type: String },
+      address: { type: String }
     },
     permissions: {
-      comments: { type: String, required: false },
-      reference: { type: Boolean, required: true },
-      personal_image: { type: Boolean, required: true },
-      email_list: { type: Boolean, required: true },
-      signature: { type: String, required: true }
+      comments: { type: String },
+      reference: { type: Boolean },
+      personal_image: { type: Boolean },
+      email_list: { type: Boolean },
+      signature: { type: String }
     }
 
     // events: {

@@ -26,7 +26,7 @@
     "nodemailer": "^4.7.0",
     "nodemailer-sendgrid": "^1.0.3",
     "passport": "^0.4.0",
-    "passport-google-oauth": "^1.0.0"
+    "passport-google-token": "^0.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
