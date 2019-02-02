@@ -1,15 +1,14 @@
 import React from 'react';
 import { Container, Col, Row, Label, Button } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
+import Heading from '../styled/Heading';
 
 const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) => (
   <div className={styles.container}>
     <Container>
       <Row>
         <Col>
-          <h2 className={styles.header}>
-            <Label for="exampleName">{name}</Label>
-          </h2>
+          <Heading text={name} />
         </Col>
       </Row>
       <Row>
@@ -92,9 +91,15 @@ const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) =>
             <Label for="exampleWeekday">Weekday</Label>
           </h6>
           <Row>
-            <Button color="primary" size="sm" disabled>Mornings</Button>{' '}
-            <Button color="primary" size="sm" active>Afternoons</Button>{' '}
-            <Button color="primary" size="sm" active>Evenings</Button>{' '}
+            <Button color="primary" size="sm" disabled>
+              Mornings
+            </Button>{' '}
+            <Button color="primary" size="sm" active>
+              Afternoons
+            </Button>{' '}
+            <Button color="primary" size="sm" active>
+              Evenings
+            </Button>{' '}
           </Row>
         </Col>
         <Col>
@@ -102,9 +107,15 @@ const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) =>
             <Label for="exampleWeekday">Weekend</Label>
           </h6>
           <Row>
-            <Button color="primary" size="sm" active>Mornings</Button>{' '}
-            <Button color="primary" size="sm" disabled>Afternoons</Button>{' '}
-            <Button color="primary" size="sm" disabled>Evenings</Button>{' '}
+            <Button color="primary" size="sm" active>
+              Mornings
+            </Button>{' '}
+            <Button color="primary" size="sm" disabled>
+              Afternoons
+            </Button>{' '}
+            <Button color="primary" size="sm" disabled>
+              Evenings
+            </Button>{' '}
           </Row>
         </Col>
       </Row>

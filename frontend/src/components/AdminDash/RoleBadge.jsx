@@ -1,20 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../../styles/RoleBadge.module.css';
+import Tag from '../styled/Tag';
+import { withTheme } from 'styled-components';
 
-const RoleBadge = ({ role, selected }) => (
-  <span
-    className={`${styles['badge']}
-    ${role === 'Pending' ? styles['badge--pending'] : styles['badge--approved']}
-    ${selected ? styles['badge--selected'] : ''}
-    `}
-  >
-    {role}
-  </span>
+const roleToColorMap = {
+  Pending: 'warning',
+  Volunteer: 'success'
+};
+
+const RoleBadge = ({ role, selected, theme }) => (
+  <Tag
+    type={roleToColorMap[role] || ''}
+    color={selected ? theme.grey9 : ''}
+    textColor={selected ? theme.primary : ''}
+    text={role}
+  />
 );
 
 RoleBadge.propTypes = {
-  role: PropTypes.string.isRequired
+  role: PropTypes.string.isRequired,
+  selected: PropTypes.boolean,
+  theme: PropTypes.object
 };
 
-export default RoleBadge;
+export default withTheme(RoleBadge);
