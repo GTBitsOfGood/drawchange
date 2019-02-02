@@ -14,6 +14,7 @@ export default class AdminDash extends Component {
       showFilterModal: false
     };
   }
+  componentWillMount = () => {};
   onSelectApplicant = index => {
     this.setState({
       selectedApplicantIndex: index
