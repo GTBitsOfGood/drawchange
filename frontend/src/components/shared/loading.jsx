@@ -32,7 +32,7 @@ const Styled = {
   `
 };
 
-const LoadingIcon = ({}) => (
+const LoadingIcon = () => (
   <Styled.Container size={1}>
     <Styled.Bubble />
     <Styled.Bubble anim-delay="0.1s" />

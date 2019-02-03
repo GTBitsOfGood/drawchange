@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Loading from './loading';
+import Loading from './Loading';
 
 const Styled = {
   Container: styled.div`

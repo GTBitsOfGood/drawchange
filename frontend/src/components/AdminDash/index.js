@@ -47,7 +47,7 @@ export default class AdminDash extends Component {
   }
   componentWillMount = () => {};
   onLoadMoreApplicants = () => {
-    console.log('willy shakes');
+    console.log('loading more users!');
   };
   onSelectApplicant = index => {
     this.setState({
