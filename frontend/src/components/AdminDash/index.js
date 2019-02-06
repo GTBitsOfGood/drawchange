@@ -1,11 +1,42 @@
 import React, { Component } from 'react';
-import styles from '../../styles/AdminDash.module.css';
 import ApplicantList from './ApplicantList';
 import ApplicantInfo from './AppInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
+import InfiniteScroll from '../shared/InfiniteScroll';
 import dummyUsers from './mockUserData';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const HEADING_HEIGHT = '4rem';
+
+const Styled = {
+  Container: styled.div`
+    background: white;
+    height: 100%;
+    width: 100%;
+  `,
+  Heading: styled.h1`
+    font-size: 1.4rem;
+    margin: 0;
+    height: ${props => props.height};
+    padding: calc((${props => props.height} - 1.4rem) / 2) 2rem;
+  `,
+  FilterContainer: styled.div`
+    display: flex;
+    margin-bottom: 1rem;
+  `,
+  Main: styled.div`
+    display: flex;
+    height: calc(100% - ${props => props.headingHeight});
+  `,
+  ApplicantInfoContainer: styled.div`
+    flex: 1;
+    background: #f6f6f6;
+    overflow-y: scroll;
+    padding: 1rem;
+  `
+};
 
 export default class AdminDash extends Component {
   constructor() {
@@ -21,7 +52,9 @@ export default class AdminDash extends Component {
     axios.get('/api/users/').then(res => this.setState({userData: res.data.users})); 
   };
 
-
+  onLoadMoreApplicants = () => {
+    console.log('loading more users!');
+  };
   onSelectApplicant = index => {
     this.setState({
       selectedApplicantIndex: index
@@ -37,25 +70,27 @@ export default class AdminDash extends Component {
     const { selectedApplicantIndex, showFilterModal, userData } = this.state;
     console.log(userData)
     return (
-      <div className={styles.container}>
-        <h1 className={styles['page-header']}>Admin Dashboard</h1>
-        <div className={styles.main}>
-          <ApplicantList
-            applicants={userData}
-            selectApplicantCallback={this.onSelectApplicant}
-            selectedIndex={selectedApplicantIndex}
-          >
-            <div class={styles['filter-container']}>
-              <Input placeholder="Search by content" />
-              <Button onClick={this.onShowFilterModal}>Filter</Button>
-            </div>
-          </ApplicantList>
-          <div className={styles['applicant-info-container']}>
+      <Styled.Container>
+        <Styled.Heading height={HEADING_HEIGHT}>Admin Dashboard</Styled.Heading>
+        <Styled.Main headingHeight={HEADING_HEIGHT}>
+          <InfiniteScroll loadCallback={this.onLoadMoreApplicants}>
+            <ApplicantList
+              applicants={dummyUsers}
+              selectApplicantCallback={this.onSelectApplicant}
+              selectedIndex={selectedApplicantIndex}
+            >
+              <Styled.FilterContainer>
+                <Input placeholder="Search by content" />
+                <Button onClick={this.onShowFilterModal}>Filter</Button>
+              </Styled.FilterContainer>
+            </ApplicantList>
+          </InfiniteScroll>
+          <Styled.ApplicantInfoContainer>
             <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
-          </div>
-        </div>
+          </Styled.ApplicantInfoContainer>
+        </Styled.Main>
         <Filters show={showFilterModal} toggleCallback={this.onShowFilterModal} />
-      </div>
+      </Styled.Container>
     );
   }
 }
