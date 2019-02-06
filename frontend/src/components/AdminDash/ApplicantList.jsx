@@ -6,14 +6,14 @@ import RoleBadge from './RoleBadge';
 const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, children }) => (
   <div className={styles['list']}>
     {children}
-    {applicants.map(({ name, email, role }, index) => (
+    {(applicants || []).map(({ bio, role }, index) => (
       <button
         key={index}
         onClick={() => selectApplicantCallback(index)}
         className={`${styles['list-item']} ${selectedIndex === index ? styles['selected'] : ''}`}
       >
-        <p className={styles['header']}>{name}</p>
-        <p>{email}</p>
+        <p className={styles['header']}>{bio.first_name}</p>
+        <p>{bio.email}</p>
         <RoleBadge role={role} selected={selectedIndex === index} />
       </button>
     ))}

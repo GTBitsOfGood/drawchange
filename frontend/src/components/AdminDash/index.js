@@ -5,16 +5,23 @@ import ApplicantInfo from './AppInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import dummyUsers from './mockUserData';
+import axios from 'axios';
 
 export default class AdminDash extends Component {
   constructor() {
     super();
     this.state = {
       selectedApplicantIndex: 0,
-      showFilterModal: false
+      showFilterModal: false,
+      userData: [],
     };
   }
-  componentWillMount = () => {};
+
+  componentWillMount = () => {
+    axios.get('/api/users/').then(res => this.setState({userData: res.data.users})); 
+  };
+
+
   onSelectApplicant = index => {
     this.setState({
       selectedApplicantIndex: index
@@ -25,14 +32,16 @@ export default class AdminDash extends Component {
       showFilterModal: !this.state.showFilterModal
     });
   };
+
   render() {
-    const { selectedApplicantIndex, showFilterModal } = this.state;
+    const { selectedApplicantIndex, showFilterModal, userData } = this.state;
+    console.log(userData)
     return (
       <div className={styles.container}>
         <h1 className={styles['page-header']}>Admin Dashboard</h1>
         <div className={styles.main}>
           <ApplicantList
-            applicants={dummyUsers}
+            applicants={userData}
             selectApplicantCallback={this.onSelectApplicant}
             selectedIndex={selectedApplicantIndex}
           >
