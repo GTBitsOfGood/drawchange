@@ -1,9 +1,6 @@
 .list {
   max-width: 20em;
-  height: 100%;
-  overflow-y: scroll;
   margin: 0 1rem;
-  padding-bottom: 5rem;
 }
 
 .list-item {

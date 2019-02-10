@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import styles from '../src/styles/App.module.css';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import { Header, Authenticated, Splash } from './components';
 import { StyleWrapper } from './components/styled';
@@ -16,24 +16,30 @@ const Styled = {
   `,
   Content: styled.main`
     flex: 1;
-    overflow: hidden;
+    overflow-y: scroll;
   `
 };
 
 class App extends Component {
-  state = { user: { role: 'admin' } };
-  componentWillMount(props) {
-    // check url for user id
-  }
+  state = { isAuthenticated: true, user: { role: 'admin' }, token: '' };
 
   fakeAuth = _ => this.setState({ user: { role: null } });
+
+  logout = e => {
+    e.preventDefault();
+    this.setState({ isAuthenticated: false, user: null });
+    axios.get('/auth/logout');
+  };
+  auth = user => {
+    this.setState({ isAuthenticated: true, user });
+  };
 
   render() {
     return (
       <BrowserRouter>
         <StyleWrapper>
           <Styled.Container>
-            <Header />
+            <Header onLogout={this.logout} loggedIn={this.state.isAuthenticated} />
             <Styled.Content>
               {this.state.user ? (
                 <Authenticated user={this.state.user} />

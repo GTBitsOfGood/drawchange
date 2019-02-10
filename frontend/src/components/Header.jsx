@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// import { GoogleLogout } from 'react-google-login';
+
 import {
   Collapse,
   Navbar,
@@ -30,6 +32,7 @@ class Header extends Component {
   };
 
   render() {
+    //
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -93,6 +96,13 @@ class Header extends Component {
                 <NavItem className={styles.navItem}>
                   <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
                 </NavItem>
+                {this.props.loggedIn && (
+                  <NavItem className={styles.navItem}>
+                    <NavLink onClick={this.props.onLogout} href="/">
+                      Logout
+                    </NavLink>
+                  </NavItem>
+                )}
               </Nav>
             </Collapse>
           </Container>

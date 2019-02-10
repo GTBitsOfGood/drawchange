@@ -21,6 +21,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-google-button": "^0.5.3",
+    "react-google-login": "^4.0.1",
     "react-grid-gallery": "^0.5.3",
     "react-redux": "^6.0.0",
     "react-redux-sweetalert": "^1.0.2",
