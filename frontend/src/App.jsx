@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { Header, Authenticated, Splash } from './components';
-import { StyleWrapper } from './components/styled';
+import { StyleWrapper } from './components/Shared';
 
 const Styled = {
   Container: styled.div`

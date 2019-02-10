@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tag from '../styled/Tag';
+import Tag from '../Shared/Tag';
 import { withTheme } from 'styled-components';
 
 const roleToColorMap = {

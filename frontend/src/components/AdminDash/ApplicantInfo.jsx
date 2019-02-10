@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Col, Row, Label, Button } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
-import Heading from '../styled/Heading';
+import Heading from '../Shared/Heading';
 
 const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) => (
   <div className={styles.container}>
