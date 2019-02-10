@@ -5,6 +5,7 @@ import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import dummyUsers from './mockUserData';
+import { filterApplicants } from './queries';
 import styled from 'styled-components';
 
 const HEADING_HEIGHT = '4rem';
@@ -42,7 +43,9 @@ export default class AdminDash extends Component {
     super();
     this.state = {
       selectedApplicantIndex: 0,
-      showFilterModal: false
+      showFilterModal: false,
+      appliedFilters: [],
+      applicants: []
     };
   }
   componentWillMount = () => {};
@@ -59,15 +62,23 @@ export default class AdminDash extends Component {
       showFilterModal: !this.state.showFilterModal
     });
   };
+  onApplyFilters = filters => {
+    console.log(filters);
+    filterApplicants(filters).then(response =>
+      this.setState({
+        applicants: response.data.users
+      })
+    );
+  };
   render() {
-    const { selectedApplicantIndex, showFilterModal } = this.state;
+    const { selectedApplicantIndex, showFilterModal, applicants } = this.state;
     return (
       <Styled.Container>
         <Styled.Heading height={HEADING_HEIGHT}>Admin Dashboard</Styled.Heading>
         <Styled.Main headingHeight={HEADING_HEIGHT}>
           <InfiniteScroll loadCallback={this.onLoadMoreApplicants}>
             <ApplicantList
-              applicants={dummyUsers}
+              applicants={applicants}
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
             >
@@ -81,7 +92,11 @@ export default class AdminDash extends Component {
             <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
-        <Filters show={showFilterModal} toggleCallback={this.onShowFilterModal} />
+        <Filters
+          show={showFilterModal}
+          toggleCallback={this.onShowFilterModal}
+          submitCallback={this.onApplyFilters}
+        />
       </Styled.Container>
     );
   }

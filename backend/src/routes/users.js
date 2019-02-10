@@ -82,6 +82,18 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     });
 });
 
+router.post('/filter', (req, res, next) => {
+  const filters = JSON.parse(req.body.data);
+  let roleFilter = [];
+  if (filters.role) {
+    roleFilter = Object.keys(filters.role).reduce((query, key) => [...query, { role: key }], []);
+    delete filters.role;
+  }
+  UserData.find(roleFilter.length ? { ...filters, $or: roleFilter } : filters)
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
 router.get('/', (req, res, next) => {
   if (req.query.type === 'pending') {
     UserData.find({ role: 'pending' })
