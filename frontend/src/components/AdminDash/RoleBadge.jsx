@@ -19,7 +19,7 @@ const RoleBadge = ({ role, selected, theme }) => (
 
 RoleBadge.propTypes = {
   role: PropTypes.string.isRequired,
-  selected: PropTypes.boolean,
+  selected: PropTypes.bool,
   theme: PropTypes.object
 };
 
