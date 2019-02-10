@@ -3,7 +3,7 @@ import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
-import InfiniteScroll from '../shared/InfiniteScroll';
+import InfiniteScroll from '../Shared/InfiniteScroll';
 import dummyUsers from './mockUserData';
 import styled from 'styled-components';
 
