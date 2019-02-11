@@ -117,7 +117,36 @@ router.get('/', (req, res, next) => {
       .then(users => res.status(200).json({ users }))
       .catch(err => next(err));
   } else {
-    UserData.find()
+    const filter = {};
+    if (req.query.role) {
+      try {
+        const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
+          (query, key) => [...query, { role: key }],
+          []
+        );
+        if (!roleFilter.length) {
+          res.status(400).json({ error: 'Invalid role param' });
+        }
+        filter.$or = roleFilter;
+      } catch (e) {
+        res.status(400).json({ error: 'Invalid role param' });
+      }
+    }
+    if (req.query.availability) {
+      try {
+        filter.availability = JSON.parse(req.query.availability);
+      } catch (e) {
+        res.status(400).json({ error: 'Invalid availability param' });
+      }
+    }
+    if (req.query.skills_interests) {
+      try {
+        filter.skills_interests = JSON.parse(req.query.skills_interests);
+      } catch (e) {
+        res.status(400).json({ error: 'Invalid skills_interests param' });
+      }
+    }
+    UserData.find(filter)
       .then(users => res.status(200).json({ users }))
       .catch(err => next(err));
   }

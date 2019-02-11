@@ -2,13 +2,19 @@ import axios from 'axios';
 
 export const filterApplicants = filterGroups => {
   let filtersToApply = {};
-  Object.entries(filterGroups).forEach(([group, { values }]) => {
+  const query = Object.entries(filterGroups).reduce((queryString, [group, { values }]) => {
     Object.entries(values).forEach(([filter, filterValue]) => {
       if (filterValue) {
+        console.log(filterValue);
         if (!filtersToApply[group]) filtersToApply[group] = {};
         filtersToApply[group][filter] = filterValue;
       }
     });
-  });
-  return axios.post('/api/users/filter', { data: JSON.stringify(filtersToApply) });
+    if (!filtersToApply[group]) {
+      return queryString;
+    } else {
+      return `${queryString}${group}=${JSON.stringify(filtersToApply[group])}&`;
+    }
+  }, '');
+  return axios.get('/api/users?' + query);
 };
