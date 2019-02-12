@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Col, Row, Label, Button } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
-import Heading from '../Shared/Heading';
+import { Heading, OptionsSelected } from '../Shared';
 
 const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) => (
   <div className={styles.container}>
@@ -91,15 +91,10 @@ const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) =>
             <Label for="exampleWeekday">Weekday</Label>
           </h6>
           <Row>
-            <Button color="primary" size="sm" disabled>
-              Mornings
-            </Button>{' '}
-            <Button color="primary" size="sm" active>
-              Afternoons
-            </Button>{' '}
-            <Button color="primary" size="sm" active>
-              Evenings
-            </Button>{' '}
+            <OptionsSelected
+              options={['Mornings', 'Afternoons', 'Evenings']}
+              selected={['Mornings', 'Afternoons']}
+            />
           </Row>
         </Col>
         <Col>
@@ -107,15 +102,10 @@ const ApplicantInfo = ({ name, email, phoneNumber, birthDate, address, bio }) =>
             <Label for="exampleWeekday">Weekend</Label>
           </h6>
           <Row>
-            <Button color="primary" size="sm" active>
-              Mornings
-            </Button>{' '}
-            <Button color="primary" size="sm" disabled>
-              Afternoons
-            </Button>{' '}
-            <Button color="primary" size="sm" disabled>
-              Evenings
-            </Button>{' '}
+            <OptionsSelected
+              options={['Mornings', 'Afternoons', 'Evenings']}
+              selected={['Evenings']}
+            />
           </Row>
         </Col>
       </Row>
