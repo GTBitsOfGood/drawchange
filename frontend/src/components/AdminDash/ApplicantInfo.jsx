@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Col, Row, Label, Button } from 'reactstrap';
+import { Container, Col, Row, Label } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
 import { Heading, OptionsSelected } from '../Shared';
 

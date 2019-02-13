@@ -20,8 +20,10 @@ const Styled = {
 
 const OptionsSelected = ({ options, selected }) => (
   <Styled.Container>
-    {options.map(option => (
-      <Styled.Item selected={selected.includes(option)}>{option}</Styled.Item>
+    {options.map((option, index) => (
+      <Styled.Item key={index} selected={selected.includes(option)}>
+        {option}
+      </Styled.Item>
     ))}
   </Styled.Container>
 );

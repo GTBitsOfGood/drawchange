@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, Input, Label } from 'reactstrap';
+import { FormGroup, CustomInput, Label } from 'reactstrap';
 
 import styles from '../../styles/Form.module.css';
 
@@ -9,17 +9,13 @@ const Checkbox = props => (
     <Field name={props.name}>
       {({ field, form }) => (
         <FormGroup className={styles.flex_field} check>
-          <Label className={styles.label}>
-            <Input
-              type="checkbox"
-              {...props}
-              {...field}
-              // {...form}
-              checked={field.value}
-              onChange={() => form.setFieldValue(props.name, !field.value)}
-            />
-            {props.value}
-          </Label>
+          <CustomInput
+            type="checkbox"
+            id={props.name}
+            checked={field.value}
+            label={props.value}
+            onChange={() => form.setFieldValue(props.name, !field.value)}
+          />
         </FormGroup>
       )}
     </Field>

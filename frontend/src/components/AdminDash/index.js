@@ -5,7 +5,7 @@ import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import dummyUsers from './mockUserData';
-import { filterApplicants } from './queries';
+import { filterApplicants, fetchApplicants } from './queries';
 import styled from 'styled-components';
 
 const HEADING_HEIGHT = '4rem';
@@ -44,13 +44,13 @@ export default class AdminDash extends Component {
     this.state = {
       selectedApplicantIndex: 0,
       showFilterModal: false,
-      appliedFilters: [],
+      appliedFilters: null,
       applicants: []
     };
   }
   componentWillMount = () => {};
   onLoadMoreApplicants = () => {
-    console.log('loading more users!');
+    fetchApplicants().then(res => this.setState({ applicants: res.data.users }));
   };
   onSelectApplicant = index => {
     this.setState({
@@ -63,7 +63,9 @@ export default class AdminDash extends Component {
     });
   };
   onApplyFilters = filters => {
-    console.log(filters);
+    this.setState({
+      appliedFilters: filters
+    });
     filterApplicants(filters).then(response =>
       this.setState({
         applicants: response.data.users
@@ -94,6 +96,7 @@ export default class AdminDash extends Component {
         </Styled.Main>
         <Filters
           show={showFilterModal}
+          appliedFilters={this.state.appliedFilters}
           toggleCallback={this.onShowFilterModal}
           submitCallback={this.onApplyFilters}
         />
