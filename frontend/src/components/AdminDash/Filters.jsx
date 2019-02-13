@@ -62,7 +62,6 @@ class Filters extends React.Component {
     console.log(values);
   };
   render() {
-    const { initValues } = this.props;
     return (
       <Modal
         isOpen={this.state.modal}
@@ -152,5 +151,5 @@ class Filters extends React.Component {
 export default Filters;
 
 Filters.propTypes = {
-  initValues: PropTypes.object.isRequired
+  initValues: PropTypes.object
 };

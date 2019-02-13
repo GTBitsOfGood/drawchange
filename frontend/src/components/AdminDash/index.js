@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ApplicantList from './ApplicantList';
-import ApplicantInfo from './AppInfo';
+import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../shared/InfiniteScroll';

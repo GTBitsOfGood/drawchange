@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Col, Row, Label, Button } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
+import Heading from '../styled/Heading';
 
 const ApplicantInfo = ({ applicant }) => (
   <div className={styles.container}>

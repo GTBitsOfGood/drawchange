@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import styles from '../src/styles/App.module.css';
+import styled from 'styled-components';
 import axios from 'axios';
 
 import { Header, Authenticated, Splash } from './components';
+import { StyleWrapper } from './components/styled';
+
+const Styled = {
+  Container: styled.div`
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  `,
+  Content: styled.main`
+    flex: 1;
+    overflow-y: scroll;
+  `
+};
 
 class App extends Component {
   state = { isAuthenticated: true, user: { role: 'admin' }, token: '' };
@@ -22,16 +37,18 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className={styles.container}>
-          <Header onLogout={this.logout} loggedIn={this.state.isAuthenticated} />
-          <content className={styles.content}>
-            {this.state.isAuthenticated ? (
-              <Authenticated user={this.state.user} />
-            ) : (
-              <Splash onAuth={this.auth} />
-            )}
-          </content>
-        </div>
+        <StyleWrapper>
+          <Styled.Container>
+            <Header onLogout={this.logout} loggedIn={this.state.isAuthenticated} />
+            <Styled.Content>
+              {this.state.user ? (
+                <Authenticated user={this.state.user} />
+              ) : (
+                <Splash onAuth={this.fakeAuth} />
+              )}
+            </Styled.Content>
+          </Styled.Container>
+        </StyleWrapper>
       </BrowserRouter>
     );
   }
