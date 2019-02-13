@@ -70,6 +70,16 @@ export default class AdminDash extends Component {
       })
     );
   };
+  onChangeComment = (index, comment) => {
+    let applicants = this.state.applicants;
+    if (!applicants[index].comments) {
+      applicants[index].comments = [];
+    }
+    applicants[index].comments.push(comment);
+    this.setState({
+      applicants
+    });
+  };
   render() {
     const { selectedApplicantIndex, showFilterModal, applicants } = this.state;
     return (
@@ -89,7 +99,11 @@ export default class AdminDash extends Component {
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
-            <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
+            <ApplicantInfo
+              {...dummyUsers[selectedApplicantIndex]}
+              onChangeComment={this.onChangeComment}
+              applicantIndex={selectedApplicantIndex}
+            />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
         <Filters
