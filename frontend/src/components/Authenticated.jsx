@@ -8,7 +8,7 @@ const Authenticated = ({ user }) => (
     {user.role === 'admin' && <AdminDash user={user} />}
     {user.role === 'pending' && <PendingVolunteer user={user} />}
     {user.role === 'volunteer' && <VolunteerDash user={user} />}
-    {user.role === 'new' && <VolunteerApp />}
+    {user.role === 'new' && <VolunteerApp user={user}/>}
   </React.Fragment>
 );
 

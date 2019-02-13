@@ -48,7 +48,7 @@ export default class AdminDash extends Component {
       applicants: []
     };
   }
-  componentWillMount = () => {};
+
   onLoadMoreApplicants = () => {
     fetchApplicants().then(res => this.setState({ applicants: res.data.users }));
   };
@@ -91,7 +91,8 @@ export default class AdminDash extends Component {
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
-            <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
+            <ApplicantInfo applicant={applicants[selectedApplicantIndex]} />
+            {/* <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} /> */}
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
         <Filters
