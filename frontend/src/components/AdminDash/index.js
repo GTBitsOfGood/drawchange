@@ -45,12 +45,20 @@ export default class AdminDash extends Component {
       selectedApplicantIndex: 0,
       showFilterModal: false,
       appliedFilters: null,
-      applicants: []
+      applicants: [],
+      isLoading: true
     };
   }
 
   onLoadMoreApplicants = () => {
-    fetchApplicants().then(res => this.setState({ applicants: res.data.users }));
+    this.setState({
+      isLoading: true
+    });
+    setTimeout(() => {
+      fetchApplicants().then(res =>
+        this.setState({ applicants: res.data.users, isLoading: false })
+      );
+    }, 1000);
   };
   onSelectApplicant = index => {
     this.setState({
@@ -73,12 +81,18 @@ export default class AdminDash extends Component {
     );
   };
   render() {
-    const { selectedApplicantIndex, showFilterModal, applicants } = this.state;
+    const {
+      selectedApplicantIndex,
+      showFilterModal,
+      applicants,
+      appliedFilters,
+      isLoading
+    } = this.state;
     return (
       <Styled.Container>
         <Styled.Heading height={HEADING_HEIGHT}>Admin Dashboard</Styled.Heading>
         <Styled.Main headingHeight={HEADING_HEIGHT}>
-          <InfiniteScroll loadCallback={this.onLoadMoreApplicants}>
+          <InfiniteScroll loadCallback={this.onLoadMoreApplicants} isLoading={isLoading}>
             <ApplicantList
               applicants={applicants}
               selectApplicantCallback={this.onSelectApplicant}
@@ -92,12 +106,11 @@ export default class AdminDash extends Component {
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
             <ApplicantInfo applicant={applicants[selectedApplicantIndex]} />
-            {/* <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} /> */}
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
         <Filters
           show={showFilterModal}
-          appliedFilters={this.state.appliedFilters}
+          appliedFilters={appliedFilters}
           toggleCallback={this.onShowFilterModal}
           submitCallback={this.onApplyFilters}
         />

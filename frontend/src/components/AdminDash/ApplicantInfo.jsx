@@ -2,17 +2,33 @@ import React from 'react';
 import { Container, Col, Row, Label } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
 import { Heading, OptionsSelected } from '../Shared';
+import _ from 'lodash';
+
+const getLabelsFromDays = (availability, type) => {
+  return Object.keys(availability)
+    .filter(day => day.includes(type))
+    .map(day => {
+      if (day.includes('mornings')) return 'Mornings';
+      if (day.includes('afternoons')) return 'Afternoons';
+      if (day.includes('evenings')) return 'Evenings';
+    });
+};
+
+const getSelectedFromDays = (availability, type) => {
+  // const filteredAvailability = Object.clone
+  // Object.entries(availability).forEach(([key, value]) => {
+  //   if (!value) delete availability[key];
+  // });
+  return getLabelsFromDays(_.pickBy(availability, (value, key) => value), type);
+};
 
 const ApplicantInfo = ({ applicant }) => (
   <div className={styles.container}>
     {applicant && (
       <Container>
-        {console.log(applicant)}
         <Row>
           <Col>
-            <h2 className={styles.header}>
-              <Label for="exampleName">{applicant ? applicant.bio.first_name : ''}</Label>
-            </h2>
+            <Heading>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</Heading>
           </Col>
         </Row>
         <Row>
@@ -20,7 +36,7 @@ const ApplicantInfo = ({ applicant }) => (
             <h5 className={styles.label}>
               <Label for="exampleEmail">Email</Label>
             </h5>
-            <p className={styles.content}>{applicant ? applicant.bio.email : ''}</p>
+            <p className={styles.content}>{applicant.bio.email}</p>
           </Col>
           <Col>
             <h5 className={styles.label}>
@@ -44,6 +60,8 @@ const ApplicantInfo = ({ applicant }) => (
               {applicant
                 ? applicant.bio.street_address +
                   ' ' +
+                  applicant.bio.city +
+                  ', ' +
                   applicant.bio.state +
                   ' ' +
                   applicant.bio.zip_code
@@ -67,6 +85,8 @@ const ApplicantInfo = ({ applicant }) => (
               {applicant.history ? applicant.history.volunteer_interest_cause : ''}
             </p>
           </Col>
+        </Row>
+        <Row>
           <Col>
             <h5 className={styles.label}>
               <Label for="volunteerSupport">Volunteer Support</Label>
@@ -75,20 +95,24 @@ const ApplicantInfo = ({ applicant }) => (
               {applicant.history ? applicant.history.volunteer_support : ''}
             </p>
           </Col>
+        </Row>
+        <Row>
           <Col>
             <h5 className={styles.label}>
               <Label for="volunteerCommittment">Volunteer Committment</Label>
             </h5>
             <p className={styles.content}>
-              {applicant.history ? applicant.history.committment : ''}
+              {applicant.history ? applicant.history.volunteer_commitment : ''}
             </p>
           </Col>
+        </Row>
+        <Row>
           <Col>
             <h5 className={styles.label}>
-              <Label for="previouseExperience">Previous Experience</Label>
+              <Label for="previousExperience">Previous Experience</Label>
             </h5>
             <p className={styles.content}>
-              {applicant.history ? applicant.history.previous_experience : ''}
+              {applicant.history ? applicant.history.previous_volunteer_experience : ''}
             </p>
           </Col>
         </Row>
@@ -97,6 +121,20 @@ const ApplicantInfo = ({ applicant }) => (
             <h4 className={styles.header}>
               <Label for="exampleAvailability">Availability</Label>
             </h4>
+            <Row>
+              <Col>
+                <OptionsSelected
+                  options={getLabelsFromDays(applicant.availability, 'weekday')}
+                  selected={getSelectedFromDays(applicant.availability, 'weekday')}
+                />
+              </Col>
+              <Col>
+                <OptionsSelected
+                  options={getLabelsFromDays(applicant.availability, 'weekend')}
+                  selected={getSelectedFromDays(applicant.availability, 'weekend')}
+                />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>

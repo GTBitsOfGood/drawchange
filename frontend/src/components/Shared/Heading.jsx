@@ -17,11 +17,11 @@ const Styled = {
   `
 };
 
-const Heading = ({ level, text }) => <Styled.Heading level={level}>{text}</Styled.Heading>;
+const Heading = ({ level, children }) => <Styled.Heading level={level}>{children}</Styled.Heading>;
 
 export default Heading;
 
 Heading.propTypes = {
   level: PropTypes.number,
-  text: PropTypes.string.isRequired
+  children: PropTypes.isRequired
 };

@@ -11,6 +11,7 @@ const Styled = {
   `,
   Item: styled.div`
     flex: 1;
+    text-align: center;
     padding: 0.5rem 1rem;
     font-weight: ${props => (props.selected ? 600 : 300)};
     color: ${props => (props.selected ? 'white' : props.theme.grey5)};
