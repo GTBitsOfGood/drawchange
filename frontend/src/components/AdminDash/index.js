@@ -75,7 +75,7 @@ export default class AdminDash extends Component {
         <Styled.Main headingHeight={HEADING_HEIGHT}>
           <InfiniteScroll loadCallback={this.onLoadMoreApplicants}>
             <ApplicantList
-              applicants={dummyUsers}
+              applicants={userData}
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
             >
@@ -86,7 +86,8 @@ export default class AdminDash extends Component {
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
-            <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} />
+            <ApplicantInfo applicant = {userData[selectedApplicantIndex]}/> 
+            {/* <ApplicantInfo {...dummyUsers[selectedApplicantIndex]} /> */}
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
         <Filters show={showFilterModal} toggleCallback={this.onShowFilterModal} />
