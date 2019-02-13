@@ -4,7 +4,6 @@ import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
-import dummyUsers from './mockUserData';
 import { filterApplicants, fetchApplicants } from './queries';
 import styled from 'styled-components';
 

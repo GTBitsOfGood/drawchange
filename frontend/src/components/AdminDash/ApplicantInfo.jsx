@@ -9,16 +9,13 @@ const getLabelsFromDays = (availability, type) => {
     .filter(day => day.includes(type))
     .map(day => {
       if (day.includes('mornings')) return 'Mornings';
-      if (day.includes('afternoons')) return 'Afternoons';
-      if (day.includes('evenings')) return 'Evenings';
+      else if (day.includes('afternoons')) return 'Afternoons';
+      else if (day.includes('evenings')) return 'Evenings';
+      return '';
     });
 };
 
 const getSelectedFromDays = (availability, type) => {
-  // const filteredAvailability = Object.clone
-  // Object.entries(availability).forEach(([key, value]) => {
-  //   if (!value) delete availability[key];
-  // });
   return getLabelsFromDays(_.pickBy(availability, (value, key) => value), type);
 };
 
@@ -42,13 +39,13 @@ const ApplicantInfo = ({ applicant }) => (
             <h5 className={styles.label}>
               <Label for="examplePhoneNumber">Phone Number</Label>
             </h5>
-            <p className={styles.content}>{applicant ? applicant.bio.phone_number : ''}</p>
+            <p className={styles.content}>{applicant.bio.phone_number}</p>
           </Col>
           <Col>
             <h5 className={styles.label}>
               <Label for="exampleBirthday">Birth Date</Label>
             </h5>
-            <p className={styles.content}>{applicant ? applicant.bio.date_of_birth : ''}</p>
+            <p className={styles.content}>{applicant.bio.date_of_birth}</p>
           </Col>
         </Row>
         <Row>
@@ -57,15 +54,9 @@ const ApplicantInfo = ({ applicant }) => (
               <Label for="exampleAddress">Address</Label>
             </h5>
             <p className={styles.content}>
-              {applicant
-                ? applicant.bio.street_address +
-                  ' ' +
-                  applicant.bio.city +
-                  ', ' +
-                  applicant.bio.state +
-                  ' ' +
-                  applicant.bio.zip_code
-                : ''}
+              {`${applicant.bio.street_address} ${applicant.bio.city}, ${applicant.bio.state} ${
+                applicant.bio.zip_code
+              }`}
             </p>
           </Col>
         </Row>

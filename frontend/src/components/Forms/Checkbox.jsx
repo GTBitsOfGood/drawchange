@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { FormGroup, CustomInput, Label } from 'reactstrap';
+import { FormGroup, CustomInput } from 'reactstrap';
 
 import styles from '../../styles/Form.module.css';
 

@@ -62,7 +62,6 @@ const keyToLabel = key => {
 
 const Filters = ({ show, toggleCallback, submitCallback, appliedFilters }) => (
   <Modal isOpen={show} toggle={toggleCallback}>
-    {console.log(appliedFilters)}
     <ModalHeader toggle={toggleCallback}>Filters</ModalHeader>
     <Form
       initialValues={appliedFilters || defaultValues}

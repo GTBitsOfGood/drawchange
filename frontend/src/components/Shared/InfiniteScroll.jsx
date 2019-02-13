@@ -40,7 +40,7 @@ class InfiniteScroll extends React.Component {
 InfiniteScroll.propTypes = {
   loadCallback: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
-  isLoading: PropTypes.boolean
+  isLoading: PropTypes.bool
 };
 
 export default InfiniteScroll;

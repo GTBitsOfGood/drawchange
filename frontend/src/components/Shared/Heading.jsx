@@ -22,6 +22,5 @@ const Heading = ({ level, children }) => <Styled.Heading level={level}>{children
 export default Heading;
 
 Heading.propTypes = {
-  level: PropTypes.number,
-  children: PropTypes.isRequired
+  level: PropTypes.number
 };
