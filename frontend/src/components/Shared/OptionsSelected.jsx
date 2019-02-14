@@ -6,8 +6,9 @@ const Styled = {
   Container: styled.div`
     display: flex;
     border-radius: 0.5rem;
-    margin: 0 0.5rem;
+    margin-bottom: 1rem;
     overflow: hidden;
+    width: 100%;
   `,
   Item: styled.div`
     flex: 1;

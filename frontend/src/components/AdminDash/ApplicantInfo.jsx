@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Col, Row, Label } from 'reactstrap';
 import styles from '../../styles/AppInfo.module.css';
 import { Heading, OptionsSelected } from '../Shared';
+import styled from 'styled-components';
 import _ from 'lodash';
 
 const getLabelsFromDays = (availability, type) => {
@@ -19,115 +19,95 @@ const getSelectedFromDays = (availability, type) => {
   return getLabelsFromDays(_.pickBy(availability, (value, key) => value), type);
 };
 
+const Section = styled.section`
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+
+  h5 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: ${props => props.theme.grey5};
+    font-weight: 600;
+    width: 100%;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+`;
+
+const SubSection = styled.div`
+  flex: 1;
+  display: inline-block;
+  margin-right: 1rem;
+  min-width: ${props => props.minWidth || '15rem'};
+`;
+
+const Container = styled.div`
+  padding: 2rem;
+  width: 100%;
+`;
+
 const ApplicantInfo = ({ applicant }) => (
   <div className={styles.container}>
     {applicant && (
       <Container>
-        <Row>
-          <Col>
-            <Heading>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</Heading>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="exampleEmail">Email</Label>
-            </h5>
+        <Section>
+          <Heading>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</Heading>
+          <SubSection>
+            <h5>Email</h5>
             <p className={styles.content}>{applicant.bio.email}</p>
-          </Col>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="examplePhoneNumber">Phone Number</Label>
-            </h5>
+          </SubSection>
+          <SubSection>
+            <h5>Phone Number</h5>
             <p className={styles.content}>{applicant.bio.phone_number}</p>
-          </Col>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="exampleBirthday">Birth Date</Label>
-            </h5>
+          </SubSection>
+          <SubSection>
+            <h5>Birth date</h5>
             <p className={styles.content}>{applicant.bio.date_of_birth}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="exampleAddress">Address</Label>
-            </h5>
+          </SubSection>
+          <SubSection>
+            <h5 className={styles.label}>Address</h5>
             <p className={styles.content}>
               {`${applicant.bio.street_address} ${applicant.bio.city}, ${applicant.bio.state} ${
                 applicant.bio.zip_code
               }`}
             </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h4 className={styles.header}>
-              <Label for="history">History</Label>
-            </h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="volunteerInterest">Volunteer Interest Cause</Label>
-            </h5>
-            <p className={styles.content}>
-              {applicant.history ? applicant.history.volunteer_interest_cause : ''}
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="volunteerSupport">Volunteer Support</Label>
-            </h5>
-            <p className={styles.content}>
-              {applicant.history ? applicant.history.volunteer_support : ''}
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="volunteerCommittment">Volunteer Committment</Label>
-            </h5>
-            <p className={styles.content}>
-              {applicant.history ? applicant.history.volunteer_commitment : ''}
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h5 className={styles.label}>
-              <Label for="previousExperience">Previous Experience</Label>
-            </h5>
-            <p className={styles.content}>
-              {applicant.history ? applicant.history.previous_volunteer_experience : ''}
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h4 className={styles.header}>
-              <Label for="exampleAvailability">Availability</Label>
-            </h4>
-            <Row>
-              <Col>
-                <OptionsSelected
-                  options={getLabelsFromDays(applicant.availability, 'weekday')}
-                  selected={getSelectedFromDays(applicant.availability, 'weekday')}
-                />
-              </Col>
-              <Col>
-                <OptionsSelected
-                  options={getLabelsFromDays(applicant.availability, 'weekend')}
-                  selected={getSelectedFromDays(applicant.availability, 'weekend')}
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+          </SubSection>
+        </Section>
+        {applicant.history && (
+          <Section>
+            <h4>History</h4>
+            <h5>Volunteer Interest Cause</h5>
+            <p>{applicant.history.volunteer_interest_cause}</p>
+            <h5>Volunteer Support</h5>
+            <p>{applicant.history.volunteer_interest_cause}</p>
+            <h5>Volunteer Commitment</h5>
+            <p>{applicant.history.volunteer_commitment}</p>
+            <h5>Previous Experience</h5>
+            <p>{applicant.history.previous_volunteer_experience}</p>
+          </Section>
+        )}
+        <Section>
+          <h4>Availability</h4>
+          <SubSection minWidth="20rem">
+            <h5>Weekdays</h5>
+            <OptionsSelected
+              options={getLabelsFromDays(applicant.availability, 'weekday')}
+              selected={getSelectedFromDays(applicant.availability, 'weekday')}
+            />
+          </SubSection>
+          <SubSection minWidth="20rem">
+            <h5>Weekends</h5>
+            <OptionsSelected
+              options={getLabelsFromDays(applicant.availability, 'weekend')}
+              selected={getSelectedFromDays(applicant.availability, 'weekend')}
+            />
+          </SubSection>
+        </Section>
       </Container>
     )}
   </div>
