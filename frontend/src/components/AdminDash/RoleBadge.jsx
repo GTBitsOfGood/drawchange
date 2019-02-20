@@ -5,20 +5,22 @@ import { withTheme } from 'styled-components';
 
 const roleToColorMap = {
   Pending: 'warning',
-  Volunteer: 'success'
+  Volunteer: 'success',
+  Admitted: 'success',
+  Denied: 'warning'
 };
 
-const RoleBadge = ({ role, selected, theme }) => (
+const RoleBadge = ({ status, selected, theme }) => (
   <Tag
-    type={roleToColorMap[role] || ''}
+    type={roleToColorMap[status] || ''}
     color={selected ? theme.grey9 : ''}
     textColor={selected ? theme.primary : ''}
-    text={role}
+    text={status}
   />
 );
 
 RoleBadge.propTypes = {
-  role: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   theme: PropTypes.object
 };

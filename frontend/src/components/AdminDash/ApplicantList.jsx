@@ -6,7 +6,7 @@ import RoleBadge from './RoleBadge';
 const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, children }) => (
   <div className={styles['list']}>
     {children}
-    {(applicants || []).map(({ bio, role }, index) => (
+    {(applicants || []).map(({ bio, status }, index) => (
       <button
         key={index}
         onClick={() => selectApplicantCallback(index)}
@@ -15,13 +15,16 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, chi
         <p className={styles['header']}>{bio.first_name + ' ' + bio.last_name}</p>
         <p>{bio.email}</p>
         <RoleBadge
-          role={role[0].toUpperCase() + role.slice(1)}
+          status={status[0].toUpperCase() + status.slice(1)}
           selected={selectedIndex === index}
         />
       </button>
     ))}
   </div>
 );
+//make function based on Filters.jsx
+//call inside status= (pass what func returns as prop)
+//pass result to rolebadge
 
 ApplicantList.propTypes = {
   applicants: PropTypes.array.isRequired,
