@@ -14,14 +14,18 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, chi
       >
         <p className={styles['header']}>{bio.first_name + ' ' + bio.last_name}</p>
         <p>{bio.email}</p>
-        <RoleBadge
-          status={status[0].toUpperCase() + status.slice(1)}
-          selected={selectedIndex === index}
-        />
+        {console.log(status)}
+        <RoleBadge status={status} selected={selectedIndex === index} />
       </button>
     ))}
   </div>
 );
+
+const keyToLabel = key => {
+  const words = key.split('_');
+  const capitalizedWords = words.map(word => `${word[0].toUpperCase()}${word.slice(1)}`);
+  return capitalizedWords.join(' ');
+};
 //make function based on Filters.jsx
 //call inside status= (pass what func returns as prop)
 //pass result to rolebadge

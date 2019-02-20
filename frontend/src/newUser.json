@@ -1,8 +1,8 @@
 {
   "bio": {
-    "first_name": "REal",
-    "last_name": "Person",
-    "email": "real@person.person",
+    "first_name": "Rheal",
+    "last_name": "Cool",
+    "email": "rheal@gmail.com",
     "phone_number": "(320) 984-3239",
     "date_of_birth": "2019-02-02T22:16:48.646Z",
     "street_address": "123 Maple St",
@@ -10,9 +10,8 @@
     "state": "GA",
     "zip_code": "30333"
   },
-  "status": {
-    "enum": "admitted"
-  },
+  "status": "responded_to_email",
+  "role": "volunteer",
   "availability": {
     "weekday_mornings": false,
     "weekday_afternoons": false,
