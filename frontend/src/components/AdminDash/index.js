@@ -4,6 +4,7 @@ import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
+import RequestResult from '../Shared/RequestResult';
 import { filterApplicants, fetchApplicants } from './queries';
 import styled from 'styled-components';
 
@@ -126,6 +127,7 @@ export default class AdminDash extends Component {
           toggleCallback={this.onShowFilterModal}
           submitCallback={this.onApplyFilters}
         />
+        <RequestResult text="Status updated!" success={true} />
       </Styled.Container>
     );
   }
