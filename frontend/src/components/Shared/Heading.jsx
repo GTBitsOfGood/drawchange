@@ -14,6 +14,7 @@ const Styled = {
     padding: 1rem 0;
     font-size: ${props => levelToFontSizeMap[props.level] || '2rem'};
     color: ${props => props.theme.grey1};
+    width: 100%;
   `
 };
 

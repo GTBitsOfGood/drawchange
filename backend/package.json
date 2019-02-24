@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./src/bin/www",
-    "dev": "PORT=3001 dotenv nodemon ./src/bin/www --watch src --ignore src/logs",
+    "dev": "dotenv nodemon ./src/bin/www --watch src --ignore src/logs",
     "format": "prettier --write '{src,test}/**/*.{js,jsx,json,css}'",
     "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
     "test": "NODE_ENV=test dotenv mocha tests --opts ./tests/mocha.opts"
