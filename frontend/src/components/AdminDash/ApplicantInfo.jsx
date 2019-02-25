@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from '../../styles/AppInfo.module.css';
-import { Heading, OptionsSelected } from '../Shared';
+import { OptionsSelected } from '../Shared';
+import StatusDropdown from './StatusDropdown';
 import styled from 'styled-components';
 import _ from 'lodash';
 
@@ -18,6 +20,24 @@ const getLabelsFromDays = (availability, type) => {
 const getSelectedFromDays = (availability, type) => {
   return getLabelsFromDays(_.pickBy(availability, (value, key) => value), type);
 };
+
+const Heading = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin-right: auto;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 60rem) {
+    flex-direction: column;
+  }
+`;
 
 const Section = styled.section`
   margin-bottom: 1.5rem;
@@ -51,12 +71,18 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const ApplicantInfo = ({ applicant }) => (
+const ApplicantInfo = ({ applicant, onUpdateApplicantStatus }) => (
   <div className={styles.container}>
     {applicant && (
       <Container>
         <Section>
-          <Heading>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</Heading>
+          <Heading>
+            <h1>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</h1>
+            <StatusDropdown
+              updateStatusCallback={status => onUpdateApplicantStatus(applicant.bio.email, status)}
+              status={applicant.status}
+            />
+          </Heading>
           <SubSection>
             <h5>Email</h5>
             <p className={styles.content}>{applicant.bio.email}</p>
@@ -114,3 +140,8 @@ const ApplicantInfo = ({ applicant }) => (
 );
 
 export default ApplicantInfo;
+
+ApplicantInfo.propTypes = {
+  applicant: PropTypes.object.isRequired,
+  onUpdateApplicantStatus: PropTypes.func.isRequired
+};

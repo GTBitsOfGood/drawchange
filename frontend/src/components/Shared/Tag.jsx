@@ -7,20 +7,18 @@ const defaultColors = {
   text: 'hsl(0, 0%, 10%)'
 };
 
-const Styled = {
-  Span: styled.span`
-    font-weight: 600;
-    padding: 0.3em 0.7em;
-    border-radius: 0.4em;
-    background: ${props => props.color || (props.theme[props.type] || defaultColors).base};
-    color: ${props => props.textColor || (props.theme[props.type] || defaultColors).text};
-  `
-};
+const Span = styled.span`
+  font-weight: 600;
+  padding: 0.3em 0.5em;
+  border-radius: 0.4em;
+  background: ${props => props.color || (props.theme[props.type] || defaultColors).base};
+  color: ${props => props.textColor || (props.theme[props.type] || defaultColors).text};
+`;
 
 const Tag = ({ children, type, color, textColor, text }) => (
-  <Styled.Span type={type} color={color} textColor={textColor}>
+  <Span type={type} color={color} textColor={textColor}>
     {text} {children}
-  </Styled.Span>
+  </Span>
 );
 
 export default Tag;

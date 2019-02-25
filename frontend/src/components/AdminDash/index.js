@@ -53,11 +53,17 @@ export default class AdminDash extends Component {
     this.setState({
       isLoading: true
     });
-    setTimeout(() => {
-      fetchApplicants().then(res =>
-        this.setState({ applicants: res.data.users, isLoading: false })
-      );
-    }, 1000);
+    // setTimeout(() => {
+    fetchApplicants().then(res => this.setState({ applicants: res.data.users, isLoading: false }));
+    // }, 1000);
+  };
+  onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
+    this.setState({
+      applicants: this.state.applicants.map(applicant => {
+        if (applicant.bio.email === applicantEmail) return { ...applicant, status: updatedStatus };
+        return applicant;
+      })
+    });
   };
   onSelectApplicant = index => {
     this.setState({
@@ -117,6 +123,7 @@ export default class AdminDash extends Component {
             <ApplicantInfo
               applicant={applicants[selectedApplicantIndex]}
               onChangeComment={this.onChangeComment}
+              onUpdateApplicantStatus={this.onUpdateApplicantStatus}
             />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
