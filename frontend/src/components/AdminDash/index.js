@@ -4,7 +4,7 @@ import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
-import { filterApplicants, fetchApplicants } from './queries';
+import { filterApplicants, fetchApplicants, updateApplicantStatus } from './queries';
 import styled from 'styled-components';
 
 const HEADING_HEIGHT = '4rem';
@@ -58,12 +58,15 @@ export default class AdminDash extends Component {
     // }, 1000);
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
-    this.setState({
-      applicants: this.state.applicants.map(applicant => {
-        if (applicant.bio.email === applicantEmail) return { ...applicant, status: updatedStatus };
-        return applicant;
+    updateApplicantStatus(applicantEmail, updatedStatus).then(() =>
+      this.setState({
+        applicants: this.state.applicants.map(applicant => {
+          if (applicant.bio.email === applicantEmail)
+            return { ...applicant, status: updatedStatus };
+          return applicant;
+        })
       })
-    });
+    );
   };
   onSelectApplicant = index => {
     this.setState({

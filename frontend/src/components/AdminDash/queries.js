@@ -19,6 +19,7 @@ export const filterApplicants = filterGroups => {
   return axios.get('/api/users?' + query);
 };
 
-export const fetchApplicants = () => {
-  return axios.get('/api/users');
-};
+export const fetchApplicants = () => axios.get('/api/users');
+
+export const updateApplicantStatus = (email, status) =>
+  axios.post(`/api/users/updateStatus?email=${email}&status=${status}`);

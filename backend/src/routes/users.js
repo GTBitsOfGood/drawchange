@@ -176,6 +176,17 @@ router.get('/', (req, res, next) => {
   }
 });
 
+router.post('/updateStatus', (req, res, next) => {
+  if (!req.query.email || !req.query.status)
+    res.status(400).json({ error: 'Invalid email or status sent' });
+  const { email, status } = req.query;
+  UserData.updateOne({ 'bio.email': email }, { $set: { status: status } }).then(result => {
+    if (!result.nModified)
+      res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
+    res.status(200).json({ success: email + ' status updated successfully.' });
+  });
+});
+
 router
   .route('/:id')
   .get([check('id').isMongoId()], (req, res, next) => {
