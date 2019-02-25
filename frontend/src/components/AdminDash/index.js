@@ -5,6 +5,7 @@ import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import { filterApplicants, fetchApplicants, updateApplicantStatus } from './queries';
+import { RequestContext } from '../Shared/RequestResult';
 import styled from 'styled-components';
 
 const HEADING_HEIGHT = '4rem';
@@ -44,8 +45,7 @@ export default class AdminDash extends Component {
       selectedApplicantIndex: 0,
       showFilterModal: false,
       appliedFilters: null,
-      applicants: [],
-      isLoading: true
+      applicants: []
     };
   }
 
@@ -53,20 +53,23 @@ export default class AdminDash extends Component {
     this.setState({
       isLoading: true
     });
-    // setTimeout(() => {
+
     fetchApplicants().then(res => this.setState({ applicants: res.data.users, isLoading: false }));
-    // }, 1000);
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
-    updateApplicantStatus(applicantEmail, updatedStatus).then(() =>
+    this.context.startLoading();
+    // setTimeout(() => {
+    updateApplicantStatus(applicantEmail, updatedStatus).then(() => {
+      this.context.success('Updated status!');
       this.setState({
         applicants: this.state.applicants.map(applicant => {
           if (applicant.bio.email === applicantEmail)
             return { ...applicant, status: updatedStatus };
           return applicant;
         })
-      })
-    );
+      });
+    });
+    // }, 2000);
   };
   onSelectApplicant = index => {
     this.setState({
@@ -140,3 +143,5 @@ export default class AdminDash extends Component {
     );
   }
 }
+
+AdminDash.contextType = RequestContext;

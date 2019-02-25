@@ -82,6 +82,25 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     });
 });
 
+router.get('/searchByContent', (req, res, next) => {
+  const inputText = req.query.searchquery;
+  const regexquery = { $regex: inputText, $options: 'i' };
+  UserData.find({
+    $or: [
+      { $text: { $search: inputText } },
+      { 'history.volunteer_interest_cause': regexquery },
+      { 'history.volunteer_support': regexquery }
+      /*and so on...*/
+    ]
+  })
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
+router.get('/searchByContent', (req, res, next) => {
+  res.status(200).json({ message: 'hi' });
+});
+
 router.post('/filter', (req, res, next) => {
   const filters = JSON.parse(req.body.data);
   let roleFilter = [];
@@ -183,7 +202,7 @@ router.post('/updateStatus', (req, res, next) => {
   UserData.updateOne({ 'bio.email': email }, { $set: { status: status } }).then(result => {
     if (!result.nModified)
       res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
-    res.status(200).json({ success: email + ' status updated successfully.' });
+    res.sendStatus(200);
   });
 });
 
