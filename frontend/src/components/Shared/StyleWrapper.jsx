@@ -18,6 +18,7 @@ const theme = {
   primary: '#b35fd0',
   grey1: 'hsl(0, 0%, 10%)',
   grey3: 'hsl(0, 0%, 30%)',
+  grey5: 'hsl(0, 0%, 50%)',
   grey9: 'hsl(0, 0%, 95%)',
   danger: {
     base: 'hsl(0, 100%, 63%)',

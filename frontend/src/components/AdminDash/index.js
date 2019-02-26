@@ -4,8 +4,7 @@ import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
-import dummyUsers from './mockUserData';
-import { filterApplicants } from './queries';
+import { filterApplicants, fetchApplicants } from './queries';
 import styled from 'styled-components';
 
 const HEADING_HEIGHT = '4rem';
@@ -44,13 +43,21 @@ export default class AdminDash extends Component {
     this.state = {
       selectedApplicantIndex: 0,
       showFilterModal: false,
-      appliedFilters: [],
-      applicants: []
+      appliedFilters: null,
+      applicants: [],
+      isLoading: true
     };
   }
-  componentWillMount = () => {};
+
   onLoadMoreApplicants = () => {
-    console.log('loading more users!');
+    this.setState({
+      isLoading: true
+    });
+    setTimeout(() => {
+      fetchApplicants().then(res =>
+        this.setState({ applicants: res.data.users, isLoading: false })
+      );
+    }, 1000);
   };
   onSelectApplicant = index => {
     this.setState({
@@ -63,14 +70,17 @@ export default class AdminDash extends Component {
     });
   };
   onApplyFilters = filters => {
-    console.log(filters);
+    this.setState({
+      appliedFilters: filters
+    });
     filterApplicants(filters).then(response =>
       this.setState({
         applicants: response.data.users
       })
     );
   };
-  onChangeComment = (index, comment) => {
+  onChangeComment = comment => {
+    const index = this.state.selectedApplicantIndex;
     let applicants = this.state.applicants;
     if (!applicants[index].comments) {
       applicants[index].comments = [];
@@ -81,12 +91,18 @@ export default class AdminDash extends Component {
     });
   };
   render() {
-    const { selectedApplicantIndex, showFilterModal, applicants } = this.state;
+    const {
+      selectedApplicantIndex,
+      showFilterModal,
+      applicants,
+      appliedFilters,
+      isLoading
+    } = this.state;
     return (
       <Styled.Container>
         <Styled.Heading height={HEADING_HEIGHT}>Admin Dashboard</Styled.Heading>
         <Styled.Main headingHeight={HEADING_HEIGHT}>
-          <InfiniteScroll loadCallback={this.onLoadMoreApplicants}>
+          <InfiniteScroll loadCallback={this.onLoadMoreApplicants} isLoading={isLoading}>
             <ApplicantList
               applicants={applicants}
               selectApplicantCallback={this.onSelectApplicant}
@@ -100,14 +116,14 @@ export default class AdminDash extends Component {
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
             <ApplicantInfo
-              {...dummyUsers[selectedApplicantIndex]}
+              applicant={applicants[selectedApplicantIndex]}
               onChangeComment={this.onChangeComment}
-              applicantIndex={selectedApplicantIndex}
             />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
         <Filters
           show={showFilterModal}
+          appliedFilters={appliedFilters}
           toggleCallback={this.onShowFilterModal}
           submitCallback={this.onApplyFilters}
         />

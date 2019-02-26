@@ -18,3 +18,7 @@ export const filterApplicants = filterGroups => {
   }, '');
   return axios.get('/api/users?' + query);
 };
+
+export const fetchApplicants = () => {
+  return axios.get('/api/users');
+};

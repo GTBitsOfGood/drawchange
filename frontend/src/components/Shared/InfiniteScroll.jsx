@@ -15,7 +15,10 @@ class InfiniteScroll extends React.Component {
     this.containerRef = React.createRef();
   }
   scrollCallback = ({ scrollHeight, clientHeight, scrollTop }) => {
-    if (scrollHeight - clientHeight - scrollTop <= 0) this.props.loadCallback();
+    if (scrollHeight - clientHeight - scrollTop <= 0) {
+      this.containerRef.current.scrollTop--;
+      this.props.loadCallback();
+    }
   };
   componentDidMount = () => {
     this.scrollCallback(this.containerRef.current);
@@ -24,11 +27,11 @@ class InfiniteScroll extends React.Component {
     );
   };
   render() {
-    const { children } = this.props;
+    const { children, isLoading } = this.props;
     return (
       <Styled.Container ref={this.containerRef}>
         {children}
-        <Loading />
+        {isLoading && <Loading />}
       </Styled.Container>
     );
   }
@@ -36,7 +39,8 @@ class InfiniteScroll extends React.Component {
 
 InfiniteScroll.propTypes = {
   loadCallback: PropTypes.func.isRequired,
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool
 };
 
 export default InfiniteScroll;

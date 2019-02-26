@@ -29,9 +29,12 @@ export default class VolunteerApp extends Component {
   postApp = _ => {
     console.log('we submitted');
     console.log(this.state.data);
+    console.log(this.props.user._id)
 
     axios
-      .post('/api/users', this.state.data)
+    //patch request to user.id to update proper asset 
+    //custom patch check in users.js 
+      .put(`/api/users/${this.props.user._id}`, this.state.data)
       .then(res => {
         console.log('Success', res);
         this.setState({ submitted: true });
@@ -81,6 +84,7 @@ export default class VolunteerApp extends Component {
                 initValues={this.state.data}
                 onBack={this.onBack}
                 onSubmit={this.onSubmit}
+                user={this.props.user}
               />
             </Col>
           </Row>

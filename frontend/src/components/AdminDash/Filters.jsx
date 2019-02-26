@@ -60,11 +60,11 @@ const keyToLabel = key => {
   return capitalizedWords.join(' ');
 };
 
-const Filters = ({ show, toggleCallback, submitCallback }) => (
+const Filters = ({ show, toggleCallback, submitCallback, appliedFilters }) => (
   <Modal isOpen={show} toggle={toggleCallback}>
     <ModalHeader toggle={toggleCallback}>Filters</ModalHeader>
     <Form
-      initialValues={defaultValues}
+      initialValues={appliedFilters || defaultValues}
       onSubmit={values => {
         toggleCallback();
         submitCallback(values);
@@ -104,5 +104,6 @@ export default Filters;
 Filters.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleCallback: PropTypes.func.isRequired,
-  submitCallback: PropTypes.func.isRequired
+  submitCallback: PropTypes.func.isRequired,
+  appliedFilters: PropTypes.object
 };
