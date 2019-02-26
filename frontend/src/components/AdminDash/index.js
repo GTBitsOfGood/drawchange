@@ -55,12 +55,6 @@ export default class AdminDash extends Component {
     };
   }
 
-  // handleKeyPress(target) {
-  //   if (target.charCode == 13) {
-  //     alert(s);
-  //   }
-  // }
-
   onLoadMoreApplicants = () => {
     this.setState({
       isLoading: true
