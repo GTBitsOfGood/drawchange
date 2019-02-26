@@ -4,7 +4,12 @@ import ApplicantInfo from './ApplicantInfo';
 import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
-import { filterApplicants, fetchApplicants, updateApplicantStatus } from './queries';
+import {
+  filterApplicants,
+  fetchApplicants,
+  updateApplicantStatus,
+  searchApplicants
+} from './queries';
 import { RequestContext } from '../Shared/RequestResult';
 import styled from 'styled-components';
 
@@ -45,9 +50,16 @@ export default class AdminDash extends Component {
       selectedApplicantIndex: 0,
       showFilterModal: false,
       appliedFilters: null,
-      applicants: []
+      applicants: [],
+      textInput: ''
     };
   }
+
+  // handleKeyPress(target) {
+  //   if (target.charCode == 13) {
+  //     alert(s);
+  //   }
+  // }
 
   onLoadMoreApplicants = () => {
     this.setState({
@@ -91,6 +103,18 @@ export default class AdminDash extends Component {
       })
     );
   };
+
+  onSearchSubmit = target => {
+    var inputquery = document.getElementById('textinp').value;
+    if (target.charCode == 13) {
+      searchApplicants(inputquery).then(response =>
+        this.setState({
+          applicants: response.data.users
+        })
+      );
+    }
+  };
+
   onChangeComment = (index, comment) => {
     let applicants = this.state.applicants;
     if (!applicants[index].comments) {
@@ -120,7 +144,12 @@ export default class AdminDash extends Component {
               selectedIndex={selectedApplicantIndex}
             >
               <Styled.FilterContainer>
-                <Input placeholder="Search by content" />
+                <Input
+                  type="text"
+                  id="textinp"
+                  placeholder="Search by content"
+                  onKeyPress={this.onSearchSubmit}
+                />
                 <Button onClick={this.onShowFilterModal}>Filter</Button>
               </Styled.FilterContainer>
             </ApplicantList>

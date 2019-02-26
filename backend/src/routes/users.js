@@ -82,25 +82,6 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     });
 });
 
-router.get('/searchByContent', (req, res, next) => {
-  const inputText = req.query.searchquery;
-  const regexquery = { $regex: inputText, $options: 'i' };
-  UserData.find({
-    $or: [
-      { $text: { $search: inputText } },
-      { 'history.volunteer_interest_cause': regexquery },
-      { 'history.volunteer_support': regexquery }
-      /*and so on...*/
-    ]
-  })
-    .then(users => res.status(200).json({ users }))
-    .catch(err => next(err));
-});
-
-router.get('/searchByContent', (req, res, next) => {
-  res.status(200).json({ message: 'hi' });
-});
-
 router.post('/filter', (req, res, next) => {
   const filters = JSON.parse(req.body.data);
   let roleFilter = [];
