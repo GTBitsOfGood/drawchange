@@ -94,6 +94,30 @@ router.post('/filter', (req, res, next) => {
     .catch(err => next(err));
 });
 
+router.get('/searchByContent', (req, res, next) => {
+  const inputText = req.query.searchquery;
+  const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
+  UserData.find({
+    $or: [
+      //{ $text: { $search: inputText } },
+      { 'history.volunteer_interest_cause': regexquery },
+      { 'history.volunteer_support': regexquery },
+      { 'history.volunteer_commitment': regexquery },
+      { 'history.previous_volunteer_experience': regexquery },
+      { 'bio.street_address': regexquery },
+      { 'bio.city': regexquery },
+      { 'bio.state': regexquery },
+      { 'bio.zip_code': regexquery },
+      { 'bio.first_name': regexquery },
+      { 'bio.last_name': regexquery },
+      { 'bio.email': regexquery },
+      { 'bio.phone_number': regexquery }
+    ]
+  })
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
 router.get('/', (req, res, next) => {
   if (req.query.type === 'pending') {
     UserData.find({ role: 'pending' })
@@ -150,6 +174,17 @@ router.get('/', (req, res, next) => {
       .then(users => res.status(200).json({ users }))
       .catch(err => next(err));
   }
+});
+
+router.post('/updateStatus', (req, res, next) => {
+  if (!req.query.email || !req.query.status)
+    res.status(400).json({ error: 'Invalid email or status sent' });
+  const { email, status } = req.query;
+  UserData.updateOne({ 'bio.email': email }, { $set: { status: status } }).then(result => {
+    if (!result.nModified)
+      res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
+    res.sendStatus(200);
+  });
 });
 
 router

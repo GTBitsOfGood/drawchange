@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Styled = {
@@ -7,7 +8,7 @@ const Styled = {
     display: flex;
     justify-content: center;
     margin: 1.5rem 0;
-    font-size: ${props => props.size * 10}px;
+    font-size: ${props => props.size || '10px'} !important;
   `,
   Bubble: styled.span`
     background-color: #555;
@@ -32,8 +33,9 @@ const Styled = {
   `
 };
 
-const LoadingIcon = () => (
-  <Styled.Container size={1}>
+const LoadingIcon = ({ size }) => (
+  <Styled.Container size={size}>
+    {console.log(size)}
     <Styled.Bubble />
     <Styled.Bubble anim-delay="0.1s" />
     <Styled.Bubble anim-delay="0.2s" />
@@ -41,3 +43,7 @@ const LoadingIcon = () => (
 );
 
 export default LoadingIcon;
+
+LoadingIcon.propTypes = {
+  size: PropTypes.string
+};

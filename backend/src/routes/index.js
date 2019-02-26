@@ -13,7 +13,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 // Restful endpoints
 router.use('/users', auth.isAuthenticated, users);
-// router.use('/events', auth.isAuthenticated, events);
+//router.use('/events', auth.isAuthenticated, events);
 
 // Error handler
 router.use((err, req, res, next) => {

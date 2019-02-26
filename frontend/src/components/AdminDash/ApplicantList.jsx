@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../styles/ApplicantList.module.css';
-import RoleBadge from './RoleBadge';
+import StatusBadge from './StatusBadge';
 
 const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, children }) => (
   <div className={styles['list']}>
     {children}
-    {(applicants || []).map(({ bio, role }, index) => (
+    {(applicants || []).map(({ bio, status }, index) => (
       <button
         key={index}
         onClick={() => selectApplicantCallback(index)}
@@ -14,10 +14,7 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, chi
       >
         <p className={styles['header']}>{bio.first_name + ' ' + bio.last_name}</p>
         <p>{bio.email}</p>
-        <RoleBadge
-          role={role[0].toUpperCase() + role.slice(1)}
-          selected={selectedIndex === index}
-        />
+        <StatusBadge status={status} selected={selectedIndex === index} />
       </button>
     ))}
   </div>

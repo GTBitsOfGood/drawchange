@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from '../Shared/Tag';
+import { getStatusColor, getStatusLabel } from './statusHelpers';
 import { withTheme } from 'styled-components';
 
-const roleToColorMap = {
-  Pending: 'warning',
-  Volunteer: 'success'
-};
-
-const RoleBadge = ({ role, selected, theme }) => (
+const StatusBadge = ({ status, selected, theme }) => (
   <Tag
-    type={roleToColorMap[role] || ''}
+    type={getStatusColor(status) || ''}
     color={selected ? theme.grey9 : ''}
     textColor={selected ? theme.primary : ''}
-    text={role}
+    text={getStatusLabel(status)}
   />
 );
 
-RoleBadge.propTypes = {
-  role: PropTypes.string.isRequired,
+StatusBadge.propTypes = {
+  status: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   theme: PropTypes.object
 };
 
-export default withTheme(RoleBadge);
+export default withTheme(StatusBadge);

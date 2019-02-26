@@ -2,10 +2,7 @@
   "name": "drawchange",
   "description": "a really cool app",
   "version": "1.0.0",
-  "cacheDirectories": [
-    "frontend/node_modules",
-    "backend/node_modules"
-  ],
+  "cacheDirectories": ["frontend/node_modules", "backend/node_modules"],
   "scripts": {
     "start": "cd backend/ && yarn start",
     "install-frontend": "yarn install --cwd frontend",
@@ -16,8 +13,5 @@
   "engines": {
     "yarn": "1.12.3",
     "node": "10.14.2"
-  },
-  "dependencies": {
-    "yarn": "^1.13.0"
   }
 }
