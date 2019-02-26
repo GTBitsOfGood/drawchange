@@ -3,6 +3,7 @@ import { Button, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 import styles from '../../styles/AppInfo.module.css';
 import { OptionsSelected } from '../Shared';
+import { getStatusLabel } from './statusHelpers';
 import StatusDropdown from './StatusDropdown';
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -70,6 +71,11 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const InputContainer = styled.div`
+  padding-left: 10;
+  padding-right: 10;
+`;
+
 class ApplicantInfo extends Component {
   constructor(props) {
     super(props);
@@ -89,10 +95,16 @@ class ApplicantInfo extends Component {
               <Heading>
                 <h1>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</h1>
                 <StatusDropdown
-                  updateStatusCallback={status => onUpdateApplicantStatus(applicant.bio.email, status)}
+                  updateStatusCallback={status =>
+                    onUpdateApplicantStatus(applicant.bio.email, status)
+                  }
                   status={applicant.status}
                 />
               </Heading>
+              <SubSection>
+                <h5>Role</h5>
+                <p className={styles.content}>{getStatusLabel(applicant.role)}</p>
+              </SubSection>
               <SubSection>
                 <h5>Email</h5>
                 <p className={styles.content}>{applicant.bio.email}</p>
@@ -145,7 +157,7 @@ class ApplicantInfo extends Component {
               </SubSection>
             </Section>
             <Section>
-              <SubSection style={{ marginTop: 10 }}>
+              <SubSection>
                 <h5>Comments</h5>
                 {applicant.comments &&
                   applicant.comments.map(comment => <p className={styles.content}>{comment}</p>)}
@@ -155,7 +167,7 @@ class ApplicantInfo extends Component {
                   </Button>
                 )}
                 {this.state.editingMode && (
-                  <div style={{ paddingLeft: 10, paddingRight: 10 }}>
+                  <InputContainer>
                     <Input
                       type="textarea"
                       onChange={e => this.setState({ commentText: e.target.value })}
@@ -168,7 +180,7 @@ class ApplicantInfo extends Component {
                     >
                       Edit Comment
                     </Button>
-                  </div>
+                  </InputContainer>
                 )}
               </SubSection>
             </Section>

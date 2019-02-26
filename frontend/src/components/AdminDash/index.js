@@ -55,12 +55,6 @@ export default class AdminDash extends Component {
     };
   }
 
-  // handleKeyPress(target) {
-  //   if (target.charCode == 13) {
-  //     alert(s);
-  //   }
-  // }
-
   onLoadMoreApplicants = () => {
     this.setState({
       isLoading: true
@@ -70,18 +64,18 @@ export default class AdminDash extends Component {
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
     this.context.startLoading();
-    // setTimeout(() => {
-    updateApplicantStatus(applicantEmail, updatedStatus).then(() => {
-      this.context.success('Updated status!');
-      this.setState({
-        applicants: this.state.applicants.map(applicant => {
-          if (applicant.bio.email === applicantEmail)
-            return { ...applicant, status: updatedStatus };
-          return applicant;
-        })
+    setTimeout(() => {
+      updateApplicantStatus(applicantEmail, updatedStatus).then(() => {
+        this.context.success('Updated status!');
+        this.setState({
+          applicants: this.state.applicants.map(applicant => {
+            if (applicant.bio.email === applicantEmail)
+              return { ...applicant, status: updatedStatus };
+            return applicant;
+          })
+        });
       });
-    });
-    // }, 2000);
+    }, 1000);
   };
   onSelectApplicant = index => {
     this.setState({
