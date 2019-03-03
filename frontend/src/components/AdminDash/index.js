@@ -126,7 +126,8 @@ export default class AdminDash extends Component {
       showFilterModal,
       applicants,
       appliedFilters,
-      isLoading
+      isLoading,
+      getApplicantEmails
     } = this.state;
     return (
       <Styled.Container>
@@ -147,6 +148,14 @@ export default class AdminDash extends Component {
                 />
                 <Button onClick={this.onShowFilterModal}>Filter</Button>
               </Styled.FilterContainer>
+              <a
+                href={`mailto:${applicants &&
+                  applicants.reduce((acc, curr) => {
+                    return acc.concat(curr.bio.email);
+                  }, [])}`}
+              >
+                Compose Email
+              </a>
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer>
