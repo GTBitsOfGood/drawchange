@@ -98,10 +98,15 @@ export default class AdminDash extends Component {
     );
   };
 
+  onSearchChange = event => {
+    console.log(event.target.value);
+    this.setState({ textInput: event.target.value });
+  };
+
   onSearchSubmit = target => {
-    var inputquery = document.getElementById('textinp').value;
     if (target.charCode == 13) {
-      searchApplicants(inputquery).then(response =>
+      console.log(this.state.textInput);
+      searchApplicants(this.state.textInput).then(response =>
         this.setState({
           applicants: response.data.users
         })
@@ -140,11 +145,12 @@ export default class AdminDash extends Component {
               selectedIndex={selectedApplicantIndex}
             >
               <Styled.FilterContainer>
+                {/* <Styled.BackButton input={this.state.textInput}>Back</Styled.BackButton> */}
                 <Input
                   type="text"
-                  id="textinp"
                   placeholder="Search by content"
                   onKeyPress={this.onSearchSubmit}
+                  onChange={this.onSearchChange}
                 />
                 <Button onClick={this.onShowFilterModal}>Filter</Button>
               </Styled.FilterContainer>
