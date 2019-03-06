@@ -40,6 +40,15 @@ const Styled = {
     background: #f6f6f6;
     overflow-y: scroll;
     padding: 1rem;
+  `,
+
+  BackButton: styled.button`
+    width: ${props => (props.show ? '3.2rem' : '0')};
+    border: none;
+    background: none;
+    transition: width 0.2s;
+    overflow: hidden;
+    padding: 0;
   `
 };
 
@@ -145,7 +154,7 @@ export default class AdminDash extends Component {
               selectedIndex={selectedApplicantIndex}
             >
               <Styled.FilterContainer>
-                {/* <Styled.BackButton input={this.state.textInput}>Back</Styled.BackButton> */}
+                <Styled.BackButton show={this.state.textInput}>Back</Styled.BackButton>
                 <Input
                   type="text"
                   placeholder="Search by content"
