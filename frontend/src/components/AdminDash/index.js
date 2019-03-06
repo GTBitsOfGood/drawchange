@@ -12,6 +12,7 @@ import {
 } from './queries';
 import { RequestContext } from '../Shared/RequestResult';
 import styled from 'styled-components';
+import Icon from '../Shared/Icon';
 
 const HEADING_HEIGHT = '4rem';
 
@@ -27,7 +28,7 @@ const Styled = {
     height: ${props => props.height};
     padding: calc((${props => props.height} - 1.4rem) / 2) 2rem;
   `,
-  FilterContainer: styled.div`
+  FilterContainer: styled.form`
     display: flex;
     margin-bottom: 1rem;
   `,
@@ -108,19 +109,29 @@ export default class AdminDash extends Component {
   };
 
   onSearchChange = event => {
-    console.log(event.target.value);
     this.setState({ textInput: event.target.value });
+    if (event.target.value === '') {
+      this.onClearSearch();
+    }
   };
 
-  onSearchSubmit = target => {
-    if (target.charCode == 13) {
-      console.log(this.state.textInput);
-      searchApplicants(this.state.textInput).then(response =>
-        this.setState({
-          applicants: response.data.users
-        })
-      );
-    }
+  onSearchSubmit = event => {
+    event.preventDefault();
+    console.log(this.state.textInput);
+    searchApplicants(this.state.textInput).then(response =>
+      this.setState({
+        applicants: response.data.users
+      })
+    );
+  };
+
+  onClearSearch = () => {
+    this.setState({ textInput: '' });
+    searchApplicants('').then(response =>
+      this.setState({
+        applicants: response.data.users
+      })
+    );
   };
 
   onChangeComment = comment => {
@@ -153,14 +164,15 @@ export default class AdminDash extends Component {
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
             >
-              <Styled.FilterContainer>
-                <Styled.BackButton show={this.state.textInput}>Back</Styled.BackButton>
-                <Input
-                  type="text"
-                  placeholder="Search by content"
-                  onKeyPress={this.onSearchSubmit}
-                  onChange={this.onSearchChange}
-                />
+              <Styled.FilterContainer onSubmit={this.onSearchSubmit}>
+                <Styled.BackButton
+                  type="reset"
+                  show={this.state.textInput}
+                  onClick={this.onClearSearch}
+                >
+                  <Icon name="back-arrow" />
+                </Styled.BackButton>
+                <Input type="text" placeholder="Search by content" onChange={this.onSearchChange} />
                 <Button onClick={this.onShowFilterModal}>Filter</Button>
               </Styled.FilterContainer>
               <a
