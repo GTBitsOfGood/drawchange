@@ -35,18 +35,15 @@ class App extends Component {
   };
 
   render() {
+    const { isAuthenticated, user } = this.state;
     return (
       <BrowserRouter>
         <StyleWrapper>
           <RequestProvider>
             <Styled.Container>
-              <Header onLogout={this.logout} loggedIn={this.state.isAuthenticated} />
+              <Header onLogout={this.logout} loggedIn={isAuthenticated} role={user.role} />
               <Styled.Content>
-                {this.state.user ? (
-                  <Authenticated user={this.state.user} />
-                ) : (
-                  <Splash onAuth={this.fakeAuth} />
-                )}
+                {user ? <Authenticated user={user} /> : <Splash onAuth={this.fakeAuth} />}
               </Styled.Content>
             </Styled.Container>
           </RequestProvider>

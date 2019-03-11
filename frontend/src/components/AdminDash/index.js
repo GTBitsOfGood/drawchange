@@ -131,7 +131,6 @@ export default class AdminDash extends Component {
     } = this.state;
     return (
       <Styled.Container>
-        <Styled.Heading height={HEADING_HEIGHT}>Admin Dashboard</Styled.Heading>
         <Styled.Main headingHeight={HEADING_HEIGHT}>
           <InfiniteScroll loadCallback={this.onLoadMoreApplicants} isLoading={isLoading}>
             <ApplicantList
