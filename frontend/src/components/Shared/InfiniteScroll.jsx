@@ -6,6 +6,7 @@ import Loading from './Loading';
 const Styled = {
   Container: styled.div`
     overflow-y: scroll;
+    position: relative;
   `
 };
 
