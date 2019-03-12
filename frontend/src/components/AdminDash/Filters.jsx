@@ -11,6 +11,17 @@ const Styled = {
 };
 
 const defaultValues = {
+  date: {
+    label: 'Date Range',
+    values: {
+      past_6_months: false,
+      past_month: false,
+      from_current_year: false,
+      from_one_year_ago: false,
+      from_two_years_ago: false,
+      older: false
+    }
+  },
   role: {
     label: 'Role',
     values: {
@@ -57,7 +68,19 @@ const defaultValues = {
 const keyToLabel = key => {
   const words = key.split('_');
   const capitalizedWords = words.map(word => `${word[0].toUpperCase()}${word.slice(1)}`);
-  return capitalizedWords.join(' ');
+  console.log(key);
+  var d = new Date();
+  if (key == 'from_current_year') {
+    return 'from' + ' ' + d.getFullYear();
+  } else if (key == 'from_one_year_ago') {
+    return 'from' + ' ' + (d.getFullYear() - 1);
+  } else if (key == 'from_two_years_ago') {
+    return 'from' + ' ' + (d.getFullYear() - 2);
+  } else if (key == 'older') {
+    return d.getFullYear() - 3 + ' and ' + 'older';
+  } else {
+    return capitalizedWords.join(' ');
+  }
 };
 
 const Filters = ({ show, toggleCallback, submitCallback, appliedFilters }) => (
