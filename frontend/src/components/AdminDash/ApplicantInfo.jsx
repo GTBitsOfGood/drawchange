@@ -57,6 +57,10 @@ const Section = styled.section`
     margin-bottom: 1.5rem;
     width: 100%;
   }
+
+  p {
+    font-size: 1rem;
+  }
 `;
 
 const SubSection = styled.div`
