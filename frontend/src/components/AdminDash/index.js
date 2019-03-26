@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
-import { Button, Input } from 'reactstrap';
+import {
+  Button,
+  Input,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import Icon from '../Shared/Icon';
@@ -67,11 +74,14 @@ const Styled = {
 class AdminDash extends Component {
   constructor() {
     super();
+    this.toggle = this.toggle.bind(this);
     this.state = {
+      dropdownOpen: false,
       selectedApplicantIndex: 0,
       showFilterModal: false,
       appliedFilters: null,
       applicants: [],
+      placeholder: 'All',
       textInput: ''
     };
   }
@@ -145,6 +155,19 @@ class AdminDash extends Component {
     );
   };
 
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  selectSearchOption = event => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+      placeholder: event.target.innerText
+    });
+  };
+
   onChangeComment = comment => {
     const index = this.state.selectedApplicantIndex;
     let applicants = this.state.applicants;
@@ -182,10 +205,27 @@ class AdminDash extends Component {
                 >
                   <Icon name="back-arrow" />
                 </Styled.BackButton>
-                <Input type="text" placeholder="Search by content" onChange={this.onSearchChange} />
+                <Input
+                  type="text"
+                  placeholder={'Search By ' + this.state.placeholder}
+                  onChange={this.onSearchChange}
+                />
+
                 <Button onClick={this.onShowFilterModal}>Filter</Button>
+                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                  <DropdownToggle caret />
+                  <DropdownMenu>
+                    <DropdownItem header>Search by..</DropdownItem>
+                    <DropdownItem onClick={this.selectSearchOption}>All</DropdownItem>
+                    <DropdownItem onClick={this.selectSearchOption}>Bio</DropdownItem>
+                    <DropdownItem onClick={this.selectSearchOption}>Email</DropdownItem>
+                    <DropdownItem onClick={this.selectSearchOption}>Phone Number</DropdownItem>
+                    <DropdownItem onClick={this.selectSearchOption}>Comments</DropdownItem>
+                  </DropdownMenu>
+                </ButtonDropdown>
               </Styled.FilterContainer>
             </ApplicantList>
+
             <Styled.MailContainer>
               <Styled.MailAll
                 href={`mailto:${applicants &&

@@ -118,6 +118,45 @@ router.get('/searchByContent', (req, res, next) => {
     .catch(err => next(err));
 });
 
+router.get('/searchByPhone', (req, res, next) => {
+  const inputText = req.query.searchquery;
+  const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
+  UserData.find({
+    $or: [{ 'bio.phone_number': regexquery }]
+  })
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
+router.get('/searchByBio', (req, res, next) => {
+  const inputText = req.query.searchquery;
+  const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
+  UserData.find({
+    $or: [
+      { 'bio.street_address': regexquery },
+      { 'bio.city': regexquery },
+      { 'bio.state': regexquery },
+      { 'bio.zip_code': regexquery },
+      { 'bio.first_name': regexquery },
+      { 'bio.last_name': regexquery },
+      { 'bio.email': regexquery },
+      { 'bio.phone_number': regexquery }
+    ]
+  })
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
+router.get('/searchByEmail', (req, res, next) => {
+  const inputText = req.query.searchquery;
+  const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
+  UserData.find({
+    $or: [{ 'bio.email': regexquery }]
+  })
+    .then(users => res.status(200).json({ users }))
+    .catch(err => next(err));
+});
+
 router.get('/', (req, res, next) => {
   if (req.query.type === 'pending') {
     UserData.find({ role: 'pending' })
