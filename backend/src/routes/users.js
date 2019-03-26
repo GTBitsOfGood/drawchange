@@ -119,6 +119,7 @@ router.get('/searchByContent', (req, res, next) => {
       })
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
+      break;
     case 'Bio':
       UserData.find({
         $or: [
@@ -134,6 +135,7 @@ router.get('/searchByContent', (req, res, next) => {
       })
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
+      break;
     case 'Email':
       UserData.find({
         $or: [{ 'bio.email': regexquery }]
@@ -144,12 +146,14 @@ router.get('/searchByContent', (req, res, next) => {
           res.status(200).json({ users });
         })
         .catch(err => next(err));
+      break;
     case 'Phone Number':
       UserData.find({
         $or: [{ 'bio.phone_number': regexquery }]
       })
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
+      break;
     default:
       UserData.find({
         $or: [
