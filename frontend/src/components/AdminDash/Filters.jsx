@@ -68,7 +68,6 @@ const defaultValues = {
 const keyToLabel = key => {
   const words = key.split('_');
   const capitalizedWords = words.map(word => `${word[0].toUpperCase()}${word.slice(1)}`);
-  console.log(key);
   var d = new Date();
   if (key == 'from_current_year') {
     return 'from' + ' ' + d.getFullYear();

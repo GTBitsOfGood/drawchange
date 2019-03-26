@@ -24,8 +24,8 @@ export const fetchApplicants = () => axios.get('/api/users');
 export const updateApplicantStatus = (email, status) =>
   axios.post(`/api/users/updateStatus?email=${email}&status=${status}`);
 
-export const searchApplicants = textinput => {
+export const searchApplicants = (textinput, searchType) => {
   return axios.get('/api/users/searchByContent', {
-    params: { searchquery: textinput }
+    params: { searchquery: textinput, searchtype: searchType }
   });
 };

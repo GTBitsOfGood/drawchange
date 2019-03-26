@@ -139,7 +139,7 @@ class AdminDash extends Component {
   onSearchSubmit = event => {
     event.preventDefault();
     console.log(this.state.textInput);
-    searchApplicants(this.state.textInput).then(response =>
+    searchApplicants(this.state.textInput, this.state.placeholder).then(response =>
       this.setState({
         applicants: response.data.users
       })
@@ -148,7 +148,7 @@ class AdminDash extends Component {
 
   onClearSearch = () => {
     this.setState({ textInput: '' });
-    searchApplicants('').then(response =>
+    searchApplicants('', this.state.placeholder).then(response =>
       this.setState({
         applicants: response.data.users
       })
