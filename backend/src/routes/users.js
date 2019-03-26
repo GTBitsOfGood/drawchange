@@ -141,8 +141,6 @@ router.get('/searchByContent', (req, res, next) => {
         $or: [{ 'bio.email': regexquery }]
       })
         .then(users => {
-          console.log('horrah!');
-          console.log(users);
           res.status(200).json({ users });
         })
         .catch(err => next(err));

@@ -138,7 +138,6 @@ class AdminDash extends Component {
 
   onSearchSubmit = event => {
     event.preventDefault();
-    console.log(this.state.textInput);
     searchApplicants(this.state.textInput, this.state.placeholder).then(response =>
       this.setState({
         applicants: response.data.users
