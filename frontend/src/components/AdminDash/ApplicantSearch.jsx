@@ -90,7 +90,6 @@ class ApplicantSearch extends React.Component {
           onChange={this.onSearchChange}
         />
 
-        <Button onClick={this.onShowFilterModal}>Filter</Button>
         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle caret />
           <DropdownMenu>
@@ -102,6 +101,7 @@ class ApplicantSearch extends React.Component {
             <DropdownItem onClick={this.selectSearchOption}>Comments</DropdownItem>
           </DropdownMenu>
         </ButtonDropdown>
+        <Button onClick={this.onShowFilterModal}>Filter</Button>
 
         <Filters
           show={this.state.showFilterModal}
