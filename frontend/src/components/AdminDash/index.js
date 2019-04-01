@@ -5,13 +5,7 @@ import { Button, Input } from 'reactstrap';
 import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import Icon from '../Shared/Icon';
-import {
-  filterApplicants,
-  fetchApplicants,
-  updateApplicantStatus,
-  searchApplicants
-} from './queries';
-import { RequestContext } from '../Shared/RequestResult';
+import { filterApplicants, fetchApplicants, searchApplicants } from './queries';
 import styled, { withTheme } from 'styled-components';
 
 const Styled = {
@@ -84,19 +78,20 @@ class AdminDash extends Component {
     fetchApplicants().then(res => this.setState({ applicants: res.data.users, isLoading: false }));
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
-    this.context.startLoading();
-    setTimeout(() => {
-      updateApplicantStatus(applicantEmail, updatedStatus).then(() => {
-        this.context.success('Updated status!');
-        this.setState({
-          applicants: this.state.applicants.map(applicant => {
-            if (applicant.bio.email === applicantEmail)
-              return { ...applicant, status: updatedStatus };
-            return applicant;
-          })
-        });
-      });
-    }, 1000);
+    this.setState({
+      applicants: this.state.applicants.map(applicant => {
+        if (applicant.bio.email === applicantEmail) return { ...applicant, status: updatedStatus };
+        return applicant;
+      })
+    });
+  };
+  onUpdateApplicantRole = (applicantEmail, updatedRole) => {
+    this.setState({
+      applicants: this.state.applicants.map(applicant => {
+        if (applicant.bio.email === applicantEmail) return { ...applicant, role: updatedRole };
+        return applicant;
+      })
+    });
   };
   onSelectApplicant = index => {
     this.setState({
@@ -202,7 +197,8 @@ class AdminDash extends Component {
             <ApplicantInfo
               applicant={applicants[selectedApplicantIndex]}
               onChangeComment={this.onChangeComment}
-              onUpdateApplicantStatus={this.onUpdateApplicantStatus}
+              updateStatusCallback={this.onUpdateApplicantStatus}
+              updateRoleCallback={this.onUpdateApplicantRole}
             />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
@@ -218,5 +214,3 @@ class AdminDash extends Component {
 }
 
 export default withTheme(AdminDash);
-
-AdminDash.contextType = RequestContext;

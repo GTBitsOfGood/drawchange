@@ -24,6 +24,9 @@ export const fetchApplicants = () => axios.get('/api/users');
 export const updateApplicantStatus = (email, status) =>
   axios.post(`/api/users/updateStatus?email=${email}&status=${status}`);
 
+export const updateApplicantRole = (email, role) =>
+  axios.post(`/api/users/updateRole?email=${email}&role=${role}`);
+
 export const searchApplicants = textinput => {
   return axios.get('/api/users/searchByContent', {
     params: { searchquery: textinput }

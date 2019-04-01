@@ -6,7 +6,7 @@ const userDataSchema = mongoose.Schema(
     role: {
       type: String,
       default: 'new',
-      enum: ['new', 'pending', 'admin', 'volunteer', 'deleted']
+      enum: ['new', 'pending', 'admin', 'volunteer', 'manager', 'deleted']
     },
     status: {
       type: String,

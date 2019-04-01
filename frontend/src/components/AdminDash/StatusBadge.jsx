@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from '../Shared/Tag';
-import { getStatusColor, getStatusLabel } from './statusHelpers';
+import { getStatusColor, getStatusLabel } from './applicantInfoHelpers';
 import { withTheme } from 'styled-components';
 
 const StatusBadge = ({ status, selected, theme }) => (

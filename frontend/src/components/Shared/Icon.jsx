@@ -5,6 +5,8 @@ import styled from 'styled-components';
 const SVG = styled.svg`
   padding: 0.1rem;
   padding-bottom: 0.2rem;
+  height: ${props => props.size};
+  width: ${props => props.size};
 `;
 
 const iconData = {
@@ -23,14 +25,8 @@ const iconData = {
 };
 
 const Icon = ({ name, color, size }) => (
-  <SVG
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 512 512"
-    fill={color}
-    height={size || '2rem'}
-    width={size || '2rem'}
-  >
-    {iconData[name]}
+  <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill={color} size={size || '2rem'}>
+    {iconData[name] || iconData.mail}
   </SVG>
 );
 

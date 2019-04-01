@@ -187,6 +187,17 @@ router.post('/updateStatus', (req, res, next) => {
   });
 });
 
+router.post('/updateRole', (req, res, next) => {
+  if (!req.query.email || !req.query.role)
+    res.status(400).json({ error: 'Invalid email or role sent' });
+  const { email, role } = req.query;
+  UserData.updateOne({ 'bio.email': email }, { $set: { role: role } }).then(result => {
+    if (!result.nModified)
+      res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
+    res.sendStatus(200);
+  });
+});
+
 router
   .route('/:id')
   .get([check('id').isMongoId()], (req, res, next) => {

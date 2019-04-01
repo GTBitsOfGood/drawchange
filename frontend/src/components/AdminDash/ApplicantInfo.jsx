@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
-import styles from '../../styles/AppInfo.module.css';
-import { OptionsSelected } from '../Shared';
-import { getStatusLabel } from './statusHelpers';
-import StatusDropdown from './StatusDropdown';
-import styled from 'styled-components';
+import { OptionsSelected, Tag, Icon } from '../Shared';
+import { getStatusColor, getStatusLabel, statuses, roles } from './applicantInfoHelpers';
+import DropdownSelect from './DropdownSelect';
+import { updateApplicantStatus, updateApplicantRole } from './queries';
+import styled, { withTheme } from 'styled-components';
+import { RequestContext } from '../Shared/RequestResult';
 import _ from 'lodash';
 
 const getLabelsFromDays = (availability, type) => {
@@ -60,6 +61,11 @@ const Section = styled.section`
 
   p {
     font-size: 1rem;
+    text-align: left;
+  }
+
+  a {
+    color: ${props => props.theme.grey1};
   }
 `;
 
@@ -71,6 +77,9 @@ const SubSection = styled.div`
 `;
 
 const Container = styled.div`
+  background: white;
+  margin-bottom: 2rem;
+  border-radius: 0.4rem;
   padding: 2rem;
   width: 100%;
 `;
@@ -89,41 +98,81 @@ class ApplicantInfo extends Component {
     };
   }
 
+  updateStatus = (callback, status) => {
+    const { email } = this.props.applicant.bio;
+    this.context.startLoading();
+    setTimeout(() => {
+      updateApplicantStatus(email, status).then(() => {
+        this.context.success('Updated status!');
+        callback(email, status);
+      });
+    }, 1000);
+  };
+
+  updateRole = (callback, role) => {
+    const { email } = this.props.applicant.bio;
+    this.context.startLoading();
+    setTimeout(() => {
+      updateApplicantRole(email, role).then(() => {
+        this.context.success('Updated role!');
+        callback(email, role);
+      });
+    }, 1000);
+  };
+
   render() {
-    const { applicant, onUpdateApplicantStatus } = this.props;
+    const { applicant, updateStatusCallback, updateRoleCallback, theme } = this.props;
     return (
-      <div className={styles.container}>
+      <div>
         {applicant && (
           <Container>
             <Section>
               <Heading>
                 <h1>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</h1>
-                <StatusDropdown
-                  updateStatusCallback={status =>
-                    onUpdateApplicantStatus(applicant.bio.email, status)
-                  }
-                  status={applicant.status}
-                />
+                <DropdownSelect
+                  updateCallback={selected => this.updateStatus(updateStatusCallback, selected)}
+                  options={statuses}
+                  screenEdgeAlign={true}
+                >
+                  <Tag
+                    type={getStatusColor(applicant.status) || ''}
+                    text={getStatusLabel(applicant.status)}
+                  >
+                    <Icon
+                      name="dropdown-arrow"
+                      color={theme[getStatusColor(applicant.status)].text}
+                      size="1.5rem"
+                    />
+                  </Tag>
+                </DropdownSelect>
               </Heading>
               <SubSection>
                 <h5>Role</h5>
-                <p className={styles.content}>{getStatusLabel(applicant.role)}</p>
+                <DropdownSelect
+                  updateCallback={selected => this.updateRole(updateRoleCallback, selected)}
+                  options={roles}
+                >
+                  <p>
+                    {getStatusLabel(applicant.role)}{' '}
+                    <Icon name="dropdown-arrow" color={theme.grey1} size="1.5rem" />
+                  </p>
+                </DropdownSelect>
               </SubSection>
               <SubSection>
                 <h5>Email</h5>
-                <p className={styles.content}>{applicant.bio.email}</p>
+                <a href={'mailto:' + applicant.bio.email}>{applicant.bio.email}</a>
               </SubSection>
               <SubSection>
                 <h5>Phone Number</h5>
-                <p className={styles.content}>{applicant.bio.phone_number}</p>
+                <p>{applicant.bio.phone_number}</p>
               </SubSection>
               <SubSection>
                 <h5>Birth date</h5>
-                <p className={styles.content}>{applicant.bio.date_of_birth}</p>
+                <p>{applicant.bio.date_of_birth}</p>
               </SubSection>
               <SubSection>
-                <h5 className={styles.label}>Address</h5>
-                <p className={styles.content}>
+                <h5>Address</h5>
+                <p>
                   {`${applicant.bio.street_address} ${applicant.bio.city}, ${applicant.bio.state} ${
                     applicant.bio.zip_code
                   }`}
@@ -163,8 +212,7 @@ class ApplicantInfo extends Component {
             <Section>
               <SubSection>
                 <h5>Comments</h5>
-                {applicant.comments &&
-                  applicant.comments.map(comment => <p className={styles.content}>{comment}</p>)}
+                {applicant.comments && applicant.comments.map(comment => <p>{comment}</p>)}
                 {!this.state.editingMode && (
                   <Button color="primary" onClick={() => this.setState({ editingMode: true })}>
                     Add a Comment
@@ -195,9 +243,11 @@ class ApplicantInfo extends Component {
   }
 }
 
-export default ApplicantInfo;
+export default withTheme(ApplicantInfo);
 
 ApplicantInfo.propTypes = {
   applicant: PropTypes.object.isRequired,
   onUpdateApplicantStatus: PropTypes.func.isRequired
 };
+
+ApplicantInfo.contextType = RequestContext;
