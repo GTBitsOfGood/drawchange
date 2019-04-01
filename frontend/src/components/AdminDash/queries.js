@@ -27,8 +27,8 @@ export const updateApplicantStatus = (email, status) =>
 export const updateApplicantRole = (email, role) =>
   axios.post(`/api/users/updateRole?email=${email}&role=${role}`);
 
-export const searchApplicants = textinput => {
+export const searchApplicants = (textinput, searchType) => {
   return axios.get('/api/users/searchByContent', {
-    params: { searchquery: textinput }
+    params: { searchquery: textinput, searchtype: searchType }
   });
 };

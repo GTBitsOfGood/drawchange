@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
-import { Button, Input } from 'reactstrap';
-import Filters from './Filters';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import Icon from '../Shared/Icon';
 import { filterApplicants, fetchApplicants, searchApplicants } from './queries';
 import styled, { withTheme } from 'styled-components';
+import ApplicantSearch from './ApplicantSearch';
 
 const Styled = {
   Container: styled.div`
     background: white;
     height: 100%;
     width: 100%;
-  `,
-  FilterContainer: styled.form`
-    display: flex;
-    margin-bottom: 1rem;
   `,
   Main: styled.div`
     display: flex;
@@ -27,15 +22,6 @@ const Styled = {
     background: #f6f6f6;
     overflow-y: scroll;
     padding: 1rem;
-  `,
-
-  BackButton: styled.button`
-    width: ${props => (props.show ? '3.2rem' : '0')};
-    border: none;
-    background: none;
-    transition: width 0.2s;
-    overflow: hidden;
-    padding: 0;
   `,
   MailAll: styled.a`
     background: ${props => props.theme.grey9};
@@ -63,12 +49,15 @@ class AdminDash extends Component {
     super();
     this.state = {
       selectedApplicantIndex: 0,
-      showFilterModal: false,
-      appliedFilters: null,
-      applicants: [],
-      textInput: ''
+      applicants: []
     };
   }
+
+  onSelectApplicant = index => {
+    this.setState({
+      selectedApplicantIndex: index
+    });
+  };
 
   onLoadMoreApplicants = () => {
     this.setState({
@@ -93,47 +82,9 @@ class AdminDash extends Component {
       })
     });
   };
-  onSelectApplicant = index => {
-    this.setState({
-      selectedApplicantIndex: index
-    });
-  };
-  onShowFilterModal = () => {
-    this.setState({
-      showFilterModal: !this.state.showFilterModal
-    });
-  };
-  onApplyFilters = filters => {
-    this.setState({
-      appliedFilters: filters
-    });
-    filterApplicants(filters).then(response =>
-      this.setState({
-        applicants: response.data.users
-      })
-    );
-  };
 
-  onSearchChange = event => {
-    this.setState({ textInput: event.target.value });
-    if (event.target.value === '') {
-      this.onClearSearch();
-    }
-  };
-
-  onSearchSubmit = event => {
-    event.preventDefault();
-    console.log(this.state.textInput);
-    searchApplicants(this.state.textInput).then(response =>
-      this.setState({
-        applicants: response.data.users
-      })
-    );
-  };
-
-  onClearSearch = () => {
-    this.setState({ textInput: '' });
-    searchApplicants('').then(response =>
+  onSearchSubmit = (textInput, type) => {
+    searchApplicants(textInput, type).then(response =>
       this.setState({
         applicants: response.data.users
       })
@@ -151,15 +102,16 @@ class AdminDash extends Component {
       applicants
     });
   };
+
+  onApplyFilters = filters => {
+    filterApplicants(filters).then(response =>
+      this.setState({
+        applicants: response.data.users
+      })
+    );
+  };
   render() {
-    const {
-      selectedApplicantIndex,
-      showFilterModal,
-      applicants,
-      appliedFilters,
-      isLoading,
-      getApplicantEmails
-    } = this.state;
+    const { selectedApplicantIndex, applicants, isLoading } = this.state;
     return (
       <Styled.Container>
         <Styled.Main>
@@ -169,18 +121,12 @@ class AdminDash extends Component {
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
             >
-              <Styled.FilterContainer onSubmit={this.onSearchSubmit}>
-                <Styled.BackButton
-                  type="reset"
-                  show={this.state.textInput}
-                  onClick={this.onClearSearch}
-                >
-                  <Icon name="back-arrow" />
-                </Styled.BackButton>
-                <Input type="text" placeholder="Search by content" onChange={this.onSearchChange} />
-                <Button onClick={this.onShowFilterModal}>Filter</Button>
-              </Styled.FilterContainer>
+              <ApplicantSearch
+                searchSubmitCallback={this.onSearchSubmit}
+                applyFiltersCallback={this.onApplyFilters}
+              />
             </ApplicantList>
+
             <Styled.MailContainer>
               <Styled.MailAll
                 href={`mailto:${applicants &&
@@ -202,12 +148,6 @@ class AdminDash extends Component {
             />
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
-        <Filters
-          show={showFilterModal}
-          appliedFilters={appliedFilters}
-          toggleCallback={this.onShowFilterModal}
-          submitCallback={this.onApplyFilters}
-        />
       </Styled.Container>
     );
   }

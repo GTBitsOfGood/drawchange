@@ -96,26 +96,82 @@ router.post('/filter', (req, res, next) => {
 
 router.get('/searchByContent', (req, res, next) => {
   const inputText = req.query.searchquery;
+  const searchType = req.query.searchtype;
   const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
-  UserData.find({
-    $or: [
-      //{ $text: { $search: inputText } },
-      { 'history.volunteer_interest_cause': regexquery },
-      { 'history.volunteer_support': regexquery },
-      { 'history.volunteer_commitment': regexquery },
-      { 'history.previous_volunteer_experience': regexquery },
-      { 'bio.street_address': regexquery },
-      { 'bio.city': regexquery },
-      { 'bio.state': regexquery },
-      { 'bio.zip_code': regexquery },
-      { 'bio.first_name': regexquery },
-      { 'bio.last_name': regexquery },
-      { 'bio.email': regexquery },
-      { 'bio.phone_number': regexquery }
-    ]
-  })
-    .then(users => res.status(200).json({ users }))
-    .catch(err => next(err));
+
+  switch (searchType) {
+    case 'All':
+      UserData.find({
+        $or: [
+          { 'history.volunteer_interest_cause': regexquery },
+          { 'history.volunteer_support': regexquery },
+          { 'history.volunteer_commitment': regexquery },
+          { 'history.previous_volunteer_experience': regexquery },
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Bio':
+      UserData.find({
+        $or: [
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Email':
+      UserData.find({
+        $or: [{ 'bio.email': regexquery }]
+      })
+        .then(users => {
+          res.status(200).json({ users });
+        })
+        .catch(err => next(err));
+      break;
+    case 'Phone Number':
+      UserData.find({
+        $or: [{ 'bio.phone_number': regexquery }]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    default:
+      UserData.find({
+        $or: [
+          { 'history.volunteer_interest_cause': regexquery },
+          { 'history.volunteer_support': regexquery },
+          { 'history.volunteer_commitment': regexquery },
+          { 'history.previous_volunteer_experience': regexquery },
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+  }
 });
 
 router.get('/', (req, res, next) => {
