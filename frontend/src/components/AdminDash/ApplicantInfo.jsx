@@ -247,7 +247,8 @@ export default withTheme(ApplicantInfo);
 
 ApplicantInfo.propTypes = {
   applicant: PropTypes.object.isRequired,
-  onUpdateApplicantStatus: PropTypes.func.isRequired
+  updateStatusCallback: PropTypes.func.isRequired,
+  updateRoleCallback: PropTypes.func.isRequired
 };
 
 ApplicantInfo.contextType = RequestContext;

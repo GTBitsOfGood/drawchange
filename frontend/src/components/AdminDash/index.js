@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
 import InfiniteScroll from '../Shared/InfiniteScroll';
-import Icon from '../Shared/Icon';
+import { Icon, Loading } from '../Shared';
 import { filterApplicants, fetchApplicants, searchApplicants } from './queries';
 import styled, { withTheme } from 'styled-components';
 import ApplicantSearch from './ApplicantSearch';
@@ -22,6 +22,14 @@ const Styled = {
     background: #f6f6f6;
     overflow-y: scroll;
     padding: 1rem;
+
+    ${props =>
+      props.loading &&
+      `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
   `,
   MailAll: styled.a`
     background: ${props => props.theme.grey9};
@@ -139,13 +147,17 @@ class AdminDash extends Component {
               </Styled.MailAll>
             </Styled.MailContainer>
           </InfiniteScroll>
-          <Styled.ApplicantInfoContainer>
-            <ApplicantInfo
-              applicant={applicants[selectedApplicantIndex]}
-              onChangeComment={this.onChangeComment}
-              updateStatusCallback={this.onUpdateApplicantStatus}
-              updateRoleCallback={this.onUpdateApplicantRole}
-            />
+          <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
+            {applicants && applicants.length ? (
+              <ApplicantInfo
+                applicant={applicants[selectedApplicantIndex]}
+                onChangeComment={this.onChangeComment}
+                updateStatusCallback={this.onUpdateApplicantStatus}
+                updateRoleCallback={this.onUpdateApplicantRole}
+              />
+            ) : (
+              <Loading />
+            )}
           </Styled.ApplicantInfoContainer>
         </Styled.Main>
       </Styled.Container>

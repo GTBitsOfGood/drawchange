@@ -35,7 +35,6 @@ const Styled = {
 
 const LoadingIcon = ({ size }) => (
   <Styled.Container size={size}>
-    {console.log(size)}
     <Styled.Bubble />
     <Styled.Bubble anim-delay="0.1s" />
     <Styled.Bubble anim-delay="0.2s" />
