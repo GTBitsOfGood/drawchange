@@ -19,7 +19,20 @@ import {
 } from 'reactstrap';
 
 import logo from '../images/drawchange_logo_white.png';
-import styles from '../styles/Header.module.css';
+
+const CustomNavItem = styled(NavItem)`
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  text-align: center;
+  min-width: 7rem;
+`;
+
+const CustomDropdown = styled(UncontrolledDropdown)`
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  text-align: center;
+  min-width: 7rem;
+`;
 
 const NavLabel = styled.p`
   color: white;
@@ -69,21 +82,21 @@ class Header extends Component {
               {loggedIn ? (
                 <FlexContainer className="navbar-nav">
                   <NavLabel>{getNavLabel(role)}</NavLabel>
-                  <NavItem className={styles.navItem}>
+                  <CustomNavItem>
                     <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
-                  </NavItem>
-                  <NavItem className={styles.navItem}>
+                  </CustomNavItem>
+                  <CustomNavItem>
                     <NavLink onClick={onLogout} href="/">
                       Logout
                     </NavLink>
-                  </NavItem>
+                  </CustomNavItem>
                 </FlexContainer>
               ) : (
                 <Nav navbar>
-                  <NavItem className={styles.navItem}>
+                  <CustomNavItem>
                     <NavLink href="http://www.drawchange.org">Home</NavLink>
-                  </NavItem>
-                  <UncontrolledDropdown nav inNavbar className={styles.navItem}>
+                  </CustomNavItem>
+                  <CustomDropdown nav inNavbar>
                     <DropdownToggle nav>About Us</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
@@ -101,8 +114,8 @@ class Header extends Component {
                         Press Kit
                       </DropdownItem>
                     </DropdownMenu>
-                  </UncontrolledDropdown>
-                  <UncontrolledDropdown nav inNavbar className={styles.navItem}>
+                  </CustomDropdown>
+                  <CustomDropdown nav inNavbar>
                     <DropdownToggle nav>Contribute</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="https://secure.donationpay.org/drawchange/">
@@ -113,11 +126,11 @@ class Header extends Component {
                         Wish List
                       </DropdownItem>
                     </DropdownMenu>
-                  </UncontrolledDropdown>
-                  <NavItem className={styles.navItem}>
+                  </CustomDropdown>
+                  <CustomDropdown>
                     <NavLink href="http://www.drawchange.org/blog">News</NavLink>
-                  </NavItem>
-                  <UncontrolledDropdown nav inNavbar className={styles.navItem}>
+                  </CustomDropdown>
+                  <CustomDropdown nav inNavbar>
                     <DropdownToggle nav>Activities</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="https://www.drawchange.org/usprograms">
@@ -130,13 +143,13 @@ class Header extends Component {
                         Ethipoia
                       </DropdownItem>
                     </DropdownMenu>
-                  </UncontrolledDropdown>
-                  <NavItem className={styles.navItem}>
+                  </CustomDropdown>
+                  <CustomNavItem>
                     <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
-                  </NavItem>
-                  <NavItem className={styles.navItem}>
+                  </CustomNavItem>
+                  <CustomDropdown>
                     <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
-                  </NavItem>
+                  </CustomDropdown>
                 </Nav>
               )}
             </Collapse>
