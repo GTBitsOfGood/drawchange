@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     const { isAuthenticated, user } = this.state;
     return (
-      <BrowserRouter>
+      <Router>
         <StyleWrapper>
           <RequestProvider>
             <Styled.Container>
@@ -52,7 +52,7 @@ class App extends Component {
             </Styled.Container>
           </RequestProvider>
         </StyleWrapper>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

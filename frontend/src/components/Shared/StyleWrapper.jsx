@@ -21,6 +21,7 @@ const theme = {
   grey5: 'hsl(0, 0%, 50%)',
   grey7: 'hsl(0, 0%, 75%)',
   grey9: 'hsl(0, 0%, 95%)',
+  primaryGrey: '#607177',
   danger: {
     base: 'hsl(0, 100%, 63%)',
     text: 'hsl(0, 100%, 30%)'
