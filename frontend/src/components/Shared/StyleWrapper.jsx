@@ -32,6 +32,10 @@ const theme = {
   success: {
     base: 'hsl(128, 43%, 86%)',
     text: 'hsl(127, 100%, 21%)'
+  },
+  default: {
+    base: 'hsl(0, 0%, 90%)',
+    text: 'hsl(0, 0%, 30%)'
   }
 };
 

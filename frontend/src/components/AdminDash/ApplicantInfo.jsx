@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { OptionsSelected, Tag, Icon } from '../Shared';
-import { getStatusColor, getStatusLabel, statuses, roles } from './applicantInfoHelpers';
+import { getStatusColor, statuses, roles } from './applicantInfoHelpers';
 import DropdownSelect from './DropdownSelect';
 import { updateApplicantStatus, updateApplicantRole } from './queries';
 import styled, { withTheme } from 'styled-components';
@@ -136,7 +136,7 @@ class ApplicantInfo extends Component {
                 >
                   <Tag
                     type={getStatusColor(applicant.status) || ''}
-                    text={getStatusLabel(applicant.status)}
+                    text={statuses[applicant.status]}
                   >
                     <Icon
                       name="dropdown-arrow"
@@ -153,7 +153,7 @@ class ApplicantInfo extends Component {
                   options={roles}
                 >
                   <p>
-                    {getStatusLabel(applicant.role)}{' '}
+                    {roles[applicant.role]}{' '}
                     <Icon name="dropdown-arrow" color={theme.grey1} size="1.5rem" />
                   </p>
                 </DropdownSelect>
