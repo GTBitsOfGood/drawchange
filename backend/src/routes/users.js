@@ -17,7 +17,6 @@ const DEFAULT_PAGE_SIZE = 10;
 router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.mapped());
     return res.status(400).json({ errors: errors.mapped() });
   }
   const newUserData = matchedData(req);
@@ -85,15 +84,55 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     });
 });
 
-router.post('/filter', (req, res, next) => {
-  const filters = JSON.parse(req.body.data);
-  let roleFilter = [];
-  if (filters.role) {
-    roleFilter = Object.keys(filters.role).reduce((query, key) => [...query, { role: key }], []);
-    delete filters.role;
+router.get('/', (req, res, next) => {
+  const filter = {};
+  if (req.query.type) {
+    UserData.find({ role: req.query.type })
+      .then(users => res.status(200).json({ users }))
+      .catch(err => next(err));
   }
-  UserData.find(roleFilter.length ? { ...filters, $or: roleFilter } : filters)
-    .then(users => res.status(200).json({ users }))
+  if (req.query.role) {
+    try {
+      // Each role is sent as an object key
+      // For mongo '$or' query, these keys need to be reduced to an array
+      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
+        (query, key) => [...query, { role: key }],
+        []
+      );
+      if (!roleFilter.length) {
+        res.status(400).json({ error: 'Invalid role param' });
+      }
+      filter.$or = roleFilter;
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid role param' });
+    }
+  }
+  if (req.query.availability) {
+    try {
+      filter.availability = JSON.parse(req.query.availability);
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid availability param' });
+    }
+  }
+  if (req.query.skills_interests) {
+    try {
+      filter.skills_interests = JSON.parse(req.query.skills_interests);
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid skills_interests param' });
+    }
+  }
+  if (req.query.lastPaginationId) {
+    filter._id = { $lt: mongoose.Types.ObjectId(req.query.lastPaginationId) };
+  }
+  // Search ordered newest first, matching filters, limited by pagination size
+  UserData.aggregate([
+    { $sort: { _id: -1 } },
+    { $match: filter },
+    { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+  ])
+    .then(users => {
+      res.status(200).json({ users });
+    })
     .catch(err => next(err));
 });
 
@@ -175,56 +214,6 @@ router.get('/searchByContent', (req, res, next) => {
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
   }
-});
-
-router.get('/', (req, res, next) => {
-  const filter = {};
-  if (req.query.type) {
-    UserData.find({ role: req.query.type })
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  }
-  if (req.query.role) {
-    try {
-      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
-        (query, key) => [...query, { role: key }],
-        []
-      );
-      if (!roleFilter.length) {
-        res.status(400).json({ error: 'Invalid role param' });
-      }
-      filter.$or = roleFilter;
-    } catch (e) {
-      res.status(400).json({ error: 'Invalid role param' });
-    }
-  }
-  if (req.query.availability) {
-    try {
-      filter.availability = JSON.parse(req.query.availability);
-    } catch (e) {
-      res.status(400).json({ error: 'Invalid availability param' });
-    }
-  }
-  if (req.query.skills_interests) {
-    try {
-      filter.skills_interests = JSON.parse(req.query.skills_interests);
-    } catch (e) {
-      res.status(400).json({ error: 'Invalid skills_interests param' });
-    }
-  }
-  if (req.query.lastPaginationId) {
-    filter._id = { $lt: mongoose.Types.ObjectId(req.query.lastPaginationId) };
-  }
-  UserData.aggregate([
-    { $sort: { _id: -1 } },
-    { $match: filter },
-    { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
-  ])
-    .then(users => {
-      console.log(users.length);
-      res.status(200).json({ users });
-    })
-    .catch(err => next(err));
 });
 
 router.post('/updateStatus', (req, res, next) => {
