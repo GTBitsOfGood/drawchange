@@ -8,8 +8,8 @@ const Styled = {
     overflow-y: scroll;
     position: relative;
   `,
-  BottomSpacing: styled.div`
-    height: 10rem;
+  Bottom: styled.div`
+    height: 100px;
   `
 };
 
@@ -21,16 +21,26 @@ class InfiniteScroll extends React.Component {
   }
   scrollCallback = ({ scrollHeight, clientHeight, scrollTop }) => {
     if (scrollHeight - clientHeight - scrollTop <= 0) {
-      if (!this.state.displayTimeout) this.props.loadCallback();
-      this.setState({
-        displayTimeout: true
-      });
-      setTimeout(() => {
-        this.containerRef.current.scrollTop--;
-        this.setState({
-          displayTimeout: false
-        });
-      }, 1000);
+      if (!this.state.displayTimeout) {
+        this.props.loadCallback();
+        this.setState(
+          {
+            displayTimeout: true
+          },
+          () => {
+            setTimeout(() => {
+              let currScrollTop = this.containerRef.current.scrollTop;
+              console.log(scrollHeight - clientHeight - currScrollTop);
+              if (scrollHeight - clientHeight - currScrollTop <= 0) {
+                this.containerRef.current.scrollTop = scrollHeight - clientHeight - 100;
+              }
+              this.setState({
+                displayTimeout: false
+              });
+            }, 1000);
+          }
+        );
+      }
     }
   };
   componentDidMount = () => {
@@ -44,7 +54,7 @@ class InfiniteScroll extends React.Component {
     return (
       <Styled.Container ref={this.containerRef}>
         {children}
-        {isLoading || this.state.displayTimeout ? <Loading /> : <Styled.BottomSpacing />}
+        <Styled.Bottom>{(isLoading || this.state.displayTimeout) && <Loading />}</Styled.Bottom>
       </Styled.Container>
     );
   }
