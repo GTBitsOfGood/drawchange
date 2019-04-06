@@ -26,6 +26,7 @@ class InfiniteScroll extends React.Component {
         displayTimeout: true
       });
       setTimeout(() => {
+        this.containerRef.current.scrollTop--;
         this.setState({
           displayTimeout: false
         });
