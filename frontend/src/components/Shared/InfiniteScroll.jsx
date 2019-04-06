@@ -7,6 +7,9 @@ const Styled = {
   Container: styled.div`
     overflow-y: scroll;
     position: relative;
+  `,
+  BottomSpacing: styled.div`
+    height: 10rem;
   `
 };
 
@@ -14,11 +17,19 @@ class InfiniteScroll extends React.Component {
   constructor() {
     super();
     this.containerRef = React.createRef();
+    this.state = { displayTimeout: false };
   }
   scrollCallback = ({ scrollHeight, clientHeight, scrollTop }) => {
     if (scrollHeight - clientHeight - scrollTop <= 0) {
-      this.containerRef.current.scrollTop--;
-      this.props.loadCallback();
+      if (!this.state.displayTimeout) this.props.loadCallback();
+      this.setState({
+        displayTimeout: true
+      });
+      setTimeout(() => {
+        this.setState({
+          displayTimeout: false
+        });
+      }, 1000);
     }
   };
   componentDidMount = () => {
@@ -32,7 +43,7 @@ class InfiniteScroll extends React.Component {
     return (
       <Styled.Container ref={this.containerRef}>
         {children}
-        {isLoading && <Loading />}
+        {isLoading || this.state.displayTimeout ? <Loading /> : <Styled.BottomSpacing />}
       </Styled.Container>
     );
   }

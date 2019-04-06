@@ -10,8 +10,9 @@ const SendgridService = require('../services/sendgridService');
 const MailchimpService = require('../services/mailchimpService');
 const { SendEmailError, EmailInUseError, SubscribeUserError } = require('../util/errors');
 const { USER_DATA_VALIDATOR } = require('../util/validators');
+const mongoose = require('mongoose');
 
-const DEFAULT_PAGE_SIZE = 25;
+const DEFAULT_PAGE_SIZE = 10;
 
 router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
   const errors = validationResult(req);
@@ -211,15 +212,18 @@ router.get('/', (req, res, next) => {
       res.status(400).json({ error: 'Invalid skills_interests param' });
     }
   }
-  if (req.query.pageLowerBound) {
-    UserData.aggregate([
-      { $sort: { _id: 1 } },
-      { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE },
-      { $match: { _id: { $gt: req.query.pageLowerBound } } }
-    ]);
+  if (req.query.lastPaginationId) {
+    filter._id = { $lt: mongoose.Types.ObjectId(req.query.lastPaginationId) };
   }
-  UserData.find(filter)
-    .then(users => res.status(200).json({ users }))
+  UserData.aggregate([
+    { $sort: { _id: -1 } },
+    { $match: filter },
+    { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+  ])
+    .then(users => {
+      console.log(users.length);
+      res.status(200).json({ users });
+    })
     .catch(err => next(err));
 });
 

@@ -3,7 +3,7 @@ import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import { Icon, Loading } from '../Shared';
-import { filterApplicants, fetchApplicants, searchApplicants } from './queries';
+import { filterApplicants, fetchMoreApplicants, searchApplicants } from './queries';
 import styled, { withTheme } from 'styled-components';
 import ApplicantSearch from './ApplicantSearch';
 
@@ -36,20 +36,18 @@ const Styled = {
     color: ${props => props.theme.grey3};
     border: 1px solid ${props => props.theme.grey7};
     font-weight: bold;
-    border-radius: 0.5rem 0.5rem 0 0;
+    border-radius: 0.5rem;
     padding: 0.5rem 1.5rem;
-    bottom: 0;
-
+    margin: auto;
     span {
       margin-left: 0.5rem;
     }
   `,
-  MailContainer: styled.div`
-    position: absolute;
+  MailAllContainer: styled.div`
     display: flex;
     justify-content: center;
-    bottom: 0;
     width: 100%;
+    padding: 1rem;
   `
 };
 class AdminDash extends Component {
@@ -72,7 +70,15 @@ class AdminDash extends Component {
       isLoading: true
     });
 
-    fetchApplicants().then(res => this.setState({ applicants: res.data.users, isLoading: false }));
+    const { applicants } = this.state;
+    const lastPaginationId = applicants.length ? applicants[applicants.length - 1]._id : 0;
+
+    fetchMoreApplicants(lastPaginationId).then(res =>
+      this.setState({
+        applicants: [...this.state.applicants, ...res.data.users],
+        isLoading: false
+      })
+    );
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
     this.setState({
@@ -133,19 +139,18 @@ class AdminDash extends Component {
                 searchSubmitCallback={this.onSearchSubmit}
                 applyFiltersCallback={this.onApplyFilters}
               />
+              <Styled.MailAllContainer>
+                <Styled.MailAll
+                // href={`mailto:${applicants &&
+                //   applicants.reduce((acc, curr) => {
+                //     return acc.concat(curr.bio.email);
+                //   }, [])}`}
+                >
+                  <Icon color={this.props.theme.grey3} name="mail" />
+                  <span>Compose Mass Email</span>
+                </Styled.MailAll>
+              </Styled.MailAllContainer>
             </ApplicantList>
-
-            <Styled.MailContainer>
-              <Styled.MailAll
-                href={`mailto:${applicants &&
-                  applicants.reduce((acc, curr) => {
-                    return acc.concat(curr.bio.email);
-                  }, [])}`}
-              >
-                <Icon color={this.props.theme.grey3} name="mail" />
-                <span>Compose Mass Email</span>
-              </Styled.MailAll>
-            </Styled.MailContainer>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
             {applicants && applicants.length ? (
