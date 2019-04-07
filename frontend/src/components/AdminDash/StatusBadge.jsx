@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tag from '../Shared/Tag';
-import { getStatusColor, getStatusLabel } from './statusHelpers';
+import { getStatusColor, statuses } from './applicantInfoHelpers';
 import { withTheme } from 'styled-components';
 
 const StatusBadge = ({ status, selected, theme }) => (
@@ -9,7 +9,7 @@ const StatusBadge = ({ status, selected, theme }) => (
     type={getStatusColor(status) || ''}
     color={selected ? theme.grey9 : ''}
     textColor={selected ? theme.primary : ''}
-    text={getStatusLabel(status)}
+    text={statuses[status]}
   />
 );
 

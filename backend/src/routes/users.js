@@ -10,11 +10,13 @@ const SendgridService = require('../services/sendgridService');
 const MailchimpService = require('../services/mailchimpService');
 const { SendEmailError, EmailInUseError, SubscribeUserError } = require('../util/errors');
 const { USER_DATA_VALIDATOR } = require('../util/validators');
+const mongoose = require('mongoose');
+
+const DEFAULT_PAGE_SIZE = 10;
 
 router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.mapped());
     return res.status(400).json({ errors: errors.mapped() });
   }
   const newUserData = matchedData(req);
@@ -82,97 +84,135 @@ router.post('/', USER_DATA_VALIDATOR, (req, res, next) => {
     });
 });
 
-router.post('/filter', (req, res, next) => {
-  const filters = JSON.parse(req.body.data);
-  let roleFilter = [];
-  if (filters.role) {
-    roleFilter = Object.keys(filters.role).reduce((query, key) => [...query, { role: key }], []);
-    delete filters.role;
+router.get('/', (req, res, next) => {
+  const filter = {};
+  if (req.query.type) {
+    UserData.find({ role: req.query.type })
+      .then(users => res.status(200).json({ users }))
+      .catch(err => next(err));
   }
-  UserData.find(roleFilter.length ? { ...filters, $or: roleFilter } : filters)
-    .then(users => res.status(200).json({ users }))
+  if (req.query.role) {
+    try {
+      // Each role is sent as an object key
+      // For mongo '$or' query, these keys need to be reduced to an array
+      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
+        (query, key) => [...query, { role: key }],
+        []
+      );
+      if (!roleFilter.length) {
+        res.status(400).json({ error: 'Invalid role param' });
+      }
+      filter.$or = roleFilter;
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid role param' });
+    }
+  }
+  if (req.query.availability) {
+    try {
+      filter.availability = JSON.parse(req.query.availability);
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid availability param' });
+    }
+  }
+  if (req.query.skills_interests) {
+    try {
+      filter.skills_interests = JSON.parse(req.query.skills_interests);
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid skills_interests param' });
+    }
+  }
+  if (req.query.lastPaginationId) {
+    filter._id = { $lt: mongoose.Types.ObjectId(req.query.lastPaginationId) };
+  }
+  // Search ordered newest first, matching filters, limited by pagination size
+  UserData.aggregate([
+    { $sort: { _id: -1 } },
+    { $match: filter },
+    { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+  ])
+    .then(users => {
+      res.status(200).json({ users });
+    })
     .catch(err => next(err));
 });
 
 router.get('/searchByContent', (req, res, next) => {
   const inputText = req.query.searchquery;
+  const searchType = req.query.searchtype;
   const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
-  UserData.find({
-    $or: [
-      //{ $text: { $search: inputText } },
-      { 'history.volunteer_interest_cause': regexquery },
-      { 'history.volunteer_support': regexquery },
-      { 'history.volunteer_commitment': regexquery },
-      { 'history.previous_volunteer_experience': regexquery },
-      { 'bio.street_address': regexquery },
-      { 'bio.city': regexquery },
-      { 'bio.state': regexquery },
-      { 'bio.zip_code': regexquery },
-      { 'bio.first_name': regexquery },
-      { 'bio.last_name': regexquery },
-      { 'bio.email': regexquery },
-      { 'bio.phone_number': regexquery }
-    ]
-  })
-    .then(users => res.status(200).json({ users }))
-    .catch(err => next(err));
-});
 
-router.get('/', (req, res, next) => {
-  if (req.query.type === 'pending') {
-    UserData.find({ role: 'pending' })
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  } else if (req.query.type === 'new') {
-    UserData.find()
-      .sort('-createdAt')
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  } else if (req.query.type === 'volunteer') {
-    UserData.find({ role: 'volunteer' })
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  } else if (req.query.type === 'denied') {
-    UserData.find({ role: 'denied' })
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  } else if (req.query.type === 'deleted') {
-    UserData.find({ role: 'denied' })
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
-  } else {
-    const filter = {};
-    if (req.query.role) {
-      try {
-        const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
-          (query, key) => [...query, { role: key }],
-          []
-        );
-        if (!roleFilter.length) {
-          res.status(400).json({ error: 'Invalid role param' });
-        }
-        filter.$or = roleFilter;
-      } catch (e) {
-        res.status(400).json({ error: 'Invalid role param' });
-      }
-    }
-    if (req.query.availability) {
-      try {
-        filter.availability = JSON.parse(req.query.availability);
-      } catch (e) {
-        res.status(400).json({ error: 'Invalid availability param' });
-      }
-    }
-    if (req.query.skills_interests) {
-      try {
-        filter.skills_interests = JSON.parse(req.query.skills_interests);
-      } catch (e) {
-        res.status(400).json({ error: 'Invalid skills_interests param' });
-      }
-    }
-    UserData.find(filter)
-      .then(users => res.status(200).json({ users }))
-      .catch(err => next(err));
+  switch (searchType) {
+    case 'All':
+      UserData.find({
+        $or: [
+          { 'history.volunteer_interest_cause': regexquery },
+          { 'history.volunteer_support': regexquery },
+          { 'history.volunteer_commitment': regexquery },
+          { 'history.previous_volunteer_experience': regexquery },
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Bio':
+      UserData.find({
+        $or: [
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Email':
+      UserData.find({
+        $or: [{ 'bio.email': regexquery }]
+      })
+        .then(users => {
+          res.status(200).json({ users });
+        })
+        .catch(err => next(err));
+      break;
+    case 'Phone Number':
+      UserData.find({
+        $or: [{ 'bio.phone_number': regexquery }]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    default:
+      UserData.find({
+        $or: [
+          { 'history.volunteer_interest_cause': regexquery },
+          { 'history.volunteer_support': regexquery },
+          { 'history.volunteer_commitment': regexquery },
+          { 'history.previous_volunteer_experience': regexquery },
+          { 'bio.street_address': regexquery },
+          { 'bio.city': regexquery },
+          { 'bio.state': regexquery },
+          { 'bio.zip_code': regexquery },
+          { 'bio.first_name': regexquery },
+          { 'bio.last_name': regexquery },
+          { 'bio.email': regexquery },
+          { 'bio.phone_number': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
   }
 });
 
@@ -195,6 +235,17 @@ router.post('/updateComments', (req, res, next) => {
     if (!result.nModified)
       res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
     res.sendStatus(200)
+  });
+});
+
+router.post('/updateRole', (req, res, next) => {
+  if (!req.query.email || !req.query.role)
+    res.status(400).json({ error: 'Invalid email or role sent' });
+  const { email, role } = req.query;
+  UserData.updateOne({ 'bio.email': email }, { $set: { role: role } }).then(result => {
+    if (!result.nModified)
+      res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
+    res.sendStatus(200);
   });
 });
 

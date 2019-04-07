@@ -6,12 +6,12 @@ const userDataSchema = mongoose.Schema(
     role: {
       type: String,
       default: 'new',
-      enum: ['new', 'pending', 'admin', 'volunteer', 'deleted']
+      enum: ['new', 'pending', 'admin', 'volunteer', 'manager', 'deleted']
     },
     status: {
       type: String,
-      default: 'admitted',
-      enum: ['admitted', 'denied', 'approved', 'got_initial_email', 'responded_to_email']
+      default: 'new',
+      enum: ['accepted', 'denied', 'no_response', 'got_initial_email', 'has_volunteered', 'new']
     },
     bio: {
       first_name: { type: String },

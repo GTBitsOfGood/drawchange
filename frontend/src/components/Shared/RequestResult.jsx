@@ -106,7 +106,13 @@ class RequestProvider extends React.Component {
             ) : (
               <React.Fragment>
                 <p>{this.state.text}</p>
-                {this.state.success && <p className="icon">🎉</p>}
+                {this.state.success && (
+                  <p className="icon">
+                    <span role="img" aria-label="success">
+                      🎉
+                    </span>
+                  </p>
+                )}
               </React.Fragment>
             )}
           </div>
