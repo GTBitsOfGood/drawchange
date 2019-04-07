@@ -102,7 +102,8 @@ const userDataSchema = mongoose.Schema(
       personal_image: { type: Boolean },
       email_list: { type: Boolean },
       signature: { type: String }
-    }
+    },
+    comments: { type: String }
 
     // events: {
     //   type: Array, // array of event objects

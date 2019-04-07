@@ -230,11 +230,11 @@ router.post('/updateStatus', (req, res, next) => {
 router.post('/updateComments', (req, res, next) => {
   if (!req.query.email || !req.query.comments)
     res.status(400).json({ error: 'Invalid email or comment sent' });
-  const { email, comment } = req.query;
-  UserData.updateOne({ 'bio.email': email }, { $set: { comment: comment } }).then(result => {
+  const { email, comments } = req.query;
+  UserData.updateOne({ 'bio.email': email }, { $set: { comments: comments } }).then(result => {
     if (!result.nModified)
       res.status(400).json({ error: 'Email requested for update was invalid. 0 items changed.' });
-    res.sendStatus(200)
+    res.sendStatus(200);
   });
 });
 
