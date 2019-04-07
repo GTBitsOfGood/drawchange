@@ -9,6 +9,7 @@ import {
   filterApplicants,
   fetchApplicants,
   updateApplicantStatus,
+  updateApplicantComments,
   searchApplicants
 } from './queries';
 import { RequestContext } from '../Shared/RequestResult';
@@ -98,6 +99,20 @@ class AdminDash extends Component {
       });
     }, 1000);
   };
+  onUpdateApplicantComments = comments => {
+    this.context.startLoading();
+    const index = this.state.selectedApplicantIndex;
+    let applicants = this.state.applicants;
+    setTimeout(() => {
+      updateApplicantComments(applicants[index].bio.email, comments).then(() => {
+        this.context.success('Updated comments!');
+        applicants[index].comments = comments;
+        this.setState({
+          applicants
+        });
+      });
+    });
+  };
   onSelectApplicant = index => {
     this.setState({
       selectedApplicantIndex: index
@@ -144,18 +159,6 @@ class AdminDash extends Component {
       })
     );
   };
-
-  onChangeComment = comment => {
-    const index = this.state.selectedApplicantIndex;
-    let applicants = this.state.applicants;
-    if (!applicants[index].comments) {
-      applicants[index].comments = [];
-    }
-    applicants[index].comments.push(comment);
-    this.setState({
-      applicants
-    });
-  };
   render() {
     const {
       selectedApplicantIndex,
@@ -201,7 +204,7 @@ class AdminDash extends Component {
           <Styled.ApplicantInfoContainer>
             <ApplicantInfo
               applicant={applicants[selectedApplicantIndex]}
-              onChangeComment={this.onChangeComment}
+              onChangeComment={this.onUpdateApplicantComments}
               onUpdateApplicantStatus={this.onUpdateApplicantStatus}
             />
           </Styled.ApplicantInfoContainer>

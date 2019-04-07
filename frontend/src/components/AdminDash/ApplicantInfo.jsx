@@ -163,17 +163,25 @@ class ApplicantInfo extends Component {
             <Section>
               <SubSection>
                 <h5>Comments</h5>
-                {applicant.comments &&
-                  applicant.comments.map(comment => <p className={styles.content}>{comment}</p>)}
+                {!this.state.editingMode && applicant.comments && (
+                  <p className={styles.content}>{applicant.comments}</p>
+                )}
                 {!this.state.editingMode && (
-                  <Button color="primary" onClick={() => this.setState({ editingMode: true })}>
-                    Add a Comment
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      this.setState({ editingMode: true });
+                      this.setState({ commentText: applicant.comments });
+                    }}
+                  >
+                    Edit Comments
                   </Button>
                 )}
                 {this.state.editingMode && (
                   <InputContainer>
                     <Input
                       type="textarea"
+                      value={this.state.commentText}
                       onChange={e => this.setState({ commentText: e.target.value })}
                     />
                     <Button
@@ -182,7 +190,7 @@ class ApplicantInfo extends Component {
                         this.props.onChangeComment(this.state.commentText);
                       }}
                     >
-                      Edit Comment
+                      Edit Comments
                     </Button>
                   </InputContainer>
                 )}
