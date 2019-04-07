@@ -1,13 +1,15 @@
 export const statusToColorMap = {
+  accepted: 'success',
   got_initial_email: 'warning',
-  responded_to_email: 'warning',
-  admitted: 'success',
+  has_volunteered: 'warning',
+  new: 'default',
+  no_response: 'warning',
   denied: 'danger'
 };
 
 const defaultStatus = {
   get: function(target, name) {
-    return target.hasOwnProperty(name) ? target[name] : 'Admitted';
+    return target.hasOwnProperty(name) ? target[name] : 'New';
   }
 };
 
@@ -19,10 +21,12 @@ const defaultRole = {
 
 export const statuses = new Proxy(
   {
-    admitted: 'Admitted',
+    accepted: 'Accepted',
     denied: 'Denied',
     got_initial_email: 'Got Initial Email',
-    responded_to_email: 'Responded To Email'
+    has_volunteered: 'Has Volunteered',
+    no_response: 'No Response',
+    new: 'New'
   },
   defaultStatus
 );
@@ -36,10 +40,4 @@ export const roles = new Proxy(
   defaultRole
 );
 
-export const getStatusColor = status => statusToColorMap[status] || 'success';
-
-export const getStatusLabel = key => {
-  const words = key.split('_');
-  const capitalizedWords = words.map(word => `${word[0].toUpperCase()}${word.slice(1)}`);
-  return capitalizedWords.join(' ');
-};
+export const getStatusColor = status => statusToColorMap[status] || 'default';

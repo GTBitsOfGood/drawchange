@@ -20,6 +20,7 @@ const theme = {
   grey3: 'hsl(0, 0%, 30%)',
   grey5: 'hsl(0, 0%, 50%)',
   grey7: 'hsl(0, 0%, 75%)',
+  grey8: 'hsl(0, 0%, 80%)',
   grey9: 'hsl(0, 0%, 95%)',
   primaryGrey: '#607177',
   danger: {
@@ -33,6 +34,10 @@ const theme = {
   success: {
     base: 'hsl(128, 43%, 86%)',
     text: 'hsl(127, 100%, 21%)'
+  },
+  default: {
+    base: 'hsl(0, 0%, 90%)',
+    text: 'hsl(0, 0%, 30%)'
   }
 };
 

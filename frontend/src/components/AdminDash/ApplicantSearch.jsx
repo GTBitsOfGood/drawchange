@@ -11,19 +11,31 @@ import {
 } from 'reactstrap';
 import Icon from '../Shared/Icon';
 
-const FilterContainer = styled.form`
-  display: flex;
-  margin-bottom: 1rem;
-`;
-
-const BackButton = styled.button`
-  width: ${props => (props.show ? '3.2rem' : '0')};
-  border: none;
-  background: none;
-  transition: width 0.2s;
-  overflow: hidden;
-  padding: 0;
-`;
+const Styled = {
+  FilterContainer: styled.form`
+    display: flex;
+    margin-bottom: 1rem;
+  `,
+  BackButton: styled.button`
+    width: ${props => (props.show ? '3.2rem' : '0')};
+    border: none;
+    background: none;
+    transition: width 0.2s;
+    overflow: hidden;
+    padding: 0;
+  `,
+  DropdownToggle: styled(DropdownToggle)`
+    background: white;
+    border: 1px solid ${props => props.theme.grey8};
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-right: 0.5rem;
+  `,
+  SearchBox: styled(Input)`
+    border: 1px solid ${props => props.theme.grey8};
+    border-radius: 0.5rem 0 0 0.5rem;
+  `
+};
 
 class ApplicantSearch extends React.Component {
   constructor(props) {
@@ -80,18 +92,18 @@ class ApplicantSearch extends React.Component {
   };
   render() {
     return (
-      <FilterContainer onSubmit={this.onSubmitSearch}>
-        <BackButton type="reset" show={this.state.textInput} onClick={this.onClearSearch}>
+      <Styled.FilterContainer onSubmit={this.onSubmitSearch}>
+        <Styled.BackButton type="reset" show={this.state.textInput} onClick={this.onClearSearch}>
           <Icon name="back-arrow" />
-        </BackButton>
-        <Input
+        </Styled.BackButton>
+        <Styled.SearchBox
           type="text"
           placeholder={'Search By ' + this.state.placeholder}
           onChange={this.onSearchChange}
         />
 
         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-          <DropdownToggle caret />
+          <Styled.DropdownToggle caret />
           <DropdownMenu>
             <DropdownItem header>Search by...</DropdownItem>
             <DropdownItem onClick={this.selectSearchOption}>All</DropdownItem>
@@ -109,7 +121,7 @@ class ApplicantSearch extends React.Component {
           toggleCallback={this.onShowFilterModal}
           submitCallback={this.onApplyFilters}
         />
-      </FilterContainer>
+      </Styled.FilterContainer>
     );
   }
 }

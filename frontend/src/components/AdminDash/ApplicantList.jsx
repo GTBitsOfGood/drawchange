@@ -71,8 +71,7 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, chi
 ApplicantList.propTypes = {
   applicants: PropTypes.array.isRequired,
   selectApplicantCallback: PropTypes.func.isRequired,
-  selectedIndex: PropTypes.number.isRequired,
-  children: PropTypes.object
+  selectedIndex: PropTypes.number.isRequired
 };
 
 export default ApplicantList;

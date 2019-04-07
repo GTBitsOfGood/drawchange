@@ -91,11 +91,6 @@ const Styled = {
   `
 };
 
-const getNavLabel = role => {
-  if (role === 'admin') return 'Admin Dashboard';
-  else return 'Volunteer Dashboard';
-};
-
 class Header extends Component {
   state = {
     isOpen: false

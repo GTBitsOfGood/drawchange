@@ -3,9 +3,10 @@ import ApplicantList from './ApplicantList';
 import ApplicantInfo from './ApplicantInfo';
 import InfiniteScroll from '../Shared/InfiniteScroll';
 import { Icon, Loading } from '../Shared';
-import { filterApplicants, fetchApplicants, searchApplicants } from './queries';
-import styled, { withTheme } from 'styled-components';
+import { filterApplicants, fetchMoreApplicants, searchApplicants } from './queries';
+import styled from 'styled-components';
 import ApplicantSearch from './ApplicantSearch';
+import { Button } from 'reactstrap';
 
 const Styled = {
   Container: styled.div`
@@ -31,28 +32,18 @@ const Styled = {
       align-items: center;
     `}
   `,
-  MailAll: styled.a`
-    background: ${props => props.theme.grey9};
-    color: ${props => props.theme.grey3};
-    border: 1px solid ${props => props.theme.grey7};
-    font-weight: bold;
-    border-radius: 0.5rem 0.5rem 0 0;
-    padding: 0.5rem 1.5rem;
-    bottom: 0;
+  SecondaryOptions: styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
 
     span {
       margin-left: 0.5rem;
     }
-  `,
-  MailContainer: styled.div`
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    bottom: 0;
-    width: 100%;
   `
 };
-class ApplicantViewer extends Component {
+class AdminDash extends Component {
   constructor() {
     super();
     this.state = {
@@ -67,12 +58,31 @@ class ApplicantViewer extends Component {
     });
   };
 
+  onRefreshApplicants = () => {
+    this.setState(
+      {
+        isLoading: true,
+        applicants: []
+      },
+      this.onLoadMoreApplicants
+    );
+  };
+
   onLoadMoreApplicants = () => {
     this.setState({
       isLoading: true
     });
 
-    fetchApplicants().then(res => this.setState({ applicants: res.data.users, isLoading: false }));
+    const { applicants } = this.state;
+    const lastPaginationId = applicants.length ? applicants[applicants.length - 1]._id : 0;
+    console.log(lastPaginationId);
+
+    fetchMoreApplicants(lastPaginationId).then(res =>
+      this.setState({
+        applicants: [...this.state.applicants, ...res.data.users],
+        isLoading: false
+      })
+    );
   };
   onUpdateApplicantStatus = (applicantEmail, updatedStatus) => {
     this.setState({
@@ -119,7 +129,7 @@ class ApplicantViewer extends Component {
     );
   };
   render() {
-    const { selectedApplicantIndex, applicants, isLoading } = this.state;
+    const { isLoading, applicants, selectedApplicantIndex } = this.state;
     return (
       <Styled.Container>
         <Styled.Main>
@@ -133,19 +143,22 @@ class ApplicantViewer extends Component {
                 searchSubmitCallback={this.onSearchSubmit}
                 applyFiltersCallback={this.onApplyFilters}
               />
+              <Styled.SecondaryOptions>
+                <Button onClick={this.onRefreshApplicants}>
+                  <Icon color="grey3" name="refresh" />
+                  <span>Refresh</span>
+                </Button>
+                <Button
+                  href={`mailto:${applicants &&
+                    applicants.reduce((acc, curr) => {
+                      return acc.concat(curr.bio.email);
+                    }, [])}`}
+                >
+                  <Icon color="grey3" name="mail" />
+                  <span>Send Mass Email</span>
+                </Button>
+              </Styled.SecondaryOptions>
             </ApplicantList>
-
-            <Styled.MailContainer>
-              <Styled.MailAll
-                href={`mailto:${applicants &&
-                  applicants.reduce((acc, curr) => {
-                    return acc.concat(curr.bio.email);
-                  }, [])}`}
-              >
-                <Icon color={this.props.theme.grey3} name="mail" />
-                <span>Compose Mass Email</span>
-              </Styled.MailAll>
-            </Styled.MailContainer>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
             {applicants && applicants.length ? (
@@ -165,4 +178,4 @@ class ApplicantViewer extends Component {
   }
 }
 
-export default withTheme(ApplicantViewer);
+export default AdminDash;

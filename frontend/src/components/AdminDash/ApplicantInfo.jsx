@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { OptionsSelected, Tag, Icon } from '../Shared';
-import { getStatusColor, getStatusLabel, statuses, roles } from './applicantInfoHelpers';
+import { getStatusColor, statuses, roles } from './applicantInfoHelpers';
 import DropdownSelect from './DropdownSelect';
 import { updateApplicantStatus, updateApplicantRole } from './queries';
 import styled, { withTheme } from 'styled-components';
@@ -84,11 +83,6 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const InputContainer = styled.div`
-  padding-left: 10;
-  padding-right: 10;
-`;
-
 class ApplicantInfo extends Component {
   constructor(props) {
     super(props);
@@ -136,7 +130,7 @@ class ApplicantInfo extends Component {
                 >
                   <Tag
                     type={getStatusColor(applicant.status) || ''}
-                    text={getStatusLabel(applicant.status)}
+                    text={statuses[applicant.status]}
                   >
                     <Icon
                       name="dropdown-arrow"
@@ -153,7 +147,7 @@ class ApplicantInfo extends Component {
                   options={roles}
                 >
                   <p>
-                    {getStatusLabel(applicant.role)}{' '}
+                    {roles[applicant.role]}{' '}
                     <Icon name="dropdown-arrow" color={theme.grey1} size="1.5rem" />
                   </p>
                 </DropdownSelect>
@@ -207,33 +201,6 @@ class ApplicantInfo extends Component {
                   options={getLabelsFromDays(applicant.availability, 'weekend')}
                   selected={getSelectedFromDays(applicant.availability, 'weekend')}
                 />
-              </SubSection>
-            </Section>
-            <Section>
-              <SubSection>
-                <h5>Comments</h5>
-                {applicant.comments && applicant.comments.map(comment => <p>{comment}</p>)}
-                {!this.state.editingMode && (
-                  <Button color="primary" onClick={() => this.setState({ editingMode: true })}>
-                    Add a Comment
-                  </Button>
-                )}
-                {this.state.editingMode && (
-                  <InputContainer>
-                    <Input
-                      type="textarea"
-                      onChange={e => this.setState({ commentText: e.target.value })}
-                    />
-                    <Button
-                      onClick={() => {
-                        this.setState({ editingMode: false });
-                        this.props.onChangeComment(this.state.commentText);
-                      }}
-                    >
-                      Edit Comment
-                    </Button>
-                  </InputContainer>
-                )}
               </SubSection>
             </Section>
           </Container>
