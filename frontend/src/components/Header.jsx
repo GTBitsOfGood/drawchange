@@ -50,11 +50,11 @@ const Styled = {
 
     :before {
       content: '';
-      width: ${props => (props.currPathName === '/applicant-viewer' ? '9rem' : '8rem')};
-      height: 1.5rem;
+      width: ${props => (props.currPathName === '/applicant-viewer' ? '10rem' : '9rem')};
+      height: 2.2rem;
       position: absolute;
-      border-radius: 0.3rem;
-      left: ${props => (props.currPathName === '/applicant-viewer' ? '-0.5rem' : '9rem')};
+      border-radius: 0.5rem;
+      left: ${props => (props.currPathName === '/applicant-viewer' ? '-1rem' : '8.5rem')};
       background: white;
       z-index: 0;
       transition: all 0.3s;
