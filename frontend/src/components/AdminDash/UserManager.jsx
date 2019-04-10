@@ -23,7 +23,6 @@ const Styled = {
     display: flex;
     align-items: center;
     height: 3rem;
-    margin-left: auto;
 
     p {
       color: ${props => props.theme.grey5};
@@ -43,6 +42,12 @@ const Styled = {
     border: none;
 
     ${props => props.disabled && 'background: white !important'}
+  `,
+  ToBeginningButton: styled(Button)`
+    background: white;
+    border: none;
+    margin-left: auto;
+    margin-right: 1rem;
   `
 };
 
@@ -74,11 +79,10 @@ class UserManager extends React.Component {
     });
   };
   onNextPage = () => {
-    const lastId = this.state.users[this.state.users.length - 1]._id;
     const { currentPage, users } = this.state;
     if ((currentPage + 1) * PAGE_SIZE === users.length) {
       this.setState({ loadingMoreUsers: true });
-      fetchUserManagementData(lastId).then(result => {
+      fetchUserManagementData(users[users.length - 1]._id).then(result => {
         if (result && result.data && result.data.users) {
           this.setState({
             users: [...users, ...result.data.users],
@@ -94,6 +98,7 @@ class UserManager extends React.Component {
     }
   };
   onPreviousPage = () => this.setState({ currentPage: this.state.currentPage - 1 });
+  onToBeginning = () => this.setState({ currentPage: 0 });
   getUsersAtPage = () => {
     const { users, currentPage } = this.state;
     const start = currentPage * PAGE_SIZE;
@@ -112,6 +117,11 @@ class UserManager extends React.Component {
             <Icon color="grey3" name="refresh" />
             <span> Refresh</span>
           </Styled.Button>
+          {currentPage > 0 && (
+            <Styled.ToBeginningButton onClick={this.onToBeginning}>
+              To Beginning
+            </Styled.ToBeginningButton>
+          )}
           <Styled.PaginationContainer>
             <Styled.Button disabled={currentPage === 0} onClick={this.onPreviousPage}>
               <Icon color={currentPage === 0 ? 'grey7' : 'grey3'} name="left-chevron" />
