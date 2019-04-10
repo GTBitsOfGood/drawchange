@@ -1,7 +1,8 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
-import { Route } from 'react-router-dom';
+import styled from 'styled-components';
+import { Route, Redirect } from 'react-router-dom';
 import ApplicantViewer from './ApplicantViewer';
+import UserManager from './UserManager';
 
 const Container = styled.div`
   background: white;
@@ -10,16 +11,27 @@ const Container = styled.div`
 `;
 
 class AdminDash extends React.Component {
-  componentDidMount = () => {
-    window.history.pushState({}, 'Applicant Viewer', 'applicant-viewer');
+  state = {
+    redirectToViewer: false
   };
+  componentDidMount = () => {
+    if (window.location.pathname === '/') {
+      this.setState({ redirectToViewer: true });
+    }
+  };
+  renderRedirect() {
+    if (this.state.redirectToViewer) {
+      return <Redirect to="/applicant-viewer" />;
+    }
+  }
   render() {
     return (
       <Container>
+        {this.renderRedirect()}
         <Route path="/applicant-viewer" component={ApplicantViewer} />
-        <Route path="/user-manager" component={ApplicantViewer} />
+        <Route path="/user-manager" component={UserManager} />
       </Container>
     );
   }
 }
-export default withTheme(AdminDash);
+export default AdminDash;

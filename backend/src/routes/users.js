@@ -136,6 +136,54 @@ router.get('/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+router.get('/managementData', (req, res, next) => {
+  const filter = {};
+  if (req.query.role) {
+    try {
+      // Each role is sent as an object key
+      // For mongo '$or' query, these keys need to be reduced to an array
+      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
+        (query, key) => [...query, { role: key }],
+        []
+      );
+      if (!roleFilter.length) {
+        res.status(400).json({ error: 'Invalid role param' });
+      }
+      filter.$or = roleFilter;
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid role param' });
+    }
+  }
+  if (req.query.lastPaginationId) {
+    filter._id = { $lt: mongoose.Types.ObjectId(req.query.lastPaginationId) };
+  }
+  UserData.aggregate([
+    { $sort: { _id: -1 } },
+    { $match: filter },
+    { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE },
+    {
+      $project: {
+        name: { $concat: ['$bio.first_name', ' ', '$bio.last_name'] },
+        email: '$bio.email',
+        role: 1,
+        status: 1
+      }
+    }
+  ])
+    .then(users => {
+      res.status(200).json({ users });
+    })
+    .catch(err => next(err));
+});
+
+router.get('/count', (req, res, next) => {
+  UserData.count()
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => next(err));
+});
+
 router.get('/searchByContent', (req, res, next) => {
   const inputText = req.query.searchquery;
   const searchType = req.query.searchtype;

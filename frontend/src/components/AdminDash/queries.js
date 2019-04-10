@@ -22,6 +22,13 @@ export const filterApplicants = filterGroups => {
 export const fetchMoreApplicants = lastPaginationId =>
   axios.get(`/api/users?${lastPaginationId ? 'lastPaginationId=' + lastPaginationId : ''}`);
 
+export const fetchUserManagementData = lastPaginationId =>
+  axios.get(
+    `/api/users/managementData?${lastPaginationId ? 'lastPaginationId=' + lastPaginationId : ''}`
+  );
+
+export const fetchUserCount = () => axios.get('/api/users/count');
+
 export const updateApplicantStatus = (email, status) =>
   axios.post(`/api/users/updateStatus?email=${email}&status=${status}`);
 
