@@ -20,40 +20,75 @@ import {
 
 import logo from '../images/drawchange_logo_white.png';
 
-const CustomNavItem = styled(NavItem)`
-  margin-left: 0.3rem;
-  margin-right: 0.3rem;
-  text-align: center;
-  min-width: 7rem;
-`;
+const Styled = {
+  NavItem: styled(NavItem)`
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    text-align: center;
+    min-width: 7rem;
+  `,
+  Dropdown: styled(UncontrolledDropdown)`
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    text-align: center;
+    min-width: 7rem;
+  `,
+  NavLabel: styled.p`
+    color: white;
+    margin: auto;
+    margin-left: 2rem;
+    flex: 1;
+    font-weight: 600;
+    font-size: 1.3rem;
+  `,
+  PageSwitch: styled.div`
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin-left: 2rem;
+    margin-right: auto;
 
-const CustomDropdown = styled(UncontrolledDropdown)`
-  margin-left: 0.3rem;
-  margin-right: 0.3rem;
-  text-align: center;
-  min-width: 7rem;
-`;
+    :before {
+      content: '';
+      width: ${props => (props.currPathName === '/applicant-viewer' ? '10rem' : '9rem')};
+      height: 2.2rem;
+      position: absolute;
+      border-radius: 0.5rem;
+      left: ${props => (props.currPathName === '/applicant-viewer' ? '-1rem' : '8.5rem')};
+      background: white;
+      z-index: 0;
+      transition: all 0.3s;
+    }
+  `,
+  PageLink: styled(Link)`
+    margin-right: 2rem;
+    z-index: 1;
 
-const NavLabel = styled.p`
-  color: white;
-  margin: auto;
-  margin-left: 2rem;
-  flex: 1;
-  font-weight: 600;
-  font-size: 1.3rem;
-`;
+    :hover {
+      color: white;
+      text-decoration: none;
+    }
+    ${props =>
+      props.selected
+        ? `
+      color: ${props.theme.primaryGrey};
+      font-weight: 600;
 
-const FlexContainer = styled.ul`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  margin: 0;
-`;
-
-const getNavLabel = role => {
-  if (role === 'admin') return 'Admin Dashboard';
-  else return 'Volunteer Dashboard';
+      :hover {
+        color: ${props.theme.primaryGrey};
+      }
+    `
+        : `
+      color: white;
+    `}
+  `,
+  FlexContainer: styled.ul`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+  `
 };
 
 class Header extends Component {
@@ -66,6 +101,12 @@ class Header extends Component {
       isOpen: !this.state.isOpen
     });
   };
+
+  componentDidMount = () => {
+    console.log(window.location.pathname);
+  };
+
+  currPageMatches = page => window.location.pathname === page;
 
   render() {
     const { onLogout, loggedIn, role } = this.props;
@@ -80,23 +121,38 @@ class Header extends Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               {loggedIn ? (
-                <FlexContainer className="navbar-nav">
-                  <NavLabel>{getNavLabel(role)}</NavLabel>
-                  <CustomNavItem>
+                <Styled.FlexContainer className="navbar-nav">
+                  <Styled.PageSwitch currPathName={window.location.pathname}>
+                    <Styled.PageLink
+                      to="/applicant-viewer"
+                      selected={this.currPageMatches('/applicant-viewer')}
+                    >
+                      Applicant Viewer
+                    </Styled.PageLink>
+                    {role === 'admin' && (
+                      <Styled.PageLink
+                        to="/user-manager"
+                        selected={this.currPageMatches('/user-manager')}
+                      >
+                        User Manager
+                      </Styled.PageLink>
+                    )}
+                  </Styled.PageSwitch>
+                  <Styled.NavItem>
                     <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
-                  </CustomNavItem>
-                  <CustomNavItem>
+                  </Styled.NavItem>
+                  <Styled.NavItem>
                     <NavLink onClick={onLogout} href="/">
                       Logout
                     </NavLink>
-                  </CustomNavItem>
-                </FlexContainer>
+                  </Styled.NavItem>
+                </Styled.FlexContainer>
               ) : (
                 <Nav navbar>
-                  <CustomNavItem>
+                  <Styled.NavItem>
                     <NavLink href="http://www.drawchange.org">Home</NavLink>
-                  </CustomNavItem>
-                  <CustomDropdown nav inNavbar>
+                  </Styled.NavItem>
+                  <Styled.Dropdown nav inNavbar>
                     <DropdownToggle nav>About Us</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
@@ -114,8 +170,8 @@ class Header extends Component {
                         Press Kit
                       </DropdownItem>
                     </DropdownMenu>
-                  </CustomDropdown>
-                  <CustomDropdown nav inNavbar>
+                  </Styled.Dropdown>
+                  <Styled.Dropdown nav inNavbar>
                     <DropdownToggle nav>Contribute</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="https://secure.donationpay.org/drawchange/">
@@ -126,11 +182,11 @@ class Header extends Component {
                         Wish List
                       </DropdownItem>
                     </DropdownMenu>
-                  </CustomDropdown>
-                  <CustomDropdown>
+                  </Styled.Dropdown>
+                  <Styled.Dropdown>
                     <NavLink href="http://www.drawchange.org/blog">News</NavLink>
-                  </CustomDropdown>
-                  <CustomDropdown nav inNavbar>
+                  </Styled.Dropdown>
+                  <Styled.Dropdown nav inNavbar>
                     <DropdownToggle nav>Activities</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem href="https://www.drawchange.org/usprograms">
@@ -143,13 +199,13 @@ class Header extends Component {
                         Ethipoia
                       </DropdownItem>
                     </DropdownMenu>
-                  </CustomDropdown>
-                  <CustomNavItem>
+                  </Styled.Dropdown>
+                  <Styled.NavItem>
                     <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
-                  </CustomNavItem>
-                  <CustomDropdown>
+                  </Styled.NavItem>
+                  <Styled.Dropdown>
                     <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
-                  </CustomDropdown>
+                  </Styled.Dropdown>
                 </Nav>
               )}
             </Collapse>

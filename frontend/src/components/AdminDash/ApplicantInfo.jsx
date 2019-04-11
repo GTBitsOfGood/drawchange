@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { OptionsSelected, Tag, Icon } from '../Shared';
 import { getStatusColor, statuses, roles } from './applicantInfoHelpers';
@@ -7,6 +6,7 @@ import DropdownSelect from './DropdownSelect';
 import { updateApplicantStatus, updateApplicantRole } from './queries';
 import styled, { withTheme } from 'styled-components';
 import { RequestContext } from '../Shared/RequestResult';
+import { Button, Input } from 'reactstrap';
 import _ from 'lodash';
 
 const getLabelsFromDays = (availability, type) => {
@@ -85,8 +85,7 @@ const Container = styled.div`
 `;
 
 const InputContainer = styled.div`
-  padding-left: 10;
-  padding-right: 10;
+  margin-top: 1.5rem;
 `;
 
 class ApplicantInfo extends Component {
