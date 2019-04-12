@@ -140,13 +140,7 @@ class Header extends Component {
                       <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
                     </Styled.NavItem>
                     <Styled.NavItem>
-                      <NavLink
-                        onClick={e => {
-                          e.preventDefault();
-                          logoutUser();
-                        }}
-                        href="/"
-                      >
+                      <NavLink onClick={logoutUser} href="/">
                         Logout
                       </NavLink>
                     </Styled.NavItem>
