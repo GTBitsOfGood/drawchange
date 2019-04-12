@@ -107,6 +107,9 @@ router.get('/', (req, res, next) => {
       res.status(400).json({ error: 'Invalid role param' });
     }
   }
+  if (req.query.date) {
+    console.log(req.query.date);
+  }
   if (req.query.availability) {
     try {
       filter.availability = JSON.parse(req.query.availability);
