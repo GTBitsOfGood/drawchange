@@ -58,17 +58,14 @@ class ApplicantViewer extends Component {
   }
 
   onUpdateApplicantComments = comments => {
-    this.setState({
-      isLoading: true
-    });
+    if (!comments) return;
     const index = this.state.selectedApplicantIndex;
     let applicants = this.state.applicants;
     setTimeout(() => {
       updateApplicantComments(applicants[index].bio.email, comments).then(() => {
         applicants[index].comments = comments;
         this.setState({
-          applicants,
-          isLoading: false
+          applicants
         });
       });
     });

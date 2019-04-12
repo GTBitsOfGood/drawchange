@@ -43,6 +43,7 @@ export class UserContextProvider extends React.Component {
       .then(response => {
         localStorage.setItem('access_token', token);
         response.json().then(user => {
+          console.log(user);
           this.setState({
             user: user,
             userRole: user ? user.role : null,

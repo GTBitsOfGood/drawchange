@@ -14,6 +14,7 @@ import FluidImage from './FluidImage';
 
 import images from '../../images/volunteer_app';
 import { PendingVolunteer } from '..';
+import { UserContext } from '../UserContext';
 
 export default class VolunteerApp extends Component {
   constructor(props) {
@@ -28,19 +29,18 @@ export default class VolunteerApp extends Component {
 
   postApp = _ => {
     console.log('we submitted');
-    console.log(this.state.data);
-    console.log(this.props.user._id)
-
-    axios
-    //patch request to user.id to update proper asset 
-    //custom patch check in users.js 
-      .put(`/api/users/${this.props.user._id}`, this.state.data)
-      .then(res => {
-        console.log('Success', res);
-        this.setState({ submitted: true });
-      })
-      .catch(er => console.log('ERROR: ', er));
-    // TODO Add error handling
+    if (this.context.user) {
+      axios
+        //patch request to user.id to update proper asset
+        //custom patch check in users.js
+        .put(`/api/users/${this.context.user._id}`, this.state.data)
+        .then(res => {
+          console.log('Success', res);
+          this.setState({ submitted: true });
+        })
+        .catch(er => console.log('ERROR: ', er));
+      // TODO Add error handling
+    }
   };
 
   onSubmit = formData => {
@@ -93,3 +93,5 @@ export default class VolunteerApp extends Component {
     );
   }
 }
+
+VolunteerApp.contextType = UserContext;

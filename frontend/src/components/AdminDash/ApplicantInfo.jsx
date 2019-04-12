@@ -7,6 +7,7 @@ import { updateApplicantStatus, updateApplicantRole } from './queries';
 import styled, { withTheme } from 'styled-components';
 import { RequestContext } from '../Shared/RequestResult';
 import { Button, Input } from 'reactstrap';
+import { UserContext } from '../UserContext';
 import _ from 'lodash';
 
 const getLabelsFromDays = (availability, type) => {
@@ -124,125 +125,137 @@ class ApplicantInfo extends Component {
     return (
       <div>
         {applicant && (
-          <Container>
-            <Section>
-              <Heading>
-                <h1>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</h1>
-                <DropdownSelect
-                  updateCallback={selected => this.updateStatus(updateStatusCallback, selected)}
-                  options={statuses}
-                  screenEdgeAlign={true}
-                >
-                  <Tag
-                    type={getStatusColor(applicant.status) || ''}
-                    text={statuses[applicant.status]}
-                  >
-                    <Icon
-                      name="dropdown-arrow"
-                      color={theme[getStatusColor(applicant.status)].text}
-                      size="1.5rem"
+          <UserContext.Consumer>
+            {({ userRole }) => (
+              <Container>
+                <Section>
+                  <Heading>
+                    <h1>{`${applicant.bio.first_name} ${applicant.bio.last_name}`}</h1>
+                    {userRole === 'admin' && (
+                      <DropdownSelect
+                        updateCallback={selected =>
+                          this.updateStatus(updateStatusCallback, selected)
+                        }
+                        options={statuses}
+                        screenEdgeAlign={true}
+                      >
+                        <Tag
+                          type={getStatusColor(applicant.status) || ''}
+                          text={statuses[applicant.status]}
+                        >
+                          <Icon
+                            name="dropdown-arrow"
+                            color={theme[getStatusColor(applicant.status)].text}
+                            size="1.5rem"
+                          />
+                        </Tag>
+                      </DropdownSelect>
+                    )}
+                  </Heading>
+                  <SubSection>
+                    <h5>Role</h5>
+                    {userRole === 'admin' ? (
+                      <DropdownSelect
+                        updateCallback={selected => this.updateRole(updateRoleCallback, selected)}
+                        options={roles}
+                      >
+                        <p>
+                          {roles[applicant.role]}{' '}
+                          <Icon name="dropdown-arrow" color={theme.grey1} size="1.5rem" />
+                        </p>
+                      </DropdownSelect>
+                    ) : (
+                      <p>{applicant.role}</p>
+                    )}
+                  </SubSection>
+                  <SubSection>
+                    <h5>Email</h5>
+                    <a href={'mailto:' + applicant.bio.email}>{applicant.bio.email}</a>
+                  </SubSection>
+                  <SubSection>
+                    <h5>Phone Number</h5>
+                    <p>{applicant.bio.phone_number}</p>
+                  </SubSection>
+                  <SubSection>
+                    <h5>Birth date</h5>
+                    <p>January 1, 1980</p>
+                  </SubSection>
+                  <SubSection>
+                    <h5>Address</h5>
+                    <p>
+                      {`${applicant.bio.street_address} ${applicant.bio.city}, ${
+                        applicant.bio.state
+                      } ${applicant.bio.zip_code}`}
+                    </p>
+                  </SubSection>
+                </Section>
+                {applicant.history && (
+                  <Section>
+                    <h4>History</h4>
+                    <h5>Volunteer Interest Cause</h5>
+                    <p>{applicant.history.volunteer_interest_cause}</p>
+                    <h5>Volunteer Support</h5>
+                    <p>{applicant.history.volunteer_interest_cause}</p>
+                    <h5>Volunteer Commitment</h5>
+                    <p>{applicant.history.volunteer_commitment}</p>
+                    <h5>Previous Experience</h5>
+                    <p>{applicant.history.previous_volunteer_experience}</p>
+                  </Section>
+                )}
+                <Section>
+                  <h4>Availability</h4>
+                  <SubSection minWidth="20rem">
+                    <h5>Weekdays</h5>
+                    <OptionsSelected
+                      options={getLabelsFromDays(applicant.availability, 'weekday')}
+                      selected={getSelectedFromDays(applicant.availability, 'weekday')}
                     />
-                  </Tag>
-                </DropdownSelect>
-              </Heading>
-              <SubSection>
-                <h5>Role</h5>
-                <DropdownSelect
-                  updateCallback={selected => this.updateRole(updateRoleCallback, selected)}
-                  options={roles}
-                >
-                  <p>
-                    {roles[applicant.role]}{' '}
-                    <Icon name="dropdown-arrow" color={theme.grey1} size="1.5rem" />
-                  </p>
-                </DropdownSelect>
-              </SubSection>
-              <SubSection>
-                <h5>Email</h5>
-                <a href={'mailto:' + applicant.bio.email}>{applicant.bio.email}</a>
-              </SubSection>
-              <SubSection>
-                <h5>Phone Number</h5>
-                <p>{applicant.bio.phone_number}</p>
-              </SubSection>
-              <SubSection>
-                <h5>Birth date</h5>
-                <p>{applicant.bio.date_of_birth}</p>
-              </SubSection>
-              <SubSection>
-                <h5>Address</h5>
-                <p>
-                  {`${applicant.bio.street_address} ${applicant.bio.city}, ${applicant.bio.state} ${
-                    applicant.bio.zip_code
-                  }`}
-                </p>
-              </SubSection>
-            </Section>
-            {applicant.history && (
-              <Section>
-                <h4>History</h4>
-                <h5>Volunteer Interest Cause</h5>
-                <p>{applicant.history.volunteer_interest_cause}</p>
-                <h5>Volunteer Support</h5>
-                <p>{applicant.history.volunteer_interest_cause}</p>
-                <h5>Volunteer Commitment</h5>
-                <p>{applicant.history.volunteer_commitment}</p>
-                <h5>Previous Experience</h5>
-                <p>{applicant.history.previous_volunteer_experience}</p>
-              </Section>
+                  </SubSection>
+                  <SubSection minWidth="20rem">
+                    <h5>Weekends</h5>
+                    <OptionsSelected
+                      options={getLabelsFromDays(applicant.availability, 'weekend')}
+                      selected={getSelectedFromDays(applicant.availability, 'weekend')}
+                    />
+                  </SubSection>
+                </Section>
+                <Section>
+                  <SubSection>
+                    <h5>Comments</h5>
+                    {!this.state.editingMode && applicant.comments && <p>{applicant.comments}</p>}
+                    {!this.state.editingMode && (
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          this.setState({ editingMode: true });
+                          this.setState({ commentText: applicant.comments });
+                        }}
+                      >
+                        {applicant.comments ? 'Edit Comments' : 'Add Comments'}
+                      </Button>
+                    )}
+                    {this.state.editingMode && (
+                      <InputContainer>
+                        <Input
+                          type="textarea"
+                          value={this.state.commentText}
+                          onChange={e => this.setState({ commentText: e.target.value })}
+                        />
+                        <Button
+                          onClick={() => {
+                            this.setState({ editingMode: false });
+                            this.props.onChangeComment(this.state.commentText);
+                          }}
+                        >
+                          Save changes
+                        </Button>
+                      </InputContainer>
+                    )}
+                  </SubSection>
+                </Section>
+              </Container>
             )}
-            <Section>
-              <h4>Availability</h4>
-              <SubSection minWidth="20rem">
-                <h5>Weekdays</h5>
-                <OptionsSelected
-                  options={getLabelsFromDays(applicant.availability, 'weekday')}
-                  selected={getSelectedFromDays(applicant.availability, 'weekday')}
-                />
-              </SubSection>
-              <SubSection minWidth="20rem">
-                <h5>Weekends</h5>
-                <OptionsSelected
-                  options={getLabelsFromDays(applicant.availability, 'weekend')}
-                  selected={getSelectedFromDays(applicant.availability, 'weekend')}
-                />
-              </SubSection>
-            </Section>
-            <Section>
-              <SubSection>
-                <h5>Comments</h5>
-                {!this.state.editingMode && applicant.comments && <p>{applicant.comments}</p>}
-                {!this.state.editingMode && (
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      this.setState({ editingMode: true });
-                      this.setState({ commentText: applicant.comments });
-                    }}
-                  >
-                    Edit Comments
-                  </Button>
-                )}
-                {this.state.editingMode && (
-                  <InputContainer>
-                    <Input
-                      type="textarea"
-                      value={this.state.commentText}
-                      onChange={e => this.setState({ commentText: e.target.value })}
-                    />
-                    <Button
-                      onClick={() => {
-                        this.setState({ editingMode: false });
-                        this.props.onChangeComment(this.state.commentText);
-                      }}
-                    >
-                      Edit Comments
-                    </Button>
-                  </InputContainer>
-                )}
-              </SubSection>
-            </Section>
-          </Container>
+          </UserContext.Consumer>
         )}
       </div>
     );

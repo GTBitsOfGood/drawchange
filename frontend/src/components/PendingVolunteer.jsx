@@ -30,7 +30,7 @@ class PendingVolunteer extends Component {
               <h1 className="display-3"> Thank You! </h1>
               <p className="lead">
                 We are very excited that you want to get involved with the work we do! Our
-                volunteers are very important to us and we review every application very closley. We
+                volunteers are very important to us and we review every application very closely. We
                 will notify you as soon as your status has been decided! Until then please feel free
                 to follow us on social media or check out our{' '}
                 <a href="http://drawchange.org">website!</a>
