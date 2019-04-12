@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 import Gallery from 'react-grid-gallery';
+import { Route } from 'react-router-dom';
 
 import Intro from './Intro';
 import Footer from './Footer';
 import AcceptPolicies from '../AcceptPolicies';
+import ApplicantViewer from '../AdminDash/ApplicantViewer';
 
-import styles from '../../styles/VolunteerDash.module.css';
+import styled from 'styled-components';
 import { IMAGES } from '../../images/gallery';
+
+const Container = styled.div`
+  background: white;
+  height: 100%;
+  width: 100%;
+`;
+
+const GalleryContainer = styled.div`
+  min-height: 1px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  overflow: auto;
+`;
 
 export default class VolunteerDashboard extends Component {
   state = {
@@ -15,21 +31,32 @@ export default class VolunteerDashboard extends Component {
 
   handlePolicies = _ => this.setState({ hasPolicies: true });
   render() {
-    return (
-      <div>
-        {this.state.hasPolicies ? (
-          <div>
-            <Intro />
-            <div className={styles.gallery}>
-              <Gallery enableImageSelection={false} maxRows={1} images={IMAGES} />
-            </div>
-            <Footer />
-          </div>
-        ) : (
-          <AcceptPolicies onSubmit={this.handlePolicies} />
-        )}
-        )}
-      </div>
+    return this.state.hasPolicies ? (
+      <React.Fragment>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <React.Fragment>
+              <Intro />
+              <GalleryContainer>
+                <Gallery enableImageSelection={false} maxRows={1} images={IMAGES} />
+              </GalleryContainer>
+              <Footer />
+            </React.Fragment>
+          )}
+        />
+        <Route
+          path="/applicant-viewer"
+          render={() => (
+            <Container>
+              <ApplicantViewer />
+            </Container>
+          )}
+        />
+      </React.Fragment>
+    ) : (
+      <AcceptPolicies onSubmit={this.handlePolicies} />
     );
   }
 }

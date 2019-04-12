@@ -104,6 +104,8 @@ class Header extends Component {
 
   currPageMatches = page => window.location.pathname === page;
 
+  onSubPage = () => window.location.pathname !== '/';
+
   render() {
     return (
       <UserContext.Consumer>
@@ -116,7 +118,7 @@ class Header extends Component {
 
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
-                {userRole && (userRole === 'admin' || userRole === 'volunteer') ? (
+                {this.onSubPage() && (userRole === 'admin' || userRole === 'volunteer') ? (
                   <Styled.FlexContainer className="navbar-nav">
                     <Styled.PageSwitch currPathName={window.location.pathname}>
                       <Styled.PageLink

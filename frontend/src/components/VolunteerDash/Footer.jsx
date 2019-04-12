@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../../styles/VolunteerDash.module.css';
 
 class Footer extends Component {
@@ -100,9 +101,19 @@ class Footer extends Component {
               <a href="http://www.verifiedvolunteers.com/">Verified Volunteers</a> done in the last
               12 months, click SHARE once you log into the system and you’re all set!
             </p>
+
+            <p>
+              Occasionally we have more volunteer opportunities available posted on{' '}
+              <a href="http://www.volunteermatch.org/search/org260116.jsp">Volunteer Match</a> .
+            </p>
             <div className={styles.informationCloser}>
               <p>
                 <strong>Thank you for saying yes to helping the children!</strong>
+              </p>
+              <p className={styles.applicantViewer}>
+                <Link to="/applicant-viewer">
+                  To view all of the amazing applications we've received, click here!
+                </Link>
               </p>
             </div>
           </div>
