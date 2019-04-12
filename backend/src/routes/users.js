@@ -210,18 +210,40 @@ router.get('/searchByContent', (req, res, next) => {
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
-    case 'Bio':
+    case 'Address':
       UserData.find({
         $or: [
           { 'bio.street_address': regexquery },
           { 'bio.city': regexquery },
           { 'bio.state': regexquery },
-          { 'bio.zip_code': regexquery },
-          { 'bio.first_name': regexquery },
-          { 'bio.last_name': regexquery },
-          { 'bio.email': regexquery },
-          { 'bio.phone_number': regexquery }
+          { 'bio.zip_code': regexquery }
         ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'History':
+      UserData.find({
+        $or: [
+          { 'history.volunteer_interest_cause': regexquery },
+          { 'history.volunteer_support': regexquery },
+          { 'history.volunteer_commitment': regexquery },
+          { 'history.previous_volunteer_experience': regexquery }
+        ]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Comments':
+      UserData.find({
+        $or: [{ comments: regexquery }]
+      })
+        .then(users => res.status(200).json({ users }))
+        .catch(err => next(err));
+      break;
+    case 'Name':
+      UserData.find({
+        $or: [{ 'bio.first_name': regexquery }, { 'bio.last_name': regexquery }]
       })
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
