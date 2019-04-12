@@ -120,7 +120,7 @@ class Header extends Component {
 
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              {loggedIn ? (
+              {loggedIn && (role === 'admin' || role === 'volunteer') ? (
                 <Styled.FlexContainer className="navbar-nav">
                   <Styled.PageSwitch currPathName={window.location.pathname}>
                     <Styled.PageLink

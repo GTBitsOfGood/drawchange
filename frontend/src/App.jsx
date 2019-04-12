@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import authHandler from './components/authHandler';
 
 import { Header, Authenticated, Splash } from './components';
 import { StyleWrapper, RequestProvider } from './components/Shared';
@@ -21,7 +22,7 @@ const Styled = {
 };
 
 class App extends Component {
-  state = { isAuthenticated: true, user: { role: 'admin' }, token: '' };
+  state = { isAuthenticated: false, user: { role: null }, token: '' };
 
   fakeAuth = _ => this.setState({ user: { role: null } });
 
@@ -32,6 +33,10 @@ class App extends Component {
   };
   auth = user => {
     this.setState({ isAuthenticated: true, user });
+  };
+  componentDidMount = () => {
+    const token = localStorage.getItem('access_token') || null;
+    authHandler(token, this.auth);
   };
 
   render() {
@@ -47,7 +52,7 @@ class App extends Component {
                 role={user ? user.role : null}
               />
               <Styled.Content>
-                {user ? <Authenticated user={user} /> : <Splash onAuth={this.fakeAuth} />}
+                {user && user.role ? <Authenticated user={user} /> : <Splash onAuth={this.auth} />}
               </Styled.Content>
             </Styled.Container>
           </RequestProvider>

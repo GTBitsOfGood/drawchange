@@ -15,9 +15,9 @@ class AdminDash extends React.Component {
     redirectToViewer: false
   };
   componentDidMount = () => {
-    if (window.location.pathname === '/') {
-      this.setState({ redirectToViewer: true });
-    }
+    // if (window.location.pathname === '/') {
+    //   this.setState({ redirectToViewer: true });
+    // }
   };
   renderRedirect() {
     if (this.state.redirectToViewer) {
