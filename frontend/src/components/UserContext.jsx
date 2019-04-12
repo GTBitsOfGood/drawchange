@@ -19,7 +19,7 @@ export class UserContextProvider extends React.Component {
         ? response.accessToken
         : localStorage.getItem('access_token');
 
-    if (token == null) {
+    if (token === '' || token == null) {
       this.setState(initialState);
       return;
     }
@@ -43,7 +43,6 @@ export class UserContextProvider extends React.Component {
       .then(response => {
         localStorage.setItem('access_token', token);
         response.json().then(user => {
-          console.log(user);
           this.setState({
             user: user,
             userRole: user ? user.role : null,
@@ -52,7 +51,6 @@ export class UserContextProvider extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error);
         localStorage.setItem('access_token', '');
         this.setState(initialState);
       });
