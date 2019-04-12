@@ -202,6 +202,19 @@ class ApplicantInfo extends Component {
                     <p>{applicant.history.previous_volunteer_experience}</p>
                   </Section>
                 )}
+                {userRole === 'admin' && applicant.criminal && !applicant.criminal.none && (
+                  <Section>
+                    <h4>Criminal Record</h4>
+                    <OptionsSelected
+                      options={Object.keys(applicant.criminal).filter(key => key !== 'explanation')}
+                      selected={Object.keys(applicant.criminal).filter(
+                        key => key !== 'explanation' && applicant.criminal[key]
+                      )}
+                    />
+                    <h5>Explanation</h5>
+                    <p>{applicant.criminal.explanation}</p>
+                  </Section>
+                )}
                 <Section>
                   <h4>Availability</h4>
                   <SubSection minWidth="20rem">
