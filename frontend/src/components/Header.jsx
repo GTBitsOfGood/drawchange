@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import { GoogleLogout } from 'react-google-login';
+import { UserContext } from './UserContext';
 
 import {
   Collapse,
@@ -102,116 +102,119 @@ class Header extends Component {
     });
   };
 
-  componentDidMount = () => {
-    console.log(window.location.pathname);
-  };
-
   currPageMatches = page => window.location.pathname === page;
 
   render() {
-    const { onLogout, loggedIn, role } = this.props;
     return (
-      <div>
-        <Navbar color="dark" dark expand="md">
-          <Container>
-            <NavbarBrand tag={Link} to="/">
-              <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
-            </NavbarBrand>
+      <UserContext.Consumer>
+        {({ userRole, logoutUser }) => (
+          <Navbar color="dark" dark expand="md">
+            <Container>
+              <NavbarBrand tag={Link} to="/">
+                <img style={{ width: '175px' }} alt="drawchange logo" src={logo} />
+              </NavbarBrand>
 
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              {loggedIn && (role === 'admin' || role === 'volunteer') ? (
-                <Styled.FlexContainer className="navbar-nav">
-                  <Styled.PageSwitch currPathName={window.location.pathname}>
-                    <Styled.PageLink
-                      to="/applicant-viewer"
-                      selected={this.currPageMatches('/applicant-viewer')}
-                    >
-                      Applicant Viewer
-                    </Styled.PageLink>
-                    {role === 'admin' && (
+              <NavbarToggler onClick={this.toggle} />
+              <Collapse isOpen={this.state.isOpen} navbar>
+                {userRole && (userRole === 'admin' || userRole === 'volunteer') ? (
+                  <Styled.FlexContainer className="navbar-nav">
+                    <Styled.PageSwitch currPathName={window.location.pathname}>
                       <Styled.PageLink
-                        to="/user-manager"
-                        selected={this.currPageMatches('/user-manager')}
+                        to="/applicant-viewer"
+                        selected={this.currPageMatches('/applicant-viewer')}
                       >
-                        User Manager
+                        Applicant Viewer
                       </Styled.PageLink>
-                    )}
-                  </Styled.PageSwitch>
-                  <Styled.NavItem>
-                    <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
-                  </Styled.NavItem>
-                  <Styled.NavItem>
-                    <NavLink onClick={onLogout} href="/">
-                      Logout
-                    </NavLink>
-                  </Styled.NavItem>
-                </Styled.FlexContainer>
-              ) : (
-                <Nav navbar>
-                  <Styled.NavItem>
-                    <NavLink href="http://www.drawchange.org">Home</NavLink>
-                  </Styled.NavItem>
-                  <Styled.Dropdown nav inNavbar>
-                    <DropdownToggle nav>About Us</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/foundersstory">
-                        Founder's Story
-                      </DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/curriculum-blueprint">
-                        Curriculum & Blueprint
-                      </DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/friends-partners">
-                        Our Friends & Partners
-                      </DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/store">Store</DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/press-kit">
-                        Press Kit
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Styled.Dropdown>
-                  <Styled.Dropdown nav inNavbar>
-                    <DropdownToggle nav>Contribute</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem href="https://secure.donationpay.org/drawchange/">
-                        Donate
-                      </DropdownItem>
-                      <DropdownItem href="/">Volunteer With Us</DropdownItem>
-                      <DropdownItem href="http://www.drawchange.org/wishlist">
-                        Wish List
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Styled.Dropdown>
-                  <Styled.Dropdown>
-                    <NavLink href="http://www.drawchange.org/blog">News</NavLink>
-                  </Styled.Dropdown>
-                  <Styled.Dropdown nav inNavbar>
-                    <DropdownToggle nav>Activities</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem href="https://www.drawchange.org/usprograms">
-                        U.S. Programs
-                      </DropdownItem>
-                      <DropdownItem href="https://www.drawchange.org/costarica">
-                        Costa Rica
-                      </DropdownItem>
-                      <DropdownItem href="https://www.drawchange.org/ethiopia">
-                        Ethipoia
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Styled.Dropdown>
-                  <Styled.NavItem>
-                    <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
-                  </Styled.NavItem>
-                  <Styled.Dropdown>
-                    <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
-                  </Styled.Dropdown>
-                </Nav>
-              )}
-            </Collapse>
-          </Container>
-        </Navbar>
-      </div>
+                      {userRole === 'admin' && (
+                        <Styled.PageLink
+                          to="/user-manager"
+                          selected={this.currPageMatches('/user-manager')}
+                        >
+                          User Manager
+                        </Styled.PageLink>
+                      )}
+                    </Styled.PageSwitch>
+                    <Styled.NavItem>
+                      <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
+                    </Styled.NavItem>
+                    <Styled.NavItem>
+                      <NavLink
+                        onClick={e => {
+                          e.preventDefault();
+                          logoutUser();
+                        }}
+                        href="/"
+                      >
+                        Logout
+                      </NavLink>
+                    </Styled.NavItem>
+                  </Styled.FlexContainer>
+                ) : (
+                  <Nav navbar>
+                    <Styled.NavItem>
+                      <NavLink href="http://www.drawchange.org">Home</NavLink>
+                    </Styled.NavItem>
+                    <Styled.Dropdown nav inNavbar>
+                      <DropdownToggle nav>About Us</DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/foundersstory">
+                          Founder's Story
+                        </DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/curriculum-blueprint">
+                          Curriculum & Blueprint
+                        </DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/friends-partners">
+                          Our Friends & Partners
+                        </DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/store">Store</DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/press-kit">
+                          Press Kit
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Styled.Dropdown>
+                    <Styled.Dropdown nav inNavbar>
+                      <DropdownToggle nav>Contribute</DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem href="https://secure.donationpay.org/drawchange/">
+                          Donate
+                        </DropdownItem>
+                        <DropdownItem href="/">Volunteer With Us</DropdownItem>
+                        <DropdownItem href="http://www.drawchange.org/wishlist">
+                          Wish List
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Styled.Dropdown>
+                    <Styled.Dropdown>
+                      <NavLink href="http://www.drawchange.org/blog">News</NavLink>
+                    </Styled.Dropdown>
+                    <Styled.Dropdown nav inNavbar>
+                      <DropdownToggle nav>Activities</DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem href="https://www.drawchange.org/usprograms">
+                          U.S. Programs
+                        </DropdownItem>
+                        <DropdownItem href="https://www.drawchange.org/costarica">
+                          Costa Rica
+                        </DropdownItem>
+                        <DropdownItem href="https://www.drawchange.org/ethiopia">
+                          Ethipoia
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Styled.Dropdown>
+                    <Styled.NavItem>
+                      <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
+                    </Styled.NavItem>
+                    <Styled.Dropdown>
+                      <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
+                    </Styled.Dropdown>
+                  </Nav>
+                )}
+              </Collapse>
+            </Container>
+          </Navbar>
+        )}
+      </UserContext.Consumer>
     );
   }
 }

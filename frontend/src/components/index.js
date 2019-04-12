@@ -6,6 +6,7 @@ import AcceptPolicies from './AcceptPolicies';
 import Authenticated from './Authenticated';
 import VolunteerDash from './VolunteerDash';
 import AdminDash from './AdminDash';
+import { UserContext, UserContextProvider } from './UserContext';
 
 export {
   VolunteerApp,
@@ -15,5 +16,7 @@ export {
   AcceptPolicies,
   Authenticated,
   VolunteerDash,
-  AdminDash
+  AdminDash,
+  UserContext,
+  UserContextProvider
 };

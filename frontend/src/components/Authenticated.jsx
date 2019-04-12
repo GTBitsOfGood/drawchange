@@ -1,19 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { VolunteerApp, VolunteerDash, PendingVolunteer, AdminDash } from '.';
+import { VolunteerApp, VolunteerDash, PendingVolunteer, AdminDash, UserContext } from '.';
 
-const Authenticated = ({ user }) => (
-  <React.Fragment>
-    {user.role === 'admin' && <AdminDash user={user} />}
-    {user.role === 'pending' && <PendingVolunteer user={user} />}
-    {user.role === 'volunteer' && <VolunteerDash user={user} />}
-    {user.role === 'new' && <VolunteerApp user={user} />}
-  </React.Fragment>
+const Authenticated = () => (
+  <UserContext.Consumer>
+    {({ userRole }) => (
+      <React.Fragment>
+        {userRole === 'admin' && <AdminDash />}
+        {userRole === 'pending' && <PendingVolunteer />}
+        {userRole === 'volunteer' && <VolunteerDash />}
+        {userRole === 'new' && <VolunteerApp />}
+      </React.Fragment>
+    )}
+  </UserContext.Consumer>
 );
-
-Authenticated.propTypes = {
-  user: PropTypes.object.isRequired
-};
 
 export default Authenticated;

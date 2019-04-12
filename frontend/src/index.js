@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { UserContextProvider } from './components/UserContext';
 import configureStore from './store/store';
 
 import './index.css';
@@ -11,7 +12,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <App />
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </Provider>,
   document.getElementById('root')
 );
