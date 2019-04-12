@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../../styles/Home.module.css';
 import { GoogleLogin } from 'react-google-login';
-import authHandler from '../authHandler';
 import { UserContext } from '../UserContext';
 
 class Footer extends Component {
