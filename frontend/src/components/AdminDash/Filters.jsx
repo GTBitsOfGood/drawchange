@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Form, Checkbox } from '../Forms';
+import { statuses } from './applicantInfoHelpers';
 import styled from 'styled-components';
 
 const Styled = {
@@ -22,15 +23,12 @@ const defaultValues = {
       older: false
     }
   },
-  role: {
-    label: 'Role',
-    values: {
-      admin: false,
-      volunteer: false,
-      manager: false,
-      pending: false,
-      rejected: false
-    }
+  status: {
+    label: 'Status',
+    values: Object.keys(statuses).reduce((obj, status) => {
+      obj[status] = false;
+      return obj;
+    }, {})
   },
   availability: {
     label: 'Availability',
