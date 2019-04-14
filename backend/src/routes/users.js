@@ -91,20 +91,35 @@ router.get('/', (req, res, next) => {
       .then(users => res.status(200).json({ users }))
       .catch(err => next(err));
   }
-  if (req.query.status) {
+  if (req.query.role) {
     try {
       // Each role is sent as an object key
       // For mongo '$or' query, these keys need to be reduced to an array
-      const statusFilter = Object.keys(JSON.parse(req.query.status)).reduce(
-        (query, key) => [...query, { status: key }],
+      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
+        (query, key) => [...query, { role: key }],
         []
       );
-      if (!statusFilter.length) {
-        res.status(400).json({ error: 'Invalid status param' });
+      if (!roleFilter.length) {
+        res.status(400).json({ error: 'Invalid role param' });
       }
-      filter.$or = statusFilter;
+      filter.$or = roleFilter;
     } catch (e) {
-      res.status(400).json({ error: 'Invalid status param' });
+      res.status(400).json({ error: 'Invalid role param' });
+    }
+  }
+  if (req.query.date) {
+    try {
+      const dates = JSON.parse(req.query.date).reduce(
+        (query, curr) => [
+          ...query,
+          { createdAt: { $gte: new Date(curr.from), $lte: new Date(curr.to) } }
+        ],
+        []
+      );
+      console.log(dates);
+      filter.$or = filter.$or ? [...filter.$or, ...dates] : dates;
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid date param' });
     }
   }
   if (req.query.availability) {
@@ -140,99 +155,124 @@ router.get('/searchByContent', (req, res, next) => {
   const inputText = req.query.searchquery;
   const searchType = req.query.searchtype;
   const regexquery = { $regex: new RegExp(inputText), $options: 'i' };
+  const filter = {};
 
   switch (searchType) {
     case 'All':
-      UserData.find({
-        $or: [
-          { 'history.volunteer_interest_cause': regexquery },
-          { 'history.volunteer_support': regexquery },
-          { 'history.volunteer_commitment': regexquery },
-          { 'history.previous_volunteer_experience': regexquery },
-          { 'bio.street_address': regexquery },
-          { 'bio.city': regexquery },
-          { 'bio.state': regexquery },
-          { 'bio.zip_code': regexquery },
-          { 'bio.first_name': regexquery },
-          { 'bio.last_name': regexquery },
-          { 'bio.email': regexquery },
-          { 'bio.phone_number': regexquery }
-        ]
-      })
+      filter.$or = [
+        { 'history.volunteer_interest_cause': regexquery },
+        { 'history.volunteer_support': regexquery },
+        { 'history.volunteer_commitment': regexquery },
+        { 'history.previous_volunteer_experience': regexquery },
+        { 'bio.street_address': regexquery },
+        { 'bio.city': regexquery },
+        { 'bio.state': regexquery },
+        { 'bio.zip_code': regexquery },
+        { 'bio.first_name': regexquery },
+        { 'bio.last_name': regexquery },
+        { 'bio.email': regexquery },
+        { 'bio.phone_number': regexquery }
+      ];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     case 'Address':
-      UserData.find({
-        $or: [
-          { 'bio.street_address': regexquery },
-          { 'bio.city': regexquery },
-          { 'bio.state': regexquery },
-          { 'bio.zip_code': regexquery }
-        ]
-      })
+      filter.$or = [
+        { 'bio.street_address': regexquery },
+        { 'bio.city': regexquery },
+        { 'bio.state': regexquery },
+        { 'bio.zip_code': regexquery }
+      ];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     case 'History':
-      UserData.find({
-        $or: [
-          { 'history.volunteer_interest_cause': regexquery },
-          { 'history.volunteer_support': regexquery },
-          { 'history.volunteer_commitment': regexquery },
-          { 'history.previous_volunteer_experience': regexquery }
-        ]
-      })
+      filter.$or = [
+        { 'history.volunteer_interest_cause': regexquery },
+        { 'history.volunteer_support': regexquery },
+        { 'history.volunteer_commitment': regexquery },
+        { 'history.previous_volunteer_experience': regexquery }
+      ];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     case 'Comments':
-      UserData.find({
-        $or: [{ comments: regexquery }]
-      })
+      filter.$or = [{ comments: regexquery }];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     case 'Name':
-      UserData.find({
-        $or: [{ 'bio.first_name': regexquery }, { 'bio.last_name': regexquery }]
-      })
+      filter.$or = [{ 'bio.first_name': regexquery }, { 'bio.last_name': regexquery }];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     case 'Email':
-      UserData.find({
-        $or: [{ 'bio.email': regexquery }]
-      })
+      filter.$or = [{ 'bio.email': regexquery }];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => {
           res.status(200).json({ users });
         })
         .catch(err => next(err));
       break;
     case 'Phone Number':
-      UserData.find({
-        $or: [{ 'bio.phone_number': regexquery }]
-      })
+      filter.$or = [{ 'bio.phone_number': regexquery }];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
       break;
     default:
-      UserData.find({
-        $or: [
-          { 'history.volunteer_interest_cause': regexquery },
-          { 'history.volunteer_support': regexquery },
-          { 'history.volunteer_commitment': regexquery },
-          { 'history.previous_volunteer_experience': regexquery },
-          { 'bio.street_address': regexquery },
-          { 'bio.city': regexquery },
-          { 'bio.state': regexquery },
-          { 'bio.zip_code': regexquery },
-          { 'bio.first_name': regexquery },
-          { 'bio.last_name': regexquery },
-          { 'bio.email': regexquery },
-          { 'bio.phone_number': regexquery }
-        ]
-      })
+      filter.$or = [
+        { 'history.volunteer_interest_cause': regexquery },
+        { 'history.volunteer_support': regexquery },
+        { 'history.volunteer_commitment': regexquery },
+        { 'history.previous_volunteer_experience': regexquery },
+        { 'bio.street_address': regexquery },
+        { 'bio.city': regexquery },
+        { 'bio.state': regexquery },
+        { 'bio.zip_code': regexquery },
+        { 'bio.first_name': regexquery },
+        { 'bio.last_name': regexquery },
+        { 'bio.email': regexquery },
+        { 'bio.phone_number': regexquery }
+      ];
+      UserData.aggregate([
+        { $sort: { _id: -1 } },
+        { $match: filter },
+        { $limit: req.query.pageSize || DEFAULT_PAGE_SIZE }
+      ])
         .then(users => res.status(200).json({ users }))
         .catch(err => next(err));
   }
