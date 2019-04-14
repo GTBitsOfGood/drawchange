@@ -6,8 +6,6 @@ export const filterApplicants = filterGroups => {
     const dateRanges = [];
     Object.entries(values).forEach(([filter, filterValue]) => {
       if (filterValue) {
-        console.log(filter);
-        console.log(group);
         if (group === 'date') {
           var tod = new Date();
           var fromd = new Date();

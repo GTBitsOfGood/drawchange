@@ -108,7 +108,16 @@ router.get('/', (req, res, next) => {
     }
   }
   if (req.query.date) {
-    console.log(req.query.date);
+    try {
+      const dates = JSON.parse(req.query.date).reduce(
+        (query, curr) => [...query, { createdAt: { $gte: curr.from, $lte: curr.to } }],
+        []
+      );
+      //console.log(dates);
+      filter.$or = dates;
+    } catch (e) {
+      res.status(400).json({ error: 'Invalid date param' });
+    }
   }
   if (req.query.availability) {
     try {
