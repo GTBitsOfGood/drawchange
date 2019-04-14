@@ -91,20 +91,20 @@ router.get('/', (req, res, next) => {
       .then(users => res.status(200).json({ users }))
       .catch(err => next(err));
   }
-  if (req.query.role) {
+  if (req.query.status) {
     try {
       // Each role is sent as an object key
       // For mongo '$or' query, these keys need to be reduced to an array
-      const roleFilter = Object.keys(JSON.parse(req.query.role)).reduce(
-        (query, key) => [...query, { role: key }],
+      const statusFilter = Object.keys(JSON.parse(req.query.status)).reduce(
+        (query, key) => [...query, { status: key }],
         []
       );
-      if (!roleFilter.length) {
-        res.status(400).json({ error: 'Invalid role param' });
+      if (!statusFilter.length) {
+        res.status(400).json({ error: 'Invalid status param' });
       }
-      filter.$or = roleFilter;
+      filter.$or = statusFilter;
     } catch (e) {
-      res.status(400).json({ error: 'Invalid role param' });
+      res.status(400).json({ error: 'Invalid status param' });
     }
   }
   if (req.query.availability) {
