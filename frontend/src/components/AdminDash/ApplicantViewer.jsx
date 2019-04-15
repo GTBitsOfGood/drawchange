@@ -46,6 +46,13 @@ const Styled = {
     span {
       margin-left: 0.5rem;
     }
+  `,
+
+  ButtonContainer: styled.div`
+    padding: 2rem;
+    width: 100%;
+    flex-direction: row;
+    display: ${props => (props.display ? 'initial' : 'none')};
   `
 };
 class ApplicantViewer extends Component {
@@ -146,7 +153,8 @@ class ApplicantViewer extends Component {
 
   onClearCheckboxes = () => {
     this.setState({
-      showMassEmailCheckboxes: false
+      showMassEmailCheckboxes: false,
+      checkedEmails: []
     });
   };
 
@@ -200,23 +208,20 @@ class ApplicantViewer extends Component {
                   <span>Send Mass Email</span>
                 </Button>
               </Styled.SecondaryOptions>
-              <Button
-                showMassEmailCheckboxes={showMassEmailCheckboxes}
-                checkedEmails={checkedEmails}
-                href={`mailto:${checkedEmails &&
-                  checkedEmails.reduce((acc, curr) => {
-                    return acc.concat(curr);
-                  }, [])}`}
-              >
-                <span>Send</span>
-              </Button>
-              <Button
-                showMassEmailCheckboxes={!showMassEmailCheckboxes}
-                checkedEmails={checkedEmails}
-                onClick={this.onClearCheckboxes}
-              >
-                <span>Cancel</span>
-              </Button>
+              <Styled.ButtonContainer display={showMassEmailCheckboxes}>
+                <Button
+                  checkedEmails={checkedEmails}
+                  href={`mailto:${checkedEmails &&
+                    checkedEmails.reduce((acc, curr) => {
+                      return acc.concat(curr);
+                    }, [])}`}
+                >
+                  <span>Send</span>
+                </Button>
+                <Button checkedEmails={checkedEmails} onClick={this.onClearCheckboxes}>
+                  <span>Cancel</span>
+                </Button>
+              </Styled.ButtonContainer>
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
