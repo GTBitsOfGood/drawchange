@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StatusBadge from './StatusBadge';
 import styled from 'styled-components';
+import { Button, CustomInput, Input } from 'reactstrap';
+import { Field } from 'formik';
+import { Form } from '../Forms';
 
 const List = styled.div`
   padding-top: 2rem;
@@ -51,7 +54,21 @@ const ListItemHeader = styled.h1`
   color: ${props => props.theme.grey1};
 `;
 
-const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, children }) => (
+const CheckboxContainer = styled.div`
+  padding: 2rem;
+  width: 100%;
+  flex-direction: row;
+  display: ${props => (props.display ? 'initial' : 'none')};
+`;
+
+const ApplicantList = ({
+  applicants,
+  selectApplicantCallback,
+  selectedIndex,
+  children,
+  showMassEmailCheckboxes,
+  selectEmails
+}) => (
   <List>
     {children}
     {(applicants || []).map(({ bio, status }, index) => (
@@ -60,6 +77,17 @@ const ApplicantList = ({ applicants, selectApplicantCallback, selectedIndex, chi
         onClick={() => selectApplicantCallback(index)}
         selected={selectedIndex === index}
       >
+        <CheckboxContainer display={showMassEmailCheckboxes}>
+          <CustomInput
+            type="checkbox"
+            id={index}
+            label={bio.email}
+            checked={showMassEmailCheckboxes.value}
+            onChange={() => {
+              selectEmails(bio.email);
+            }}
+          />
+        </CheckboxContainer>
         <ListItemHeader>{bio.first_name + ' ' + bio.last_name}</ListItemHeader>
         <p>{bio.email}</p>
         <StatusBadge status={status} selected={selectedIndex === index} />

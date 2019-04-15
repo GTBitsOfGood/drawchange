@@ -53,7 +53,10 @@ class ApplicantViewer extends Component {
     super();
     this.state = {
       selectedApplicantIndex: 0,
-      applicants: []
+      applicants: [],
+      showMassEmailCheckboxes: false,
+      checkedEmails: [],
+      toggle: false
     };
   }
 
@@ -133,8 +136,39 @@ class ApplicantViewer extends Component {
       })
     );
   };
+
+  onShowCheckboxes = () => {
+    this.setState({
+      showMassEmailCheckboxes: !this.showMassEmailCheckboxes,
+      toggle: true
+    });
+  };
+
+  onClearCheckboxes = () => {
+    this.setState({
+      showMassEmailCheckboxes: false
+    });
+  };
+
+  onSelectEmails = email => {
+    if (this.state.checkedEmails || []) {
+      if (!this.state.checkedEmails.includes(email)) {
+        this.setState({ checkedEmails: [...this.state.checkedEmails, email] });
+      }
+      var i = this.state.checkedEmails.indexOf(email);
+      this.state.checkedEmails.splice(i, 1);
+    }
+  };
+
   render() {
-    const { selectedApplicantIndex, applicants, isLoading } = this.state;
+    const {
+      selectedApplicantIndex,
+      applicants,
+      isLoading,
+      showMassEmailCheckboxes,
+      checkedEmails,
+      toggle
+    } = this.state;
     return (
       <Styled.Container>
         <Styled.Main>
@@ -143,6 +177,8 @@ class ApplicantViewer extends Component {
               applicants={applicants}
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
+              showMassEmailCheckboxes={showMassEmailCheckboxes}
+              selectEmails={this.onSelectEmails}
             >
               <ApplicantSearch
                 searchSubmitCallback={this.onSearchSubmit}
@@ -154,15 +190,33 @@ class ApplicantViewer extends Component {
                   <span>Refresh</span>
                 </Button>
                 <Button
-                  href={`mailto:${applicants &&
-                    applicants.reduce((acc, curr) => {
-                      return acc.concat(curr.bio.email);
-                    }, [])}`}
+                  // href={`mailto:${applicants &&
+                  //   applicants.reduce((acc, curr) => {
+                  //     return acc.concat(curr.bio.email);
+                  //   }, [])}`}
+                  onClick={this.onShowCheckboxes}
                 >
                   <Icon color="grey3" name="mail" />
                   <span>Send Mass Email</span>
                 </Button>
               </Styled.SecondaryOptions>
+              <Button
+                showMassEmailCheckboxes={showMassEmailCheckboxes}
+                checkedEmails={checkedEmails}
+                href={`mailto:${checkedEmails &&
+                  checkedEmails.reduce((acc, curr) => {
+                    return acc.concat(curr);
+                  }, [])}`}
+              >
+                <span>Send</span>
+              </Button>
+              <Button
+                showMassEmailCheckboxes={!showMassEmailCheckboxes}
+                checkedEmails={checkedEmails}
+                onClick={this.onClearCheckboxes}
+              >
+                <span>Cancel</span>
+              </Button>
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
