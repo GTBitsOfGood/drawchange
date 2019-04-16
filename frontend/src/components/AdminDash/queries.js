@@ -11,7 +11,7 @@ export const filterApplicants = filterGroups => {
           var fromd = new Date();
           switch (filter) {
             case 'past_month':
-              if (fromd.getMonth() == 0) {
+              if (fromd.getMonth() === 0) {
                 fromd.setMonth(11);
                 fromd.setFullYear(fromd.getFullYear() - 1);
               } else {
@@ -60,6 +60,9 @@ export const filterApplicants = filterGroups => {
               tod.setMonth(11);
               tod.setDate(31);
               tod.setHours(23, 59, 59, 1000);
+              break;
+            default:
+              break;
           }
           dateRanges.push({ from: fromd, to: tod });
         }
