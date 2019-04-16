@@ -26,12 +26,14 @@ const Styled = {
     margin-right: 0.3rem;
     text-align: center;
     min-width: 7rem;
+    font-family: 'Poppins';
   `,
   Dropdown: styled(UncontrolledDropdown)`
     margin-left: 0.3rem;
     margin-right: 0.3rem;
     text-align: center;
     min-width: 7rem;
+    font-family: 'Poppins';
   `,
   NavLabel: styled.p`
     color: white;
@@ -46,19 +48,21 @@ const Styled = {
     position: relative;
     align-items: center;
     margin-left: 2rem;
-    margin-right: auto;
 
     :before {
       content: '';
-      width: ${props => (props.currPathName === '/applicant-viewer' ? '10rem' : '9rem')};
+      width: ${props => (props.currPathName === '/applicant-viewer' ? '10.8rem' : '9rem')};
       height: 2.2rem;
       position: absolute;
       border-radius: 0.5rem;
-      left: ${props => (props.currPathName === '/applicant-viewer' ? '-1rem' : '8.5rem')};
+      left: ${props => (props.currPathName === '/applicant-viewer' ? '-1rem' : '9.5rem')};
       background: white;
       z-index: 0;
       transition: all 0.3s;
     }
+  `,
+  Spacing: styled.div`
+    flex: 1;
   `,
   PageLink: styled(Link)`
     margin-right: 2rem;
@@ -88,6 +92,7 @@ const Styled = {
     justify-content: space-between;
     list-style: none;
     margin: 0;
+    font-family: 'Poppins';
   `
 };
 
@@ -106,6 +111,103 @@ class Header extends Component {
 
   onSubPage = () => window.location.pathname !== '/';
 
+  renderApplicantPortalHeader(userRole, logoutUser) {
+    return (
+      <Styled.FlexContainer className="navbar-nav">
+        <Styled.PageSwitch currPathName={window.location.pathname}>
+          <Styled.PageLink
+            to="/applicant-viewer"
+            selected={this.currPageMatches('/applicant-viewer')}
+          >
+            Applicant Viewer
+          </Styled.PageLink>
+          {userRole === 'admin' && (
+            <Styled.PageLink to="/user-manager" selected={this.currPageMatches('/user-manager')}>
+              User Manager
+            </Styled.PageLink>
+          )}
+        </Styled.PageSwitch>
+        <Styled.Spacing />
+        <Styled.NavItem>
+          <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
+        </Styled.NavItem>
+        <Styled.NavItem>
+          <NavLink onClick={logoutUser} href="/">
+            Logout
+          </NavLink>
+        </Styled.NavItem>
+      </Styled.FlexContainer>
+    );
+  }
+
+  renderNewApplicantFormHeader(logoutUser) {
+    return (
+      <Styled.FlexContainer className="navbar-nav">
+        <Styled.Spacing />
+        <Styled.NavItem>
+          <NavLink href="http://www.drawchange.org">Home</NavLink>
+        </Styled.NavItem>
+        <Styled.NavItem>
+          <NavLink onClick={logoutUser} href="/">
+            Return to sign in
+          </NavLink>
+        </Styled.NavItem>
+      </Styled.FlexContainer>
+    );
+  }
+
+  renderStandardHeader() {
+    return (
+      <Nav navbar>
+        <Styled.NavItem>
+          <NavLink href="http://www.drawchange.org">Home</NavLink>
+        </Styled.NavItem>
+        <Styled.Dropdown nav inNavbar>
+          <DropdownToggle nav>About Us</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/foundersstory">
+              Founder's Story
+            </DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/curriculum-blueprint">
+              Curriculum & Blueprint
+            </DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/friends-partners">
+              Our Friends & Partners
+            </DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/store">Store</DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/press-kit">Press Kit</DropdownItem>
+          </DropdownMenu>
+        </Styled.Dropdown>
+        <Styled.Dropdown nav inNavbar>
+          <DropdownToggle nav>Contribute</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem href="https://secure.donationpay.org/drawchange/">Donate</DropdownItem>
+            <DropdownItem href="/">Volunteer With Us</DropdownItem>
+            <DropdownItem href="http://www.drawchange.org/wishlist">Wish List</DropdownItem>
+          </DropdownMenu>
+        </Styled.Dropdown>
+        <Styled.Dropdown>
+          <NavLink href="http://www.drawchange.org/blog">News</NavLink>
+        </Styled.Dropdown>
+        <Styled.Dropdown nav inNavbar>
+          <DropdownToggle nav>Activities</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem href="https://www.drawchange.org/usprograms">U.S. Programs</DropdownItem>
+            <DropdownItem href="https://www.drawchange.org/costarica">Costa Rica</DropdownItem>
+            <DropdownItem href="https://www.drawchange.org/ethiopia">Ethipoia</DropdownItem>
+          </DropdownMenu>
+        </Styled.Dropdown>
+        <Styled.NavItem>
+          <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
+        </Styled.NavItem>
+        <Styled.Dropdown>
+          <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
+        </Styled.Dropdown>
+      </Nav>
+    );
+  }
+
   render() {
     return (
       <UserContext.Consumer>
@@ -118,94 +220,11 @@ class Header extends Component {
 
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
-                {this.onSubPage() && (userRole === 'admin' || userRole === 'volunteer') ? (
-                  <Styled.FlexContainer className="navbar-nav">
-                    <Styled.PageSwitch currPathName={window.location.pathname}>
-                      <Styled.PageLink
-                        to="/applicant-viewer"
-                        selected={this.currPageMatches('/applicant-viewer')}
-                      >
-                        Applicant Viewer
-                      </Styled.PageLink>
-                      {userRole === 'admin' && (
-                        <Styled.PageLink
-                          to="/user-manager"
-                          selected={this.currPageMatches('/user-manager')}
-                        >
-                          User Manager
-                        </Styled.PageLink>
-                      )}
-                    </Styled.PageSwitch>
-                    <Styled.NavItem>
-                      <NavLink href="http://www.drawchange.org">Back to Main Site</NavLink>
-                    </Styled.NavItem>
-                    <Styled.NavItem>
-                      <NavLink onClick={logoutUser} href="/">
-                        Logout
-                      </NavLink>
-                    </Styled.NavItem>
-                  </Styled.FlexContainer>
-                ) : (
-                  <Nav navbar>
-                    <Styled.NavItem>
-                      <NavLink href="http://www.drawchange.org">Home</NavLink>
-                    </Styled.NavItem>
-                    <Styled.Dropdown nav inNavbar>
-                      <DropdownToggle nav>About Us</DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem href="http://www.drawchange.org/faqs">FAQs</DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/foundersstory">
-                          Founder's Story
-                        </DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/curriculum-blueprint">
-                          Curriculum & Blueprint
-                        </DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/friends-partners">
-                          Our Friends & Partners
-                        </DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/store">Store</DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/press-kit">
-                          Press Kit
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Styled.Dropdown>
-                    <Styled.Dropdown nav inNavbar>
-                      <DropdownToggle nav>Contribute</DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem href="https://secure.donationpay.org/drawchange/">
-                          Donate
-                        </DropdownItem>
-                        <DropdownItem href="/">Volunteer With Us</DropdownItem>
-                        <DropdownItem href="http://www.drawchange.org/wishlist">
-                          Wish List
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Styled.Dropdown>
-                    <Styled.Dropdown>
-                      <NavLink href="http://www.drawchange.org/blog">News</NavLink>
-                    </Styled.Dropdown>
-                    <Styled.Dropdown nav inNavbar>
-                      <DropdownToggle nav>Activities</DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem href="https://www.drawchange.org/usprograms">
-                          U.S. Programs
-                        </DropdownItem>
-                        <DropdownItem href="https://www.drawchange.org/costarica">
-                          Costa Rica
-                        </DropdownItem>
-                        <DropdownItem href="https://www.drawchange.org/ethiopia">
-                          Ethipoia
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Styled.Dropdown>
-                    <Styled.NavItem>
-                      <NavLink href="http://www.drawchange.org/contactus">Contact</NavLink>
-                    </Styled.NavItem>
-                    <Styled.Dropdown>
-                      <NavLink href="https://secure.donationpay.org/drawchange/">Donate</NavLink>
-                    </Styled.Dropdown>
-                  </Nav>
-                )}
+                {this.onSubPage() &&
+                  (userRole === 'admin' || userRole === 'volunteer') &&
+                  this.renderApplicantPortalHeader(userRole, logoutUser)}
+                {userRole === 'new' && this.renderNewApplicantFormHeader(logoutUser)}
+                {!this.onSubPage() && userRole !== 'new' && this.renderStandardHeader()}
               </Collapse>
             </Container>
           </Navbar>

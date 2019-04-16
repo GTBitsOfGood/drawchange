@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Header, Authenticated, Splash, UserContext } from './components';
@@ -34,6 +34,7 @@ class App extends Component {
                 <Styled.Container>
                   <Header onLogout={this.logout} loggedIn={userRole != null} role={userRole} />
                   <Styled.Content>
+                    {userRole !== 'admin' && userRole !== 'volunteer' && <Redirect to="/" />}
                     {userRole && <Authenticated />}
                     {!userRole && !authenticating && <Splash />}
                     {/* otherwise, we're authenticating, so just don't show a component yet */}
