@@ -13,3 +13,13 @@ $danger: #ff6261;
 // $body-color: #dc3545;
 // Bootstrap and its default variables
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+@import url("https://use.typekit.net/bgw3nnz.css");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins'
+}
