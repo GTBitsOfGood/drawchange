@@ -46,13 +46,6 @@ const Styled = {
     span {
       margin-left: 0.5rem;
     }
-  `,
-
-  ButtonContainer: styled.div`
-    padding: 2rem;
-    width: 100%;
-    flex-direction: row;
-    display: ${props => (props.display ? 'initial' : 'none')};
   `
 };
 class ApplicantViewer extends Component {
@@ -103,7 +96,6 @@ class ApplicantViewer extends Component {
 
     const { applicants } = this.state;
     const lastPaginationId = applicants.length ? applicants[applicants.length - 1]._id : 0;
-    console.log(lastPaginationId);
 
     fetchMoreApplicants(lastPaginationId).then(res =>
       this.setState({
@@ -158,6 +150,15 @@ class ApplicantViewer extends Component {
     });
   };
 
+  onSendMassEmail = () => {
+    const checkedEmails = this.state.checkedEmails;
+    this.onClearCheckboxes();
+    const sendTo = checkedEmails.reduce((acc, curr) => {
+      return acc.concat(curr);
+    }, []);
+    window.location.href = `mailTo:${sendTo}`;
+  };
+
   onSelectEmails = email => {
     if (this.state.checkedEmails || []) {
       if (!this.state.checkedEmails.includes(email)) {
@@ -186,6 +187,7 @@ class ApplicantViewer extends Component {
               selectApplicantCallback={this.onSelectApplicant}
               selectedIndex={selectedApplicantIndex}
               showMassEmailCheckboxes={showMassEmailCheckboxes}
+              checkedEmails={checkedEmails}
               selectEmails={this.onSelectEmails}
             >
               <ApplicantSearch
@@ -197,31 +199,20 @@ class ApplicantViewer extends Component {
                   <Icon color="grey3" name="refresh" />
                   <span>Refresh</span>
                 </Button>
-                <Button
-                  // href={`mailto:${applicants &&
-                  //   applicants.reduce((acc, curr) => {
-                  //     return acc.concat(curr.bio.email);
-                  //   }, [])}`}
-                  onClick={this.onShowCheckboxes}
-                >
-                  <Icon color="grey3" name="mail" />
-                  <span>Send Mass Email</span>
-                </Button>
+                {showMassEmailCheckboxes ? (
+                  <React.Fragment>
+                    <Button onClick={this.onSendMassEmail} color="success">
+                      Send
+                    </Button>
+                    <Button onClick={this.onClearCheckboxes}>Cancel</Button>
+                  </React.Fragment>
+                ) : (
+                  <Button onClick={this.onShowCheckboxes}>
+                    <Icon color="grey3" name="mail" />
+                    <span>Send Mass Email</span>
+                  </Button>
+                )}
               </Styled.SecondaryOptions>
-              <Styled.ButtonContainer display={showMassEmailCheckboxes}>
-                <Button
-                  checkedEmails={checkedEmails}
-                  href={`mailto:${checkedEmails &&
-                    checkedEmails.reduce((acc, curr) => {
-                      return acc.concat(curr);
-                    }, [])}`}
-                >
-                  <span>Send</span>
-                </Button>
-                <Button checkedEmails={checkedEmails} onClick={this.onClearCheckboxes}>
-                  <span>Cancel</span>
-                </Button>
-              </Styled.ButtonContainer>
             </ApplicantList>
           </InfiniteScroll>
           <Styled.ApplicantInfoContainer loading={!applicants || !applicants.length}>
