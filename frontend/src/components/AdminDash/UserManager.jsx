@@ -28,6 +28,7 @@ const Styled = {
       color: ${props => props.theme.grey5};
       margin: 0 1rem;
       font-size: 1.2rem;
+      font-variant-numeric: tabular-nums;
     }
   `,
   ButtonContainer: styled.div`

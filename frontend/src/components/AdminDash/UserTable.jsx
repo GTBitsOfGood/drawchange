@@ -1,8 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { roles, statuses } from './applicantInfoHelpers';
-import Loading from '../Shared/Loading';
+import { Loading, Icon } from '../Shared';
 import PropTypes from 'prop-types';
+
+const EditIcon = styled.div`
+  display: none;
+  position: absolute;
+  right: 2rem;
+  margin-top: -0.2rem;
+`;
 
 const Styled = {
   Container: styled.div`
@@ -23,11 +30,21 @@ const Styled = {
     th,
     td {
       padding: 1.5rem;
+      position: relative;
     }
   `,
   Row: styled.tr`
     ${props => props.evenIndex && 'background: #F7F7F7'};
     cursor: pointer;
+    :hover {
+      background-color: ${props => props.theme.primary};
+      border-radius: 0.5rem;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    :hover ${EditIcon} {
+      display: initial;
+    }
   `,
   LoadingBody: styled.div`
     height: 39rem;
@@ -80,7 +97,12 @@ class UserTable extends React.Component {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{roles[user.role]}</td>
-                  <td>{statuses[user.status]}</td>
+                  <td>
+                    {statuses[user.status]}{' '}
+                    <EditIcon>
+                      <Icon color="grey9" name="edit" />
+                    </EditIcon>
+                  </td>
                 </Styled.Row>
               ))}
           </tbody>
