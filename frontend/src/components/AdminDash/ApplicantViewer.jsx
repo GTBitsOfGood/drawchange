@@ -55,8 +55,7 @@ class ApplicantViewer extends Component {
       selectedApplicantIndex: 0,
       applicants: [],
       showMassEmailCheckboxes: false,
-      checkedEmails: [],
-      toggle: false
+      checkedEmails: []
     };
   }
 
@@ -138,8 +137,7 @@ class ApplicantViewer extends Component {
 
   onShowCheckboxes = () => {
     this.setState({
-      showMassEmailCheckboxes: !this.showMassEmailCheckboxes,
-      toggle: true
+      showMassEmailCheckboxes: !this.showMassEmailCheckboxes
     });
   };
 
@@ -175,8 +173,7 @@ class ApplicantViewer extends Component {
       applicants,
       isLoading,
       showMassEmailCheckboxes,
-      checkedEmails,
-      toggle
+      checkedEmails
     } = this.state;
     return (
       <Styled.Container>
