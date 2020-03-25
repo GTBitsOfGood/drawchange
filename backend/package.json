@@ -10,7 +10,7 @@
     "test": "NODE_ENV=test dotenv mocha tests --opts ./tests/mocha.opts"
   },
   "dependencies": {
-    "connect-mongo": "^2.0.3",
+    "connect-mongo": "^3.0.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
