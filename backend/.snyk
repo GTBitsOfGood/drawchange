@@ -1,0 +1,12 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - express-validator > lodash:
+        patched: '2020-05-01T08:52:23.509Z'
+    - mailchimp-api-v3 > lodash:
+        patched: '2020-05-01T08:52:23.509Z'
+    - mongoose > async > lodash:
+        patched: '2020-05-01T08:52:23.509Z'
