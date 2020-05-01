@@ -7,7 +7,9 @@
     "dev": "dotenv nodemon ./src/bin/www --watch src --ignore src/logs",
     "format": "prettier --write '{src,test}/**/*.{js,jsx,json,css}'",
     "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
-    "test": "NODE_ENV=test dotenv mocha tests --opts ./tests/mocha.opts"
+    "test": "NODE_ENV=test dotenv mocha tests --opts ./tests/mocha.opts",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "connect-mongo": "^2.0.3",
@@ -26,7 +28,8 @@
     "nodemailer": "^4.7.0",
     "nodemailer-sendgrid": "^1.0.3",
     "passport": "^0.4.0",
-    "passport-google-token": "^0.1.2"
+    "passport-google-token": "^0.1.2",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -39,5 +42,6 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3"
-  }
+  },
+  "snyk": true
 }
