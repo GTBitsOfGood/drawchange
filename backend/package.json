@@ -23,7 +23,7 @@
     "mongoose": "^5.4.0",
     "morgan": "~1.9.0",
     "mustache": "^3.0.1",
-    "nodemailer": "^4.7.0",
+    "nodemailer": "^6.4.16",
     "nodemailer-sendgrid": "^1.0.3",
     "passport": "^0.4.0",
     "passport-google-token": "^0.1.2"
